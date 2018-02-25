@@ -9,7 +9,7 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 @Configuration
-@ComponentScan(basePackages = {"be.unamur.webapp.spring.basics.web.controller"})
+@ComponentScan(basePackages = {"be.unamur.hermes.web.controller"})
 // Un peut comme les autres module, ici on active l'autoconfiguration du web mvc
 @EnableWebMvc
 public class WebConfiguration extends WebMvcConfigurerAdapter {
