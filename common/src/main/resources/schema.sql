@@ -19,7 +19,7 @@
 #TODO : Rethink some attributes (e.g.: phone, mail,
 CREATE TABLE t_people (
   peopleID      INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  forename      VARCHAR(255)     NOT NULL,
+  firstname      VARCHAR(255)     NOT NULL,
   lastname      VARCHAR(255)     NOT NULL
 /*  addressID     INT             NOT NULL,
   mail          VARCHAR(255)     NOT NULL,
