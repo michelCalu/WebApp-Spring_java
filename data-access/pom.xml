@@ -31,6 +31,7 @@
             <artifactId>slf4j-api</artifactId>
         </dependency>
 
+        <!-- Gestion du pool de connexion db -->
         <dependency>
             <groupId>com.zaxxer</groupId>
             <artifactId>HikariCP</artifactId>
@@ -43,7 +44,7 @@
 
         <dependency>
             <groupId>be.unamur.hermes</groupId>
-            <artifactId>common-test</artifactId>
+            <artifactId>common</artifactId>
         </dependency>
     </dependencies>
     

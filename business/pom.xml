@@ -19,7 +19,7 @@
         </dependency>
         <dependency>
             <groupId>be.unamur.hermes</groupId>
-            <artifactId>common-test</artifactId>
+            <artifactId>common</artifactId>
         </dependency>
 
         <dependency>

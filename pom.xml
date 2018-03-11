@@ -40,7 +40,7 @@
             </dependency>
             <dependency>
                 <groupId>be.unamur.hermes</groupId>
-                <artifactId>common-test</artifactId>
+                <artifactId>common</artifactId>
                 <version>${project.version}</version>
                 <scope>test</scope>
             </dependency>

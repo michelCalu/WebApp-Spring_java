@@ -3,7 +3,9 @@ package be.unamur.hermes.dataaccess.repository;
 import be.unamur.hermes.dataaccess.entity.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class EmployeeRepositoryImpl implements EmployeeRepository {
 
     private final JdbcTemplate jdbcTemplate;

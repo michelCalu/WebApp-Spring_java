@@ -10,7 +10,7 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>common-test</artifactId>
+    <artifactId>common</artifactId>
 
     <!-- db embarquée (pour les tests) => pas d'interraction avec la vrai db -->
     <dependencies>

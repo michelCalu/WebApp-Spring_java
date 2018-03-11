@@ -3,7 +3,9 @@ package be.unamur.hermes.dataaccess.repository;
 import be.unamur.hermes.dataaccess.entity.Inhabitant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class InhabitantRepositoryImpl implements InhabitantRepository {
 
     private final JdbcTemplate jdbcTemplate;
