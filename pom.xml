@@ -11,7 +11,7 @@
     <modules>
         <module>business</module>
         <module>data-access</module>
-        <module>common-test</module>
+        <module>common</module>
         <module>web</module>
     </modules>
 
@@ -55,9 +55,9 @@
             </dependency>
 
             <dependency>
-                <groupId>org.postgresql</groupId>
-                <artifactId>postgresql</artifactId>
-                <version>42.2.1</version>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>5.1.45</version>
             </dependency>
 
             <!-- Tests de préconditions, manipulation de string, ... -->
