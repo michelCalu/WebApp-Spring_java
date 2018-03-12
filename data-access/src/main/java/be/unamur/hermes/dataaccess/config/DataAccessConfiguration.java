@@ -9,9 +9,4 @@ import org.springframework.context.annotation.Configuration;
 @ComponentScan(basePackages = {"be.unamur.hermes.dataaccess.repository"})
 public class DataAccessConfiguration {
 
-    //DataSourceAutoConfiguration
-    //DataSourceConfiguration
-    //DataSourceBuilder & -> DatabaseDriver to determine the driver
-    //DataSourcePoolMetadataProvidersConfiguration -> HikariPoolDataSourceMetadataProviderConfiguration
-
 }
