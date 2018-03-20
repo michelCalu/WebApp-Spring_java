@@ -13,6 +13,7 @@
         <module>data-access</module>
         <module>common</module>
         <module>web</module>
+        <module>client</module>
     </modules>
 
     <packaging>pom</packaging>
