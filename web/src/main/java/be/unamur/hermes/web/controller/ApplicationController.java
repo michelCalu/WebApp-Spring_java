@@ -37,12 +37,14 @@ public class ApplicationController {
         return "about";
     }
 
-    @PostMapping(path = "/create_people")
+    @PostMapping(path = "/createpeople")
+    @CrossOrigin(origins = "http://localhost:4200")
     public void createPeople(@RequestBody People people){
         inhabitantService.register(people.getFirstname(), people.getLastname());
     }
 
-    @GetMapping(path = "/show_people")
+    @GetMapping(path = "/showpeople")
+    @CrossOrigin(origins = "http://localhost:4200")
     public List<PeopleBis> showPeople(){
         return peopleBisService.findAll();
     }
