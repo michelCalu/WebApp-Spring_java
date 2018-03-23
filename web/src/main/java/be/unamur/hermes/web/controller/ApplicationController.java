@@ -1,11 +1,13 @@
 package be.unamur.hermes.web.controller;
 
 import be.unamur.hermes.business.service.InhabitantService;
+import be.unamur.hermes.business.service.PeopleBisService;
+import be.unamur.hermes.dataaccess.entity.People;
+import be.unamur.hermes.dataaccess.entity.PeopleBis;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -13,10 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class ApplicationController {
 
     private InhabitantService inhabitantService;
+    private PeopleBisService peopleBisService;
 
     @Autowired
-    public ApplicationController(InhabitantService inhabitantService){
+    public ApplicationController(InhabitantService inhabitantService, PeopleBisService peopleBisService){
         this.inhabitantService = inhabitantService;
+        this.peopleBisService = peopleBisService;
     }
 
     @GetMapping
@@ -31,6 +35,16 @@ public class ApplicationController {
         System.out.println("About bitches");
         inhabitantService.register("Marco", "Polo");
         return "about";
+    }
+
+    @PostMapping(path = "/create_people")
+    public void createPeople(@RequestBody People people){
+        inhabitantService.register(people.getFirstname(), people.getLastname());
+    }
+
+    @GetMapping(path = "/show_people")
+    public List<PeopleBis> showPeople(){
+        return peopleBisService.findAll();
     }
 
 }
