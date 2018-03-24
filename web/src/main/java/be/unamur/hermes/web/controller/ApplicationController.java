@@ -36,9 +36,8 @@ public class ApplicationController {
     }
 
     @PostMapping(path = "/createpeople")
-    public ResponseEntity<Void> createPeople(@RequestBody String peopleBis){
-        System.out.println(peopleBis);
-        inhabitantService.register("oscaR", "CBLS");
+    public ResponseEntity<Void> createPeople(@RequestBody PeopleBis peopleBis){
+        inhabitantService.register(peopleBis.getFirstName(), peopleBis.getLastName());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

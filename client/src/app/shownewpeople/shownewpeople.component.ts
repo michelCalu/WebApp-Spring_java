@@ -20,5 +20,4 @@ export class ShowNewComponent implements OnInit {
 			this.peoples = data;
 		});
 	}
-
 }

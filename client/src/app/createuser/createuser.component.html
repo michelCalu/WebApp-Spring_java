@@ -3,10 +3,10 @@
 		<title> Creation </title>
 	</head>
 	<body>
-		<h1> Create a new people </h1>
-		<label for="firstName">First Name:</label>
+		<h1>Inscription</h1>
+		<label for="firstName">Prénom:</label>
 		<input [(ngModel)]="people.firstName" placeholder="First Name" name="firstName" class="form-control" id="firstName">
-		<label for="lastName">Last Name:</label>
+		<label for="lastName">Nom:</label>
 		<input [(ngModel)]="people.lastName" placeholder="Last Name" name="lastName" class="form-control" id="lastName">
 		<button class="btn btn-success" (click)="createPeople()">Create</button>
 	</body>
