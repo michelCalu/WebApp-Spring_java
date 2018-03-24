@@ -12,18 +12,18 @@ export class PeopleService {
   constructor(private http: HttpClient) {
   }
 
-  private serverUrl = 'http://localhost:8080/';
+  //private serverUrl = 'http://localhost:8080/';
 
   public getAbout() {
-    return this.http.get(this.serverUrl + "about");
+    return this.http.get("/about");
   }
 
   public createPeople(people) {
-    return this.http.post(this.serverUrl+"createpeople", people);
+    return this.http.post("/createpeople", people);
   }
 
   public showPeople(){
-    return this.http.get(this.serverUrl+"showpeople");
+    return this.http.get("/showpeople");
   }
 
 }

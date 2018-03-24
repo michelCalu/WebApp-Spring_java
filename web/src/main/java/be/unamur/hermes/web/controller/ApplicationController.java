@@ -2,15 +2,15 @@ package be.unamur.hermes.web.controller;
 
 import be.unamur.hermes.business.service.InhabitantService;
 import be.unamur.hermes.business.service.PeopleBisService;
-import be.unamur.hermes.dataaccess.entity.People;
 import be.unamur.hermes.dataaccess.entity.PeopleBis;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping({"/"})
 public class ApplicationController {
 
@@ -24,13 +24,11 @@ public class ApplicationController {
     }
 
     @GetMapping
-    @CrossOrigin(origins = "http://localhost:4200")
     public String serveHomePage() {
         return "index";
     }
 
     @GetMapping(path = "/about")
-    @CrossOrigin(origins = "http://localhost:4200")
     public String serveAboutPage() {
         System.out.println("About bitches");
         inhabitantService.register("Marco", "Polo");
@@ -38,15 +36,15 @@ public class ApplicationController {
     }
 
     @PostMapping(path = "/createpeople")
-    @CrossOrigin(origins = "http://localhost:4200")
-    public void createPeople(@RequestBody People people){
-        inhabitantService.register(people.getFirstname(), people.getLastname());
+    public ResponseEntity<Void> createPeople(@RequestBody String peopleBis){
+        System.out.println(peopleBis);
+        inhabitantService.register("oscaR", "CBLS");
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping(path = "/showpeople")
-    @CrossOrigin(origins = "http://localhost:4200")
-    public List<PeopleBis> showPeople(){
-        return peopleBisService.findAll();
+    public ResponseEntity<List<PeopleBis>> showPeople(){
+        return ResponseEntity.status(HttpStatus.OK).body(peopleBisService.findAll());
     }
 
 }
