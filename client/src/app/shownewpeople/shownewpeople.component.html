@@ -1,0 +1,22 @@
+<div class="col-md-6">
+  <head>
+    <title> Peoples </title>
+  </head>
+  <body>
+    <h1> Show peoples </h1>
+    <table>
+    	<thead>
+    		<tr>
+		    	<th>First Name</th>
+		    	<th>Last Name</th>
+	    	</tr>
+    	</thead>
+    	<tbody>
+    		<tr *ngFor="let people of peoples">
+    			<td>{{people.firstName}}</td>
+    			<td>{{people.lastName}}</td>
+			</tr>
+    	</tbody>
+    </table>
+  </body>
+</div>

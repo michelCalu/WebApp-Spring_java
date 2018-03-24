@@ -3,15 +3,17 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
-import { AboutComponent } from './about/about.component';
+import { ShowNewComponent } from './shownewpeople/shownewpeople.component';
+import {CreateUserComponent} from "./createuser/createuser.component";
 import { AppRoutingModule } from './app.routing.module';
-import {AboutService} from './about/about.service';
+import {PeopleService} from './service/people.service';
 import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [
     AppComponent,
-    AboutComponent
+    ShowNewComponent,
+    CreateUserComponent
   ],
   imports: [
     BrowserModule,
@@ -19,7 +21,7 @@ import {HttpClientModule} from '@angular/common/http';
     HttpClientModule,
     FormsModule
   ],
-  providers: [AboutService],
+  providers: [PeopleService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

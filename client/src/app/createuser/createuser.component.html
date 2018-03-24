@@ -1,0 +1,13 @@
+<div class="col-md-6">
+	<head>
+		<title> Creation </title>
+	</head>
+	<body>
+		<h1> Create a new people </h1>
+		<label for="firstName">First Name:</label>
+		<input [(ngModel)]="people.firstName" placeholder="First Name" name="firstName" class="form-control" id="firstName">
+		<label for="lastName">Last Name:</label>
+		<input [(ngModel)]="people.lastName" placeholder="Last Name" name="lastName" class="form-control" id="lastName">
+		<button class="btn btn-success" (click)="createPeople()">Create</button>
+	</body>
+</div>
