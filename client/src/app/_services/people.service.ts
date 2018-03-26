@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 
+import { People } from '../_models/index'
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -18,7 +19,7 @@ export class PeopleService {
     return this.http.get("/about");
   }
 
-  public createPeople(people) {
+  public createPeople(people: People) {
     return this.http.post("/createpeople", people);
   }
 

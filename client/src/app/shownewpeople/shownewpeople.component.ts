@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { PeopleService } from '../service/people.service';
-import {People} from "../model/people.model";
+import { PeopleService } from '../_services/people.service';
+import {People} from "../_models/people.model";
 
 @Component({
 	templateUrl: './shownewpeople.component.html',
