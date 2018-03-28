@@ -3,24 +3,25 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { HomeComponent } from './home/index';
 import { ShowNewComponent } from './shownewpeople/shownewpeople.component';
-import { CreateUserComponent } from './createuser/createuser.component';
+import { CreateUserComponent } from './createuser/index';
 import { AuthGuard } from './_guards/index';
 
 const appRoutes: Routes = [
-	{ path: '', redirectTo: 'fleet', pathMatch: 'full'},
-	{
-		path: '',
-		component: HomeComponent,
+	{ path: '', redirectTo: '/home', pathMatch: 'full'},
+/*	{
+		path: 'home', component: HomeComponent,
 		children: [
-			{ path: 'shownewpeople', component: ShowNewComponent, canActivate: [AuthGuard] },
-			{ path: 'createuser', component: CreateUserComponent, canActivate: [AuthGuard] },
+			//{ path: 'shownewpeople', component: ShowNewComponent, canActivate: [AuthGuard] },
+			{ path: 'createuser', component: CreateUserComponent}
 		]
-	}
-	/*{ path: '', component: HomeComponent, canActivate: [AuthGuard]},
+	}*/
+	/*{ path: '', component: HomeComponent, canActivate: [AuthGuard]},*/
+	//{ path: '', component: HomeComponent },
+	{ path: 'home', component: HomeComponent },
 	{ path: 'shownewpeople', component: ShowNewComponent },
 	{ path: 'createuser', component: CreateUserComponent },
 
-	{ path: '**', redirectTo: ''}*/
+	{ path: '**', redirectTo: '/home', pathMatch: 'full'}
 ];
 
 //export const AppRoutingModule = RouterModule.forRoot(appRoutes);

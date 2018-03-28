@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { PeopleService } from '../_services/people.service';
 import { People } from "../_models/people.model";
 
 @Component({
+	moduleId: module.id,
 	templateUrl: './createuser.component.html',
 })
 export class CreateUserComponent{
