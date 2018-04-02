@@ -6,6 +6,8 @@ public interface EmployeeRepository {
 
     Employee findByName(String firstname, String lastname);
 
+    Employee findById(long employeeId);
+
     void create(String firstname, String lastname);
 
 }
