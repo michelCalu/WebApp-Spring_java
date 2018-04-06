@@ -8,9 +8,11 @@ import { AlertComponent } from './_directives/index';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app.routing.module';
 import { AuthGuard } from './_guards/index';
+import { AuthService } from './_guards/index';
 import { CreateUserComponent } from './createuser/createuser.component';
 import { HomeComponent } from './home/index';
 import { JwtInterceptor } from './_helpers/index';
+import { LoginComponent } from './login/index';
 import { RegisterComponent } from './register/index';
 import { ShowNewComponent } from './shownewpeople/shownewpeople.component';
 
@@ -20,6 +22,7 @@ import { ShowNewComponent } from './shownewpeople/shownewpeople.component';
     AppComponent,
     CreateUserComponent,
     HomeComponent,
+    LoginComponent,
     RegisterComponent,
     ShowNewComponent
   ],
@@ -31,6 +34,7 @@ import { ShowNewComponent } from './shownewpeople/shownewpeople.component';
   ],
   providers: [
     AuthGuard,
+    AuthService,
     AlertService,
     AuthenticationService,
     PeopleService,

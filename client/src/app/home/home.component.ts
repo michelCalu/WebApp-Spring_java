@@ -5,7 +5,7 @@ import { PeopleService } from '../_services/people.Service';
 
 @Component({
     moduleId: module.id,
-    templateUrl: 'home.component.html'
+    templateUrl: './home.component.html'
 })
 
 export class HomeComponent implements OnInit {
