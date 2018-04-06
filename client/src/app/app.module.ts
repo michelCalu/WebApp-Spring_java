@@ -13,6 +13,10 @@ import { CreateUserComponent } from './createuser/createuser.component';
 import { HomeComponent } from './home/index';
 import { JwtInterceptor } from './_helpers/index';
 import { LoginComponent } from './login/index';
+import { MyFoldersComponent } from './myfolders/index';
+import { MyProfileComponent } from './myprofile/index';
+import { MyRequestsComponent } from './myrequests/index';
+import { NewRequestComponent } from './newrequest/index';
 import { RegisterComponent } from './register/index';
 import { ShowNewComponent } from './shownewpeople/shownewpeople.component';
 
@@ -23,6 +27,10 @@ import { ShowNewComponent } from './shownewpeople/shownewpeople.component';
     CreateUserComponent,
     HomeComponent,
     LoginComponent,
+    MyFoldersComponent,
+    MyProfileComponent,
+    MyRequestsComponent,
+    NewRequestComponent,
     RegisterComponent,
     ShowNewComponent
   ],
