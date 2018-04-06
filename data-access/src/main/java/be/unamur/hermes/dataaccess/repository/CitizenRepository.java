@@ -8,10 +8,12 @@ public interface CitizenRepository {
 
     Citizen findByName(String firstname, String lastname);
 
-    Citizen findById(Long citizenId);
+    Citizen findById(long citizenId);
 
     List<Citizen> findAll();
 
     void create(Citizen citizen);
+
+    void activate(long citizenId);
 
 }

@@ -1,5 +1,6 @@
 package be.unamur.hermes.business.service;
 
+import be.unamur.hermes.business.exception.BusinessException;
 import be.unamur.hermes.dataaccess.entity.Citizen;
 import be.unamur.hermes.dataaccess.repository.CitizenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +37,15 @@ public class CitizenServiceImpl implements CitizenService {
 
     @Override
     @Transactional
-    public void register(String firstname, String lastname) {
-        citizenRepository.create(firstname,lastname);
+    public void register(Citizen citizen) {
+        citizenRepository.create(citizen);
+    }
+
+    @Override
+    public void activate(Citizen citizen) throws BusinessException {
+        if(citizen.isActivated())
+            throw new BusinessException("This citizen is already activated !");
+        else
+            citizenRepository.activate(citizen.getId());
     }
 }

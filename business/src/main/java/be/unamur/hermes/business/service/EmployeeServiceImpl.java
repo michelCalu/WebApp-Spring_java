@@ -36,7 +36,7 @@ public class EmployeeServiceImpl implements EmployeeService{
 
     @Override
     @Transactional
-    public void register(String firstname, String lastname){
-        employeeRepository.create(firstname,lastname);
+    public void register(Employee employee){
+        employeeRepository.create(employee);
     }
 }

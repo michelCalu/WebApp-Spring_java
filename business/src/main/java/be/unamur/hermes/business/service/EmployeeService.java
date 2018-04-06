@@ -12,5 +12,5 @@ public interface EmployeeService {
 
     List<Employee> findAll();
 
-    void register(String firstname, String lastname);
+    void register(Employee employee);
 }

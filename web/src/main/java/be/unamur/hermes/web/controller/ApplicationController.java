@@ -1,10 +1,12 @@
 package be.unamur.hermes.web.controller;
 
+import be.unamur.hermes.business.exception.BusinessException;
 import be.unamur.hermes.business.service.EmployeeService;
 import be.unamur.hermes.dataaccess.entity.Citizen;
 import be.unamur.hermes.dataaccess.entity.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -47,7 +49,7 @@ public class ApplicationController {
 
     @PostMapping(path = "/createEmployee")
     public ResponseEntity<Void> createEmployee(@RequestBody Employee employee) {
-	    employeeService.register(employee.getFirstName(), employee.getLastName());
+	    employeeService.register(employee);
 	    return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -58,13 +60,23 @@ public class ApplicationController {
 
     @PostMapping(path = "/createCitizen")
     public ResponseEntity<Void> createEmployee(@RequestBody Citizen citizen) {
-        citizenService.register(citizen.getFirstName(), citizen.getLastName());
+        citizenService.register(citizen);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping(path = "/showCitizens")
     public ResponseEntity<List<Citizen>> showCitizens() {
         return ResponseEntity.status(HttpStatus.OK).body(citizenService.findAll());
+    }
+
+    @PostMapping(path = "/activateCitizen")
+    public ResponseEntity<Void> activateCitizen(@RequestBody Citizen citizen) {
+        try{
+            citizenService.activate(citizen);
+            return ResponseEntity.status(HttpStatus.OK).body(null);
+        } catch (BusinessException be){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
     }
 
     @GetMapping(path = "/claims/{claimId}")

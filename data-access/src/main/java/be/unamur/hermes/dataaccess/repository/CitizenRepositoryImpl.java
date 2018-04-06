@@ -14,19 +14,22 @@ public class CitizenRepositoryImpl implements CitizenRepository {
 
     // queries
     private static final String queryById = //
-            "SELECT * FROM t_citizens i WHERE i.employeeID = ? ";
+            "SELECT * FROM t_citizens c WHERE c.employeeID = ? ";
 
     private static final String queryByName = //
-            "SELECT * FROM t_citizens i WHERE i.firstname = ? AND i.lastname = ?";
+            "SELECT * FROM t_citizens c WHERE c.firstname = ? AND c.lastname = ?";
 
     private static final String queryAll = //
             "SELECT * FROM t_citizens";
 
     private static final String createNew = //
-            "INSERT INTO t_addresses (" +
+            "INSERT INTO t_citizens (" +
                     "firstName, lastName, addressID, mail, phone, " +
                     "nationalRegistreNb, birthdate, activated) VALUES " +
                     "(?, ?, ?, ?, ?, ?, ?, FALSE)";
+
+    private static final String updateActivate = //
+            "UPDATE t_citizens c SET c.activated = TRUE WHERE c.citizenID = ?";
 
     private static final BeanPropertyRowMapper<Citizen> citizenMapper = new BeanPropertyRowMapper<>(Citizen.class);
 
@@ -49,7 +52,7 @@ public class CitizenRepositoryImpl implements CitizenRepository {
     }
 
     @Override
-    public Citizen findById(Long citizenId) {
+    public Citizen findById(long citizenId) {
         return jdbcTemplate.queryForObject(
                 queryById,
                 new Object[]{citizenId},
@@ -84,5 +87,10 @@ public class CitizenRepositoryImpl implements CitizenRepository {
                 Types.VARCHAR,
                 Types.DATE};
         jdbcTemplate.update(createNew, values, types);
+    }
+
+    @Override
+    public void activate(long citizenId) {
+        jdbcTemplate.update(updateActivate, citizenId);
     }
 }
