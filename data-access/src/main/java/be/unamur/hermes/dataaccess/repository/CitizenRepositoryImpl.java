@@ -6,6 +6,7 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Types;
 import java.util.List;
 
 @Repository
@@ -21,13 +22,21 @@ public class CitizenRepositoryImpl implements CitizenRepository {
     private static final String queryAll = //
             "SELECT * FROM t_citizens";
 
+    private static final String createNew = //
+            "INSERT INTO t_addresses (" +
+                    "firstName, lastName, addressID, mail, phone, " +
+                    "nationalRegistreNb, birthdate, activated) VALUES " +
+                    "(?, ?, ?, ?, ?, ?, ?, FALSE)";
+
     private static final BeanPropertyRowMapper<Citizen> citizenMapper = new BeanPropertyRowMapper<>(Citizen.class);
 
     private final JdbcTemplate jdbcTemplate;
+    private final AddressRepository addressRepository;
 
     @Autowired
-    public CitizenRepositoryImpl(final  JdbcTemplate jdbcTemplate){
+    public CitizenRepositoryImpl(final  JdbcTemplate jdbcTemplate, final AddressRepository addressRepository){
            this.jdbcTemplate = jdbcTemplate;
+           this.addressRepository = addressRepository;
     }
 
     @Override
@@ -54,15 +63,26 @@ public class CitizenRepositoryImpl implements CitizenRepository {
     }
 
     @Override
-    public void create(String firstname, String lastname) {
-        long peopleID = jdbcTemplate.update(
-                "INSERT INTO t_people (firstname, lastname) VALUES (?, ?)",
-                firstname,
-                lastname
-        );
-        jdbcTemplate.update(
-                "INSERT INTO t_citizens (peopleID) VALUES (?)",
-                peopleID
-        );
+    public void create(Citizen citizen) {
+        long addressID = addressRepository.create(citizen.getAddress());
+        Object[] values = {
+                citizen.getFirstName(),
+                citizen.getLastName(),
+                addressID,
+                citizen.getMail(),
+                citizen.getPhone(),
+                citizen.getNationalRegistreNb(),
+                citizen.getBirthdate(),
+        };
+
+        int[] types = {
+                Types.VARCHAR,
+                Types.VARCHAR,
+                Types.INTEGER,
+                Types.VARCHAR,
+                Types.VARCHAR,
+                Types.VARCHAR,
+                Types.DATE};
+        jdbcTemplate.update(createNew, values, types);
     }
 }

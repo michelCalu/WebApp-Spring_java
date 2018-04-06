@@ -17,7 +17,7 @@ CREATE TABLE t_employees (
   employeeID    INT PRIMARY KEY   NOT NULL AUTO_INCREMENT,
   firstName     VARCHAR(255)      NOT NULL,
   lastName      VARCHAR(255)      NOT NULL,
-  address       INT               NOT NULL,
+  addressID     INT               NOT NULL,
   mail          VARCHAR(255)      NOT NULL,
   phone         VARCHAR(255)      NOT NULL,
   nationalRegistreNb VARCHAR(255) NOT NULL,
@@ -27,7 +27,8 @@ CREATE TABLE t_employees (
   gender        CHAR(1)           NOT NULL,
   civilStatus   VARCHAR(255)      NOT NULL,
   dependentChildren INT           NOT NULL,
-  dependentPeople   INT           NOT NULL
+  dependentPeople   INT           NOT NULL,
+  FOREIGN KEY (addressID)  REFERENCES t_addresses(addressID)
 );
 
 DROP TABLE IF EXISTS t_claim_types;

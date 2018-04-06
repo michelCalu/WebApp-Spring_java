@@ -12,6 +12,6 @@ public interface CitizenRepository {
 
     List<Citizen> findAll();
 
-    void create(String firstname, String lastname);
+    void create(Citizen citizen);
 
 }
