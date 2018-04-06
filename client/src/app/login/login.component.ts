@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { AuthService } from '../_guards/index';
-import { PeopleService } from '../_services/people.service';
+import { CitizenService } from '../_services/citizen.service';
 import { User } from "../_models/user.model";
 
 @Component({
@@ -13,14 +13,14 @@ export class LoginComponent{
 
 	user: User = new User();
 
-	constructor(private router: Router, private authService: AuthService, private peopleService: PeopleService) {
+	constructor(private router: Router, private authService: AuthService, private citizenService: CitizenService) {
 
 	}
 
 	login(): void {
 		this.authService.login(this.user);
 		console.log("logged");
-		/*this.peopleService.login(this.user).subscribe(data => {
+		/*this.citizenService.login(this.user).subscribe(data => {
 			console.log("user connected");
 		});*/
 	}

@@ -1,5 +1,6 @@
 package be.unamur.hermes.dataaccess.entity;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Objects;
@@ -20,7 +21,7 @@ public class Employee extends User {
                     String mail,
                     String phone,
                     String nationalRegistreNb,
-                    Date birthdate,
+                    String birthdate,
                     long id,
                     String accountNumber,
                     LocalDateTime arrivalDate,

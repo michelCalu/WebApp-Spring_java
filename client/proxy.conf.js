@@ -2,8 +2,7 @@ const PROXY_CONFIG = [
   {
     context: [
       "/about",
-      "/createpeople",
-      "/showpeople"
+      "/citizens"
     ],
     "target": "http://localhost:8080",
     "secure": false,

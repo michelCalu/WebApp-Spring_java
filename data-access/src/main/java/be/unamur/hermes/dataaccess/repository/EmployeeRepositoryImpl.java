@@ -83,7 +83,7 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
                 Types.VARCHAR,
                 Types.VARCHAR,
                 Types.VARCHAR,
-                Types.DATE,
+                Types.VARCHAR,
                 Types.VARCHAR,
                 Types.TIMESTAMP,
                 Types.CHAR,

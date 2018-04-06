@@ -11,6 +11,22 @@ public class Address {
     private String street;
     private int streetNb;
 
+    public Address(){};
+
+    public Address(
+            String country,
+            String state,
+            String street,
+            int streetNb,
+            int zipCode) {
+        System.out.println("tamere");
+        this.addressId = 42;
+        this.country = country;
+        this.state = state;
+        this.zipCode = zipCode;
+        this.street = street;
+        this.streetNb = streetNb;
+    }
 
     public Address(long addressId, String country, String state, String street, int streetNb) {
         this.addressId = addressId;
@@ -70,8 +86,8 @@ public class Address {
         this.state = state;
     }
 
-    public String getZipCode() {
-        return state;
+    public int getZipCode() {
+        return zipCode;
     }
 
     public void setZipCode(int zipCode) {

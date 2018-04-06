@@ -9,14 +9,14 @@ import { MyFoldersComponent } from './myfolders/index';
 import { MyProfileComponent } from './myprofile/index';
 import { MyRequestsComponent } from './myrequests/index';
 import { NewRequestComponent } from './newrequest/index';
-import { ShowNewComponent } from './shownewpeople/shownewpeople.component';
+//import { ShowNewComponent } from './shownewcitizen/shownewcitizen.component';
 
 const appRoutes: Routes = [
 	{ path: '', component: HomeComponent, canActivate: [AuthGuard]},
 /*	{
 		path: 'home', component: HomeComponent,
 		children: [
-			//{ path: 'shownewpeople', component: ShowNewComponent, canActivate: [AuthGuard] },
+			//{ path: 'shownewcitizen', component: ShowNewComponent, canActivate: [AuthGuard] },
 			{ path: 'createuser', component: CreateUserComponent}
 		]
 	}*/

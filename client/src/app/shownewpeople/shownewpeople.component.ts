@@ -1,23 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { PeopleService } from '../_services/people.service';
-import {People} from "../_models/people.model";
+import { CitizenService } from '../_services/citizen.service';
+import {Citizen} from "../_models/citizen.model";
 
 @Component({
-	templateUrl: './shownewpeople.component.html',
+	templateUrl: './shownewcitizen.component.html',
 })
 export class ShowNewComponent implements OnInit {
 
-	peoples: People[];
+	citizens: Citizen[];
 
-	constructor(private router: Router, private peopleService: PeopleService) {
+	constructor(private router: Router, private citizenService: CitizenService) {
 
 	}
 
 	ngOnInit(): void {
-		this.peopleService.showPeople().subscribe((data:People[]) => {
-			this.peoples = data;
-		});
+		/*this.citizenService.showCitizen().subscribe((data:Citizen[]) => {
+			this.citizens = data;
+		});*/
 	}
 }

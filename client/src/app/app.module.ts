@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 
-import { AlertService, AuthenticationService, PeopleService } from './_services/index';
+import { AlertService, AuthenticationService, CitizenService } from './_services/index';
 import { AlertComponent } from './_directives/index';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app.routing.module';
@@ -18,7 +18,7 @@ import { MyProfileComponent } from './myprofile/index';
 import { MyRequestsComponent } from './myrequests/index';
 import { NewRequestComponent } from './newrequest/index';
 import { RegisterComponent } from './register/index';
-import { ShowNewComponent } from './shownewpeople/shownewpeople.component';
+//import { ShowNewComponent } from './shownewcitizen/shownewcitizen.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +32,7 @@ import { ShowNewComponent } from './shownewpeople/shownewpeople.component';
     MyRequestsComponent,
     NewRequestComponent,
     RegisterComponent,
-    ShowNewComponent
+    //ShowNewComponent
   ],
   imports: [
     AppRoutingModule,
@@ -45,7 +45,7 @@ import { ShowNewComponent } from './shownewpeople/shownewpeople.component';
     AuthService,
     AlertService,
     AuthenticationService,
-    PeopleService,
+    CitizenService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: JwtInterceptor,

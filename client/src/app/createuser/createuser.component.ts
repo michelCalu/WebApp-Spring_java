@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { PeopleService } from '../_services/people.service';
-import { People } from "../_models/people.model";
+import { CitizenService } from '../_services/citizen.service';
+import { Citizen, Address } from "../_models/index";
 
 @Component({
 	moduleId: module.id,
@@ -10,14 +10,15 @@ import { People } from "../_models/people.model";
 })
 export class CreateUserComponent{
 
-	people: People = new People();
+	citizen: Citizen = new Citizen();
+	address: Address = new Address();
 
-	constructor(private router: Router, private peopleService: PeopleService) {
+	constructor(private router: Router, private citizenService: CitizenService) {
 
 	}
 
-	createPeople(): void {
-		this.peopleService.createPeople(this.people).subscribe(data => {
+	createCitizen(): void {
+		this.citizenService.createCitizen(this.citizen, this.address).subscribe(data => {
 			console.log("user created");
 		});
 	}
