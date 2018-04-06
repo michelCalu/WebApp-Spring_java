@@ -1,8 +1,8 @@
 package be.unamur.hermes.web.controller;
 
 import be.unamur.hermes.business.service.EmployeeService;
+import be.unamur.hermes.dataaccess.entity.Citizen;
 import be.unamur.hermes.dataaccess.entity.Employee;
-import be.unamur.hermes.dataaccess.entity.Inhabitant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import be.unamur.hermes.business.service.ClaimService;
-import be.unamur.hermes.business.service.InhabitantService;
+import be.unamur.hermes.business.service.CitizenService;
 import be.unamur.hermes.dataaccess.entity.Claim;
 
 import java.util.List;
@@ -23,14 +23,14 @@ import java.util.List;
 @RequestMapping({ "/" })
 public class ApplicationController {
 
-    private InhabitantService inhabitantService;
+    private CitizenService citizenService;
     private EmployeeService employeeService;
     private ClaimService claimService;
 
     @Autowired
-    public ApplicationController(InhabitantService inhabitantService, EmployeeService employeeService,
-	    ClaimService claimService) {
-	this.inhabitantService = inhabitantService;
+    public ApplicationController(CitizenService citizenService, EmployeeService employeeService,
+                                 ClaimService claimService) {
+	this.citizenService = citizenService;
 	this.employeeService = employeeService;
 	this.claimService = claimService;
     }
@@ -56,15 +56,15 @@ public class ApplicationController {
 	    return ResponseEntity.status(HttpStatus.OK).body(employeeService.findAll());
     }
 
-    @PostMapping(path = "/createInhabitant")
-    public ResponseEntity<Void> createEmployee(@RequestBody Inhabitant inhabitant) {
-        inhabitantService.register(inhabitant.getFirstName(), inhabitant.getLastName());
+    @PostMapping(path = "/createCitizen")
+    public ResponseEntity<Void> createEmployee(@RequestBody Citizen citizen) {
+        citizenService.register(citizen.getFirstName(), citizen.getLastName());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping(path = "/showInhabitants")
-    public ResponseEntity<List<Inhabitant>> showInhabitants() {
-        return ResponseEntity.status(HttpStatus.OK).body(inhabitantService.findAll());
+    @GetMapping(path = "/showCitizens")
+    public ResponseEntity<List<Citizen>> showCitizens() {
+        return ResponseEntity.status(HttpStatus.OK).body(citizenService.findAll());
     }
 
     @GetMapping(path = "/claims/{claimId}")

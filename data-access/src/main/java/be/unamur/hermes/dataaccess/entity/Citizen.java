@@ -3,12 +3,12 @@ package be.unamur.hermes.dataaccess.entity;
 import java.util.Date;
 import java.util.Objects;
 
-public class Inhabitant extends User {
+public class Citizen extends User {
 
     private long id;
     private boolean activated;
 
-    public Inhabitant(
+    public Citizen(
             String firstname,
             String lastname,
             Address address,
@@ -26,9 +26,9 @@ public class Inhabitant extends User {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Inhabitant)) return false;
+        if (!(o instanceof Citizen)) return false;
         if (!super.equals(o)) return false;
-        Inhabitant that = (Inhabitant) o;
+        Citizen that = (Citizen) o;
         return id == that.id &&
                 activated == that.activated;
     }

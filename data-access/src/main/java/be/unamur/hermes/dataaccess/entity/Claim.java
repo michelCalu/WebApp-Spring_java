@@ -12,7 +12,7 @@ public class Claim {
 
     // derived information
     private Employee assignee;
-    private People citizen;
+    private Citizen citizen;
 
     public Claim(long id, long typeId, long employeeId, long peopleId) {
 	super();
@@ -38,11 +38,11 @@ public class Claim {
 	this.assignee = assignee;
     }
 
-    public People getCitizen() {
+    public Citizen getCitizen() {
 	return citizen;
     }
 
-    public void setCitizen(People citizen) {
+    public void setCitizen(Citizen citizen) {
 	this.citizen = citizen;
     }
 

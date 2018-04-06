@@ -12,6 +12,6 @@ public interface EmployeeRepository {
 
     List<Employee> findAll();
 
-    void create(String firstname, String lastname);
+    void create(Employee employee);
 
 }

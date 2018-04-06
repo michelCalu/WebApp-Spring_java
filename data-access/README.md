@@ -21,8 +21,8 @@ directement l'objet. Attention pas de logique métier !
 ex : 
 - public void activate() : Pour valider l'inscription d'un citoyen peut se retrouver dans la classe de l'entité citoyen.
 Elle changera simplement l'attribut `activated` de false à true.
-- public boolean checkInhabitantInformation() : Qui vérifie que les informations entrées par le citoyen sont correctes
-avant de activer le profil du citoyen devra se trouver dans le module business et pas dans l'entité inhabitant.
+- public boolean checkCitizenInformation() : Qui vérifie que les informations entrées par le citoyen sont correctes
+avant de activer le profil du citoyen devra se trouver dans le module business et pas dans l'entité citizen.
 
 ### Repository
 Le package `repository` va contenir les classes qui vont intéragir directement avec la base de données SQL.

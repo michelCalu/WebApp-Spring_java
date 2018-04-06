@@ -7,6 +7,7 @@ public class Address {
     private long addressId;
     private String country;
     private String state;
+    private int zipCode;
     private String street;
     private int streetNb;
 
@@ -37,6 +38,11 @@ public class Address {
         return Objects.hash(addressId, country, state, street, streetNb);
     }
 
+    @Override
+    public String toString() {
+        return street + ", " + streetNb + " " + zipCode + " " + state + ", " + country;
+    }
+
 
     //---------------------- getters and setters -------------------------//
 
@@ -62,6 +68,14 @@ public class Address {
 
     public void setState(String state) {
         this.state = state;
+    }
+
+    public String getZipCode() {
+        return state;
+    }
+
+    public void setZipCode(int zipCode) {
+        this.zipCode = zipCode;
     }
 
     public String getStreet() {
