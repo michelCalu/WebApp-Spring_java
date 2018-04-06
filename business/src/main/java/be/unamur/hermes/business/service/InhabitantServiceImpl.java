@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 public class InhabitantServiceImpl implements InhabitantService {
 
@@ -18,8 +20,18 @@ public class InhabitantServiceImpl implements InhabitantService {
 
     @Override
     @Transactional
-    public Inhabitant find(String firstName, String lastname) {
+    public Inhabitant findByName(String firstName, String lastname) {
         return inhabitantRepository.findByName(firstName,lastname);
+    }
+
+    @Override
+    public Inhabitant findById(Long inhabitantId) {
+        return inhabitantRepository.findById(inhabitantId);
+    }
+
+    @Override
+    public List<Inhabitant> findAll() {
+        return inhabitantRepository.findAll();
     }
 
     @Override

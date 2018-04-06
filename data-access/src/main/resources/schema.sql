@@ -1,22 +1,32 @@
-DROP TABLE IF EXISTS t_people;
-CREATE TABLE t_people (
-  peopleID      INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  firstname      VARCHAR(255)     NOT NULL,
-  lastname      VARCHAR(255)     NOT NULL
-);
-
-
 DROP TABLE IF EXISTS t_inhabitants;
 CREATE TABLE t_inhabitants (
-  inhabitantID  INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  peopleID      INT             NOT NULL,
+  inhabitantID  INT PRIMARY KEY   NOT NULL AUTO_INCREMENT,
+  firstName     VARCHAR(255)      NOT NULL,
+  lastName      VARCHAR(255)      NOT NULL,
+  address       INT               NOT NULL,
+  mail          VARCHAR(255)      NOT NULL,
+  phone         VARCHAR(255),
+  nationalRegistreNb VARCHAR(255) NOT NULL,
+  birthdate     DATE              NOT NULL,
   activated     BOOLEAN DEFAULT FALSE
 );
 
 DROP TABLE IF EXISTS t_employees;
 CREATE TABLE t_employees (
-  employeeID    INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  peopleID      INT             NOT NULL
+  employeeID    INT PRIMARY KEY   NOT NULL AUTO_INCREMENT,
+  firstName     VARCHAR(255)      NOT NULL,
+  lastName      VARCHAR(255)      NOT NULL,
+  address       INT               NOT NULL,
+  mail          VARCHAR(255)      NOT NULL,
+  phone         VARCHAR(255)      NOT NULL,
+  nationalRegistreNb VARCHAR(255) NOT NULL,
+  birthdate     DATE              NOT NULL,
+  accountNumber VARCHAR(255)      NOT NULL,
+  arrivalDate   DATETIME          NOT NULL,
+  gender        CHAR(1)           NOT NULL,
+  civilStatus   VARCHAR(255)      NOT NULL,
+  dependentChildren INT           NOT NULL,
+  dependentPeople   INT           NOT NULL
 );
 
 DROP TABLE IF EXISTS t_claim_types;
