@@ -1,39 +1,32 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { AuthGuard } from './_guards/index';
-import { CreateUserComponent } from './createuser/index';
-import { HomeComponent } from './home/index';
-import { LoginComponent } from './login/index';
-import { MyFoldersComponent } from './myfolders/index';
-import { MyProfileComponent } from './myprofile/index';
-import { MyRequestsComponent } from './myrequests/index';
-import { NewRequestComponent } from './newrequest/index';
-//import { ShowNewComponent } from './shownewcitizen/shownewcitizen.component';
+import { AuthGuard } from './_guards';
+import { CreateUserComponent } from './createuser';
+import { HomeComponent } from './home';
+import { LoginComponent } from './login';
+import { MyFoldersComponent } from './myfolders';
+import { MyProfileComponent } from './myprofile';
+import { MyRequestsComponent } from './myrequests';
+import { NewRequestComponent } from './newrequest';
 
 const appRoutes: Routes = [
-	{ path: '', component: HomeComponent, canActivate: [AuthGuard]},
-/*	{
-		path: 'home', component: HomeComponent,
-		children: [
-			//{ path: 'shownewcitizen', component: ShowNewComponent, canActivate: [AuthGuard] },
-			{ path: 'createuser', component: CreateUserComponent}
-		]
-	}*/
-	/*{ path: '', component: HomeComponent, canActivate: [AuthGuard]},*/
-	//{ path: '', component: HomeComponent },
-	{ path: 'home', component: HomeComponent },
-	{ path: 'login', component: LoginComponent },
-	{ path: 'createuser', component: CreateUserComponent },
-	{ path: 'myfolders', component: MyFoldersComponent },
-	{ path: 'myprofile', component: MyProfileComponent },
-	{ path: 'myrequests', component: MyRequestsComponent },
-	{ path: 'newrequest', component: NewRequestComponent },
+  //routes protected with AuthGuard
+  { path: '', canActivate: [AuthGuard], children: [
+      { path: '', component: HomeComponent },
+      { path: 'home', component: HomeComponent },
+      { path: 'myfolders', component: MyFoldersComponent },
+      { path: 'myprofile', component: MyProfileComponent },
+      { path: 'myrequests', component: MyRequestsComponent },
+      { path: 'newrequest', component: NewRequestComponent }
+    ] },
+  //unprotected routes:
+  { path: 'login', component: LoginComponent },
+  { path: 'createuser', component: CreateUserComponent },
+  { path: '**', redirectTo: '/home', pathMatch: 'full'}
 
-	{ path: '**', redirectTo: '/home', pathMatch: 'full'}
 ];
 
-//export const AppRoutingModule = RouterModule.forRoot(appRoutes);
 @NgModule({
 	imports: [
 	RouterModule.forRoot(appRoutes)
