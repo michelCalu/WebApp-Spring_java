@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { AuthService } from '../_guards/index';
 import { CitizenService } from '../_services/citizen.service';
 import { User } from "../_models/user.model";
+import {AuthenticationService, MockAuthService} from "../_services";
 
 @Component({
 	moduleId: module.id,
@@ -11,18 +11,24 @@ import { User } from "../_models/user.model";
 })
 export class LoginComponent{
 
-	user: User = new User();
+  username: string;
+  password: string;
 
-	constructor(private router: Router, private authService: AuthService, private citizenService: CitizenService) {
-
-	}
+	constructor(private router: Router, private authService: MockAuthService, private citizenService: CitizenService) {	}
 
 	login(): void {
-		this.authService.login(this.user);
-		console.log("logged");
-		/*this.citizenService.login(this.user).subscribe(data => {
-			console.log("user connected");
-		});*/
+		this.authService.login(this.username, this.password).subscribe(success => {
+		  if (success) {
+		    console.log('connected!');
+        this.router.navigate(['/']);
+      } else {
+		    console.log('NOT connected');
+      }
+    });
+	}
+
+	logout(): void {
+		this.authService.logout();
 	}
 
 }

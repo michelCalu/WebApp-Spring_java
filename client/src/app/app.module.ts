@@ -8,7 +8,7 @@ import { AlertComponent } from './_directives/index';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app.routing.module';
 import { AuthGuard } from './_guards/index';
-import { AuthService } from './_guards/index';
+import { MockAuthService } from './_guards/index';
 import { CreateUserComponent } from './createuser/createuser.component';
 import { HomeComponent } from './home/index';
 import { JwtInterceptor } from './_helpers/index';
@@ -42,7 +42,7 @@ import { RegisterComponent } from './register/index';
   ],
   providers: [
     AuthGuard,
-    AuthService,
+    MockAuthService,
     AlertService,
     AuthenticationService,
     CitizenService,
