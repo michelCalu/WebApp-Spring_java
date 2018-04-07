@@ -1,26 +1,16 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { User } from '../_models/index';
-import { Observable } from 'rxjs/Observable';
+import { User } from '../_models';
+import { Observable } from "rxjs/Observable";
+import 'rxjs/add/observable/of';
+
 
 @Injectable()
 export class MockAuthService {
 
-  get isLoggedIn() {
-    if (localStorage.getItem('currentUser')){
-      return Observable.of(true);
-    } else {
-      return Observable.of(false);
-    }
-  }
-
-  constructor(
-    private router: Router
-  ) {}
+  constructor() {}
 
   login(username: string, password: string) : Observable<boolean> {
-    return this._simulateLoginBackend(username, password).map( user => {
+    return this._simulateLoginBackend(username, password).map(user => {
       if (user && user.token) {
         localStorage.setItem('currentUser', JSON.stringify(user));
         return true;

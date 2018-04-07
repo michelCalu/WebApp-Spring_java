@@ -1,9 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-
-import { CitizenService } from '../_services/citizen.service';
-import { User } from "../_models/user.model";
-import {AuthenticationService, MockAuthService} from "../_services";
+import {AlertService, MockAuthService} from "../_services";
 
 @Component({
 	moduleId: module.id,
@@ -14,21 +11,21 @@ export class LoginComponent{
   username: string;
   password: string;
 
-	constructor(private router: Router, private authService: MockAuthService, private citizenService: CitizenService) {	}
+	constructor(private router: Router, private authService: MockAuthService, private alertService: AlertService) {	}
 
 	login(): void {
 		this.authService.login(this.username, this.password).subscribe(success => {
 		  if (success) {
-		    console.log('connected!');
         this.router.navigate(['/']);
       } else {
-		    console.log('NOT connected');
+		    this.alertService.error('Nom d\'utilisateur ou mot de passe incorrecte');
       }
     });
 	}
 
 	logout(): void {
 		this.authService.logout();
+    this.alertService.success('Vous êtes déconnecté');
 	}
 
 }
