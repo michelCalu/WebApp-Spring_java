@@ -3,12 +3,11 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 
-import { AlertService, AuthenticationService, CitizenService } from './_services/index';
+import { AlertService, AuthenticationService, CitizenService, MockAuthService } from './_services/index';
 import { AlertComponent } from './_directives/index';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app.routing.module';
 import { AuthGuard } from './_guards/index';
-import { MockAuthService } from './_guards/index';
 import { CreateUserComponent } from './createuser/createuser.component';
 import { HomeComponent } from './home/index';
 import { JwtInterceptor } from './_helpers/index';
