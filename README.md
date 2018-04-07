@@ -7,7 +7,8 @@ Afin de pouvoir contribuer au projet Hermes, il faut passer par plusieurs étape
 ### I. Git
 
 Pour plus de faciliter il est recommander de créer une clé ssh.
-Pour ce faire, il suffit de suivre les instruction fournies par Git ici. **insérer lien**
+Pour ce faire, il suffit de suivre les instruction fournies par Git: 
+  https://help.github.com/articles/connecting-to-github-with-ssh/
 
 Il vous suffit ensuite de cloner le projet :
   `git clone git@github.com:fgermeau/hermes.git`
