@@ -47,6 +47,6 @@ Ceci fait, il faut ajouter le serveur Tomcat dans Intellij :
 Puis définir la manière dont vous voulez lancer l'application :
   Ici on veut déployer l'application sur un serveur Tomcat : `run -> Edit Configurations...`
   Ensuite créez votre serveur Tomcat en cliquant sur le petit '+' -> Tomcat server
-  Dans l'écran de création du serveur, allez dans `Deployement` et ajouter un `Artefact -> war ou war exploded` (les deux sont bons)
+  Dans l'écran de création du serveur, allez dans `Deployement` et ajouter un `Artefact -> war exploded` (les deux sont bons)
 
 Il ne vous reste plus qu'à appuyer sur 'run' ! :)
