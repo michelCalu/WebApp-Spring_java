@@ -20,16 +20,11 @@ import java.util.List;
 @RequestMapping({ "/" })
 public class ApplicationController {
 
-    private CitizenService citizenService;
-    private EmployeeService employeeService;
     private ClaimService claimService;
 
     @Autowired
-    public ApplicationController(CitizenService citizenService, EmployeeService employeeService,
-                                 ClaimService claimService) {
-	this.citizenService = citizenService;
-	this.employeeService = employeeService;
-	this.claimService = claimService;
+    public ApplicationController(ClaimService claimService) {
+	    this.claimService = claimService;
     }
 
     @GetMapping
@@ -40,38 +35,6 @@ public class ApplicationController {
     @GetMapping(path = "/about")
     public String serveAboutPage() {
 	    return "about";
-    }
-
-    @PostMapping(path = "/employees")
-    public ResponseEntity<Void> createEmployee(@RequestBody Employee employee) {
-	    employeeService.register(employee);
-	    return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @GetMapping(path = "/employees")
-    public ResponseEntity<List<Employee>> showPeople() {
-	    return ResponseEntity.status(HttpStatus.OK).body(employeeService.findAll());
-    }
-
-    @PostMapping(path = "/citizens")
-    public ResponseEntity<Void> createEmployee(@RequestBody Citizen citizen) {
-        citizenService.register(citizen);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @GetMapping(path = "/citizens")
-    public ResponseEntity<List<Citizen>> showCitizens() {
-        return ResponseEntity.status(HttpStatus.OK).body(citizenService.findAll());
-    }
-
-    @PutMapping(path = "/citizens")
-    public ResponseEntity<Void> activateCitizen(@RequestBody Citizen citizen) {
-        try{
-            citizenService.activate(citizen);
-            return ResponseEntity.status(HttpStatus.OK).body(null);
-        } catch (BusinessException be){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-        }
     }
 
     @GetMapping(path = "/claims/{claimId}")
