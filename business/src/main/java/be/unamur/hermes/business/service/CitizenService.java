@@ -13,6 +13,8 @@ public interface CitizenService {
 
     List<Citizen> findAll();
 
+    List<Citizen> findPending();
+
     void register(Citizen citizen);
 
     Citizen activate(Citizen citizen) throws BusinessException;

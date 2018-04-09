@@ -14,13 +14,16 @@ public class CitizenRepositoryImpl implements CitizenRepository {
 
     // queries
     private static final String queryById =
-            "SELECT * FROM t_citizens c WHERE c.citizenID = ? ";
+            "SELECT * FROM t_citizens c WHERE c.citizenID = ?";
 
     private static final String queryByName =
             "SELECT * FROM t_citizens c WHERE c.firstname = ? AND c.lastname = ?";
 
     private static final String queryAll =
             "SELECT * FROM t_citizens";
+
+    private static final String queryPending =
+            "SELECT * FROM t_citizens c WHERE c.activated = FALSE";
 
     private static final String createNew =
             "INSERT INTO t_citizens (" +
@@ -63,6 +66,11 @@ public class CitizenRepositoryImpl implements CitizenRepository {
     @Override
     public List<Citizen> findAll() {
         return jdbcTemplate.query(queryAll,citizenMapper);
+    }
+
+    @Override
+    public List<Citizen> findPending() {
+        return jdbcTemplate.query(queryPending,citizenMapper);
     }
 
     @Override

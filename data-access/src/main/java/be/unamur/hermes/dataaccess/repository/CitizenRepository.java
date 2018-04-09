@@ -12,6 +12,8 @@ public interface CitizenRepository {
 
     List<Citizen> findAll();
 
+    List<Citizen> findPending();
+
     void create(Citizen citizen);
 
     void activate(long citizenId);

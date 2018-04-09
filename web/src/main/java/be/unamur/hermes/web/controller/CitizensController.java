@@ -52,6 +52,11 @@ public class CitizensController {
         }
     }
 
+    @GetMapping(path = "/pending")
+    public ResponseEntity<List<Citizen>> showPendingCitizens(){
+        return ResponseEntity.status(HttpStatus.OK).body(citizenService.findPending());
+    }
+
     @PutMapping
     public ResponseEntity<Citizen> activateCitizen(@RequestBody Citizen citizen) {
         try{

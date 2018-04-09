@@ -44,6 +44,11 @@ public class CitizenServiceImpl implements CitizenService {
     }
 
     @Override
+    public List<Citizen> findPending() {
+        return citizenRepository.findPending();
+    }
+
+    @Override
     @Transactional
     public void register(Citizen citizen) {
         citizenRepository.create(citizen);
