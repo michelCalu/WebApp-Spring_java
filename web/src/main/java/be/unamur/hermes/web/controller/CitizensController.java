@@ -42,7 +42,7 @@ public class CitizensController {
     }
 
     @GetMapping(path = "/{lastName}/{firstName}")
-    public ResponseEntity<Citizen> showCitizenById(
+    public ResponseEntity<Citizen> showCitizenByName(
             @PathVariable(value = "lastName") String lastName,
             @PathVariable(value = "firstName") String firstName) {
         try {

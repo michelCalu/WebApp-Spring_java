@@ -21,7 +21,6 @@ public class CitizenServiceImpl implements CitizenService {
     }
 
     @Override
-    @Transactional
     public Citizen findByName(String firstName, String lastname) throws BusinessException {
         try {
             return citizenRepository.findByName(firstName, lastname);
@@ -51,6 +50,7 @@ public class CitizenServiceImpl implements CitizenService {
     }
 
     @Override
+    @Transactional
     public Citizen activate(Citizen citizen) throws BusinessException {
         if(citizen.isActivated()) {
             throw new BusinessException("This citizen is already activated !");

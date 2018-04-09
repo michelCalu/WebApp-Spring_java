@@ -1,8 +1,10 @@
 package be.unamur.hermes.business.service;
 
+import be.unamur.hermes.business.exception.BusinessException;
 import be.unamur.hermes.dataaccess.entity.Employee;
 import be.unamur.hermes.dataaccess.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,14 +21,21 @@ public class EmployeeServiceImpl implements EmployeeService{
     }
 
     @Override
-    @Transactional
-    public Employee findByName(String firstName, String lastname){
-        return employeeRepository.findByName(firstName,lastname);
+    public Employee findByName(String firstName, String lastname) throws BusinessException {
+        try {
+            return employeeRepository.findByName(firstName,lastname);
+        } catch (EmptyResultDataAccessException e){
+            throw new BusinessException("Employee not found !");
+        }
     }
 
     @Override
-    public Employee findById(Long employeeId) {
-        return employeeRepository.findById(employeeId);
+    public Employee findById(Long employeeId) throws BusinessException {
+        try {
+            return employeeRepository.findById(employeeId);
+        } catch (EmptyResultDataAccessException e){
+            throw new BusinessException("Employee not found !");
+        }
     }
 
     @Override
