@@ -4,6 +4,7 @@ import be.unamur.hermes.business.exception.BusinessException;
 import be.unamur.hermes.dataaccess.entity.Citizen;
 import be.unamur.hermes.dataaccess.repository.CitizenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,13 +22,21 @@ public class CitizenServiceImpl implements CitizenService {
 
     @Override
     @Transactional
-    public Citizen findByName(String firstName, String lastname) {
-        return citizenRepository.findByName(firstName,lastname);
+    public Citizen findByName(String firstName, String lastname) throws BusinessException {
+        try {
+            return citizenRepository.findByName(firstName, lastname);
+        } catch(EmptyResultDataAccessException e){
+            throw new BusinessException("Citizen not found !");
+        }
     }
 
     @Override
-    public Citizen findById(Long citizenId) {
-        return citizenRepository.findById(citizenId);
+    public Citizen findById(Long citizenId) throws BusinessException {
+        try {
+            return citizenRepository.findById(citizenId);
+        } catch(EmptyResultDataAccessException e){
+            throw new BusinessException("Citizen not found !");
+        }
     }
 
     @Override
@@ -42,10 +51,12 @@ public class CitizenServiceImpl implements CitizenService {
     }
 
     @Override
-    public void activate(Citizen citizen) throws BusinessException {
-        if(citizen.isActivated())
+    public Citizen activate(Citizen citizen) throws BusinessException {
+        if(citizen.isActivated()) {
             throw new BusinessException("This citizen is already activated !");
-        else
+        } else {
             citizenRepository.activate(citizen.getId());
+            return citizenRepository.findById(citizen.getId());
+        }
     }
 }

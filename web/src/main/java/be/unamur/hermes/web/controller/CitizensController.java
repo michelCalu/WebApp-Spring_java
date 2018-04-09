@@ -24,7 +24,7 @@ public class CitizensController {
     @PostMapping
     public ResponseEntity<Void> createCitizen(@RequestBody Citizen citizen) {
         citizenService.register(citizen);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @GetMapping
@@ -33,10 +33,10 @@ public class CitizensController {
     }
 
     @PutMapping
-    public ResponseEntity<Void> activateCitizen(@RequestBody Citizen citizen) {
+    public ResponseEntity<Citizen> activateCitizen(@RequestBody Citizen citizen) {
         try{
-            citizenService.activate(citizen);
-            return ResponseEntity.status(HttpStatus.OK).body(null);
+            Citizen updatedCitizen = citizenService.activate(citizen);
+            return ResponseEntity.status(HttpStatus.OK).body(updatedCitizen);
         } catch (BusinessException be){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }

@@ -7,13 +7,13 @@ import java.util.List;
 
 public interface CitizenService {
 
-    Citizen findByName(String firstName, String lastname);
+    Citizen findByName(String firstName, String lastname) throws BusinessException;
 
-    Citizen findById(Long citizenId);
+    Citizen findById(Long citizenId) throws BusinessException;
 
     List<Citizen> findAll();
 
     void register(Citizen citizen);
 
-    void activate(Citizen citizen) throws BusinessException;
+    Citizen activate(Citizen citizen) throws BusinessException;
 }
