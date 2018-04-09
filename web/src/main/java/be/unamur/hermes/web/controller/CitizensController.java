@@ -32,6 +32,26 @@ public class CitizensController {
         return ResponseEntity.status(HttpStatus.OK).body(citizenService.findAll());
     }
 
+    @GetMapping(path = "/{citizenID}")
+    public ResponseEntity<Citizen> showCitizenById(@PathVariable(value = "citizenID") long citizenID) {
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(citizenService.findById(citizenID));
+        } catch (BusinessException be) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+    }
+
+    @GetMapping(path = "/{lastName}/{firstName}")
+    public ResponseEntity<Citizen> showCitizenById(
+            @PathVariable(value = "lastName") String lastName,
+            @PathVariable(value = "firstName") String firstName) {
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(citizenService.findByName(firstName,lastName));
+        } catch (BusinessException be) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+    }
+
     @PutMapping
     public ResponseEntity<Citizen> activateCitizen(@RequestBody Citizen citizen) {
         try{
