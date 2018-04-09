@@ -9,6 +9,14 @@ public class Citizen extends User {
 
     public Citizen(){};
 
+    public Citizen(
+            String firstName, String lastName, Address address, String mail, String phone,
+            String nationalRegistreNb, String birthdate
+    ){
+        super(firstName, lastName, address, mail, phone, nationalRegistreNb, birthdate);
+        this.activated = false;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

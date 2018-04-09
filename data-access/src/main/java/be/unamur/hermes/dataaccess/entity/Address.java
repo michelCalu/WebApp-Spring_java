@@ -16,9 +16,9 @@ public class Address {
     public Address(
             String country,
             String state,
+            int zipCode,
             String street,
-            int streetNb,
-            int zipCode) {
+            int streetNb) {
         System.out.println("tamere");
         this.addressId = 42;
         this.country = country;
