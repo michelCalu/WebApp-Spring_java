@@ -14,7 +14,7 @@ public class CitizenRepositoryImpl implements CitizenRepository {
 
     // queries
     private static final String queryById =
-            "SELECT * FROM t_citizens c WHERE c.employeeID = ? ";
+            "SELECT * FROM t_citizens c WHERE c.citizenID = ? ";
 
     private static final String queryByName =
             "SELECT * FROM t_citizens c WHERE c.firstname = ? AND c.lastname = ?";
