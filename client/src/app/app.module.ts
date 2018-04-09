@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app.routing.module';
 import { AuthGuard } from './_guards/index';
 import { CreateUserComponent } from './createuser/createuser.component';
+import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/index';
 import { JwtInterceptor } from './_helpers/index';
 import { LoginComponent } from './login/index';
@@ -24,6 +25,7 @@ import { RegisterComponent } from './register/index';
     AlertComponent,
     AppComponent,
     CreateUserComponent,
+    HeaderComponent,
     HomeComponent,
     LoginComponent,
     MyFoldersComponent,
