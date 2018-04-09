@@ -13,22 +13,22 @@ import java.util.List;
 public class CitizenRepositoryImpl implements CitizenRepository {
 
     // queries
-    private static final String queryById = //
+    private static final String queryById =
             "SELECT * FROM t_citizens c WHERE c.employeeID = ? ";
 
-    private static final String queryByName = //
+    private static final String queryByName =
             "SELECT * FROM t_citizens c WHERE c.firstname = ? AND c.lastname = ?";
 
-    private static final String queryAll = //
+    private static final String queryAll =
             "SELECT * FROM t_citizens";
 
-    private static final String createNew = //
+    private static final String createNew =
             "INSERT INTO t_citizens (" +
                     "firstName, lastName, addressID, mail, phone, " +
                     "nationalRegistreNb, birthdate, activated) VALUES " +
                     "(?, ?, ?, ?, ?, ?, ?, FALSE)";
 
-    private static final String updateActivate = //
+    private static final String updateActivate =
             "UPDATE t_citizens c SET c.activated = TRUE WHERE c.citizenID = ?";
 
     private static final BeanPropertyRowMapper<Citizen> citizenMapper = new BeanPropertyRowMapper<>(Citizen.class);
@@ -75,7 +75,7 @@ public class CitizenRepositoryImpl implements CitizenRepository {
                 citizen.getMail(),
                 citizen.getPhone(),
                 citizen.getNationalRegistreNb(),
-                citizen.getBirthdate(),
+                citizen.getBirthdate()
         };
 
         int[] types = {
