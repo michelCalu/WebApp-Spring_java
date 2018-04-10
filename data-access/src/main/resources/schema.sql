@@ -23,8 +23,8 @@ CREATE TABLE t_citizens (
   addressID     INT               NOT NULL,
   mail          VARCHAR(255)      NOT NULL,
   phone         VARCHAR(255),
-  nationalRegistreNb VARCHAR(255) NOT NULL,
-  birthdate     VARCHAR(255)              NOT NULL,
+  nationalRegisterNb VARCHAR(255) NOT NULL,
+  birthdate     VARCHAR(255),
   activated     BOOLEAN DEFAULT FALSE,
   FOREIGN KEY (addressID) REFERENCES t_addresses(addressID)
 );
@@ -36,7 +36,7 @@ CREATE TABLE t_employees (
   addressID     INT               NOT NULL,
   mail          VARCHAR(255)      NOT NULL,
   phone         VARCHAR(255)      NOT NULL,
-  nationalRegistreNb VARCHAR(255) NOT NULL,
+  nationalRegisterNb VARCHAR(255) NOT NULL,
   birthdate     VARCHAR(255)      NOT NULL,
   accountNumber VARCHAR(255)      NOT NULL,
   arrivalDate   DATETIME          NOT NULL,

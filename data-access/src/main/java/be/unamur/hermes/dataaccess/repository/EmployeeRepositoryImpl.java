@@ -61,7 +61,7 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
     public void create(Employee employee) {
 	long addressID = addressRepository.create(employee.getAddress());
 	Object[] values = { employee.getFirstName(), employee.getLastName(), addressID, employee.getMail(),
-		employee.getPhone(), employee.getNationalRegistreNb(), employee.getBirthdate(),
+		employee.getPhone(), employee.getNationalRegisterNb(), employee.getBirthdate(),
 		employee.getAccountNumber(), employee.getArrivalDate(), employee.getGender(), employee.getCivilStatus(),
 		employee.getDependentChildren(), employee.getDependentPeople() };
 

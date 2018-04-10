@@ -60,8 +60,8 @@ public class CitizenServiceImpl implements CitizenService {
         if(citizen.isActivated()) {
             throw new BusinessException("This citizen is already activated !");
         } else {
-            citizenRepository.activate(citizen.getId());
-            return citizenRepository.findById(citizen.getId());
+            citizenRepository.activate(citizen.getCitizenID());
+            return citizenRepository.findById(citizen.getCitizenID());
         }
     }
 }

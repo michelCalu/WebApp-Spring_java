@@ -9,7 +9,7 @@ public abstract class User {
     private Address address;
     private String mail;
     private String phone;
-    private String nationalRegistreNb;
+    private String nationalRegisterNb;
     private String birthdate;
 
     public User(){};
@@ -20,14 +20,14 @@ public abstract class User {
             Address address,
             String mail,
             String phone,
-            String nationalRegistreNb,
+            String nationalRegisterNb,
             String birthdate) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
         this.mail = mail;
         this.phone = phone;
-        this.nationalRegistreNb = nationalRegistreNb;
+        this.nationalRegisterNb = nationalRegisterNb;
         this.birthdate = birthdate;
     }
 
@@ -41,14 +41,14 @@ public abstract class User {
                 Objects.equals(address, user.address) &&
                 Objects.equals(mail, user.mail) &&
                 Objects.equals(phone, user.phone) &&
-                Objects.equals(nationalRegistreNb, user.nationalRegistreNb) &&
+                Objects.equals(nationalRegisterNb, user.nationalRegisterNb) &&
                 Objects.equals(birthdate, user.birthdate);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(firstName, lastName, address, mail, phone, nationalRegistreNb, birthdate);
+        return Objects.hash(firstName, lastName, address, mail, phone, nationalRegisterNb, birthdate);
     }
 
 
@@ -78,12 +78,12 @@ public abstract class User {
         this.phone = phone;
     }
 
-    public String getNationalRegistreNb() {
-        return nationalRegistreNb;
+    public String getNationalRegisterNb() {
+        return nationalRegisterNb;
     }
 
-    public void setNationalRegistreNb(String nationalRegistreNb) {
-        this.nationalRegistreNb = nationalRegistreNb;
+    public void setNationalRegisterNb(String nationalRegisterNb) {
+        this.nationalRegisterNb = nationalRegisterNb;
     }
 
     public String getBirthdate() {

@@ -28,11 +28,11 @@ public class CitizenRepositoryImpl implements CitizenRepository {
     private static final String createNew =
             "INSERT INTO t_citizens (" +
                     "firstName, lastName, addressID, mail, phone, " +
-                    "nationalRegistreNb, birthdate, activated) VALUES " +
+                    "nationalRegisterNb, birthdate, activated) VALUES " +
                     "(?, ?, ?, ?, ?, ?, ?, FALSE)";
 
     private static final String updateActivate =
-            "UPDATE t_citizens c SET c.activated = TRUE WHERE c.citizenID = ?";
+            "UPDATE t_citizens c SET c.activated = TRUE WHERE c.id = ?";
 
     private static final BeanPropertyRowMapper<Citizen> citizenMapper = new BeanPropertyRowMapper<>(Citizen.class);
 
@@ -82,7 +82,7 @@ public class CitizenRepositoryImpl implements CitizenRepository {
                 addressID,
                 citizen.getMail(),
                 citizen.getPhone(),
-                citizen.getNationalRegistreNb(),
+                citizen.getNationalRegisterNb(),
                 citizen.getBirthdate()
         };
 
