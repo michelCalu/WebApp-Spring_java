@@ -7,22 +7,22 @@ import be.unamur.hermes.dataaccess.entity.Claim;
 import be.unamur.hermes.dataaccess.entity.Employee;
 import be.unamur.hermes.dataaccess.repository.ClaimRepository;
 import be.unamur.hermes.dataaccess.repository.EmployeeRepository;
-import be.unamur.hermes.dataaccess.repository.InhabitantRepository;
+import be.unamur.hermes.dataaccess.repository.CitizenRepository;
 
 @Service
 public class ClaimServiceImpl implements ClaimService {
 
     private final ClaimRepository claimRepository;
     private final EmployeeRepository employeeRepository;
-    private final InhabitantRepository inhabitantRepository;
+    private final CitizenRepository peopleRepository;
 
     @Autowired
     public ClaimServiceImpl(ClaimRepository claimRepository, EmployeeRepository employeeRepository,
-	    InhabitantRepository inhabitantRepository) {
+	    CitizenRepository peopleRepository) {
 	super();
 	this.claimRepository = claimRepository;
 	this.employeeRepository = employeeRepository;
-	this.inhabitantRepository = inhabitantRepository;
+	this.peopleRepository = peopleRepository;
     }
 
     @Override

@@ -12,7 +12,6 @@ import javax.sql.DataSource;
 
 @Configuration
 @ComponentScan(basePackages = {"be.unamur.hermes.business.service"})
-// Mise en place par Spring de tout l'aspect atomic, securité, ... pour les méthode @Transactional
 @EnableTransactionManagement
 public class BusinessConfiguration {
 

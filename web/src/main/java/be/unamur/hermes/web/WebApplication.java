@@ -13,15 +13,6 @@ import org.springframework.context.annotation.Import;
 @Import({WebConfiguration.class, BusinessConfiguration.class, DataAccessConfiguration.class, WebSecurityConfiguration.class})
 public class WebApplication extends SpringBootServletInitializer {
 
-    // Spring va créé un dispatcher servlet.
-    // Il va checker toutes les classes avec @controller
-    // Et c'est dans les controller qu'on défini les mapping  (../author, ../todo,...)
-    // Spring va demander : "Toi tu peux gérer cet appel ? non ok toi ? non, ... (au plus précis)
-
-    // Le retour d'un controller est soit
-    //   - json,
-    //   - une view (de type timeleaf) via le ViewResolver
-
     @Override
     protected SpringApplicationBuilder configure(final SpringApplicationBuilder builder) {
         return builder.sources(WebApplication.class);

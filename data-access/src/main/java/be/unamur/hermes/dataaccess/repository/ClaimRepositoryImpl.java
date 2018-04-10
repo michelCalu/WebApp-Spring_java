@@ -14,7 +14,7 @@ public class ClaimRepositoryImpl implements ClaimRepository {
 
     // queries
     private static final String queryById = //
-	    "SELECT cl.claimID, cl.claimTypeID, cl.employeeID, cl.inhabitantID FROM t_claims cl WHERE cl.claimID = ?";
+	    "SELECT cl.claimID, cl.claimTypeID, cl.employeeID, cl.citizenID FROM t_claims cl WHERE cl.claimID = ?";
 
     private final JdbcTemplate jdbcTemplate;
 

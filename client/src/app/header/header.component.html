@@ -1,0 +1,18 @@
+<div *ngIf="isLoggedIn$ | async as isLoggedIn; else logout">
+    <ul class="nav nav-tabs">
+        <li class="nav-item"><a class="nav-link" routerLink="newrequest">Nouvelle demande</a></li>
+        <li class="nav-item"><a class="nav-link" routerLink="myrequests">Mes demandes</a></li>
+        <li class="nav-item"><a class="nav-link" routerLink="myfolders">Mes documents</a></li>
+        <li class="nav-item"><a class="nav-link" routerLink="myprofile">Mon profile</a></li>
+        <li class="nav-item" class="disabled"><a class="nav-link" routerLink="" style="color: red">Mes sociétés</a></li>
+        <li class="nav-item"><a class="nav-link" routerLink="home" (click)="onLogout()">Se déconnecter</a></li>
+    </ul>
+</div>
+
+<ng-template #logout>
+    <ul class="nav nav-tabs">
+        <li class="nav-item"><a class="nav-link" routerLink="home">Accueil</a></li>
+        <li class="nav-item"><a class="nav-link" routerLink="createuser">S'inscrire</a></li>
+        <li class="nav-item"><a class="nav-link" routerLink="login">Se connecter</a></li>
+    </ul>
+</ng-template>
