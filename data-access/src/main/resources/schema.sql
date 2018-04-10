@@ -55,8 +55,9 @@ CREATE TABLE t_claim_types (
 CREATE TABLE t_claims (
   claimID		INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
   claimTypeID	INT 			NOT NULL,
-  citizenID	INT				NOT NULL,
-  employeeID	INT				NOT NULL,
+  citizenID		INT				NOT NULL,
+  employeeID	INT						,
+  status 		INT				NOT NULL,
   
   FOREIGN KEY(claimTypeID)
     REFERENCES t_claim_types(claimTypeID),
@@ -73,5 +74,5 @@ insert into t_people values(null,"Thomas","Elskens");
 insert into t_people values(null,"Fabian","Germeau");
 insert into t_citizens values (null, 1, 1);
 insert into t_employees values(null,2);
-insert into t_claims values(null,1,1,1);
+insert into t_claims values(null,1,1,null,0);
 */

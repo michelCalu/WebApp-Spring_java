@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 import be.unamur.hermes.business.parameters.ClaimType;
 import be.unamur.hermes.business.service.ClaimService;
 import be.unamur.hermes.business.service.ParameterService;
-import be.unamur.hermes.dataaccess.entity.Claim;
 
 @RestController
 @RequestMapping({ "/" })
@@ -37,11 +36,6 @@ public class ApplicationController {
     @GetMapping(path = "/about")
     public String serveAboutPage() {
 	return "about";
-    }
-
-    @GetMapping(path = "/claims/{claimId}")
-    public ResponseEntity<Claim> showClaim(@PathVariable(value = "claimId") long claimId) {
-	return ResponseEntity.status(HttpStatus.OK).body(claimService.find(claimId));
     }
 
     @GetMapping(path = "/parameters/{municipality}")

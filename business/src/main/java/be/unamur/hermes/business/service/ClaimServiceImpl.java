@@ -1,39 +1,39 @@
 package be.unamur.hermes.business.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import be.unamur.hermes.business.exception.BusinessException;
 import be.unamur.hermes.dataaccess.entity.Claim;
-import be.unamur.hermes.dataaccess.entity.Employee;
 import be.unamur.hermes.dataaccess.repository.ClaimRepository;
-import be.unamur.hermes.dataaccess.repository.EmployeeRepository;
-import be.unamur.hermes.dataaccess.repository.CitizenRepository;
 
 @Service
 public class ClaimServiceImpl implements ClaimService {
 
     private final ClaimRepository claimRepository;
-    private final EmployeeRepository employeeRepository;
-    private final CitizenRepository peopleRepository;
 
     @Autowired
-    public ClaimServiceImpl(ClaimRepository claimRepository, EmployeeRepository employeeRepository,
-	    CitizenRepository peopleRepository) {
+    public ClaimServiceImpl(ClaimRepository claimRepository) {
 	super();
 	this.claimRepository = claimRepository;
-	this.employeeRepository = employeeRepository;
-	this.peopleRepository = peopleRepository;
     }
 
     @Override
     public Claim find(long claimId) {
-	Claim result = claimRepository.findById(claimId);
-	long employeeId = result.getEmployeeId();
-	Employee assignee = employeeRepository.findById(employeeId);
-	result.setAssignee(assignee);
-	// TODO citizen
-	long peopleId = result.getPeopleId();
-	return result;
+	return claimRepository.findById(claimId);
     }
 
+    @Override
+    public long create(Claim newClaim) {
+	if (newClaim.getId() != null)
+	    throw new BusinessException("Claim is already registered in the database !");
+	return claimRepository.create(newClaim);
+    }
+
+    @Override
+    public List<Claim> findByCitizenId(long citizenId) {
+	return claimRepository.findByCitizen(citizenId);
+    }
 }

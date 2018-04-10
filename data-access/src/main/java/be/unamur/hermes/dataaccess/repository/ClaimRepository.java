@@ -10,6 +10,6 @@ public interface ClaimRepository {
 
     Claim findById(long id);
 
-    void create(long type, long citizenId);
+    long create(Claim newClaim);
 
 }

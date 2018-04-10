@@ -1,9 +1,9 @@
 package be.unamur.hermes.dataaccess.repository;
 
-import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -14,7 +14,13 @@ public class ClaimRepositoryImpl implements ClaimRepository {
 
     // queries
     private static final String queryById = //
-	    "SELECT cl.claimID, cl.claimTypeID, cl.employeeID, cl.citizenID FROM t_claims cl WHERE cl.claimID = ?";
+	    "SELECT cl.claimID, cl.claimTypeID, cl.employeeID, cl.citizenID, cl.status FROM t_claims cl WHERE cl.claimID = ?";
+    private static final String queryByCitizenId = //
+	    "SELECT cl.claimID, cl.claimTypeID, cl.employeeID, cl.citizenID, cl.status FROM t_claims cl WHERE cl.citizenID = ?";
+    private static final String create = //
+	    "INSERT INTO t_claims(claimTypeID, employeeID, citizenID, status) VALUES(?,?,?,?)";
+
+    private static final BeanPropertyRowMapper<Claim> claimMapper = new BeanPropertyRowMapper<>(Claim.class);
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -26,18 +32,19 @@ public class ClaimRepositoryImpl implements ClaimRepository {
 
     @Override
     public List<Claim> findByCitizen(long citizenId) {
-	// TODO Auto-generated method stub
-	return Collections.emptyList();
+	return jdbcTemplate.query(queryByCitizenId, claimMapper);
     }
 
     @Override
     public Claim findById(long id) {
-	return jdbcTemplate.queryForObject(queryById, new Object[] { id },
-		(rs, rowNum) -> new Claim(rs.getLong(1), rs.getLong(2), rs.getLong(3), rs.getLong(4)));
+	return jdbcTemplate.queryForObject(queryById, new Object[] { id }, claimMapper);
     }
 
     @Override
-    public void create(long type, long citizenId) {
-	// TODO Auto-generated method stub
+    public long create(Claim newClaim) {
+	Long citizenId = newClaim.getCitizen().getId();
+	Long employeeId = newClaim.getAssignee() == null ? null : newClaim.getAssignee().getId();
+	return jdbcTemplate.update(create,
+		new Object[] { newClaim.getTypeId(), employeeId, citizenId, newClaim.getStatus() });
     }
 }
