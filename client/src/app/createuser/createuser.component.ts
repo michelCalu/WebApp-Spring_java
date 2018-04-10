@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-
-import { CitizenService } from '../_services/citizen.service';
-import { Citizen, Address } from "../_models/index";
+import { AlertService, CitizenService } from "../_services";
+import { Citizen } from "../_models/index";
 
 @Component({
 	moduleId: module.id,
@@ -10,17 +8,15 @@ import { Citizen, Address } from "../_models/index";
 })
 export class CreateUserComponent {
 
-	citizen: Citizen = new Citizen();
-	address: Address = new Address();
+	citizen = new Citizen();
 
-	constructor(private router: Router, private citizenService: CitizenService) {
-
-	}
+	constructor(private citizenService: CitizenService, private alertService: AlertService) { }
 
 	createCitizen(): void {
-		this.citizenService.createCitizen(this.citizen, this.address).subscribe(data => {
-			console.log("user created");
-		});
+		this.citizenService.createCitizen(this.citizen).subscribe(
+			data => this.alertService.success('Enregistrement réussi'),
+			error => this.alertService.error('Échec dans l\'enregistrement')
+		);
 	}
 
 }

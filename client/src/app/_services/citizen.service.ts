@@ -20,17 +20,17 @@ export class CitizenService {
     return this.http.get("/about");
   }
 
-  public createCitizen(citizen: Citizen, address: Address): Observable<any> {
-    citizen.address = address;
-    citizen.citizenID = 42;
+  public createCitizen(citizen: Citizen): Observable<any>{
     return this.http.post("/citizens", citizen);
   }
-  // to test login
-  public login(user: User) {
+// to test login
+
+  public login(user: User){
     return this.http.post("/login", user);
   }
 
-  public showFolders() {
+ /*
+  public showFolders(){
     return this.http.get("/myfolders");
   }
 
@@ -41,7 +41,7 @@ export class CitizenService {
   public showRequests() {
     return this.http.get("/myrequests");
   }
-
+*/
   /*public newRequest(){
     return this.http.post("/newrequest", request);
   }*/
