@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<parameters>
+	<parametrizable id="Gembloux">
+		<claimType id="cert-nationality">
+			<activated>true</activated>
+		</claimType>
+		<claimType id="perm-parking" >
+			<activated>false</activated>
+			<!-- TODO -->
+			<fee>3690</fee>
+			<legalNotice>Uniquement applicable du lundi au vendredi de 7 à 21 heures.</legalNotice>
+		</claimType>
+	</parametrizable>
+	<parametrizable id="Namur">
+		<claimType id="cert-nationality">
+			<activated>true</activated>
+		</claimType>
+		<claimType id="perm-parking" >
+			<activated>false</activated>
+			<!-- TODO -->
+			<fee>7810</fee>
+			<legalNotice>Applicable ad libitum.</legalNotice>
+		</claimType>
+	</parametrizable>
+</parameters>

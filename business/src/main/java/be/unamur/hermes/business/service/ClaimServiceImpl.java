@@ -14,15 +14,15 @@ public class ClaimServiceImpl implements ClaimService {
 
     private final ClaimRepository claimRepository;
     private final EmployeeRepository employeeRepository;
-    private final InhabitantRepository peopleRepository;
+    private final InhabitantRepository inhabitantRepository;
 
     @Autowired
     public ClaimServiceImpl(ClaimRepository claimRepository, EmployeeRepository employeeRepository,
-	    InhabitantRepository peopleRepository) {
+	    InhabitantRepository inhabitantRepository) {
 	super();
 	this.claimRepository = claimRepository;
 	this.employeeRepository = employeeRepository;
-	this.peopleRepository = peopleRepository;
+	this.inhabitantRepository = inhabitantRepository;
     }
 
     @Override
