@@ -1,6 +1,7 @@
 package be.unamur.hermes.web.controller;
 
 import be.unamur.hermes.business.exception.BusinessException;
+import be.unamur.hermes.business.exception.NRNNotValidException;
 import be.unamur.hermes.business.service.CitizenService;
 import be.unamur.hermes.dataaccess.entity.Citizen;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,8 @@ public class CitizensController {
         this.citizenService = citizenService;
     }
 
+    // CREATE
+
     @PostMapping
     public ResponseEntity<Object> createCitizen(@RequestBody Citizen citizen)throws URISyntaxException {
         try {
@@ -35,6 +38,8 @@ public class CitizensController {
             return new ResponseEntity<>(be, HttpStatus.BAD_REQUEST);
         }
     }
+
+    // READ
 
     @GetMapping
     public ResponseEntity<List<Citizen>> showCitizens() {
@@ -65,6 +70,18 @@ public class CitizensController {
     public ResponseEntity<List<Citizen>> showPendingCitizens(){
         return new ResponseEntity<>(citizenService.findPending(), HttpStatus.OK);
     }
+
+    @GetMapping(path = "/validNRN/{citizenID}")
+    public ResponseEntity isNRNValid(@PathVariable(value = "citizenID") long citizenID) {
+        /*try{
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(citizenService.validateNRN(citizenID));
+        } catch (NRNNotValidException nrnE) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(nrnE.getMessage());
+        }*/
+        return null;
+    }
+
+    // UPDATE
 
     @PutMapping
     public ResponseEntity<Object> activateCitizen(@RequestBody Citizen citizen) {

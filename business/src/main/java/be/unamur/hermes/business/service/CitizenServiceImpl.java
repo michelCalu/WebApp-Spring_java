@@ -2,6 +2,9 @@ package be.unamur.hermes.business.service;
 
 import be.unamur.hermes.business.exception.BusinessException;
 import be.unamur.hermes.common.enums.*;
+import be.unamur.hermes.business.exception.NRNNotValidException;
+import be.unamur.hermes.business.io.NRNValidation;
+import be.unamur.hermes.business.model.NRNValidationModel;
 import be.unamur.hermes.dataaccess.entity.Citizen;
 import be.unamur.hermes.dataaccess.repository.CitizenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,56 +72,65 @@ public class CitizenServiceImpl implements CitizenService {
         }
     }
 
-    private void checkCitizenAttributes(Citizen citizen) throws BusinessException{
-        if(!Pattern.matches(
+    private void checkCitizenAttributes(Citizen citizen) throws BusinessException {
+        if (!Pattern.matches(
                 HermesRegex.ALLNAME.regex(),
-                citizen.getFirstName())){
+                citizen.getFirstName())) {
             throw new BusinessException("The specified firstname is incorrect");
         }
-        if(!Pattern.matches(
+        if (!Pattern.matches(
                 HermesRegex.ALLNAME.regex(),
-                citizen.getLastName())){
+                citizen.getLastName())) {
             throw new BusinessException("The specified lastName is incorrect");
         }
-        if(!Pattern.matches(
+        if (!Pattern.matches(
                 HermesRegex.MAIL.regex(),
-                citizen.getMail())){
+                citizen.getMail())) {
             throw new BusinessException("The specified mail is incorrect");
         }
-        if(!Pattern.matches(
+        if (!Pattern.matches(
                 HermesRegex.PHONE.regex(),
-                citizen.getPhone())){
+                citizen.getPhone())) {
             throw new BusinessException("The specified phone is incorrect");
         }
-        if(citizen.getBirthdate().isAfter(LocalDate.now())){
+        if (citizen.getBirthdate().isAfter(LocalDate.now())) {
             throw new BusinessException("The specified birth date is in the future");
         }
 
         // Address
-        if(!Pattern.matches(
+        if (!Pattern.matches(
                 "Belgique|Belgium|Belgie",
-                citizen.getAddress().getCountry())){
+                citizen.getAddress().getCountry())) {
             throw new BusinessException("The specified country is incorrect");
         }
-        if(!Pattern.matches(
+        if (!Pattern.matches(
                 HermesRegex.COMMONNAME.regex(),
-                citizen.getAddress().getState())){
+                citizen.getAddress().getState())) {
             throw new BusinessException("The specified state is incorrect");
         }
-        if(!Pattern.matches(
+        if (!Pattern.matches(
                 HermesRegex.COMMONNAME.regex(),
-                citizen.getAddress().getStreet())){
+                citizen.getAddress().getStreet())) {
             throw new BusinessException("The specified street is incorrect");
         }
-        if(!Pattern.matches(
+        if (!Pattern.matches(
                 HermesRegex.INTEGER.regex(),
-                Integer.toString(citizen.getAddress().getStreetNb()))){
+                Integer.toString(citizen.getAddress().getStreetNb()))) {
             throw new BusinessException("The specified street number is incorrect");
         }
-        if(!Pattern.matches(
+        if (!Pattern.matches(
                 HermesRegex.ZIPCODE.regex(),
-                Integer.toString(citizen.getAddress().getZipCode()))){
+                Integer.toString(citizen.getAddress().getZipCode()))) {
             throw new BusinessException("The specified zip code is incorrect");
         }
+    }
+
+    @Override
+    public Boolean validateNRN(String citizenID) throws NRNNotValidException {
+        //Citizen citizen = citizenRepository.findById(citizenID);
+        //String nRN = citizen.getNationalRegistreNb();
+        NRNValidationModel nrnValidationModel = new NRNValidation().validate(citizenID);
+
+        return nrnValidationModel.checkValidity();
     }
 }
