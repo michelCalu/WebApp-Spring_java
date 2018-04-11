@@ -53,7 +53,7 @@ public class CitizenRepositoryImpl implements CitizenRepository {
     }
 
     @Override
-    public void create(Citizen citizen) {
+    public long create(Citizen citizen) {
         long addressID = addressRepository.create(citizen.getAddress());
         Object[] values = {
                 citizen.getFirstName(),
@@ -73,7 +73,7 @@ public class CitizenRepositoryImpl implements CitizenRepository {
                 Types.VARCHAR,
                 Types.VARCHAR,
                 Types.VARCHAR};
-        jdbcTemplate.update(createNew, values, types);
+        return jdbcTemplate.update(createNew, values, types);
     }
 
     @Override

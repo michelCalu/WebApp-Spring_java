@@ -53,9 +53,9 @@ public class CitizenServiceImpl implements CitizenService {
 
     @Override
     @Transactional
-    public void register(Citizen citizen) {
+    public long register(Citizen citizen) {
         checkCitizenAttributes(citizen);
-        citizenRepository.create(citizen);
+        return citizenRepository.create(citizen);
     }
 
     @Override

@@ -15,7 +15,7 @@ public interface CitizenService {
 
     List<Citizen> findPending();
 
-    void register(Citizen citizen);
+    long register(Citizen citizen);
 
     Citizen activate(Citizen citizen) throws BusinessException;
 }
