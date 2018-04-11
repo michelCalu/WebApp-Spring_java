@@ -33,7 +33,7 @@ public class ParameterParser {
     private static final String ATTR_ID = "id";
     private static final String TAG_ROOT = "parameters";
     private static final String TAG_PARAMETRIZABLE = "parametrizable";
-    private static final String TAG_CLAIMTYPE = "claimType";
+    private static final String TAG_REQUESTTYPE = "requestType";
     private static final String QUERY_MUNICIPALITY = "/" + TAG_ROOT + "/" + TAG_PARAMETRIZABLE + "[@id='%s']";
 
     /**
@@ -47,7 +47,7 @@ public class ParameterParser {
      * @return a Map<String,ClaimParameterSet> where the key is the name of the
      *         municipality
      */
-    public Map<String, ClaimParameterSet> parse(InputStream is) {
+    public Map<String, RequestParameterSet> parse(InputStream is) {
 	Document doc;
 	try {
 	    doc = XMLUtil.toDocument(is);
@@ -55,28 +55,28 @@ public class ParameterParser {
 	    logger.error("Invalid parameters.xml file", e);
 	    throw new BusinessException("Invalid parameters.xml file");
 	}
-	Map<String, ClaimParameterSet> result = new HashMap<>();
+	Map<String, RequestParameterSet> result = new HashMap<>();
 	Element root = doc.getDocumentElement();
 	List<Element> municipalityElements = DomUtils.getChildElementsByTagName(root, TAG_PARAMETRIZABLE);
 
 	for (Element municipalityElem : municipalityElements) {
-	    ClaimParameterSet cps = parseMunicipality(municipalityElem);
+	    RequestParameterSet cps = parseMunicipality(municipalityElem);
 	    result.put(cps.getMunicipality(), cps);
 	}
 	return result;
     }
 
     /**
-     * Parse and retrieve the {@link ClaimParameterSet} for a single municipality at
-     * a time. For future use.
+     * Parse and retrieve the {@link RequestParameterSet} for a single municipality
+     * at a time. For future use.
      * 
      * @param doc
      *            the DOM contents of a parameters.xml file
      * @param municipality
-     * @return the ClaimParameterSet corresponding to the municipality given in
+     * @return the RequestParameterSet corresponding to the municipality given in
      *         parameter
      */
-    public ClaimParameterSet parseMunicipality(Document doc, String municipality) {
+    public RequestParameterSet parseMunicipality(Document doc, String municipality) {
 	XPathFactory xpf = XPathFactory.newInstance();
 	XPath path = xpf.newXPath();
 	String queryString = String.format(QUERY_MUNICIPALITY, municipality);
@@ -89,21 +89,21 @@ public class ParameterParser {
 	}
     }
 
-    private ClaimParameterSet parseMunicipality(Element municipalityElem) {
+    private RequestParameterSet parseMunicipality(Element municipalityElem) {
 	String idString = municipalityElem.getAttribute(ATTR_ID);
 	if (!StringUtils.hasText(idString)) {
 	    throw new BusinessException(missingAttribute(municipalityElem, ATTR_ID));
 	}
-	ClaimParameterSet cps = new ClaimParameterSet(idString);
-	List<Element> parameterElems = DomUtils.getChildElementsByTagName(municipalityElem, TAG_CLAIMTYPE);
+	RequestParameterSet cps = new RequestParameterSet(idString);
+	List<Element> parameterElems = DomUtils.getChildElementsByTagName(municipalityElem, TAG_REQUESTTYPE);
 	for (Element paramElem : parameterElems) {
-	    ClaimType cp = parseClaim(paramElem);
+	    RequestType cp = parseClaim(paramElem);
 	    cps.addClaimParameters(cp.getId(), cp);
 	}
 	return cps;
     }
 
-    private ClaimType parseClaim(Element claimElem) {
+    private RequestType parseClaim(Element claimElem) {
 	String claimIdString = claimElem.getAttribute(ATTR_ID);
 	if (!StringUtils.hasText(claimIdString))
 	    throw new BusinessException(missingAttribute(claimElem, ATTR_ID));
@@ -113,7 +113,7 @@ public class ParameterParser {
 		    StringUtils.arrayToCommaDelimitedString(ClaimId.values()));
 	    throw new BusinessException(message);
 	}
-	ClaimType cp = new ClaimType(claimType);
+	RequestType cp = new RequestType(claimType);
 	// parse parameter nodes (if any)
 	for (Element child : DomUtils.getChildElements(claimElem)) {
 	    parseParams(child, cp, "");
@@ -121,7 +121,7 @@ public class ParameterParser {
 	return cp;
     }
 
-    private void parseParams(Element elem, ClaimType params, String parentId) {
+    private void parseParams(Element elem, RequestType params, String parentId) {
 	String newId = appendXPathSegment(parentId, elem);
 	List<Element> children = DomUtils.getChildElements(elem);
 	// is element leaf ?

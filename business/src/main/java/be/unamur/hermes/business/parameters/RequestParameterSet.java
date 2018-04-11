@@ -11,12 +11,12 @@ import be.unamur.hermes.common.enums.ClaimId;
  * This class holds all parameters of all claim types for a given municipality.
  *
  */
-public class ClaimParameterSet {
+public class RequestParameterSet {
 
     private final String municipality;
-    private final Map<ClaimId, ClaimType> claims;
+    private final Map<ClaimId, RequestType> claims;
 
-    public ClaimParameterSet(String municipality) {
+    public RequestParameterSet(String municipality) {
 	super();
 	this.municipality = municipality;
 	this.claims = new EnumMap<>(ClaimId.class);
@@ -27,20 +27,20 @@ public class ClaimParameterSet {
     }
 
     public boolean isActivated(ClaimId claimId) {
-	ClaimType claimType = getClaimType(claimId);
+	RequestType claimType = getClaimType(claimId);
 	return claimType == null ? false : claimType.isActivated();
     }
 
-    public ClaimType getClaimType(ClaimId claimId) {
+    public RequestType getClaimType(ClaimId claimId) {
 	return claims.get(claimId);
     }
 
     public String getParameter(ClaimId claimId, String parameterId) {
-	ClaimType claimType = getClaimType(claimId);
+	RequestType claimType = getClaimType(claimId);
 	return claimType == null ? null : claimType.getParameter(parameterId);
     }
 
-    public List<ClaimType> getClaimTypes() {
+    public List<RequestType> getClaimTypes() {
 	return new ArrayList<>(claims.values());
     }
 
@@ -49,7 +49,7 @@ public class ClaimParameterSet {
 	return "ClaimParameterSet [municipality=" + municipality + ", claims=" + claims + "]";
     }
 
-    void addClaimParameters(ClaimId id, ClaimType claim) {
+    void addClaimParameters(ClaimId id, RequestType claim) {
 	claims.put(id, claim);
     }
 }

@@ -2,7 +2,7 @@ package be.unamur.hermes.business.service;
 
 import java.util.List;
 
-import be.unamur.hermes.business.parameters.ClaimType;
+import be.unamur.hermes.business.parameters.RequestType;
 import be.unamur.hermes.common.enums.ClaimId;
 
 /**
@@ -31,8 +31,8 @@ public interface ParameterService {
      */
     String getParameter(String municipality, String claimId, String parameterId);
 
-    ClaimType getClaimType(String municipality, String claimId);
+    RequestType getRequestType(String municipality, String claimId);
 
-    List<ClaimType> getClaimTypes(String municipality);
+    List<RequestType> getRequestTypes(String municipality);
 
 }

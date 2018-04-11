@@ -9,14 +9,14 @@ import be.unamur.hermes.common.enums.ClaimId;
  * Class represting a type of claim.
  *
  */
-public class ClaimType {
+public class RequestType {
 
     private static final String KEY_ACTIVATED = "activated";
 
     private final ClaimId id;
     private final Map<String, String> parameters = new HashMap<>();
 
-    public ClaimType(ClaimId id) {
+    public RequestType(ClaimId id) {
 	super();
 	this.id = id;
     }

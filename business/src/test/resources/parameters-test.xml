@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <parameters>
 	<parametrizable id="Gembloux">
-		<claimType id="cert-nationality">
+		<requestType id="cert-nationality">
 			<activated>true</activated>
-		</claimType>
-		<claimType id="perm-parking" >
+		</requestType>
+		<requestType id="perm-parking" >
 			<activated>false</activated>
 			<!-- TODO -->
 			<fee>3690</fee>
@@ -13,17 +13,17 @@
 				<nestedParam1>nestedValue1</nestedParam1>
 				<nestedParam2>nestedValue2</nestedParam2>
 			</nestingParam>
-		</claimType>
+		</requestType>
 	</parametrizable>
 	<parametrizable id="Namur">
-		<claimType id="cert-nationality">
+		<requestType id="cert-nationality">
 			<activated>false</activated>
-		</claimType>
-		<claimType id="perm-parking" >
+		</requestType>
+		<requestType id="perm-parking" >
 			<activated>true</activated>
 			<!-- TODO -->
 			<fee>7810</fee>
 			<legalNotice>Applicable ad libitum.</legalNotice>
-		</claimType>
+		</requestType>
 	</parametrizable>
 </parameters>
