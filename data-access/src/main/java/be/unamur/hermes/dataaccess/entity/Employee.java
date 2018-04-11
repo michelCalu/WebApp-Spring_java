@@ -9,7 +9,7 @@ public class Employee extends User {
 
     private long id;
     private String accountNumber;
-    private LocalDateTime arrivalDate;
+    private LocalDate arrivalDate;
     private char gender;
     private String civilStatus;
     private int dependentChildren;
@@ -28,7 +28,7 @@ public class Employee extends User {
             String nationalRegistreNb,
             String birthdate,
             String accountNumber,
-            LocalDateTime arrivalDate,
+            LocalDate arrivalDate,
             char gender,
             String civilStatus,
             int dependentChildren,
@@ -76,11 +76,11 @@ public class Employee extends User {
         this.accountNumber = accountNumber;
     }
 
-    public LocalDateTime getArrivalDate() {
+    public LocalDate getArrivalDate() {
         return arrivalDate;
     }
 
-    public void setArrivalDate(LocalDateTime arrivalDate) {
+    public void setArrivalDate(LocalDate arrivalDate) {
         this.arrivalDate = arrivalDate;
     }
 

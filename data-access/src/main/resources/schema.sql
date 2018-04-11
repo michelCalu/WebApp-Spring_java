@@ -39,7 +39,7 @@ CREATE TABLE t_employees (
   nationalRegisterNb VARCHAR(255) NOT NULL,
   birthdate     VARCHAR(255)      NOT NULL,
   accountNumber VARCHAR(255)      NOT NULL,
-  arrivalDate   DATETIME          NOT NULL,
+  arrivalDate   DATE              NOT NULL,
   gender        CHAR(1)           NOT NULL,
   civilStatus   VARCHAR(255)      NOT NULL,
   dependentChildren INT           NOT NULL,
