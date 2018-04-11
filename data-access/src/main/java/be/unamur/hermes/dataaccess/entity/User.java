@@ -1,5 +1,6 @@
 package be.unamur.hermes.dataaccess.entity;
 
+import java.time.LocalDate;
 import java.util.Objects;
 
 public abstract class User {
@@ -10,7 +11,7 @@ public abstract class User {
     private String mail;
     private String phone;
     private String nationalRegisterNb;
-    private String birthdate;
+    private LocalDate birthdate;
 
     public User(){};
 
@@ -21,7 +22,7 @@ public abstract class User {
             String mail,
             String phone,
             String nationalRegisterNb,
-            String birthdate) {
+            LocalDate birthdate) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
@@ -86,11 +87,11 @@ public abstract class User {
         this.nationalRegisterNb = nationalRegisterNb;
     }
 
-    public String getBirthdate() {
+    public LocalDate getBirthdate() {
         return birthdate;
     }
 
-    public void setBirthdate(String birthdate) {
+    public void setBirthdate(LocalDate birthdate) {
         this.birthdate = birthdate;
     }
 

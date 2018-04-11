@@ -23,8 +23,12 @@ public class CitizensController {
 
     @PostMapping
     public ResponseEntity<Void> createCitizen(@RequestBody Citizen citizen) {
-        citizenService.register(citizen);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        try {
+            citizenService.register(citizen);
+            return ResponseEntity.status(HttpStatus.CREATED).body(null);
+        } catch (BusinessException be) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
     }
 
     @GetMapping

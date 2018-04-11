@@ -8,7 +8,9 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.regex.Pattern;
 
 @Service
 public class CitizenServiceImpl implements CitizenService {
@@ -51,6 +53,7 @@ public class CitizenServiceImpl implements CitizenService {
     @Override
     @Transactional
     public void register(Citizen citizen) {
+        checkCitizenAttributes(citizen);
         citizenRepository.create(citizen);
     }
 
@@ -62,6 +65,57 @@ public class CitizenServiceImpl implements CitizenService {
         } else {
             citizenRepository.activate(citizen.getId());
             return citizenRepository.findById(citizen.getId());
+        }
+    }
+
+    private void checkCitizenAttributes(Citizen citizen) throws BusinessException{
+        if(!Pattern.matches(
+                "^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð '-]+$",
+                citizen.getFirstName())){
+            throw new BusinessException("The specified firstname is incorrect");
+        }
+        if(!Pattern.matches(
+                "^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð '-]+$",
+                citizen.getLastName())){
+            throw new BusinessException("The specified lastName is incorrect");
+        }
+        if(!Pattern.matches("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,6}$",
+                citizen.getMail())){
+            throw new BusinessException("The specified mail is incorrect");
+        }
+        if(!Pattern.matches("^([+]32)[1-9][0-9]{2}/([0-9]{2}[.]){2}[0-9]{2}$",
+                citizen.getPhone())){
+            throw new BusinessException("The specified phone is incorrect");
+        }
+        if(citizen.getBirthdate().isAfter(LocalDate.now())){
+            throw new BusinessException("The specified birth date is in the future");
+        }
+
+        // Address
+        if(!Pattern.matches(
+                "Belgique|Belgium|Belgie",
+                citizen.getAddress().getCountry())){
+            throw new BusinessException("The specified country is incorrect");
+        }
+        if(!Pattern.matches(
+                "^[a-zA-ZàáâäãèéêëîïòôöùûüçÈÉÊËÎÏÒÔÖÙÛÜ '-]+$",
+                citizen.getAddress().getState())){
+            throw new BusinessException("The specified state is incorrect");
+        }
+        if(!Pattern.matches(
+                "^[a-zA-ZàáâäãèéêëîïòôöùûüçÈÉÊËÎÏÒÔÖÙÛÜ '-]+$",
+                citizen.getAddress().getStreet())){
+            throw new BusinessException("The specified street is incorrect");
+        }
+        if(!Pattern.matches(
+                "^[1-9][0-9]*$",
+                Integer.toString(citizen.getAddress().getStreetNb()))){
+            throw new BusinessException("The specified street number is incorrect");
+        }
+        if(!Pattern.matches(
+                "^[1-9][0-9]{0,3}$",
+                Integer.toString(citizen.getAddress().getZipCode()))){
+            throw new BusinessException("The specified zip code is incorrect");
         }
     }
 }

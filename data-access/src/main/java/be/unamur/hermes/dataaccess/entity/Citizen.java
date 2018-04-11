@@ -1,6 +1,7 @@
 package be.unamur.hermes.dataaccess.entity;
 
 import java.sql.ResultSet;
+import java.time.LocalDate;
 import java.util.Objects;
 
 public class Citizen extends User {
@@ -18,7 +19,7 @@ public class Citizen extends User {
             String mail,
             String phone,
             String nationalRegisterNb,
-            String birthdate,
+            LocalDate birthdate,
             boolean activated
     ){
         super(firstName, lastName, address, mail, phone, nationalRegisterNb, birthdate);

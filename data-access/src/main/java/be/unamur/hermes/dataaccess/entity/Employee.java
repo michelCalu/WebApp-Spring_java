@@ -26,7 +26,7 @@ public class Employee extends User {
             String mail,
             String phone,
             String nationalRegistreNb,
-            String birthdate,
+            LocalDate birthdate,
             String accountNumber,
             LocalDate arrivalDate,
             char gender,

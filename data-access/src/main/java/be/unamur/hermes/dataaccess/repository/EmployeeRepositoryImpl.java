@@ -85,7 +85,7 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
                 rs.getString(5),
                 rs.getString(6),
                 rs.getString(7),
-                rs.getString(8),
+                rs.getDate(8).toLocalDate(),
                 rs.getString(9),
                 rs.getDate(10).toLocalDate(),
                 rs.getString(11).charAt(0),

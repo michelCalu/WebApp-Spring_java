@@ -115,7 +115,7 @@ public class CitizenRepositoryImpl implements CitizenRepository {
                 rs.getString(5),
                 rs.getString(6),
                 rs.getString(7),
-                rs.getString(8),
+                rs.getDate(8).toLocalDate(),
                 rs.getBoolean(9));
     }
 }
