@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class Address {
 
-    private long addressId;
+    private long id;
     private String country;
     private String state;
     private int zipCode;
@@ -13,25 +13,16 @@ public class Address {
 
     public Address(){};
 
-    public Address(
-            String country,
-            String state,
-            int zipCode,
-            String street,
-            int streetNb) {
-        System.out.println("tamere");
-        this.addressId = 42;
+    public Address(long id,
+                   String country,
+                   String state,
+                   int zipCode,
+                   String street,
+                   int streetNb) {
+        this.id = id;
         this.country = country;
         this.state = state;
         this.zipCode = zipCode;
-        this.street = street;
-        this.streetNb = streetNb;
-    }
-
-    public Address(long addressId, String country, String state, String street, int streetNb) {
-        this.addressId = addressId;
-        this.country = country;
-        this.state = state;
         this.street = street;
         this.streetNb = streetNb;
     }
@@ -41,7 +32,7 @@ public class Address {
         if (this == o) return true;
         if (!(o instanceof Address)) return false;
         Address address = (Address) o;
-        return addressId == address.addressId &&
+        return id == address.id &&
                 streetNb == address.streetNb &&
                 Objects.equals(country, address.country) &&
                 Objects.equals(state, address.state) &&
@@ -51,7 +42,7 @@ public class Address {
     @Override
     public int hashCode() {
 
-        return Objects.hash(addressId, country, state, street, streetNb);
+        return Objects.hash(id, country, state, street, streetNb);
     }
 
     @Override
@@ -62,12 +53,12 @@ public class Address {
 
     //---------------------- getters and setters -------------------------//
 
-    public long getAddressId() {
-        return addressId;
+    public long getId() {
+        return id;
     }
 
-    public void setAddressId(long addressId) {
-        this.addressId = addressId;
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getCountry() {

@@ -7,29 +7,13 @@ import org.springframework.stereotype.Repository;
 
 import be.unamur.hermes.dataaccess.entity.Employee;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Types;
 import java.util.List;
 
 @Repository
 public class EmployeeRepositoryImpl implements EmployeeRepository {
-
-    // queries
-    private static final String queryById = //
-	    "SELECT * FROM t_employees e WHERE e.employeeID = ? ";
-
-    private static final String queryByName = //
-	    "SELECT * FROM t_employees e WHERE e.firstname = ? AND e.lastname = ?";
-
-    private static final String queryAll = //
-	    "SELECT * FROM t_employees";
-
-    private static final String createNew = //
-	    "INSERT INTO t_employees (" + "firstName, lastName, address, " + "mail, phone, nationalRegistreNb, "
-		    + "birthdate, accountNumber, arrivalDate, "
-		    + "gender, civilStatus, dependentChildren, dependentPeople) "
-		    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
-    private static final BeanPropertyRowMapper<Employee> employeeMapper = new BeanPropertyRowMapper<>(Employee.class);
 
     private final JdbcTemplate jdbcTemplate;
     private final AddressRepository addressRepository;
@@ -42,19 +26,19 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
 
     @Override
     public Employee findByName(String firstname, String lastname) {
-	return jdbcTemplate.queryForObject(queryByName, new Object[] { firstname, lastname }, employeeMapper);
+	    return jdbcTemplate.queryForObject(queryByName, new Object[] { firstname, lastname }, this::buildEmployee);
     }
 
     @Override
     public Employee findById(long employeeId) {
-	if (employeeId == 0)
-	    return null;
-	return jdbcTemplate.queryForObject(queryById, new Object[] { employeeId }, employeeMapper);
+    	if (employeeId == 0)
+	        return null;
+	    return jdbcTemplate.queryForObject(queryById, new Object[] { employeeId }, this::buildEmployee);
     }
 
     @Override
     public List<Employee> findAll() {
-	return jdbcTemplate.query(queryAll, employeeMapper);
+        return jdbcTemplate.query(queryAll, this::buildEmployee);
     }
 
     @Override
@@ -69,5 +53,45 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
 		Types.VARCHAR, Types.VARCHAR, Types.TIMESTAMP, Types.CHAR, Types.VARCHAR, Types.INTEGER,
 		Types.INTEGER };
 	jdbcTemplate.update(createNew, values, types);
+    }
+
+
+    // queries
+    private static final String queryById = //
+            "SELECT * FROM t_employees e WHERE e.employeeID = ? ";
+
+    private static final String queryByName = //
+            "SELECT * FROM t_employees e WHERE e.firstname = ? AND e.lastname = ?";
+
+    private static final String queryAll = //
+            "SELECT * FROM t_employees";
+
+    private static final String createNew = //
+            "INSERT INTO t_employees (" +
+                    "firstName, lastName, address, " +
+                    "mail, phone, nationalRegistreNb, " +
+                    "birthdate, accountNumber, arrivalDate, " +
+                    "gender, civilStatus, dependentChildren, dependentPeople) " +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+
+    // Other methods
+    private Employee buildEmployee(ResultSet rs, int rowNum) throws SQLException{
+        return new Employee(
+                rs.getLong(1),
+                rs.getString(2),
+                rs.getString(3),
+                addressRepository.findById(rs.getLong(4)),
+                rs.getString(5),
+                rs.getString(6),
+                rs.getString(7),
+                rs.getString(8),
+                rs.getString(9),
+                rs.getTimestamp(10).toLocalDateTime(),
+                rs.getString(11).charAt(0),
+                rs.getString(12),
+                rs.getInt(13),
+                rs.getInt(14)
+                );
     }
 }
