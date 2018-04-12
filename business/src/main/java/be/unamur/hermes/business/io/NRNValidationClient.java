@@ -13,9 +13,9 @@ import java.security.cert.X509Certificate;
 import java.security.*;
 import java.util.Base64;
 
-public final class NRNValidation {
+public final class NRNValidationClient {
 
-    public NRNValidationModel validate(String nRN) throws NRNServiceAccessException{
+    public static NRNValidationModel getNRNValidationModel(String nRN) throws NRNServiceAccessException{
         try {
             // Create a trust manager that does not validate certificate chains
             TrustManager[] trustAllCerts = new TrustManager[] {new X509TrustManager() {
@@ -69,7 +69,7 @@ public final class NRNValidation {
      * @return  A HttpsConnection
      * @throws IOException
      */
-    private HttpsURLConnection getConn(String nRN, String encodedConnectionInformation) throws IOException{
+    private static HttpsURLConnection getConn(String nRN, String encodedConnectionInformation) throws IOException{
         URL url = new URL("https://91.121.217.193/validation/v1/nrn/" + nRN);
 
         HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
@@ -87,7 +87,7 @@ public final class NRNValidation {
      * Encode the user and password to access the NRNValidationService
      * @return The encoded information as a string
      */
-    private String encodeConnectionInformation(){
+    private static String encodeConnectionInformation(){
         String connectionInformation = "groupe8:cWolokyZUp";
         return Base64.getEncoder().encodeToString(connectionInformation.getBytes());
     }
@@ -98,7 +98,7 @@ public final class NRNValidation {
      * @return A NRNValidationModel
      * @throws IOException
      */
-    private NRNValidationModel retrieveNRNValidationInformations(HttpsURLConnection conn) throws IOException{
+    private static NRNValidationModel retrieveNRNValidationInformations(HttpsURLConnection conn) throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
         StringBuilder sb = new StringBuilder();
 

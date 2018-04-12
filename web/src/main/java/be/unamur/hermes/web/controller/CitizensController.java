@@ -71,16 +71,6 @@ public class CitizensController {
         return new ResponseEntity<>(citizenService.findPending(), HttpStatus.OK);
     }
 
-    @GetMapping(path = "/validNRN/{citizenID}")
-    public ResponseEntity isNRNValid(@PathVariable(value = "citizenID") long citizenID) {
-        /*try{
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(citizenService.validateNRN(citizenID));
-        } catch (NRNNotValidException nrnE) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(nrnE.getMessage());
-        }*/
-        return null;
-    }
-
     // UPDATE
 
     @PutMapping
