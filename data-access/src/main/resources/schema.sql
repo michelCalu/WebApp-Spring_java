@@ -1,3 +1,8 @@
+DROP TABLE IF EXISTS t_departments_employees;
+DROP TABLE IF EXISTS t_towns_employees;
+DROP TABLE IF EXISTS t_towns_departments;
+DROP TABLE IF EXISTS t_departments;
+DROP TABLE IF EXISTS t_towns;
 DROP TABLE IF EXISTS t_requests;
 DROP TABLE IF EXISTS t_request_types;
 DROP TABLE IF EXISTS t_employees;
@@ -67,3 +72,59 @@ CREATE TABLE t_requests (
   FOREIGN KEY(employeeID)
     REFERENCES t_employees(employeeID)
 );
+
+CREATE TABLE t_towns (
+  townID  INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  name    VARCHAR(255)  NOT NULL UNIQUE
+);
+
+CREATE TABLE t_departments (
+  departmentID        INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  headOfDepartmentID  INT NOT NULL,
+  parentDepartmentID  INT,
+
+  FOREIGN KEY(headOfDepartmentID)
+    REFERENCES t_employees(employeeID),
+  FOREIGN KEY(parentDepartmentID)
+    REFERENCES t_departments(departmentID)
+);
+
+CREATE TABLE t_towns_departments (
+  townID        INT NOT NULL,
+  departmentID  INT NOT NULL,
+
+  PRIMARY KEY (townID,departmentID),
+  FOREIGN KEY (townID) REFERENCES t_towns(townID),
+  FOREIGN KEY (departmentID) REFERENCES t_departments(departmentID),
+  UNIQUE (townID,departmentID)
+);
+
+CREATE TABLE t_towns_employees (
+  townID        INT NOT NULL,
+  employeeID    INT NOT NULL,
+
+  PRIMARY KEY (townID,employeeID),
+  FOREIGN KEY (townID) REFERENCES t_towns(townID),
+  FOREIGN KEY (employeeID) REFERENCES t_employees(employeeID),
+  UNIQUE (townID,employeeID)
+);
+
+CREATE TABLE t_departments_employees (
+  departmentID  INT NOT NULL,
+  employeeID    INT NOT NULL,
+
+  PRIMARY KEY (departmentID,employeeID),
+  FOREIGN KEY (departmentID) REFERENCES t_departments(departmentID),
+  FOREIGN KEY (employeeID) REFERENCES t_employees(employeeID),
+  UNIQUE (departmentID,employeeID)
+);
+
+/*
+-- test data
+insert into t_claim_types values(1,"Certificat de nationalité");
+insert into t_people values(null,"Thomas","Elskens");
+insert into t_people values(null,"Fabian","Germeau");
+insert into t_citizens values (null, 1, 1);
+insert into t_employees values(null,2);
+insert into t_claims values(null,1,1,1);
+*/
