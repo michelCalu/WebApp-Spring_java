@@ -1,87 +1,113 @@
 package be.unamur.hermes.business.io;
 
-import be.unamur.hermes.business.model.NRNValidationModel;
+import be.unamur.hermes.business.exception.NRNServiceAccessException;
+import be.unamur.hermes.business.model.NRNValidation.NRNValidationModel;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.net.ssl.*;
 import java.io.BufferedReader;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Base64;
+import java.security.cert.X509Certificate;
 import java.security.*;
-import java.security.cert.CertificateException;
+import java.util.Base64;
 
 public final class NRNValidation {
 
-    public NRNValidationModel validate(String NRN){
+    public NRNValidationModel validate(String nRN) throws NRNServiceAccessException{
         try {
-            KeyStore clientStore = KeyStore.getInstance("PKCS12");
-            clientStore.load(new FileInputStream("nrnvalidator_domain_public.crt"), "testPass".toCharArray());
+            // Create a trust manager that does not validate certificate chains
+            TrustManager[] trustAllCerts = new TrustManager[] {new X509TrustManager() {
+                public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+                    return null;
+                }
+                public void checkClientTrusted(X509Certificate[] certs, String authType) {
+                }
+                public void checkServerTrusted(X509Certificate[] certs, String authType) {
+                }
+            }
+            };
 
-            KeyManagerFactory kmf = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
-            kmf.init(clientStore, "testPass".toCharArray());
-            KeyManager[] kms = kmf.getKeyManagers();
+            // Install the all-trusting trust manager
+            SSLContext sc = SSLContext.getInstance("SSL");
+            sc.init(null, trustAllCerts, new java.security.SecureRandom());
+            HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
 
-            KeyStore trustStore = KeyStore.getInstance("JKS");
-            trustStore.load(new FileInputStream("cacerts"), "changeit".toCharArray());
+            // Create all-trusting host name verifier
+            HostnameVerifier allHostsValid = new HostnameVerifier() {
+                public boolean verify(String hostname, SSLSession session) {
+                    return true;
+                }
+            };
 
-            TrustManagerFactory tmf = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
-            tmf.init(trustStore);
-            TrustManager[] tms = tmf.getTrustManagers();
+            // Install the all-trusting host verifier
+            HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);
 
-            SSLContext sslContext = null;
-            sslContext = SSLContext.getInstance("TLS");
-            sslContext.init(kms, tms, new SecureRandom());
+            String encodedConnectionInformation = encodeConnectionInformation();
 
-            String connectionInformation = "groupe8:cWolokyZUp";
-            String encodedConnectionInformation = Base64.getEncoder().encodeToString(connectionInformation.getBytes());
-            System.out.println("encoded " + encodedConnectionInformation);
-
-            NRNValidationModel nrnValidationModel;
-            URL url = new URL("https://91.121.217.193/validation/v1/nrn/" + NRN);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("GET");
-            conn.setDoInput(true);
-            conn.setDoOutput(true);
-            conn.setRequestProperty("Accept", "application/json");
-            conn.setRequestProperty("Authorization","Basic " + encodedConnectionInformation);
+            HttpsURLConnection conn = getConn(nRN,encodedConnectionInformation);
 
             if (conn.getResponseCode() != 200) {
-                System.out.println(conn.getResponseMessage());
-                throw new RuntimeException("Failed : HTTP error code : "
-                        + conn.getResponseCode());
+                throw new NRNServiceAccessException(
+                        "Failed : HTTP error code : " + conn.getResponseCode());
             }
 
-            System.out.println("response code == 200");
-
-            BufferedReader br = new BufferedReader(new InputStreamReader(
-                    (conn.getInputStream())));
-
-            ObjectMapper mapper = new ObjectMapper();
-            nrnValidationModel = mapper.readValue(url, NRNValidationModel.class);
+            NRNValidationModel nrnValidationModel = retrieveNRNValidationInformations(conn);
 
             conn.disconnect();
             return nrnValidationModel;
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyStoreException e) {
-            e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (CertificateException e) {
-            e.printStackTrace();
-        } catch (UnrecoverableKeyException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
+        } catch (IOException | NoSuchAlgorithmException | KeyManagementException e) {
+            throw new NRNServiceAccessException("Unable to contact the NRN service : " + e.getMessage());
         }
-        return null;
+    }
+
+    /**
+     * Create the HttpsConnection needed to acces the NRNValidationService
+     * @param nRN The national register number we want to check
+     * @param encodedConnectionInformation The encoded connection information
+     * @return  A HttpsConnection
+     * @throws IOException
+     */
+    private HttpsURLConnection getConn(String nRN, String encodedConnectionInformation) throws IOException{
+        URL url = new URL("https://91.121.217.193/validation/v1/nrn/" + nRN);
+
+        HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
+        conn.setRequestMethod("GET");
+        conn.setDoInput(true);
+        conn.setDoOutput(true);
+        conn.setRequestProperty("Accept", "application/json");
+        conn.setRequestProperty("Authorization","Basic " + encodedConnectionInformation);
+        return conn;
+    }
+
+
+    // TODO set this in as environment variable or in a config file
+    /**
+     * Encode the user and password to access the NRNValidationService
+     * @return The encoded information as a string
+     */
+    private String encodeConnectionInformation(){
+        String connectionInformation = "groupe8:cWolokyZUp";
+        return Base64.getEncoder().encodeToString(connectionInformation.getBytes());
+    }
+
+    /**
+     * Read the response input stream and convert it to a NRNValidationModel
+     * @param conn The HttpsConnection use to contact the server
+     * @return A NRNValidationModel
+     * @throws IOException
+     */
+    private NRNValidationModel retrieveNRNValidationInformations(HttpsURLConnection conn) throws IOException{
+        BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
+        StringBuilder sb = new StringBuilder();
+
+        String line;
+        while ((line = br.readLine()) != null) {
+            sb.append(line);
+        }
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.readValue(sb.toString(),NRNValidationModel.class);
     }
 
 }

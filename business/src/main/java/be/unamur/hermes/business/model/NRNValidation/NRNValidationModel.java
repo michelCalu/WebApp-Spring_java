@@ -1,4 +1,4 @@
-package be.unamur.hermes.business.model;
+package be.unamur.hermes.business.model.NRNValidation;
 
 import be.unamur.hermes.business.exception.NRNNotValidException;
 
@@ -21,25 +21,16 @@ public class NRNValidationModel {
         return alive;
     }
 
+    public ExplanationIfInvalid getExplanationIfInvalid() {
+        return explanationIfInvalid;
+    }
+
     public Boolean checkValidity() throws NRNNotValidException{
         if(explanationIfInvalid != null)
-            throw new NRNNotValidException(explanationIfInvalid.description);
+            throw new NRNNotValidException(explanationIfInvalid.getDescription());
         else
             return true;
     }
 
-    private class ExplanationIfInvalid{
-
-        private String code;
-        private String description;
-
-        public String getCode() {
-            return code;
-        }
-
-        public String getDescription() {
-            return description;
-        }
-    }
 }
 

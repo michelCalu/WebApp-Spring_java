@@ -3,8 +3,9 @@ package be.unamur.hermes.business.service;
 import be.unamur.hermes.business.exception.BusinessException;
 import be.unamur.hermes.common.enums.*;
 import be.unamur.hermes.business.exception.NRNNotValidException;
+import be.unamur.hermes.business.exception.NRNServiceAccessException;
 import be.unamur.hermes.business.io.NRNValidation;
-import be.unamur.hermes.business.model.NRNValidationModel;
+import be.unamur.hermes.business.model.NRNValidation.NRNValidationModel;
 import be.unamur.hermes.dataaccess.entity.Citizen;
 import be.unamur.hermes.dataaccess.repository.CitizenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -126,7 +127,7 @@ public class CitizenServiceImpl implements CitizenService {
     }
 
     @Override
-    public Boolean validateNRN(String citizenID) throws NRNNotValidException {
+    public Boolean validateNRN(String citizenID) throws NRNNotValidException, NRNServiceAccessException {
         //Citizen citizen = citizenRepository.findById(citizenID);
         //String nRN = citizen.getNationalRegistreNb();
         NRNValidationModel nrnValidationModel = new NRNValidation().validate(citizenID);
