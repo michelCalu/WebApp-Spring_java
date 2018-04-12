@@ -41,4 +41,9 @@ public class RequestServiceImpl implements RequestService {
     public List<Request> findByCitizenId(long citizenId) {
 	return requestRepository.findByCitizen(citizenId);
     }
+
+    @Override
+    public List<Request> find(long citizenId, long requestTypeId) {
+	return requestRepository.findByCitizen(citizenId, requestTypeId);
+    }
 }

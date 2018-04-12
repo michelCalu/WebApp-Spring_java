@@ -10,6 +10,8 @@ public interface RequestService {
 
     List<Request> findByCitizenId(long citizenId);
 
+    List<Request> find(long citizenId, long requestTypeId);
+
     long create(Request newClaim);
 
 }

@@ -18,9 +18,12 @@ public class RequestRepositoryImpl implements RequestRepository {
 
     // queries
     private static final String queryById = //
-	    "SELECT cl.requestID as id, cl.requestTypeID as typeId, cl.employeeID, cl.citizenID, cl.status FROM t_requests cl WHERE cl.requestID = ?";
+	    "SELECT req.requestID, req.requestTypeID, req.employeeID, req.citizenID, req.status FROM t_requests req WHERE req.requestID = ?";
     private static final String queryByCitizenId = //
-	    "SELECT cl.requestID as id, cl.requestTypeID as typeId, cl.employeeID, cl.citizenID, cl.status FROM t_requests cl WHERE cl.citizenID = ?";
+	    "SELECT req.requestID, req.requestTypeID, req.employeeID, req.citizenID, req.status FROM t_requests req WHERE req.citizenID = ?";
+    private static final String queryByCitizenIdAndRequestType = queryByCitizenId //
+	    + " AND req.requestTypeID = ?";
+
     private static final String create = //
 	    "INSERT INTO t_requests(requestTypeID, employeeID, citizenID, status) VALUES(?,?,?,?)";
 
@@ -46,6 +49,14 @@ public class RequestRepositoryImpl implements RequestRepository {
     }
 
     @Override
+    public List<Request> findByCitizen(long citizenId, long requestTypeId) {
+	List<Request> requests = jdbcTemplate.query(queryByCitizenIdAndRequestType,
+		new Object[] { citizenId, requestTypeId }, new RequestRowMapper());
+	requests.stream().forEach(this::fillRequest);
+	return requests;
+    }
+
+    @Override
     public Request findById(long id) {
 	Request result = jdbcTemplate.queryForObject(queryById, new Object[] { id }, new RequestRowMapper());
 	fillRequest(result);
@@ -62,9 +73,11 @@ public class RequestRepositoryImpl implements RequestRepository {
 
     private void fillRequest(Request request) {
 	Citizen citizen = citizenRepository.findById(request.getCitizenId());
-	Employee assignee = employeeRepository.findById(request.getEmployeeId());
 	request.setCitizen(citizen);
-	request.setAssignee(assignee);
+	if (request.getEmployeeId() > 0) {
+	    Employee assignee = employeeRepository.findById(request.getEmployeeId());
+	    request.setAssignee(assignee);
+	}
     }
 
     private static class RequestRowMapper implements RowMapper<Request> {

@@ -1,6 +1,11 @@
 package be.unamur.hermes.web.controller;
 
 import java.util.List;
+import java.util.Optional;
+
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,10 +30,12 @@ public class RequestController {
     private static Logger logger = LoggerFactory.getLogger(RequestController.class);
 
     private final RequestService requestService;
+    private final ServletContext servletContext;
 
     @Autowired
-    public RequestController(RequestService requestService) {
+    public RequestController(RequestService requestService, ServletContext servletContext) {
 	this.requestService = requestService;
+	this.servletContext = servletContext;
     }
 
     @GetMapping(path = "/{requestId}")
@@ -42,9 +49,12 @@ public class RequestController {
     }
 
     @GetMapping(path = "/all")
-    public ResponseEntity<List<Request>> getRequests(@RequestParam("citizenId") long citizenId) {
+    public ResponseEntity<List<Request>> getRequests(@RequestParam("citizenId") long citizenId,
+	    @RequestParam("requestTypeId") Optional<Long> requestTypeId) {
 	try {
-	    return ResponseEntity.status(HttpStatus.OK).body(requestService.findByCitizenId(citizenId));
+	    List<Request> data = requestTypeId.isPresent() ? requestService.find(citizenId, requestTypeId.get())
+		    : requestService.findByCitizenId(citizenId);
+	    return ResponseEntity.status(HttpStatus.OK).body(data);
 	} catch (Exception ex) {
 	    logger.error("Bad request", ex);
 	    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
@@ -52,11 +62,16 @@ public class RequestController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> createRequest(@RequestBody Request newRequest) {
+    public ResponseEntity<Void> createRequest(@RequestBody Request newRequest, HttpServletRequest request,
+	    HttpServletResponse response) {
 	try {
 	    Long requestId = requestService.create(newRequest);
-	    return (requestId != null) ? ResponseEntity.status(HttpStatus.CREATED).build()
-		    : ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+	    if (requestId != null) {
+		ResponseEntity<Void> result = ResponseEntity.status(HttpStatus.CREATED).build();
+		response.addHeader("Location", String.format("/requests/{%s}", String.valueOf(requestId)));
+		return result;
+	    }
+	    return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 	} catch (Exception ex) {
 	    logger.error("Bad request", ex);
 	    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);

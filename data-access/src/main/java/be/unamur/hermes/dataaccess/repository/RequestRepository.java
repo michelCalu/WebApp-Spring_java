@@ -8,6 +8,8 @@ public interface RequestRepository {
 
     List<Request> findByCitizen(long citizenId);
 
+    List<Request> findByCitizen(long citizenId, long requestTypeId);
+
     Request findById(long id);
 
     long create(Request newClaim);
