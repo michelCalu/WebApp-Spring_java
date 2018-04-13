@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Citizen } from '../_models/citizen.model';
 import { CitizenService } from '../_services/citizen.service';
 import { RequestService, MockAuthService } from '../_services';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 import { CitizenRequest } from '../_models/citizen-request.model';
 
 @Component({
