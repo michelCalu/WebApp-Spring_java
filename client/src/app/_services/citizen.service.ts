@@ -1,12 +1,12 @@
-import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Citizen, Address } from '../_models/index'
 import { User } from '../_models/index'
 //import { Request } from
 
 const httpOptions = {
-  headers: new HttpHeaders({'Content-Type': 'application/json'})
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
 
 @Injectable()
@@ -20,25 +20,25 @@ export class CitizenService {
     return this.http.get("/about");
   }
 
-  public createCitizen(citizen: Citizen, address: Address) {
+  public createCitizen(citizen: Citizen, address: Address): Observable<any> {
     citizen.address = address;
     citizen.citizenID = 42;
     return this.http.post("/citizens", citizen);
   }
-// to test login
-  public login(user: User){
+  // to test login
+  public login(user: User) {
     return this.http.post("/login", user);
   }
 
-  public showFolders(){
+  public showFolders() {
     return this.http.get("/myfolders");
   }
 
-  public showProfile(){
+  public showProfile() {
     return this.http.get("/myprofile");
   }
 
-  public showRequests(){
+  public showRequests() {
     return this.http.get("/myrequests");
   }
 

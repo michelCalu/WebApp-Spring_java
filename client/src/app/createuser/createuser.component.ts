@@ -8,7 +8,7 @@ import { Citizen, Address } from "../_models/index";
 	moduleId: module.id,
 	templateUrl: './createuser.component.html',
 })
-export class CreateUserComponent{
+export class CreateUserComponent {
 
 	citizen: Citizen = new Citizen();
 	address: Address = new Address();
