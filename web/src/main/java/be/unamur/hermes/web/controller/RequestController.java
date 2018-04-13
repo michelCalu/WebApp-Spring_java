@@ -3,7 +3,6 @@ package be.unamur.hermes.web.controller;
 import java.util.List;
 import java.util.Optional;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -30,12 +29,10 @@ public class RequestController {
     private static Logger logger = LoggerFactory.getLogger(RequestController.class);
 
     private final RequestService requestService;
-    private final ServletContext servletContext;
 
     @Autowired
-    public RequestController(RequestService requestService, ServletContext servletContext) {
+    public RequestController(RequestService requestService) {
 	this.requestService = requestService;
-	this.servletContext = servletContext;
     }
 
     @GetMapping(path = "/{requestId}")
@@ -48,7 +45,7 @@ public class RequestController {
 	}
     }
 
-    @GetMapping(path = "/all")
+    @GetMapping
     public ResponseEntity<List<Request>> getRequests(@RequestParam("citizenId") long citizenId,
 	    @RequestParam("requestTypeId") Optional<Long> requestTypeId) {
 	try {
