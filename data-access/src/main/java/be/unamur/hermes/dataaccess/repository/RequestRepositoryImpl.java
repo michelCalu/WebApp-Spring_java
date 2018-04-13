@@ -27,9 +27,6 @@ public class RequestRepositoryImpl implements RequestRepository {
     private static final String queryByCitizenIdAndRequestType = queryByCitizenId //
 	    + " AND req.requestTypeID = ?";
 
-    private static final String create = //
-	    "INSERT INTO t_requests(requestTypeID, employeeID, citizenID, status) VALUES(?,?,?,?)";
-
     private final JdbcTemplate jdbcTemplate;
     private final SimpleJdbcInsert inserter;
     private final CitizenRepository citizenRepository;
