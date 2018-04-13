@@ -2,11 +2,14 @@ package be.unamur.hermes.dataaccess.repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
 import be.unamur.hermes.dataaccess.entity.Citizen;
@@ -28,6 +31,7 @@ public class RequestRepositoryImpl implements RequestRepository {
 	    "INSERT INTO t_requests(requestTypeID, employeeID, citizenID, status) VALUES(?,?,?,?)";
 
     private final JdbcTemplate jdbcTemplate;
+    private final SimpleJdbcInsert inserter;
     private final CitizenRepository citizenRepository;
     private final EmployeeRepository employeeRepository;
 
@@ -36,6 +40,8 @@ public class RequestRepositoryImpl implements RequestRepository {
 	    EmployeeRepository employeeRepository) {
 	super();
 	this.jdbcTemplate = jdbcTemplate;
+	this.inserter = new SimpleJdbcInsert(jdbcTemplate.getDataSource()).withTableName("t_requests")
+		.usingGeneratedKeyColumns("requestID");
 	this.citizenRepository = citizenRepository;
 	this.employeeRepository = employeeRepository;
     }
@@ -65,10 +71,13 @@ public class RequestRepositoryImpl implements RequestRepository {
 
     @Override
     public long create(Request newRequest) {
-	Long citizenId = newRequest.getCitizen().getId();
+	Map<String, Object> parameters = new HashMap<>();
+	parameters.put("requestTypeID", newRequest.getTypeId());
+	parameters.put("citizenID", newRequest.getCitizen().getId());
 	Long employeeId = newRequest.getAssignee() == null ? null : newRequest.getAssignee().getId();
-	return jdbcTemplate.update(create,
-		new Object[] { newRequest.getTypeId(), employeeId, citizenId, newRequest.getStatus() });
+	parameters.put("employeeID", employeeId);
+	parameters.put("status", newRequest.getStatus());
+	return (Long) inserter.executeAndReturnKey(parameters);
     }
 
     private void fillRequest(Request request) {
