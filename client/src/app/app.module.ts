@@ -16,6 +16,7 @@ import { LoginComponent } from './login/index';
 import { MyFoldersComponent } from './myfolders/index';
 import { MyProfileComponent } from './myprofile/index';
 import { MyRequestsComponent } from './myrequests/index';
+import { NationalityCertificateCreationComponent} from './nationality-certificate-creation';
 import { NewRequestComponent } from './newrequest/index';
 import { RegisterComponent } from './register/index';
 //import { ShowNewComponent } from './shownewcitizen/shownewcitizen.component';
@@ -32,6 +33,7 @@ import { RegisterComponent } from './register/index';
     MyProfileComponent,
     MyRequestsComponent,
     NewRequestComponent,
+    NationalityCertificateCreationComponent,
     RegisterComponent,
     //ShowNewComponent
   ],
