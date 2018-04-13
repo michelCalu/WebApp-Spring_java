@@ -1,3 +1,31 @@
-<div class="col-md-6 col-md-offset-3">
-	<h1>Mes requêtes</h1>
+<div class="col-md-9 col-md-offset-3">
+	<h1>Mes demandes</h1>
+	<div> ... Espace de recherche ici ...</div>
+	<br>
+	<br>
+	<div class="container">
+		<table *ngIf="(citizenRequests$ | async)?.length; else noRequests" class="table table-striped">
+			<thead>
+				<tr>
+					<th scope="col">Nom</th>
+					<th scope="col">Date demande</th>
+					<th scope="col">Statut</th>
+					<th scope="col">Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngFor="let request of (citizenRequests$ | async)">
+					<th scope="row">{{request.type}}</th>
+					<td>--</td> <!-- TODO -->
+					<td>{{request.status}}</td>
+					<td>--</td>
+				</tr>
+			</tbody>
+		</table>
+		<ng-template #noRequests>
+			<div>Vous n'avez pas encore introduit des demandes</div>
+		</ng-template>
+
+	</div>
+
 </div>

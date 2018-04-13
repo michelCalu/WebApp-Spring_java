@@ -1,7 +1,7 @@
 export class CitizenRequest {
   id: number;
   type: string;
-  status: any; // number ?
+  status: string;
   assignee: any; // employee
   citizen: any; // citizen
 }
