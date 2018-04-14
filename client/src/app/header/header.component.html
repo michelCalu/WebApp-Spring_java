@@ -1,19 +1,19 @@
 <div *ngIf="isLoggedIn$ | async as isLoggedIn; else logout">
     <ul class="nav nav-tabs">
-        <li class="nav-item"><a class="nav-link" routerLink="newrequest">Nouvelle demande</a></li>
-        <li class="nav-item"><a class="nav-link" routerLink="myrequests">Mes demandes</a></li>
-        <li class="nav-item"><a class="nav-link" routerLink="myfolders">Mes documents</a></li>
-        <li class="nav-item"><a class="nav-link" routerLink="myprofile">Mon profile</a></li>
-        <li class="nav-item" class="disabled"><a class="nav-link" routerLink="" style="color: red">Mes sociétés</a></li>
-        <li class="nav-item"><a class="nav-link" routerLink="home" (click)="onLogout()">Se déconnecter</a></li>
+        <li class="nav-item"><a class="nav-link" routerLink="newrequest">{{'newrequest' | translate}}</a></li>
+        <li class="nav-item"><a class="nav-link" routerLink="myrequests">{{'myrequests' | translate}}</a></li>
+        <li class="nav-item"><a class="nav-link" routerLink="myfolders">{{'mydocuments' | translate}}</a></li>
+        <li class="nav-item"><a class="nav-link" routerLink="myprofile">{{'myprofile' | translate}}</a></li>
+        <li class="nav-item" class="disabled"><a class="nav-link" routerLink="" style="color: red">{{'mycompanies' | translate}}</a></li>
+        <li class="nav-item"><a class="nav-link" routerLink="home" (click)="onLogout()">{{'logout' | translate}}</a></li>
         <li class="nav-item"><a class="nav-link" (click)="switchLanguage()"> {{currentLanguage === 'fr' ? 'en' : 'fr'}}</a></li>
     </ul>
 </div>
 
 <ng-template #logout>
     <ul class="nav nav-tabs">
-        <li class="nav-item"><a class="nav-link" routerLink="home">Accueil</a></li>
-        <li class="nav-item"><a class="nav-link" routerLink="createuser">S'inscrire</a></li>
-        <li class="nav-item"><a class="nav-link" routerLink="login">Se connecter</a></li>
+        <li class="nav-item"><a class="nav-link" routerLink="home">{{'home' | translate}}</a></li>
+        <li class="nav-item"><a class="nav-link" routerLink="createuser">{{'signup' | translate}}</a></li>
+        <li class="nav-item"><a class="nav-link" routerLink="login">{{'signin' | translate}}</a></li>
     </ul>
 </ng-template>

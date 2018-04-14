@@ -1,5 +1,5 @@
 <div class="col-md-9 col-md-offset-3">
-	<h1>Mes demandes</h1>
+	<h1>{{'myrequests' | translate}}</h1>
 	<div> ... Espace de recherche ici ...</div>
 	<br>
 	<br>
@@ -7,10 +7,10 @@
 		<table *ngIf="(citizenRequests$ | async)?.length; else noRequests" class="table table-striped">
 			<thead>
 				<tr>
-					<th scope="col">Type</th>
-					<th scope="col">Date demande</th>
-					<th scope="col">Statut</th>
-					<th scope="col">Actions</th>
+					<th scope="col">{{'type' | translate}}</th>
+					<th scope="col">{{'requestDate' | translate}}</th>
+					<th scope="col">{{'status' | translate}}</th>
+					<th scope="col">{{'actions' | translate}}</th>
 				</tr>
 			</thead>
 			<tbody>

@@ -1,6 +1,25 @@
 {
-    "nationalityCertificate": "certificat de nationalité",
-    
-    "ongoing": "en cours"
+    "actions": "actions",
 
+    "home": "accueil",
+
+    "logout": "se déconnecter",
+
+    "mycompanies": "mes sociétés",
+    "mydocuments": "mes documents",
+    "myprofile": "mon profile",
+    "myrequests": "mes demandes",
+
+    "nationalityCertificate": "certificat de nationalité",
+    "newrequest": "nouvelle demande",
+    
+    "ongoing": "en cours",
+
+    "requestDate": "date demande",
+
+    "signin": "se connecter",
+    "signup": "s'inscrire",
+    "status": "statut",
+
+    "type": "type"
 }

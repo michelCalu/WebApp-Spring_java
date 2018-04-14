@@ -1,6 +1,25 @@
 {
+    "actions": "actions",
+
+    "home": "home",
+
+    "logout": "logout",
+
+    "mycompanies": "my companies",
+    "mydocuments": "my documents",
+    "myrequests": "my requests",
+
     "nationalityCertificate": "nationality certificate",
+    "newrequest": "new request",    
     
-    "ongoing": "ongoing"
+    "ongoing": "ongoing",
+
+    "requestDate": "request date",
+
+    "signin": "sign in",
+    "signup": "sign up",
+    "status": "status",
+
+    "type": "type"
 
 }
