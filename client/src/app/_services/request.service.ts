@@ -33,7 +33,7 @@ export class RequestService {
     // TODO should be: return this.http.get('/requests/citizenID?'+ citizenID);
 
     // TODO remove this
-    const stringifiedCitizenRequests = localStorage.getItem('requests');
+    const stringifiedCitizenRequests = sessionStorage.getItem('requests');
     const citizenRequests = stringifiedCitizenRequests ? JSON.parse(stringifiedCitizenRequests) : [];
     return Observable.of(citizenRequests);
     
