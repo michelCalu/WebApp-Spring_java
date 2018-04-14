@@ -13,14 +13,14 @@ export class RequestService {
   public createRequest(request: CitizenRequest): Observable<boolean> {
     // TODO should be: return this.http.post('/requests', request);
 
-    // TODO to be removed: 
-    let existingRequests = JSON.parse(localStorage.getItem('requests'));
+    // TODO to be removed:
+    let existingRequests = JSON.parse(sessionStorage.getItem('requests'));
     if (!existingRequests) {
       existingRequests = [];
     }
     existingRequests.push(request);
-    
-    localStorage.setItem('requests', JSON.stringify(existingRequests));
+
+    sessionStorage.setItem('requests', JSON.stringify(existingRequests));
     return Observable.of(true);
   }
 }
