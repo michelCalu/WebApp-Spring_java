@@ -1,5 +1,5 @@
 -- test data
-insert into t_request_types values(1,"Certificat de nationalité");
+insert into t_request_types values(1,"nationalityCertificate");
 
 insert into t_addresses values(null,"Belgium","Bruxelles",1020,"Avenue de la Reine", 279);
 insert into t_addresses values(null,"Belgium","Bruxelles",1080,"Quelque Rue", 13);

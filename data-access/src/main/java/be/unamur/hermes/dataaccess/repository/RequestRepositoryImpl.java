@@ -13,8 +13,10 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
 import be.unamur.hermes.dataaccess.entity.Citizen;
+import be.unamur.hermes.dataaccess.entity.CreateRequest;
 import be.unamur.hermes.dataaccess.entity.Employee;
 import be.unamur.hermes.dataaccess.entity.Request;
+import be.unamur.hermes.dataaccess.entity.RequestType;
 
 @Repository
 public class RequestRepositoryImpl implements RequestRepository {
@@ -26,6 +28,8 @@ public class RequestRepositoryImpl implements RequestRepository {
 	    "SELECT req.requestID, req.requestTypeID, req.employeeID, req.citizenID, req.status FROM t_requests req WHERE req.citizenID = ?";
     private static final String queryByCitizenIdAndRequestType = queryByCitizenId //
 	    + " AND req.requestTypeID = ?";
+    private static final String queryRequestTypeByDescription = //
+	    "SELECT rt.requestTypeID, rt.description FROM t_request_types rt WHERE rt.description = ? ";
 
     private final JdbcTemplate jdbcTemplate;
     private final SimpleJdbcInsert inserter;
@@ -67,14 +71,20 @@ public class RequestRepositoryImpl implements RequestRepository {
     }
 
     @Override
-    public long create(Request newRequest) {
+    public long create(CreateRequest newRequest) {
 	Map<String, Object> parameters = new HashMap<>();
-	parameters.put("requestTypeID", newRequest.getTypeId());
-	parameters.put("citizenID", newRequest.getCitizen().getId());
-	Long employeeId = newRequest.getAssignee() == null ? null : newRequest.getAssignee().getId();
+	parameters.put("requestTypeID", newRequest.getRequestTypeId());
+	parameters.put("citizenID", newRequest.getCitizen());
+	Long employeeId = newRequest.getAssignee() == null ? null : newRequest.getAssignee();
 	parameters.put("employeeID", employeeId);
 	parameters.put("status", newRequest.getStatus());
 	return (Long) inserter.executeAndReturnKey(parameters);
+    }
+
+    @Override
+    public RequestType findRequestTypeByDescription(String description) {
+	return jdbcTemplate.queryForObject(queryRequestTypeByDescription, new Object[] { description },
+		(rs, rowId) -> new RequestType(rs.getLong(1), rs.getString(2)));
     }
 
     private void fillRequest(Request request) {

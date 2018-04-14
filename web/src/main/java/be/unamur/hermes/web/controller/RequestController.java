@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import be.unamur.hermes.business.service.RequestService;
+import be.unamur.hermes.dataaccess.entity.CreateRequest;
 import be.unamur.hermes.dataaccess.entity.Request;
 
 @RestController
@@ -59,7 +60,7 @@ public class RequestController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> createRequest(@RequestBody Request newRequest, HttpServletRequest request,
+    public ResponseEntity<Void> createRequest(@RequestBody CreateRequest newRequest, HttpServletRequest request,
 	    HttpServletResponse response) {
 	try {
 	    Long requestId = requestService.create(newRequest);

@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum ClaimId {
 
-    NATIONALITY_CERTIFICATE("cert-nationality"), //
+    NATIONALITY_CERTIFICATE("nationalityCertificate"), //
     PARKING_PERMISSION("perm-parking");
 
     private final String id;

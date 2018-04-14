@@ -49,7 +49,8 @@ CREATE TABLE t_employees (
 
 CREATE TABLE t_request_types (
 	requestTypeID INT PRIMARY KEY NOT NULL,
-	description VARCHAR(255)
+	description VARCHAR(255),
+	CONSTRAINT UC_Description UNIQUE (description)
 );
 
 CREATE TABLE t_requests (

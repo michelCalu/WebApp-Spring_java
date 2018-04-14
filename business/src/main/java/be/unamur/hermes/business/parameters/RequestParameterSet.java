@@ -14,7 +14,7 @@ import be.unamur.hermes.common.enums.ClaimId;
 public class RequestParameterSet {
 
     private final String municipality;
-    private final Map<ClaimId, RequestType> claims;
+    private final Map<ClaimId, RequestParameters> claims;
 
     public RequestParameterSet(String municipality) {
 	super();
@@ -27,20 +27,20 @@ public class RequestParameterSet {
     }
 
     public boolean isActivated(ClaimId claimId) {
-	RequestType claimType = getClaimType(claimId);
+	RequestParameters claimType = getClaimType(claimId);
 	return claimType == null ? false : claimType.isActivated();
     }
 
-    public RequestType getClaimType(ClaimId claimId) {
+    public RequestParameters getClaimType(ClaimId claimId) {
 	return claims.get(claimId);
     }
 
     public String getParameter(ClaimId claimId, String parameterId) {
-	RequestType claimType = getClaimType(claimId);
+	RequestParameters claimType = getClaimType(claimId);
 	return claimType == null ? null : claimType.getParameter(parameterId);
     }
 
-    public List<RequestType> getClaimTypes() {
+    public List<RequestParameters> getClaimTypes() {
 	return new ArrayList<>(claims.values());
     }
 
@@ -49,7 +49,7 @@ public class RequestParameterSet {
 	return "ClaimParameterSet [municipality=" + municipality + ", claims=" + claims + "]";
     }
 
-    void addClaimParameters(ClaimId id, RequestType claim) {
+    void addClaimParameters(ClaimId id, RequestParameters claim) {
 	claims.put(id, claim);
     }
 }
