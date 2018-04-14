@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 
 import { AlertService, AuthenticationService, CitizenService, MockAuthService, RequestService } from './_services/index';
@@ -19,7 +19,14 @@ import { MyRequestsComponent } from './myrequests/index';
 import { NationalityCertificateCreationComponent} from './nationality-certificate-creation';
 import { NewRequestComponent } from './newrequest/index';
 import { RegisterComponent } from './register/index';
+import { TranslateModule, TranslateLoader} from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 // import { ShowNewComponent } from './shownewcitizen/shownewcitizen.component';
+
+// AoT requires an exported function for factories
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http);
+}
 
 @NgModule({
   declarations: [
@@ -41,7 +48,14 @@ import { RegisterComponent } from './register/index';
     AppRoutingModule,
     BrowserModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    TranslateModule.forRoot({
+      loader: {
+          provide: TranslateLoader,
+          useFactory: HttpLoaderFactory,
+          deps: [HttpClient]
+      }
+    })
   ],
   providers: [
     AuthGuard,

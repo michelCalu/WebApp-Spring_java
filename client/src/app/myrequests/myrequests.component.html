@@ -7,7 +7,7 @@
 		<table *ngIf="(citizenRequests$ | async)?.length; else noRequests" class="table table-striped">
 			<thead>
 				<tr>
-					<th scope="col">Nom</th>
+					<th scope="col">Type</th>
 					<th scope="col">Date demande</th>
 					<th scope="col">Statut</th>
 					<th scope="col">Actions</th>
@@ -15,9 +15,9 @@
 			</thead>
 			<tbody>
 				<tr *ngFor="let request of (citizenRequests$ | async)">
-					<th scope="row">{{request.type}}</th>
+					<th scope="row">{{request.type | translate}}</th>
 					<td>--</td> <!-- TODO -->
-					<td>{{request.status}}</td>
+					<td>{{request.status | translate}}</td>
 					<td>--</td>
 				</tr>
 			</tbody>
