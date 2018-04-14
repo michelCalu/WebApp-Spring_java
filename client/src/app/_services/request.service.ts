@@ -14,7 +14,7 @@ export class RequestService {
     // TODO should be: return this.http.post('/requests', request);
 
     // TODO to be removed:
-    let existingRequests = JSON.parse(localStorage.getItem('requests'));
+    let existingRequests = JSON.parse(sessionStorage.getItem('requests'));
     if (!existingRequests) {
       existingRequests = [];
     }
@@ -25,7 +25,7 @@ export class RequestService {
     request.citizen.lastName = 'Doe';
     existingRequests.push(request);
 
-    localStorage.setItem('requests', JSON.stringify(existingRequests));
+    sessionStorage.setItem('requests', JSON.stringify(existingRequests));
     return Observable.of(true);
   }
 
