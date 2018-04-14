@@ -31,7 +31,7 @@ export class HeaderComponent implements OnInit {
         this.isLoggedIn$ = this.mockAuthService.isLoggedIn;
     }
 
-    onLogout(){
+    onLogout() {
         this.mockAuthService.logout();
         this.alertService.success('Vous êtes déconnecté');
     }
