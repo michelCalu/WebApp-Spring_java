@@ -6,6 +6,7 @@
         <li class="nav-item"><a class="nav-link" routerLink="myprofile">Mon profile</a></li>
         <li class="nav-item" class="disabled"><a class="nav-link" routerLink="" style="color: red">Mes sociétés</a></li>
         <li class="nav-item"><a class="nav-link" routerLink="home" (click)="onLogout()">Se déconnecter</a></li>
+        <li class="nav-item"><a class="nav-link" (click)="switchLanguage()"> {{currentLanguage === 'fr' ? 'en' : 'fr'}}</a></li>
     </ul>
 </div>
 
