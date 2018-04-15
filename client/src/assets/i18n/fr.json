@@ -1,7 +1,15 @@
 {
     "actions": "actions",
+    "additionalComment": "Communication libre",
+
+    "carMake": "Marque",
+    "carModel": "Modèle",
+    "carRegistrationNumber": "Immatriculation",
+    "colour": "Couleur",
 
     "home": "accueil",
+
+    "insuranceCertificate": "Certificat d'assurance",
 
     "logout": "se déconnecter",
 
@@ -11,9 +19,11 @@
     "myrequests": "mes demandes",
 
     "nationalityCertificate": "certificat de nationalité",
-    "newrequest": "nouvelle demande",
+    "newrequest": "nouvelle demande",    
     
     "ongoing": "en cours",
+
+    "parkingCard": "Carte de stationnement",
 
     "requestDate": "date demande",
 

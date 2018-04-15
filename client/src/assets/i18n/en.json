@@ -1,7 +1,15 @@
 {
     "actions": "actions",
+    "additionalComment": "Additional communication",
+
+    "carMake": "Car make",
+    "carModel": "Model",
+    "carRegistrationNumber": "Registration number",
+    "colour": "Colour",
 
     "home": "home",
+
+    "insuranceCertificate": "Insurance certificate",
 
     "logout": "logout",
 
@@ -13,6 +21,8 @@
     "newrequest": "new request",    
     
     "ongoing": "ongoing",
+
+    "parkingCard": "Parking card",
 
     "requestDate": "request date",
 
