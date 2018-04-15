@@ -10,6 +10,7 @@ import { MyProfileComponent } from './myprofile';
 import { MyRequestsComponent } from './myrequests';
 import { NewRequestComponent } from './newrequest';
 import { NationalityCertificateCreationComponent } from './nationality-certificate-creation';
+import { ParkingCardCreationComponent } from './parking-card-creation';
 
 const appRoutes: Routes = [
   //routes protected with AuthGuard
@@ -21,6 +22,7 @@ const appRoutes: Routes = [
       { path: 'myrequests', component: MyRequestsComponent },
       { path: 'newrequest', component: NewRequestComponent },
       { path: 'newrequest/nationality', component: NationalityCertificateCreationComponent},
+      { path: 'newrequest/parking', component: ParkingCardCreationComponent},
 
     ] },
   //unprotected routes:

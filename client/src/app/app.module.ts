@@ -21,6 +21,7 @@ import { NewRequestComponent } from './newrequest/index';
 import { RegisterComponent } from './register/index';
 import { TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { ParkingCardCreationComponent } from './parking-card-creation';
 // import { ShowNewComponent } from './shownewcitizen/shownewcitizen.component';
 
 // AoT requires an exported function for factories
@@ -41,6 +42,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     MyRequestsComponent,
     NewRequestComponent,
     NationalityCertificateCreationComponent,
+    ParkingCardCreationComponent,
     RegisterComponent,
     //ShowNewComponent
   ],
