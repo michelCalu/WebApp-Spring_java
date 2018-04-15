@@ -13,6 +13,7 @@ import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 /* file handling inspired by https://nehalist.io/uploading-files-in-angular2/ */
 export class ParkingCardCreationComponent implements OnInit {
 
+    fileLoaded: boolean;
     form: FormGroup;
     loading = false;
 
@@ -37,33 +38,37 @@ export class ParkingCardCreationComponent implements OnInit {
         if (event.target.files.length > 0) {
             const file = event.target.files[0];
             this.form.get('insurance_certificate').setValue(file);
+            this.fileLoaded = true;
         }
     }
 
-    private prepareSave(): any {
-        const input = new FormData();
-        input.append('insurance_certificate', this.form.get('insurance_certificate').value);
-        input.append('carMake', this.form.get('carMake').value);
-        input.append('carModel', this.form.get('carModel').value);
-        input.append('colour', this.form.get('colour').value);
-        input.append('carRegistrationNumber', this.form.get('carRegistrationNumber').value);
-
-        return input;
-    }
 
     onSubmit() {
-        const formModel = this.prepareSave();
         this.loading = true;
-        // this.requestService.createRequestWithUpload('parking');
-        // TODO  call createREquest
-        // on callback :
-        //     alert('done!');
-        //     this.loading = false;
+        const request = new CitizenRequest();
+        request.type =  'parkingCard';
+        request.data = {
+            carMake : this.form.get('carMake').value,
+            carModel: this.form.get('carModel').value,
+            colour: this.form.get('colour').value,
+            carRegistrationNumber: this.form.get('carRegistrationNumber').value
+        };
+
+        this.requestService.createRequestWithFileUploads(request, [this.form.get('insurance_certificate').value]).subscribe(success => {
+            this.loading = false;
+            if (success) {
+                this.router.navigate(['/myrequests']);
+                this.alertService.success('Demande de carte de parking bien envoyé');
+            } else {
+                this.alertService.error('Échec dans la carte de parking');
+            }
+        });
 
     }
 
     clearFile() {
         this.form.get('insurance_certificate').setValue(null);
         this.fileInput.nativeElement.value = '';
+        this.fileLoaded = false;
     }
 }

@@ -30,11 +30,11 @@
                     </div>
                     <div class="form-group">
                       <label for="insurance_certificate">{{'insuranceCertificate' | translate}}</label>
-                      <input type="file" id="insurance_certificate" (change)="onFileChange($event)" #fileInput>
+                      <input type="file" id="insurance_certificate" (change)="onFileChange($event)" #fileInput required>
                       <button type="button" class="btn btn-sm btn-default" (click)="clearFile()">clear file</button>
                     </div>
- 
-                    <button type="submit" [disabled]="form.invalid || loading" class="btn btn-success">Submit <i class="fa fa-spinner fa-spin fa-fw" *ngIf="loading"></i></button>
+                    <!-- TODO include awsome font for spinner -->
+                    <button type="submit" [disabled]="form.invalid || !fileLoaded || loading" class="btn btn-success">Submit <span *ngIf="loading"><i class="fa fa-spinner fa-spin fa-fw">Loading</i></span></button>
            
             </form>
 		</div>
