@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import be.unamur.hermes.business.parameters.RequestType;
+import be.unamur.hermes.business.parameters.RequestParameters;
 import be.unamur.hermes.business.service.ParameterService;
 
 @RestController
@@ -36,13 +36,13 @@ public class ApplicationController {
     }
 
     @GetMapping(path = "/parameters/{municipality}")
-    public ResponseEntity<RequestType> getClaimType(@PathVariable(value = "municipality") String municipality,
+    public ResponseEntity<RequestParameters> getRequestParameters(@PathVariable(value = "municipality") String municipality,
 	    @RequestParam("requestTypeId") String requestTypeId) {
 	return ResponseEntity.status(HttpStatus.OK).body(parameterService.getRequestType(municipality, requestTypeId));
     }
 
     @GetMapping(path = "/parameters/{municipality}/all")
-    public ResponseEntity<List<RequestType>> getClaimTypes(@PathVariable(value = "municipality") String municipality) {
+    public ResponseEntity<List<RequestParameters>> getAllRequestParameters(@PathVariable(value = "municipality") String municipality) {
 	return ResponseEntity.status(HttpStatus.OK).body(parameterService.getRequestTypes(municipality));
     }
 
