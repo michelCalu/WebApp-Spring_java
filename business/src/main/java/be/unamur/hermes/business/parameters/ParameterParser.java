@@ -97,13 +97,13 @@ public class ParameterParser {
 	RequestParameterSet cps = new RequestParameterSet(idString);
 	List<Element> parameterElems = DomUtils.getChildElementsByTagName(municipalityElem, TAG_REQUESTTYPE);
 	for (Element paramElem : parameterElems) {
-	    RequestType cp = parseClaim(paramElem);
+	    RequestParameters cp = parseClaim(paramElem);
 	    cps.addClaimParameters(cp.getId(), cp);
 	}
 	return cps;
     }
 
-    private RequestType parseClaim(Element claimElem) {
+    private RequestParameters parseClaim(Element claimElem) {
 	String claimIdString = claimElem.getAttribute(ATTR_ID);
 	if (!StringUtils.hasText(claimIdString))
 	    throw new BusinessException(missingAttribute(claimElem, ATTR_ID));
@@ -113,7 +113,7 @@ public class ParameterParser {
 		    StringUtils.arrayToCommaDelimitedString(ClaimId.values()));
 	    throw new BusinessException(message);
 	}
-	RequestType cp = new RequestType(claimType);
+	RequestParameters cp = new RequestParameters(claimType);
 	// parse parameter nodes (if any)
 	for (Element child : DomUtils.getChildElements(claimElem)) {
 	    parseParams(child, cp, "");
@@ -121,7 +121,7 @@ public class ParameterParser {
 	return cp;
     }
 
-    private void parseParams(Element elem, RequestType params, String parentId) {
+    private void parseParams(Element elem, RequestParameters params, String parentId) {
 	String newId = appendXPathSegment(parentId, elem);
 	List<Element> children = DomUtils.getChildElements(elem);
 	// is element leaf ?

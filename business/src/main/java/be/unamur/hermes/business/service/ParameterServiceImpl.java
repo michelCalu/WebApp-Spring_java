@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 import be.unamur.hermes.business.exception.BusinessException;
 import be.unamur.hermes.business.parameters.RequestParameterSet;
-import be.unamur.hermes.business.parameters.RequestType;
+import be.unamur.hermes.business.parameters.RequestParameters;
 import be.unamur.hermes.business.parameters.ParameterParser;
 import be.unamur.hermes.common.enums.ClaimId;
 
@@ -34,12 +34,12 @@ public class ParameterServiceImpl implements ParameterService {
 
     @Override
     public String getParameter(String municipality, String claimId, String parameterId) {
-	RequestType claimType = getRequestType(municipality, claimId);
+	RequestParameters claimType = getRequestType(municipality, claimId);
 	return claimType == null ? null : claimType.getParameter(parameterId);
     }
 
     @Override
-    public RequestType getRequestType(String municipality, String claimId) {
+    public RequestParameters getRequestType(String municipality, String claimId) {
 	ClaimId id = ClaimId.getClaimId(claimId);
 	if (id == null)
 	    throw new BusinessException("Unknown claim type '" + claimId + "'");
@@ -48,7 +48,7 @@ public class ParameterServiceImpl implements ParameterService {
     }
 
     @Override
-    public List<RequestType> getRequestTypes(String municipality) {
+    public List<RequestParameters> getRequestTypes(String municipality) {
 	RequestParameterSet parameterSet = getSet(municipality);
 	return parameterSet == null ? Collections.emptyList() : parameterSet.getClaimTypes();
     }

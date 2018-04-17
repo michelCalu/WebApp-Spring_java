@@ -1,13 +1,17 @@
 package be.unamur.hermes.web.controller;
 
 import be.unamur.hermes.business.exception.BusinessException;
+import be.unamur.hermes.business.exception.NRNNotValidException;
 import be.unamur.hermes.business.service.CitizenService;
 import be.unamur.hermes.dataaccess.entity.Citizen;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 
 @RestController
@@ -21,49 +25,61 @@ public class CitizensController {
         this.citizenService = citizenService;
     }
 
+    // CREATE
+
     @PostMapping
-    public ResponseEntity<Void> createCitizen(@RequestBody Citizen citizen) {
-        citizenService.register(citizen);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+    public ResponseEntity<Object> createCitizen(@RequestBody Citizen citizen)throws URISyntaxException {
+        try {
+            long id = citizenService.register(citizen);
+            HttpHeaders responseHeaders = new HttpHeaders();
+            responseHeaders.setLocation(new URI("/citizens/" + id));
+            return new ResponseEntity<>(responseHeaders,HttpStatus.CREATED);
+        } catch (BusinessException be) {
+            return new ResponseEntity<>(be, HttpStatus.BAD_REQUEST);
+        }
     }
+
+    // READ
 
     @GetMapping
     public ResponseEntity<List<Citizen>> showCitizens() {
-        return ResponseEntity.status(HttpStatus.OK).body(citizenService.findAll());
+        return new ResponseEntity<>(citizenService.findAll(), HttpStatus.OK);
     }
 
     @GetMapping(path = "/{citizenID}")
-    public ResponseEntity<Citizen> showCitizenById(@PathVariable(value = "citizenID") long citizenID) {
+    public ResponseEntity<Object> showCitizenById(@PathVariable(value = "citizenID") long citizenID) {
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(citizenService.findById(citizenID));
+            return new ResponseEntity<>(citizenService.findById(citizenID), HttpStatus.OK);
         } catch (BusinessException be) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+            return new ResponseEntity<>(be, HttpStatus.BAD_REQUEST);
         }
     }
 
     @GetMapping(path = "/{lastName}/{firstName}")
-    public ResponseEntity<Citizen> showCitizenByName(
+    public ResponseEntity<Object> showCitizenByName(
             @PathVariable(value = "lastName") String lastName,
             @PathVariable(value = "firstName") String firstName) {
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(citizenService.findByName(firstName,lastName));
+            return new ResponseEntity<>(citizenService.findByName(firstName,lastName), HttpStatus.OK);
         } catch (BusinessException be) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+            return new ResponseEntity<>(be, HttpStatus.BAD_REQUEST);
         }
     }
 
     @GetMapping(path = "/pending")
     public ResponseEntity<List<Citizen>> showPendingCitizens(){
-        return ResponseEntity.status(HttpStatus.OK).body(citizenService.findPending());
+        return new ResponseEntity<>(citizenService.findPending(), HttpStatus.OK);
     }
 
+    // UPDATE
+
     @PutMapping
-    public ResponseEntity<Citizen> activateCitizen(@RequestBody Citizen citizen) {
+    public ResponseEntity<Object> activateCitizen(@RequestBody Citizen citizen) {
         try{
             Citizen updatedCitizen = citizenService.activate(citizen);
-            return ResponseEntity.status(HttpStatus.OK).body(updatedCitizen);
+            return new ResponseEntity<>(updatedCitizen, HttpStatus.OK);
         } catch (BusinessException be){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+            return new ResponseEntity<>(be, HttpStatus.BAD_REQUEST);
         }
     }
 }

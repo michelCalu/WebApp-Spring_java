@@ -1,40 +1,19 @@
 package be.unamur.hermes.dataaccess.repository;
 
+import be.unamur.hermes.dataaccess.entity.Address;
 import be.unamur.hermes.dataaccess.entity.Citizen;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Types;
 import java.util.List;
 
 @Repository
 public class CitizenRepositoryImpl implements CitizenRepository {
-
-    // queries
-    private static final String queryById =
-            "SELECT * FROM t_citizens c WHERE c.citizenID = ?";
-
-    private static final String queryByName =
-            "SELECT * FROM t_citizens c WHERE c.firstname = ? AND c.lastname = ?";
-
-    private static final String queryAll =
-            "SELECT * FROM t_citizens";
-
-    private static final String queryPending =
-            "SELECT * FROM t_citizens c WHERE c.activated = FALSE";
-
-    private static final String createNew =
-            "INSERT INTO t_citizens (" +
-                    "firstName, lastName, addressID, mail, phone, " +
-                    "nationalRegistreNb, birthdate, activated) VALUES " +
-                    "(?, ?, ?, ?, ?, ?, ?, FALSE)";
-
-    private static final String updateActivate =
-            "UPDATE t_citizens c SET c.activated = TRUE WHERE c.citizenID = ?";
-
-    private static final BeanPropertyRowMapper<Citizen> citizenMapper = new BeanPropertyRowMapper<>(Citizen.class);
 
     private final JdbcTemplate jdbcTemplate;
     private final AddressRepository addressRepository;
@@ -50,7 +29,7 @@ public class CitizenRepositoryImpl implements CitizenRepository {
         return jdbcTemplate.queryForObject(
                 queryByName,
                 new Object[]{firstname, lastname},
-                citizenMapper
+                this::buildCitizen
         );
     }
 
@@ -59,22 +38,22 @@ public class CitizenRepositoryImpl implements CitizenRepository {
         return jdbcTemplate.queryForObject(
                 queryById,
                 new Object[]{citizenId},
-                citizenMapper
+                this::buildCitizen
         );
     }
 
     @Override
     public List<Citizen> findAll() {
-        return jdbcTemplate.query(queryAll,citizenMapper);
+        return jdbcTemplate.query(queryAll,this::buildCitizen);
     }
 
     @Override
     public List<Citizen> findPending() {
-        return jdbcTemplate.query(queryPending,citizenMapper);
+        return jdbcTemplate.query(queryPending,this::buildCitizen);
     }
 
     @Override
-    public void create(Citizen citizen) {
+    public long create(Citizen citizen) {
         long addressID = addressRepository.create(citizen.getAddress());
         Object[] values = {
                 citizen.getFirstName(),
@@ -82,7 +61,7 @@ public class CitizenRepositoryImpl implements CitizenRepository {
                 addressID,
                 citizen.getMail(),
                 citizen.getPhone(),
-                citizen.getNationalRegistreNb(),
+                citizen.getNationalRegisterNb(),
                 citizen.getBirthdate()
         };
 
@@ -94,11 +73,49 @@ public class CitizenRepositoryImpl implements CitizenRepository {
                 Types.VARCHAR,
                 Types.VARCHAR,
                 Types.VARCHAR};
-        jdbcTemplate.update(createNew, values, types);
+        return jdbcTemplate.update(createNew, values, types);
     }
 
     @Override
     public void activate(long citizenId) {
         jdbcTemplate.update(updateActivate, citizenId);
+    }
+
+
+    // Queries
+    private static final String queryById =
+            "SELECT * FROM t_citizens c WHERE c.citizenID = ?";
+
+    private static final String queryByName =
+            "SELECT * FROM t_citizens c WHERE c.firstname = ? AND c.lastname = ?";
+
+    private static final String queryAll =
+            "SELECT * FROM t_citizens";
+
+    private static final String queryPending =
+            "SELECT * FROM t_citizens c WHERE c.activated = FALSE";
+
+    private static final String createNew =
+            "INSERT INTO t_citizens (" +
+                    "firstName, lastName, addressID, mail, phone, " +
+                    "nationalRegisterNb, birthdate, activated) VALUES " +
+                    "(?, ?, ?, ?, ?, ?, ?, FALSE)";
+
+    private static final String updateActivate =
+            "UPDATE t_citizens c SET c.activated = TRUE WHERE c.id = ?";
+
+
+    // Other methods
+    private Citizen buildCitizen(ResultSet rs, int rowNum) throws SQLException{
+        return new Citizen(
+                rs.getLong(1),
+                rs.getString(2),
+                rs.getString(3),
+                addressRepository.findById(rs.getLong(4)),
+                rs.getString(5),
+                rs.getString(6),
+                rs.getString(7),
+                rs.getDate(8).toLocalDate(),
+                rs.getBoolean(9));
     }
 }

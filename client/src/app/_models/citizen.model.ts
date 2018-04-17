@@ -1,13 +1,14 @@
-import { Address } from "./index";
+import { Address } from "./address.model";
+
 
 export class Citizen {
-  citizenID: number;
+  id: number;
   firstName: string;
   lastName: string;
-  address: Address;
+  address = new Address();
   mail: string;
   phone: string;
-  nationalRegistreNb: string;
-  birthdate: string;
+  nationalRegisterNb: string;
+  birthdate: Date;
   //activated: boolean; To implement
 }

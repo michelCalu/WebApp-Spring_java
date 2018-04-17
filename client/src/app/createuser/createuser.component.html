@@ -1,31 +1,30 @@
 <div class="col-md-6">
-  <!--  <head>
-      <title> Inscription </title>
-    </head> -->
-  <!--  <body> -->
-  <h1>Inscription</h1>
-  <label for="firstName">Prénom:</label>
-  <input [(ngModel)]="citizen.firstName" placeholder="Prénom" name="firstName" class="form-control" id="firstName">
-  <label for="lastName">Nom:</label>
-  <input [(ngModel)]="citizen.lastName" placeholder="Nom" name="lastName" class="form-control" id="lastName">
-  <label for="mail">Mail:</label>
-  <input [(ngModel)]="citizen.mail" placeholder="nom@example.be" name="mail" class="form-control" id="mail">
-  <label for="phone">Phone:</label>
-  <input [(ngModel)]="citizen.phone" placeholder="0477 22 22 22" name="phone" class="form-control" id="phone">
-  <label for="nationalRegistreNb">Numéro de registre national:</label>
-  <input [(ngModel)]="citizen.nationalRegistreNb" placeholder="****** *** **" name="nationalRegisterNb" class="form-control" id="nationalRegistreNb">
-  <label for="birthdate">Date de naissance:</label>
-  <input [(ngModel)]="citizen.birthdate" placeholder="aaaa-MM-jjTHH:mm" name="birthdate" class="form-control" id="birthdate">
-  <label for="country">Pays:</label>
-  <input [(ngModel)]="address.country" placeholder="Belgique" name="country" class="form-control" id="country">
-  <label for="state">Commune:</label>
-  <input [(ngModel)]="address.state" placeholder="Bruxelles Capital" name="state" class="form-control" id="state">
-  <label for="street">Rue:</label>
-  <input [(ngModel)]="address.street" placeholder="Boulevard Anspach" name="street" class="form-control" id="street">
-  <label for="streetNb">Numéro de rue:</label>
-  <input [(ngModel)]="address.streetNb" placeholder="42" name="streetNb" class="form-control" id="streetNb">
-  <label for="zipCode">Code postal</label>
-  <input [(ngModel)]="address.zipCode" placeholder="1000" name="zipCode" class="form-control" id="zipCode">
-  <button class="btn btn-success" (click)="createCitizen()">Create</button>
-  <!--  </body> -->
+  <div class="container">
+	<h1>Inscription</h1>
+	<form #inscriptionForm="ngForm">
+	  <label for="firstName">Prénom:</label>
+	  <input [(ngModel)]="citizen.firstName" type="text" placeholder="Prénom" name="firstName" class="form-control" id="firstName" required>
+	  <label for="lastName">Nom:</label>
+	  <input [(ngModel)]="citizen.lastName" type="text" placeholder="Nom" name="lastName" class="form-control" id="lastName" required>
+	  <label for="mail">Mail:</label>
+	  <input [(ngModel)]="citizen.mail" email placeholder="Ex: nom@example.be" name="mail" class="form-control" id="mail" required>
+	  <label for="phone">Phone:</label>
+	  <input [(ngModel)]="citizen.phone" type="text" placeholder="Ex: 0477 22 22 22" name="phone" class="form-control" id="phone">
+	  <label for="nationalRegistreNb">Numéro de registre national:</label>
+	  <input [(ngModel)]="citizen.nationalRegisterNb" type="text" placeholder="****** *** **" name="nationalRegisterNb" class="form-control" id="nationalRegistreNb" required>
+	  <label for="birthdate">Date de naissance:</label>
+	  <input [(ngModel)]="citizen.birthdate" type="date" placeholder="aaaa-MM-jjTHH:mm" name="birthdate" class="form-control" id="birthdate">
+	  <label for="country">Pays:</label>
+	  <input [(ngModel)]="citizen.address.country" type="text" placeholder="Ex: Belgique" name="country" class="form-control" id="country" required>
+	  <label for="state">Commune:</label>
+	  <input [(ngModel)]="citizen.address.state" type="text" placeholder="Ex: Bruxelles Capital" name="state" class="form-control" id="state" required>
+	  <label for="street">Rue:</label>
+	  <input [(ngModel)]="citizen.address.street" type="text" placeholder="Boulevard Anspach" name="street" class="form-control" id="street" required>
+	  <label for="streetNb">Numéro de rue:</label>
+	  <input [(ngModel)]="citizen.address.streetNb" type="text" placeholder="Ex: 42B" name="streetNb" class="form-control" id="streetNb">
+	  <label for="zipCode">Code postal</label>
+	  <input [(ngModel)]="citizen.address.zipCode" type="text" placeholder="Ex: 1000" name="zipCode" class="form-control" id="zipCode" required>
+	  <button class="btn btn-success" [class.btn-danger]="!inscriptionForm.form.valid"(click)="createCitizen()" [disabled]="!inscriptionForm.form.valid">Create</button>
+	</form>
+  </div>
 </div>

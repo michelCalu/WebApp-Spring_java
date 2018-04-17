@@ -23,8 +23,8 @@ CREATE TABLE t_citizens (
   addressID     INT               NOT NULL,
   mail          VARCHAR(255)      NOT NULL,
   phone         VARCHAR(255),
-  nationalRegistreNb VARCHAR(255) NOT NULL,
-  birthdate     VARCHAR(255)              NOT NULL,
+  nationalRegisterNb VARCHAR(255) NOT NULL,
+  birthdate     DATE,
   activated     BOOLEAN DEFAULT FALSE,
   FOREIGN KEY (addressID) REFERENCES t_addresses(addressID)
 );
@@ -36,10 +36,10 @@ CREATE TABLE t_employees (
   addressID     INT               NOT NULL,
   mail          VARCHAR(255)      NOT NULL,
   phone         VARCHAR(255)      NOT NULL,
-  nationalRegistreNb VARCHAR(255) NOT NULL,
-  birthdate     VARCHAR(255)      NOT NULL,
+  nationalRegisterNb VARCHAR(255) NOT NULL,
+  birthdate     DATE              NOT NULL,
   accountNumber VARCHAR(255)      NOT NULL,
-  arrivalDate   DATETIME          NOT NULL,
+  arrivalDate   DATE              NOT NULL,
   gender        CHAR(1)           NOT NULL,
   civilStatus   VARCHAR(255)      NOT NULL,
   dependentChildren INT           NOT NULL,
@@ -49,7 +49,8 @@ CREATE TABLE t_employees (
 
 CREATE TABLE t_request_types (
 	requestTypeID INT PRIMARY KEY NOT NULL,
-	description VARCHAR(255)
+	description VARCHAR(255),
+	CONSTRAINT UC_Description UNIQUE (description)
 );
 
 CREATE TABLE t_requests (

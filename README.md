@@ -49,4 +49,22 @@ Puis définir la manière dont vous voulez lancer l'application :
   Ensuite créez votre serveur Tomcat en cliquant sur le petit '+' -> Tomcat server
   Dans l'écran de création du serveur, allez dans `Deployement` et ajouter un `Artefact -> war exploded` (les deux sont bons)
 
+### V. Certificat auto-signé
+
+Afin de pouvoir contacter le service externe de validation de registre national, vous devez ajouter le certificat
+auto-signé dans votre environnement.
+
+#### Windows
+
+Un simple double-clic suffit visiblement. Windows fait le reste.
+
+#### Linux
+
+Suivez les instructions : https://askubuntu.com/a/94861
+
+#### Mac
+
+Aucune idée, si ni la solution Windows ou Linux fonctionne il faudra chercher un peu.
+Du style : "execute crt file on Mac".
+
 Il ne vous reste plus qu'à appuyer sur 'run' ! :)

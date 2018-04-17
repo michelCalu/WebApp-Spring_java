@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <parameters>
 	<parametrizable id="Gembloux">
-		<requestType id="cert-nationality">
+		<requestType id="nationalityCertificate">
 			<activated>true</activated>
 		</requestType>
 		<requestType id="perm-parking" >
@@ -12,7 +12,7 @@
 		</requestType>
 	</parametrizable>
 	<parametrizable id="Namur">
-		<requestType id="cert-nationality">
+		<requestType id="nationalityCertificate">
 			<activated>true</activated>
 		</requestType>
 		<requestType id="perm-parking" >

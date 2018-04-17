@@ -1,5 +1,7 @@
 package be.unamur.hermes.dataaccess.entity;
 
+import java.sql.ResultSet;
+import java.time.LocalDate;
 import java.util.Objects;
 
 public class Citizen extends User {
@@ -10,11 +12,18 @@ public class Citizen extends User {
     public Citizen(){};
 
     public Citizen(
-            String firstName, String lastName, Address address, String mail, String phone,
-            String nationalRegistreNb, String birthdate
+            long id,
+            String firstName,
+            String lastName,
+            Address address,
+            String mail,
+            String phone,
+            String nationalRegisterNb,
+            LocalDate birthdate,
+            boolean activated
     ){
-        super(firstName, lastName, address, mail, phone, nationalRegistreNb, birthdate);
-        this.activated = false;
+        super(firstName, lastName, address, mail, phone, nationalRegisterNb, birthdate);
+        this.activated = activated;
     }
 
     @Override
