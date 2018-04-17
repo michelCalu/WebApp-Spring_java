@@ -12,7 +12,7 @@ public class Department {
     //TODO add concerns and skills (compétences (flemme de regarder une bonne traduction sur le net mais j'ai le temps pour écrire ce message))
     // ==> Questions on met ces classes ici ou dans Business ou Common ?
     //     Perso : ce sont des entitées, les préoccupation et compétences peuvent changer ==> à ajouter en DB
-    //private List<Concern> concerns;
+    //private List<Scope> scope;
 
     public Department(){};
 
