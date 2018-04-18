@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="~{base :: common-head}" />
+<body>
+<div th:insert="~{base :: base-message-header}"/>
+<div>
+<p>
+Par la présente, nous avons le regret de ne pas pouvoir vous délivrer un certificat de nationalité belge.
+</p>
+<p th:object="${requestor}">
+En effet, après enquête, il s’est avéré que , *{last_name}, *{first_names}, né(e) le *{birth_day}, ayant pour numéro de registre national *{nrn}, 
+<strong><ins>ne peut pas être certifié de nationalité belge</ins></strong>.
+</p>
+</div>
+<div th:insert="~{base :: base-message-footer}"/>
+</body>

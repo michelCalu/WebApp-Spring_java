@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:fragment="common-head">
+        <meta charset="utf-8"/>
+        <link th:href="@{/style.css}" rel="stylesheet" type="text/css"/>
+    </div>
+</head>
+<body>
+<div th:fragment="base-message-header">
+<table th:object="${coordinates}">
+	<tr>
+		<td>*{municipality.name}</td>
+		<td>*{officer.fullName}</td>
+	</tr>
+	<tr>
+		<td>   </td>
+		<td>*{service.name}</td>
+	</tr>
+	<tr>
+		<td>*{municipality.address}</td>
+		<td>*{service.address}</td>
+	</tr>
+	<tr>
+		<td>*{municipality.phone}</td>
+		<td>${service.phone}</td>
+	</tr>
+	<tr>
+		<td>*{municipality.email}</td>
+		<td>${service.email}</td>
+	</tr>
+</table>
+<br/>
+<table th:object="${references}">
+	<tr>
+		<td>Votre référence : </td>
+		<td>Notre référence : </td>
+		<td>Réference Hermès : </td>
+	</tr>
+	<tr>
+		<td>*{requestor}</td>
+		<td>*{administration}</td>
+		<td>*{system}</td>
+	</tr>
+</table>
+<br/>
+CONCERNE : ${document.title}
+<br/>
+Le ${document.date}
+<br/>
+<br/>
+Madame, Monsieur,
+<br/>
+<br/>
+</div>
+
+<div th:fragment="base-message-footer">
+<br/>
+<br/>
+Je vous prie d'agréer, Madame, Monsieur, l'expression de nos sentiments distingués.
+<br/>
+<br/>
+<br/>
+<table th:object="${coordinates}">
+	<tr>
+		<td>*{municipality.mayor}</td>
+		<td>*{service.manager}</td>
+	</tr>
+	<tr>
+		<td>Bourgmestre de la commune de <br/> *{municipality.name}</td>
+		<td>Service *{service.name}</td>
+	</tr>
+</table>
+</div>
+</body>
+</html>
