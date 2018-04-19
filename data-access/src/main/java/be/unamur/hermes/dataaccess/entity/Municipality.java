@@ -3,19 +3,19 @@ package be.unamur.hermes.dataaccess.entity;
 import java.util.List;
 import java.util.Objects;
 
-public class Town {
+public class Municipality {
 
     private long id;
     private String name;
     private List<Employee> employees;
     private List<Department> departments;
 
-    public Town(){};
+    public Municipality(){};
 
-    public Town(long id,
-                String name,
-                List<Employee> employees,
-                List<Department> departments){
+    public Municipality(long id,
+                        String name,
+                        List<Employee> employees,
+                        List<Department> departments){
         this.id = id;
         this.name = name;
         this.employees = employees;
@@ -51,12 +51,12 @@ public class Town {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Town)) return false;
-        Town town = (Town) o;
-        return id == town.id &&
-                Objects.equals(name, town.name) &&
-                Objects.equals(employees, town.employees) &&
-                Objects.equals(departments, town.departments);
+        if (!(o instanceof Municipality)) return false;
+        Municipality municipality = (Municipality) o;
+        return id == municipality.id &&
+                Objects.equals(name, municipality.name) &&
+                Objects.equals(employees, municipality.employees) &&
+                Objects.equals(departments, municipality.departments);
     }
 
     @Override
@@ -67,7 +67,7 @@ public class Town {
 
     @Override
     public String toString() {
-        return "Town{" +
+        return "Municipality{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", employees=" + employees +

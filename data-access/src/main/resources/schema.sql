@@ -1,8 +1,6 @@
 DROP TABLE IF EXISTS t_departments_employees;
-DROP TABLE IF EXISTS t_towns_employees;
-DROP TABLE IF EXISTS t_towns_departments;
 DROP TABLE IF EXISTS t_departments;
-DROP TABLE IF EXISTS t_towns;
+DROP TABLE IF EXISTS t_municipalities;
 DROP TABLE IF EXISTS t_requests;
 DROP TABLE IF EXISTS t_request_types;
 DROP TABLE IF EXISTS t_employees;
@@ -73,40 +71,24 @@ CREATE TABLE t_requests (
     REFERENCES t_employees(employeeID)
 );
 
-CREATE TABLE t_towns (
-  townID  INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+CREATE TABLE t_municipalities (
+  municipalityID  INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
   name    VARCHAR(255)  NOT NULL UNIQUE
 );
 
 CREATE TABLE t_departments (
   departmentID        INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  municipalityID              INT NOT NULL,
+  name                VARCHAR(255)  NOT NULL,
   headOfDepartmentID  INT NOT NULL,
   parentDepartmentID  INT,
 
   FOREIGN KEY(headOfDepartmentID)
     REFERENCES t_employees(employeeID),
   FOREIGN KEY(parentDepartmentID)
-    REFERENCES t_departments(departmentID)
-);
-
-CREATE TABLE t_towns_departments (
-  townID        INT NOT NULL,
-  departmentID  INT NOT NULL,
-
-  PRIMARY KEY (townID,departmentID),
-  FOREIGN KEY (townID) REFERENCES t_towns(townID),
-  FOREIGN KEY (departmentID) REFERENCES t_departments(departmentID),
-  UNIQUE (townID,departmentID)
-);
-
-CREATE TABLE t_towns_employees (
-  townID        INT NOT NULL,
-  employeeID    INT NOT NULL,
-
-  PRIMARY KEY (townID,employeeID),
-  FOREIGN KEY (townID) REFERENCES t_towns(townID),
-  FOREIGN KEY (employeeID) REFERENCES t_employees(employeeID),
-  UNIQUE (townID,employeeID)
+    REFERENCES t_departments(departmentID),
+  FOREIGN KEY(municipalityID)
+    REFERENCES t_municipalities (municipalityID)
 );
 
 CREATE TABLE t_departments_employees (
