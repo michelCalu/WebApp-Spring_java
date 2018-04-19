@@ -7,18 +7,15 @@ public class Municipality {
 
     private long id;
     private String name;
-    private List<Employee> employees;
     private List<Department> departments;
 
     public Municipality(){};
 
     public Municipality(long id,
                         String name,
-                        List<Employee> employees,
                         List<Department> departments){
         this.id = id;
         this.name = name;
-        this.employees = employees;
         this.departments = departments;
     }
 
@@ -29,14 +26,6 @@ public class Municipality {
 
     public String getName() {
         return name;
-    }
-
-    public List<Employee> getEmployees() {
-        return employees;
-    }
-
-    public void addEmployee(Employee employee) {
-        employees.add(employee);
     }
 
     public List<Department> getDepartments() {
@@ -55,14 +44,13 @@ public class Municipality {
         Municipality municipality = (Municipality) o;
         return id == municipality.id &&
                 Objects.equals(name, municipality.name) &&
-                Objects.equals(employees, municipality.employees) &&
                 Objects.equals(departments, municipality.departments);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, name, employees, departments);
+        return Objects.hash(id, name, departments);
     }
 
     @Override
@@ -70,7 +58,6 @@ public class Municipality {
         return "Municipality{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", employees=" + employees +
                 ", departments=" + departments +
                 '}';
     }

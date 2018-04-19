@@ -1,27 +1,27 @@
 package be.unamur.hermes.dataaccess.entity;
 
-import be.unamur.hermes.common.enums.SkillId;
-
 public class Skill {
 
-    private SkillId id;
+    private String name;
     private String description;
 
-    public Skill(SkillId id, String description) {
-        this.id = id;
+    public Skill(){};
+
+    public Skill(String name, String description) {
+        this.name = name;
         this.description = description;
     }
 
-    public SkillId getId() {
-        return id;
+    public String getName() {
+        return name;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public void setId(SkillId id) {
-        this.id = id;
+    public void setId(String name) {
+        this.name = name;
     }
 
     public void setDescription(String description) {
@@ -31,7 +31,7 @@ public class Skill {
     @Override
     public String toString() {
         return "Skill{" +
-                "id=" + id +
+                "name=" + name +
                 ", description='" + description + '\'' +
                 '}';
     }

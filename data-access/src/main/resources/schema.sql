@@ -1,3 +1,5 @@
+DROP TABLE IF EXISTS t_departments_skills;
+DROP TABLE IF EXISTS t_skills;
 DROP TABLE IF EXISTS t_departments_employees;
 DROP TABLE IF EXISTS t_departments;
 DROP TABLE IF EXISTS t_municipalities;
@@ -78,7 +80,7 @@ CREATE TABLE t_municipalities (
 
 CREATE TABLE t_departments (
   departmentID        INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  municipalityID              INT NOT NULL,
+  municipalityID      INT NOT NULL,
   name                VARCHAR(255)  NOT NULL,
   headOfDepartmentID  INT NOT NULL,
   parentDepartmentID  INT,
@@ -100,6 +102,21 @@ CREATE TABLE t_departments_employees (
   FOREIGN KEY (employeeID) REFERENCES t_employees(employeeID),
   UNIQUE (departmentID,employeeID)
 );
+
+CREATE TABLE t_skills (
+  skillID       VARCHAR(255) PRIMARY KEY NOT NULL,
+  description   VARCHAR(255) UNIQUE
+);
+
+CREATE TABLE t_departments_skills (
+  departmentID  INT NOT NULL,
+  skillID       INT NOT NULL,
+
+  PRIMARY KEY (departmentID, skillID),
+  FOREIGN KEY (departmentID) REFERENCES t_departments(departmentID),
+  FOREIGN KEY (skillID) REFERENCES t_skills(skillID),
+  UNIQUE (departmentID, skillID)
+)
 
 /*
 -- test data
