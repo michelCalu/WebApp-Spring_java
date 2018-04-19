@@ -1,7 +1,7 @@
 package be.unamur.hermes.web.controller;
 
-import be.unamur.hermes.business.exception.NRNNotValidException;
-import be.unamur.hermes.business.exception.NRNServiceAccessException;
+import be.unamur.hermes.business.exception.NRNNotValidExceptions.NRNNotValidException;
+import be.unamur.hermes.business.exception.NRNNotValidExceptions.NRNServiceAccessException;
 import be.unamur.hermes.business.service.NRNService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

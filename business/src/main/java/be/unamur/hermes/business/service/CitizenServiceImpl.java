@@ -2,8 +2,8 @@ package be.unamur.hermes.business.service;
 
 import be.unamur.hermes.business.exception.BusinessException;
 import be.unamur.hermes.common.enums.*;
-import be.unamur.hermes.business.exception.NRNNotValidException;
-import be.unamur.hermes.business.exception.NRNServiceAccessException;
+import be.unamur.hermes.business.exception.NRNNotValidExceptions.NRNNotValidException;
+import be.unamur.hermes.business.exception.NRNNotValidExceptions.NRNServiceAccessException;
 import be.unamur.hermes.business.io.NRNValidationClient;
 import be.unamur.hermes.business.model.NRNValidation.NRNValidationModel;
 import be.unamur.hermes.dataaccess.entity.Citizen;

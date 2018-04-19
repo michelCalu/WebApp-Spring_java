@@ -1,4 +1,4 @@
-package be.unamur.hermes.business.exception;
+package be.unamur.hermes.business.exception.NRNNotValidExceptions;
 
 public class NRNNotValidException extends Exception {
 

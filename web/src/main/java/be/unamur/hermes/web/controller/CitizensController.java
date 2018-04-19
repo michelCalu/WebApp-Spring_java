@@ -1,7 +1,6 @@
 package be.unamur.hermes.web.controller;
 
 import be.unamur.hermes.business.exception.BusinessException;
-import be.unamur.hermes.business.exception.NRNNotValidException;
 import be.unamur.hermes.business.service.CitizenService;
 import be.unamur.hermes.dataaccess.entity.Citizen;
 import org.springframework.beans.factory.annotation.Autowired;

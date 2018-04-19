@@ -1,6 +1,6 @@
 package be.unamur.hermes.business.model.NRNValidation;
 
-import be.unamur.hermes.business.exception.NRNNotValidException;
+import be.unamur.hermes.business.exception.NRNNotValidExceptions.NRNNotValidException;
 
 public class NRNValidationModel {
 

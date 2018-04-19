@@ -1,6 +1,6 @@
 package be.unamur.hermes.business.io;
 
-import be.unamur.hermes.business.model.NRNValidationModel;
+import be.unamur.hermes.business.model.NRNValidation.NRNValidationModel;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.net.ssl.*;

@@ -1,6 +1,6 @@
 package be.unamur.hermes.business.io;
 
-import be.unamur.hermes.business.exception.NRNServiceAccessException;
+import be.unamur.hermes.business.exception.NRNNotValidExceptions.NRNServiceAccessException;
 import be.unamur.hermes.business.model.NRNValidation.NRNValidationModel;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
