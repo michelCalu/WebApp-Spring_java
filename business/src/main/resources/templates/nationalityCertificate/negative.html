@@ -8,7 +8,7 @@
 Par la présente, nous avons le regret de ne pas pouvoir vous délivrer un certificat de nationalité belge.
 </p>
 <p th:object="${requestor}">
-En effet, après enquête, il s’est avéré que , [[*{lastName}]], [[*{firstName}]], né(e) le [[*{birthdate}]], ayant pour numéro de registre national [[*{nationalRegisterNb}]], 
+En effet, après enquête, il s’est avéré que , [[*{lastName}]], [[*{firstName}]], né(e) le [[*{#temporals.format(birthdate,'dd/MM/yyyy')}]], ayant pour numéro de registre national [[*{nationalRegisterNb}]], 
 <strong><ins>ne peut pas être certifié de nationalité belge</ins></strong>.
 </p>
 </div>

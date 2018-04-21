@@ -10,6 +10,7 @@ import java.util.Locale;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
+import org.thymeleaf.extras.java8time.dialect.Java8TimeDialect;
 import org.thymeleaf.templatemode.StandardTemplateModeHandlers;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 import org.thymeleaf.templateresolver.TemplateResolver;
@@ -36,6 +37,7 @@ public class DocumentServiceImpl implements DocumentService {
 	this.templateEngine = new TemplateEngine();
 	this.templateResolver = initResolver();
 	this.templateEngine.setTemplateResolver(templateResolver);
+	this.templateEngine.addDialect(new Java8TimeDialect());
     }
 
     private TemplateResolver initResolver() {
@@ -53,7 +55,7 @@ public class DocumentServiceImpl implements DocumentService {
 	String templateName = positive ? "nationalityCertificate/positive" : "nationalityCertificate/negative";
 	Context context = initContext(document);
 	context.setVariable("title", "Demande de certificat de nationalité");
-	context.setVariable("date", LocalDate.now().toString());
+	context.setVariable("date", LocalDate.now());
 	return templateEngine.process(templateName, context);
     }
 
