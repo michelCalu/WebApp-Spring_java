@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="base :: common-head" />
+<body th:inline="text">
+<div th:replace="base :: base-message-header"></div>
+<div th:object="${request}">
+<p>
+Suite à votre demande de carte de stationnement pour riverain ou visiteur acceptée, voici les informations nécessaires pour effectuer le paiement.
+</p>
+<p>
+Montant à payer : TODO €
+</p>
+<p>
+Destinataire : <br/>
+[[${municipality.name}]] <br/>
+[[${municipality.address.streetNb}]], [[${municipality.address.street}]] <br/>
+[[${municipality.address.zipCode}]] [[${municipality.address.state}]]
+</p>
+<p>
+Communication libre : TODO
+</p>
+<p>
+Veuillez effectuer le versement pour le TODO compris. Si ce n’est pas fait, la carte de stationnement sera invalidée dès le lendemain de l’échéance.
+</p>
+</div>
+<div th:replace="base :: base-message-footer"> </div>
+</body>
+</html>

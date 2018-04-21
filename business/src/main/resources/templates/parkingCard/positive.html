@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="base :: common-head" />
+<body th:inline="text">
+<div th:replace="base :: base-message-header"></div>
+<div th:object="${request}">
+<p>
+Par la présente, nous avons le plaisir de vous faire savoir que votre demande de carte de stationnement pour riverain ou visiteur <strong><ins>a été acceptée</ins></strong>.
+</p>
+<p>
+Le véhicule immatriculé TODO est autorisé à stationner sur le territoire de la commune de [[${municipality.name}]] pour une période s'étalant du TODO au TODO compris. 
+<strong><ins>est certifié de nationalité belge</ins></strong>.
+</p>
+<p>
+En annexe à ce document, vous trouverez votre carte de stationnement. Lors du stationnement, veuillez toujours mettre la carte en évidence, sous le pare-brise.
+</p>
+<p>
+Vous trouverez aussi en annexe une invitation à payer le montant de TODO €. Toutes les informations nécessaires figurent dans le document.
+</p>
+</div>
+<div th:replace="base :: base-message-footer"> </div>
+</body>
+</html>

@@ -68,6 +68,27 @@ public class DocumentServiceImpl implements DocumentService {
 	templateEngine.process(templateName, context, writer);
     }
 
+    public String getParkingCardDecision(boolean positive, DocumentCreationRequest document) {
+	String templateName = positive ? "parkingCard/positive" : "parkingCard/negative";
+	Context context = initContext(document);
+	context.setVariable("title", "Demande de carte de stationnement pour riverain ou visiteur");
+	context.setVariable("date", LocalDate.now());
+	return templateEngine.process(templateName, context);
+    }
+
+    public String getParkingCard(DocumentCreationRequest document) {
+	Context context = initContext(document);
+	context.setVariable("date", LocalDate.now());
+	return templateEngine.process("parkingCard/card", context);
+    }
+
+    public String getPayment(DocumentCreationRequest document) {
+	Context context = initContext(document);
+	context.setVariable("date", LocalDate.now());
+	context.setVariable("title", "Invitation à payer");
+	return templateEngine.process("parkingCard/payment", context);
+    }
+
     protected Context initContext(DocumentCreationRequest document) {
 	Context result = new Context(Locale.FRENCH);
 	result.setVariable("requestor", document.getRequestor());
@@ -112,7 +133,10 @@ public class DocumentServiceImpl implements DocumentService {
 	request.setStatus(ClaimStatus.DONE.getId());
 	doc.setRequest(request);
 	DocumentServiceImpl service = new DocumentServiceImpl();
-	String result = service.getNationalityCertificate(false, doc);
+	String result = service.getNationalityCertificate(true, doc);
+	// service.getParkingCardDecision(false, doc);
+	// service.getPayment(doc);
+	// service.getParkingCard(doc);
 	System.out.println(result);
 	PDFCreator creator = new PDFCreator();
 	try {
