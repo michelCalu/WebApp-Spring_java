@@ -1,38 +1,114 @@
+
+DROP TABLE IF EXISTS t_account_of_citizen;
+DROP TABLE IF EXISTS t_citizen_accounts;
+DROP TABLE IF EXISTS t_employees_accounts;
+DROP TABLE IF EXISTS t_account_of_employee;
+DROP TABLE IF EXISTS events;
 DROP TABLE IF EXISTS t_departments_skills;
 DROP TABLE IF EXISTS t_skills;
 DROP TABLE IF EXISTS t_departments_employees;
 DROP TABLE IF EXISTS t_departments;
-DROP TABLE IF EXISTS t_municipalities;
 DROP TABLE IF EXISTS t_requests;
+DROP TABLE IF EXISTS t_municipalities_address;
+DROP TABLE IF EXISTS t_municipalities;
 DROP TABLE IF EXISTS t_request_types;
 DROP TABLE IF EXISTS t_employees;
+DROP TABLE IF EXISTS t_employee_accounts;
+DROP TABLE IF EXISTS event_types;
+DROP TABLE IF EXISTS t_req_statusses;
+DROP TABLE IF EXISTS t_mandataries;
+DROP TABLE IF EXISTS t_companies;
 DROP TABLE IF EXISTS t_citizens;
+DROP TABLE IF EXISTS t_user_statusses;
 DROP TABLE IF EXISTS t_addresses;
+DROP TABLE IF EXISTS t_mandatary_roles;
 
 
 
 CREATE TABLE t_addresses (
   addressID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  country VARCHAR(255)    NOT NULL,
-  state VARCHAR(255)      NOT NULL,
-  zipCode INT             NOT NULL,
-  street VARCHAR(255)     NOT NULL,
-  streetNb INT            NOT NULL
+  country 	VARCHAR(255)    NOT NULL,
+  state 	VARCHAR(255)      NOT NULL,
+  zipCode 	INT             NOT NULL,
+  street 	VARCHAR(255)     NOT NULL,
+  streetNb 	INT            NOT NULL,
+  numberSuffix VARCHAR(4)
+);
+
+
+/* registered / activated / suspended */
+CREATE TABLE t_user_statusses (
+  statusID      INT 	PRIMARY KEY     NOT NULL AUTO_INCREMENT,
+  statusValue   VARCHAR(255)            NOT NULL
 );
 
 
 CREATE TABLE t_citizens (
-  citizenID  INT PRIMARY KEY   NOT NULL AUTO_INCREMENT,
   firstName     VARCHAR(255)      NOT NULL,
-  lastName      VARCHAR(255)      NOT NULL,
+  lastNames     VARCHAR(255)      NOT NULL,
   addressID     INT               NOT NULL,
-  mail          VARCHAR(255)      NOT NULL,
+  mail          VARCHAR(255),
   phone         VARCHAR(255),
-  nationalRegisterNb VARCHAR(255) NOT NULL,
-  birthdate     DATE,
-  activated     BOOLEAN DEFAULT FALSE,
+  nationalRegistryNb VARCHAR(255) PRIMARY KEY	NOT NULL,
+  birthdate     DATE              NOT NULL,
+
   FOREIGN KEY (addressID) REFERENCES t_addresses(addressID)
 );
+
+/**/
+CREATE TABLE t_citizen_accounts (
+	citizenLogin	VARCHAR(255)	PRIMARY KEY NOT NULL,
+	citizenPwd		VARCHAR(255)	NOT NULL,
+	accountState	INT				NOT NULL,
+
+	FOREIGN KEY (accountState) REFERENCES t_user_statusses(statusID),
+	FOREIGN KEY (citizenLogin) REFERENCES t_citizens(nationalRegistryNb)
+);
+
+
+
+CREATE TABLE t_account_of_citizen(
+	accountID		VARCHAR(255)	NOT NULL,
+	citizenID		VARCHAR(255)	NOT NULL,
+	FOREIGN KEY (accountID) REFERENCES t_citizen_accounts(citizenLogin),
+	FOREIGN KEY (citizenID) REFERENCES t_citizens(nationalRegistryNb),
+	UNIQUE(accountID, citizenID)
+);
+
+
+
+
+CREATE TABLE t_companies (
+	companyNb		VARCHAR(255)	PRIMARY KEY	NOT NULL,
+	vatNb			VARCHAR(255)	NOT NULL,
+	address			INT				NOT NULL,
+	judicialForm	VARCHAR(255) 	NOT NULL,
+	CompanyOwner	VARCHAR(255)	NOT NULL,			/* 1 mandatory Owner p/ company */
+
+	FOREIGN KEY (address) REFERENCES t_addresses(addressID),
+	FOREIGN KEY (companyOwner) REFERENCES t_citizens(nationalRegistryNb),
+  	UNIQUE (companyOwner,companyNb)
+);
+
+
+CREATE TABLE t_mandatary_roles(
+	roleID		INT PRIMARY KEY   NOT NULL AUTO_INCREMENT,
+	roleName	VARCHAR(255)	NOT NULL
+);
+
+
+CREATE TABLE t_mandataries(
+	mandataryID		INT PRIMARY KEY NOT NULL,
+	citizenID		VARCHAR(255) 	NOT NULL,
+	companyNb		VARCHAR(255)	NOT NULL,
+	role			INT				NOT NULL,
+
+	FOREIGN KEY (citizenID) REFERENCES t_citizens(nationalRegistryNb),
+	FOREIGN KEY (companyNb) REFERENCES t_companies(companyNb),
+	FOREIGN KEY (role) REFERENCES t_mandatary_roles(roleID)
+);
+
+
 
 CREATE TABLE t_employees (
   employeeID    INT PRIMARY KEY   NOT NULL AUTO_INCREMENT,
@@ -41,7 +117,7 @@ CREATE TABLE t_employees (
   addressID     INT               NOT NULL,
   mail          VARCHAR(255)      NOT NULL,
   phone         VARCHAR(255)      NOT NULL,
-  nationalRegisterNb VARCHAR(255) NOT NULL,
+  nationalRegistryNb VARCHAR(255) NOT NULL,
   birthdate     DATE              NOT NULL,
   accountNumber VARCHAR(255)      NOT NULL,
   arrivalDate   DATE              NOT NULL,
@@ -49,40 +125,98 @@ CREATE TABLE t_employees (
   civilStatus   VARCHAR(255)      NOT NULL,
   dependentChildren INT           NOT NULL,
   dependentPeople   INT           NOT NULL,
+
   FOREIGN KEY (addressID)  REFERENCES t_addresses(addressID)
 );
 
+
+CREATE TABLE t_employee_accounts (
+	emplLogin	VARCHAR(255) PRIMARY KEY	NOT NULL,
+	emplPwd		VARCHAR(255)	NOT NULL,
+	accountState	INT			NOT NULL
+
+);
+
+CREATE TABLE t_account_of_employee(
+	accountID		VARCHAR(255)	NOT NULL,
+	employeeID		INT	NOT NULL,
+	FOREIGN KEY (accountID) REFERENCES t_employee_accounts(emplLogin),
+	FOREIGN KEY (employeeID) REFERENCES t_employees(employeeID),
+	UNIQUE(accountID, employeeID)
+);
+
+
 CREATE TABLE t_request_types (
-	requestTypeID INT PRIMARY KEY NOT NULL,
-	description VARCHAR(255),
+	requestTypeID 	INT PRIMARY KEY NOT NULL,
+	description 	VARCHAR(255),
 	CONSTRAINT UC_Description UNIQUE (description)
+);
+
+CREATE TABLE t_req_statusses (
+	statusID		INT 	PRIMARY KEY NOT NULL,
+	statusName		VARCHAR(255)
+);
+
+CREATE TABLE t_municipalities (
+  municipalityID  INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  name		VARCHAR(255)	NOT NULL UNIQUE,
+  address 	INT 			NOT NULL,
+  email		VARCHAR(255)	NOT NULL,
+  mayor		INT				NOT NULl,
+  phone		VARCHAR(255)	NOT NULL,
+
+  FOREIGN KEY  (address) REFERENCES t_addresses(addressID),
+  FOREIGN KEY  (mayor) REFERENCES t_employees(employeeID)
 );
 
 CREATE TABLE t_requests (
   requestID		INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
   requestTypeID	INT 			NOT NULL,
-  citizenID		INT				NOT NULL,
+  citizenID		VARCHAR(255)	NOT NULL,
   employeeID	INT						,
-  status 		INT				NOT NULL,
-  
+  municipalityID INT 			NOT NULL,
+  statusID 		INT				NOT NULL,
+  lastChangeBy	INT				NOT NULL,
+  systemRef		VARCHAR(255)	NOT NULL,
+  userRef		VARCHAR(255)	,
+  municipalityRef VARCHAR(255)	NOT NULL,
+
   FOREIGN KEY(requestTypeID)
     REFERENCES t_request_types(requestTypeID),
   FOREIGN KEY(citizenID)
-    REFERENCES t_citizens(citizenID),
+    REFERENCES t_citizens(nationalRegistryNb),
   FOREIGN KEY(employeeID)
+    REFERENCES t_employees(employeeID),
+  FOREIGN KEY(municipalityID)
+    REFERENCES t_municipalities(municipalityID),
+  FOREIGN KEY(statusID)
+    REFERENCES t_req_statusses(statusID),
+  FOREIGN KEY(lastChangeBy)
     REFERENCES t_employees(employeeID)
 );
 
-CREATE TABLE t_municipalities (
-  municipalityID  INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  name    VARCHAR(255)  NOT NULL UNIQUE
+
+CREATE TABLE event_types (
+	eventID		INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	eventDesc	VARCHAR(255)	NOT NULL
+);
+
+
+CREATE TABLE events (
+	eventType	INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	eventDate	DATE			NOT NULL,
+	author		INT				NOT NULL,
+	request		INT				NOT NULL,
+
+	FOREIGN KEY (author) REFERENCES t_employees(employeeID),
+	FOREIGN KEY (request) REFERENCES t_requests(requestID)
 );
 
 CREATE TABLE t_departments (
   departmentID        INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  municipalityID      INT NOT NULL,
+  municipalityID      INT 			NOT NULL,
   name                VARCHAR(255)  NOT NULL,
-  headOfDepartmentID  INT NOT NULL,
+  headOfDepartmentID  INT 			NOT NULL,
   parentDepartmentID  INT,
 
   FOREIGN KEY(headOfDepartmentID)
@@ -92,6 +226,7 @@ CREATE TABLE t_departments (
   FOREIGN KEY(municipalityID)
     REFERENCES t_municipalities (municipalityID)
 );
+
 
 CREATE TABLE t_departments_employees (
   departmentID  INT NOT NULL,
@@ -104,19 +239,29 @@ CREATE TABLE t_departments_employees (
 );
 
 CREATE TABLE t_skills (
-  skillID       VARCHAR(255) PRIMARY KEY NOT NULL,
+  skillID       INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
   description   VARCHAR(255) UNIQUE
 );
 
 CREATE TABLE t_departments_skills (
-  departmentID  INT NOT NULL,
-  skillID       INT NOT NULL,
+  departmentID  INT NOT NULL UNIQUE,
+  skillID       INT NOT NULL UNIQUE,
 
   PRIMARY KEY (departmentID, skillID),
   FOREIGN KEY (departmentID) REFERENCES t_departments(departmentID),
   FOREIGN KEY (skillID) REFERENCES t_skills(skillID),
   UNIQUE (departmentID, skillID)
-)
+);
+
+CREATE TABLE t_municipalities_address (
+	addressID		INT NOT NULL ,
+	municipalityID	INT NOT NULL ,
+
+	PRIMARY KEY (addressID, municipalityID),
+	FOREIGN KEY (addressID) REFERENCES t_addresses(addressID),
+	FOREIGN KEY (municipalityID) REFERENCES t_municipalities(municipalityID)
+
+);
 
 /*
 -- test data
@@ -126,4 +271,10 @@ insert into t_people values(null,"Fabian","Germeau");
 insert into t_citizens values (null, 1, 1);
 insert into t_employees values(null,2);
 insert into t_claims values(null,1,1,1);
+*/
+
+
+/*
+liste des 262 communes:
+https://pouvoirslocaux.wallonie.be/jahia/webdav/site/dgpl/shared/Listes/communes_wallonnes_20160311.xls
 */
