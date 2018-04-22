@@ -10,5 +10,5 @@ export class Citizen {
   phone: string;
   nationalRegisterNb: string;
   birthdate: Date;
-  //activated: boolean; To implement
+  activated: boolean;
 }

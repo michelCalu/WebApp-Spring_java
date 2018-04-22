@@ -2,7 +2,9 @@ const PROXY_CONFIG = [
   {
     context: [
       "/about",
-      "/citizens"
+      "/citizens",
+      "/requests",
+      "/login"
     ],
     "target": "http://localhost:8080",
     "secure": false,

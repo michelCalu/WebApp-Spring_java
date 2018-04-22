@@ -39,7 +39,7 @@ export class MockAuthService {
         if (username === 'root' && password === 'root') {
             const user = new User();
             user.name = 'John Doe';
-            user.id = 23;
+            user.id = 1;
             user.token = 'a JWT token';
             return Observable.of(user);
         } else {

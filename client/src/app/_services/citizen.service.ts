@@ -15,18 +15,22 @@ export class CitizenService {
   constructor(private http: HttpClient) {
   }
 
-  //private serverUrl = 'http://localhost:8080/';
   public getAbout() {
-    return this.http.get("/about");
+    return this.http.get('/about');
   }
 
-  public createCitizen(citizen: Citizen): Observable<any>{
-    return this.http.post("/citizens", citizen);
+  public createCitizen(citizen: Citizen): Observable<any> {
+    console.log('CREATING CITIZEN : ' + JSON.stringify(citizen));
+    return this.http.post('/citizens', citizen);
   }
 // to test login
 
-  public login(user: User){
-    return this.http.post("/login", user);
+  public login(user: User) {
+    return this.http.post('/login', user);
+  }
+  
+  public getCitizen(user: User): Observable<Citizen> {
+    return this.http.get<Citizen>(`/citizens/${user.id}`);
   }
 
  /*

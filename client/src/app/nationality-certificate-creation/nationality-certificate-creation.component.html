@@ -1,15 +1,23 @@
-<div class="col-md-12 col-md-offset-3">
-	<h1> Certificat de nationalité</h1>
-	<h2> Nouvelle demande </h2>
+<div class="col-md-12 col-md-offset-3" *ngIf="requestor">
+	<h1> {{'nationalityCertificate' | translate}}</h1>
+	<h2> {{'newrequest' | translate}} </h2>
 	<div class="row">
 		<div class="col-md-6">
 			<h2>Informations demandeur</h2>
-			<ul>
-				<li>Nom : Elkens</li>
-				<li>Prénom : Thomas</li>
-				<li>...</li>
-			</ul>
+			<div><span>Nom : </span>{{requestor.lastName}}</div>
+			<div><span>Prénom : </span>{{requestor.firstName}}</div>
+			<div><span>Date de naissance : </span>{{requestor.birthdate}}</div>
+			<div><span>Numéro de registre national : </span>{{requestor.nationalRegisterNb}}</div>
+			<div><span>Adresse : </span>{{requestor.address}}</div>
+			<div><span>Adresse électronique : </span>{{requestor.mail}}</div>
 			<button class="btn btn-success" (click)="sendRequest()">Envoyer demande</button>
+			<button class="btn btn-success" (click)="cancelRequest()">Annuler</button>
+		</div>
+		<div>
+			<h3>Votre référence</h3>
+			<form>
+				<input [(ngModel)]="request.data" type="text" placeholder="Votre référence (opt.)" class="form-control" id="reference" name="reference">
+			</form>
 		</div>
 	</div>
 </div>
