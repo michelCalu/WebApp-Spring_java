@@ -75,8 +75,6 @@ public class RequestRepositoryImpl implements RequestRepository {
 	Map<String, Object> parameters = new HashMap<>();
 	parameters.put("requestTypeID", newRequest.getRequestTypeId());
 	parameters.put("citizenID", newRequest.getCitizen());
-	Long employeeId = newRequest.getAssignee() == null ? null : newRequest.getAssignee();
-	parameters.put("employeeID", employeeId);
 	parameters.put("status", newRequest.getStatus());
 	return (Long) inserter.executeAndReturnKey(parameters);
     }

@@ -5,40 +5,26 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class CreateRequest {
     private Long requestTypeId;
     private String type;
-    private Integer status;
     private Long citizen;
-    private Long assignee;
+    private int status;
+
+    public CreateRequest() {
+    }
 
     public String getType() {
 	return type;
-    }
-
-    public Integer getStatus() {
-	return status;
     }
 
     public Long getCitizen() {
 	return citizen;
     }
 
-    public Long getAssignee() {
-	return assignee;
-    }
-
     public void setType(String type) {
 	this.type = type;
     }
 
-    public void setStatus(Integer status) {
-	this.status = status;
-    }
-
     public void setCitizen(Long citizen) {
 	this.citizen = citizen;
-    }
-
-    public void setAssignee(Long assignee) {
-	this.assignee = assignee;
     }
 
     @JsonIgnore
@@ -50,4 +36,12 @@ public class CreateRequest {
 	this.requestTypeId = requestTypeId;
     }
 
+    @JsonIgnore
+    public int getStatus() {
+	return status;
+    }
+
+    public void setStatus(int status) {
+	this.status = status;
+    }
 }

@@ -32,10 +32,7 @@ public class RequestServiceImpl implements RequestService {
     @Override
     public long create(CreateRequest newRequest) {
 	// TODO validate with Authentification
-	Integer statusId = newRequest.getStatus();
-	if (statusId == null) {
-	    newRequest.setStatus(ClaimStatus.NEW.getId());
-	}
+	newRequest.setStatus(ClaimStatus.NEW.getId());
 	String type = newRequest.getType();
 	if (!StringUtils.hasText(type))
 	    throw new BusinessException("Request type is mandatory");
