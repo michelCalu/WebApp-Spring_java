@@ -3,10 +3,13 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import { CitizenRequest, Citizen } from '../_models';
 import { HttpHeaders } from '@angular/common/http';
+import * as configData from '../configuration-data';
 
 
 @Injectable()
 export class RequestService {
+
+    serverAddress = configData.serverAddress;
 
   constructor(private http: HttpClient) {
   }
@@ -15,7 +18,7 @@ export class RequestService {
     const requestBody = new CreateRequest();
     requestBody.citizen = citizenId;
     requestBody.type = requestType;
-    return this.http.post<boolean>('/requests', requestBody, {observe: 'response'}).map(
+    return this.http.post<boolean>(this.serverAddress + '/requests', requestBody, {observe: 'response'}).map(
      resp =>  resp.headers.has('Location'));
   }
 
