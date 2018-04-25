@@ -45,7 +45,7 @@ CREATE TABLE t_citizens (
   addressID     INT               NOT NULL,
   mail          VARCHAR(255)      NOT NULL,
   phone         VARCHAR(255),
-  nationalRegisterNb VARCHAR(255) NOT NULL,
+  nationalRegisterNb VARCHAR(255) NOT NULL UNIQUE ,
   birthdate     DATE,
   activated     BOOLEAN DEFAULT FALSE,
   FOREIGN KEY (addressID) REFERENCES t_addresses(addressID)
@@ -70,7 +70,7 @@ CREATE TABLE t_employees (
   addressID     INT               NOT NULL,
   mail          VARCHAR(255)      NOT NULL,
   phone         VARCHAR(255)      NOT NULL,
-  nationalRegisterNb VARCHAR(255) NOT NULL,
+  nationalRegisterNb VARCHAR(255) NOT NULL UNIQUE,
   birthdate     DATE              NOT NULL,
   accountNumber VARCHAR(255)      NOT NULL,
   arrivalDate   DATE              NOT NULL,
@@ -89,8 +89,8 @@ CREATE TABLE t_companies (
   CompanyOwner  INT			  	NOT NULL,     /* 1 mandatory Owner p/ company */
 
   FOREIGN KEY (address) REFERENCES t_addresses(addressID),
-  FOREIGN KEY (companyOwner) REFERENCES t_citizens(citizenID),
-  UNIQUE (companyOwner,companyNb)
+  FOREIGN KEY (companyOwner) REFERENCES t_citizens(citizenID)
+  /* useless because the companyNb is the primary key so is unique UNIQUE (companyOwner,companyNb) */
 );
 
 
@@ -108,7 +108,8 @@ CREATE TABLE t_mandataries(
 
   FOREIGN KEY (citizenID) REFERENCES t_citizens(citizenID),
   FOREIGN KEY (companyNb) REFERENCES t_companies(companyNb),
-  FOREIGN KEY (role) REFERENCES t_mandatary_roles(roleID)
+  FOREIGN KEY (role) REFERENCES t_mandatary_roles(roleID),
+  UNIQUE (citizenID, companyNb, role)
 );
 
 CREATE TABLE t_request_types (
@@ -128,7 +129,7 @@ CREATE TABLE t_municipalities (
   name    VARCHAR(255)  NOT NULL UNIQUE,
   address   INT       NOT NULL,
   email   VARCHAR(255)  NOT NULL,
-  mayor   INT       NOT NULl,
+  mayor   INT       NOT NULl, /* TODO remove this ? */
   phone   VARCHAR(255)  NOT NULL,
 
   FOREIGN KEY  (address) REFERENCES t_addresses(addressID),
@@ -219,7 +220,7 @@ CREATE TABLE t_departments_skills (
   UNIQUE (departmentID, skillID)
 );
 
-CREATE TABLE t_municipalities_address (
+CREATE TABLE t_municipalities_address ( /* Is this table really necessary ? */
   addressID   INT NOT NULL ,
   municipalityID  INT NOT NULL ,
 
