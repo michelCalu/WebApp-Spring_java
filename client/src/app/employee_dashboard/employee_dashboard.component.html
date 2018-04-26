@@ -1,25 +1,31 @@
 <div class="col-md-9 col-md-offset-3">
 	<h1> truc employee dashboard </h1>
 	<div class="container">
-		<!-- <table *ngIf="(citizenRequests$ | async)?.length; else noRequests" class="table table-striped">
+		<table *ngIf="(serviceRequests$ | async)?.length; else noRequests" class="table table-striped">
 			<thead>
 				<tr>
-					<th scope="col">{{'type' | translate}}</th>
+                    <th scope="col">{{'type' | translate}}</th>
+                    <th scope="col">{{'reference' | translate}}</th>
 					<th scope="col">{{'requestDate' | translate}}</th>
 					<th scope="col">{{'status' | translate}}</th>
-					<th scope="col">{{'actions' | translate}}</th>
+                    <th scope="col">{{'assignee' | translate}}</th>
+                    <th></th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr *ngFor="let request of (citizenRequests$ | async)">
-					<th scope="row">{{request.type | translate}}</th>
-					<td>{{request.status | translate}}</td>
+				<tr *ngFor="let request of (serviceRequests$ | async)">
+                    <td scope="row">{{request.type | translate}}</td>
+                    <td> ** TODO **</td>
+                    <td> ** TODO **</td>
+                    <td> {{request.status <!-- TODO should be | translate -->}}</td>
+                    <td> ** TODO **</td>
+                    <td><button class="btn btn-success">{{'details'| translate}}</button></td>
 				</tr>
 			</tbody>
-		</table> -->
-		<!-- <ng-template #noRequests>
-			<div>Vous n'avez pas encore introduit des demandes</div>
-		</ng-template> -->
+		</table>
+		<ng-template #noRequests>
+			<div>Votre service n'a pas encore reçu des demandes</div>
+		</ng-template>
 
 	</div>
 

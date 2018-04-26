@@ -5,6 +5,8 @@ import 'rxjs/add/operator/catch';
 import { CitizenRequest, Citizen } from '../_models';
 import { HttpHeaders } from '@angular/common/http';
 import * as configData from '../configuration-data';
+import { AlertService } from '.';
+import { TranslateService } from '@ngx-translate/core';
 
 
 @Injectable()
@@ -12,7 +14,8 @@ export class RequestService {
 
     serverAddress = configData.serverAddress;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private messageService: AlertService,
+                private translateService: TranslateService) {
   }
 
   public createRequest(citizenId: number, requestType: string): Observable<boolean> {
@@ -38,7 +41,18 @@ export class RequestService {
     const stringifiedCitizenRequests = sessionStorage.getItem('requests');
     const citizenRequests = stringifiedCitizenRequests ? JSON.parse(stringifiedCitizenRequests) : [];
     return Observable.of(citizenRequests);
-    
+  }
+
+  getServiceRequests(serviceID: number): Observable<CitizenRequest[]> {
+      return this.http
+                // TODO should be:  .get(this.serverAddress + '/requests?serviceId= + serviceID */)
+                // instead of:
+                .get(this.serverAddress + '/requests?citizenId=1')
+                .catch( err => {
+                    this.messageService.error(this.translateService.instant('request.service.getError'));
+                    return [];
+                });
+
   }
 }
 

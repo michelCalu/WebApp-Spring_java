@@ -1,6 +1,7 @@
 {
     "actions": "actions",
     "additionalComment": "Additional communication",
+    "assignee": "assignee",
 
     "carMake": "Car make",
     "carModel": "Model",
@@ -24,7 +25,9 @@
 
     "parkingCard": "Parking card",
 
+    "reference": "reference",
     "requestDate": "request date",
+    "request.service.getError": "Error retrieving the requests",
 
     "signin": "sign in",
     "signup": "sign up",

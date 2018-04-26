@@ -1,6 +1,8 @@
 {
     "actions": "actions",
     "additionalComment": "Communication libre",
+    "assignee": "gestionnaire",
+
 
     "carMake": "Marque",
     "carModel": "Modèle",
@@ -25,7 +27,9 @@
 
     "parkingCard": "Carte de stationnement",
 
+    "reference": "référence",
     "requestDate": "date demande",
+    "request.service.getError": "Erreur dans la recherche de demandes",
 
     "signin": "se connecter",
     "signup": "s'inscrire",
