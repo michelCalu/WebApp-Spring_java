@@ -22,7 +22,7 @@ import { RegisterComponent } from './register/index';
 import { TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ParkingCardCreationComponent } from './parking-card-creation';
-// import { ShowNewComponent } from './shownewcitizen/shownewcitizen.component';
+import { EmployeeDashboardComponent } from './employee_dashboard';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -40,11 +40,11 @@ export function HttpLoaderFactory(http: HttpClient) {
     MyFoldersComponent,
     MyProfileComponent,
     MyRequestsComponent,
+    EmployeeDashboardComponent,
     NewRequestComponent,
     NationalityCertificateCreationComponent,
     ParkingCardCreationComponent,
-    RegisterComponent,
-    //ShowNewComponent
+    RegisterComponent
   ],
   imports: [
     AppRoutingModule,

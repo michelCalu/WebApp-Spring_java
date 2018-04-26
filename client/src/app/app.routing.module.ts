@@ -11,9 +11,10 @@ import { MyRequestsComponent } from './myrequests';
 import { NewRequestComponent } from './newrequest';
 import { NationalityCertificateCreationComponent } from './nationality-certificate-creation';
 import { ParkingCardCreationComponent } from './parking-card-creation';
+import { EmployeeDashboardComponent } from './employee_dashboard';
 
 const appRoutes: Routes = [
-  //routes protected with AuthGuard
+  // routes protected with AuthGuard
   { path: '', canActivate: [AuthGuard], children: [
       { path: '', component: HomeComponent },
       { path: 'home', component: HomeComponent },
@@ -21,11 +22,12 @@ const appRoutes: Routes = [
       { path: 'myprofile', component: MyProfileComponent },
       { path: 'myrequests', component: MyRequestsComponent },
       { path: 'newrequest', component: NewRequestComponent },
+      { path: 'employee_dashboard', component: EmployeeDashboardComponent },
       { path: 'newrequest/nationality', component: NationalityCertificateCreationComponent},
       { path: 'newrequest/parking', component: ParkingCardCreationComponent},
 
     ] },
-  //unprotected routes:
+  // unprotected routes:
   { path: 'login', component: LoginComponent },
   { path: 'createuser', component: CreateUserComponent },
   { path: '**', redirectTo: '/home', pathMatch: 'full'}
