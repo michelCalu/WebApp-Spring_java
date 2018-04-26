@@ -83,7 +83,7 @@ CREATE TABLE t_employees (
 
 CREATE TABLE t_companies (
   companyNb   	VARCHAR(255)  	PRIMARY KEY NOT NULL,
-  vatNb     	VARCHAR(255)  	NOT NULL,
+  vatNb     	VARCHAR(255),
   address     	INT       		NOT NULL,
   judicialForm  VARCHAR(255)  	NOT NULL,
   CompanyOwner  INT			  	NOT NULL,     /* 1 mandatory Owner p/ company */
@@ -165,17 +165,19 @@ CREATE TABLE t_requests (
 );
 
 CREATE TABLE t_event_types (
-  eventID   INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  eventTypeID   INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
   eventDesc VARCHAR(255)  NOT NULL
 );
 
 
 CREATE TABLE t_events (
-  eventType INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  eventDate DATE      NOT NULL,
+  eventID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  eventType    INT       NOT NULL,
+  at      DATETIME      NOT NULL,
   author    INT       NOT NULL,
   request   INT       NOT NULL,
 
+  FOREIGN KEY (eventType) REFERENCES t_event_types(eventTypeID),
   FOREIGN KEY (author) REFERENCES t_employees(employeeID),
   FOREIGN KEY (request) REFERENCES t_requests(requestID)
 );
