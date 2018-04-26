@@ -5,7 +5,7 @@ import 'rxjs/add/operator/catch';
 import { CitizenRequest, Citizen } from '../_models';
 import { HttpHeaders } from '@angular/common/http';
 import * as configData from '../configuration-data';
-import { AlertService } from '.';
+import { AlertService } from './alert.service';
 import { TranslateService } from '@ngx-translate/core';
 
 
