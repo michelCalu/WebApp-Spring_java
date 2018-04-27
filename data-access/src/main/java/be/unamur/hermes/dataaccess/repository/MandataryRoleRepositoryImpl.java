@@ -1,4 +1,7 @@
 package be.unamur.hermes.dataaccess.repository;
 
-public class MandataryRoleRepositoryImpl {
+import org.springframework.stereotype.Repository;
+
+@Repository
+public class MandataryRoleRepositoryImpl implements MandataryRoleRepository {
 }
