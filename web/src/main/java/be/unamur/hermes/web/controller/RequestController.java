@@ -47,11 +47,19 @@ public class RequestController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Request>> getRequests(@RequestParam("citizenId") long citizenId,
-	    @RequestParam("requestTypeId") Optional<Long> requestTypeId) {
+    public ResponseEntity<List<Request>> getRequests(@RequestParam("citizenId") Optional<Long> citizenId,
+	    @RequestParam("requestTypeId") Optional<Long> requestTypeId,
+	    @RequestParam("departmentId") Optional<Long> departmentId) {
 	try {
-	    List<Request> data = requestTypeId.isPresent() ? requestService.find(citizenId, requestTypeId.get())
-		    : requestService.findByCitizenId(citizenId);
+	    List<Request> data = null;
+	    if (departmentId.isPresent()) {
+		data = requestService.findByDepartmentId(departmentId.get());
+		return ResponseEntity.status(HttpStatus.OK).body(data);
+	    }
+	    if (!citizenId.isPresent())
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+	    data = requestTypeId.isPresent() ? requestService.find(citizenId.get(), requestTypeId.get())
+		    : requestService.findByCitizenId(citizenId.get());
 	    return ResponseEntity.status(HttpStatus.OK).body(data);
 	} catch (Exception ex) {
 	    logger.error("Bad request", ex);

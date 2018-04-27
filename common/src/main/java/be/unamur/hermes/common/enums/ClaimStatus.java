@@ -1,7 +1,6 @@
 package be.unamur.hermes.common.enums;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
 
 /**
  * This type enumerates the different statuses a claim can be in.
@@ -30,7 +29,6 @@ public enum ClaimStatus {
      */
     REJECTED;
 
-    @JsonValue
     public int getId() {
 	return this.ordinal();
     }

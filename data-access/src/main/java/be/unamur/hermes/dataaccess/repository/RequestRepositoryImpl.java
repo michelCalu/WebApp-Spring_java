@@ -26,10 +26,15 @@ public class RequestRepositoryImpl implements RequestRepository {
 	    "SELECT req.requestID, req.requestTypeID, req.employeeID, req.citizenID, req.status FROM t_requests req WHERE req.requestID = ?";
     private static final String queryByCitizenId = //
 	    "SELECT req.requestID, req.requestTypeID, req.employeeID, req.citizenID, req.status FROM t_requests req WHERE req.citizenID = ?";
+    // FIXME
+    private static final String queryByDepartmentId = //
+	    "SELECT req.requestID, req.requestTypeID, req.employeeID, req.citizenID, req.status FROM t_requests req WHERE ";
     private static final String queryByCitizenIdAndRequestType = queryByCitizenId //
 	    + " AND req.requestTypeID = ?";
     private static final String queryRequestTypeByDescription = //
 	    "SELECT rt.requestTypeID, rt.description FROM t_request_types rt WHERE rt.description = ? ";
+    private static final String queryRequestTypeById = //
+	    "SELECT rt.requestTypeID, rt.description FROM t_request_types rt WHERE rt.requestTypeID = ? ";
 
     private final JdbcTemplate jdbcTemplate;
     private final SimpleJdbcInsert inserter;
@@ -57,8 +62,8 @@ public class RequestRepositoryImpl implements RequestRepository {
 
     @Override
     public List<Request> findByCitizen(long citizenId, long requestTypeId) {
-	List<Request> requests = jdbcTemplate.query(queryByCitizenIdAndRequestType,
-		new Object[] { citizenId, requestTypeId }, new RequestRowMapper());
+	List<Request> requests = jdbcTemplate.query(queryByDepartmentId, new Object[] { citizenId, requestTypeId },
+		new RequestRowMapper());
 	requests.stream().forEach(this::fillRequest);
 	return requests;
     }
@@ -68,6 +73,14 @@ public class RequestRepositoryImpl implements RequestRepository {
 	Request result = jdbcTemplate.queryForObject(queryById, new Object[] { id }, new RequestRowMapper());
 	fillRequest(result);
 	return result;
+    }
+
+    @Override
+    public List<Request> findbyDepartmentId(long departmentId) {
+	List<Request> requests = jdbcTemplate.query(queryByCitizenIdAndRequestType, new Object[] { departmentId },
+		new RequestRowMapper());
+	requests.stream().forEach(this::fillRequest);
+	return requests;
     }
 
     @Override
@@ -85,9 +98,17 @@ public class RequestRepositoryImpl implements RequestRepository {
 		(rs, rowId) -> new RequestType(rs.getLong(1), rs.getString(2)));
     }
 
+    @Override
+    public RequestType findRequestTypeById(long id) {
+	return jdbcTemplate.queryForObject(queryRequestTypeById, new Object[] { id },
+		(rs, rowId) -> new RequestType(rs.getLong(1), rs.getString(2)));
+    }
+
     private void fillRequest(Request request) {
 	Citizen citizen = citizenRepository.findById(request.getCitizenId());
+	RequestType reqType = findRequestTypeById(request.getTypeId());
 	request.setCitizen(citizen);
+	request.setType(reqType.getDescription());
 	if (request.getEmployeeId() > 0) {
 	    Employee assignee = employeeRepository.findById(request.getEmployeeId());
 	    request.setAssignee(assignee);

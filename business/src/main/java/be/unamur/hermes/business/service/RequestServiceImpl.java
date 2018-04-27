@@ -57,4 +57,14 @@ public class RequestServiceImpl implements RequestService {
     public RequestType findRequestTypeByDescription(String description) {
 	return requestRepository.findRequestTypeByDescription(description);
     }
+
+    @Override
+    public List<Request> findByDepartmentId(long departmentId) {
+	return requestRepository.findbyDepartmentId(departmentId);
+    }
+
+    @Override
+    public RequestType findRequestTypeById(long id) {
+	return requestRepository.findRequestTypeById(id);
+    }
 }

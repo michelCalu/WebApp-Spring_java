@@ -12,10 +12,13 @@ public interface RequestRepository {
 
     List<Request> findByCitizen(long citizenId, long requestTypeId);
 
+    List<Request> findbyDepartmentId(long departmentId);
+
     Request findById(long id);
 
     long create(CreateRequest newClaim);
 
     RequestType findRequestTypeByDescription(String description);
 
+    RequestType findRequestTypeById(long id);
 }

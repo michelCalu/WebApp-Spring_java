@@ -2,15 +2,18 @@ package be.unamur.hermes.dataaccess.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import be.unamur.hermes.common.enums.ClaimStatus;
+
 public class Request {
 
     private Long id;
-    private Long typeId;
     private int status;
+    private String type;
 
     // only used for database retrieval
     private Long citizenId;
     private Long employeeId;
+    private Long typeId;
 
     // derived information
     private Employee assignee;
@@ -26,8 +29,13 @@ public class Request {
 	this.typeId = typeId;
     }
 
-    public int getStatus() {
+    @JsonIgnore
+    public int getStatusId() {
 	return status;
+    }
+
+    public String getStatus() {
+	return ClaimStatus.values()[status].name();
     }
 
     public void setStatus(int status) {
@@ -54,6 +62,15 @@ public class Request {
 	return id;
     }
 
+    public String getType() {
+	return type;
+    }
+
+    public void setType(String type) {
+	this.type = type;
+    }
+
+    @JsonIgnore
     public Long getTypeId() {
 	return typeId;
     }
