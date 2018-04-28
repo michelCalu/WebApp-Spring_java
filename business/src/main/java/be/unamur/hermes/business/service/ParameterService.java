@@ -3,7 +3,6 @@ package be.unamur.hermes.business.service;
 import java.util.List;
 
 import be.unamur.hermes.business.parameters.RequestParameters;
-import be.unamur.hermes.common.enums.ClaimId;
 
 /**
  * Service Interface for parameters.

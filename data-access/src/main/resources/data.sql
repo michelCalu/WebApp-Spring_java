@@ -1,5 +1,6 @@
 -- bootstrap data
 insert into t_request_types values(null,"nationalityCertificate");
+insert into t_request_types values(null,"parkingCard");
 
 --test data
 

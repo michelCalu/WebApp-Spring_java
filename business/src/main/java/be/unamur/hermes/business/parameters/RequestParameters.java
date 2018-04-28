@@ -3,8 +3,6 @@ package be.unamur.hermes.business.parameters;
 import java.util.HashMap;
 import java.util.Map;
 
-import be.unamur.hermes.common.enums.ClaimId;
-
 /**
  * Class represting a type of claim.
  *
@@ -13,17 +11,17 @@ public class RequestParameters {
 
     private static final String KEY_ACTIVATED = "activated";
 
-    private final ClaimId id;
+    private final String requestTypeId;
     private final Map<String, String> parameters = new HashMap<>();
 
-    public RequestParameters(ClaimId id) {
+    public RequestParameters(String requestTypeId) {
 	super();
-	this.id = id;
+	this.requestTypeId = requestTypeId;
     }
 
     @Override
     public String toString() {
-	return "ClaimType [id=" + id + ", parameters=" + parameters + "]";
+	return "ClaimType [id=" + requestTypeId + ", parameters=" + parameters + "]";
     }
 
     public boolean isActivated() {
@@ -34,8 +32,8 @@ public class RequestParameters {
 	return false;
     }
 
-    public ClaimId getId() {
-	return id;
+    public String getId() {
+	return requestTypeId;
     }
 
     public Map<String, String> getParameters() {

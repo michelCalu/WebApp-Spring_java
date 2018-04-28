@@ -19,7 +19,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import be.unamur.hermes.business.exception.BusinessException;
-import be.unamur.hermes.common.enums.ClaimId;
 import be.unamur.hermes.common.util.XMLUtil;
 
 /**
@@ -104,16 +103,10 @@ public class ParameterParser {
     }
 
     private RequestParameters parseClaim(Element claimElem) {
-	String claimIdString = claimElem.getAttribute(ATTR_ID);
-	if (!StringUtils.hasText(claimIdString))
+	String requestTypeId = claimElem.getAttribute(ATTR_ID);
+	if (!StringUtils.hasText(requestTypeId))
 	    throw new BusinessException(missingAttribute(claimElem, ATTR_ID));
-	ClaimId claimType = ClaimId.getClaimId(claimIdString);
-	if (claimType == null) {
-	    String message = String.format("Invalid ClaimType ID '%s' - one of '%s' expected.", claimIdString,
-		    StringUtils.arrayToCommaDelimitedString(ClaimId.values()));
-	    throw new BusinessException(message);
-	}
-	RequestParameters cp = new RequestParameters(claimType);
+	RequestParameters cp = new RequestParameters(requestTypeId);
 	// parse parameter nodes (if any)
 	for (Element child : DomUtils.getChildElements(claimElem)) {
 	    parseParams(child, cp, "");

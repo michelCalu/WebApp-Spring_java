@@ -1,11 +1,9 @@
 package be.unamur.hermes.business.parameters;
 
 import java.util.ArrayList;
-import java.util.EnumMap;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import be.unamur.hermes.common.enums.ClaimId;
 
 /**
  * This class holds all parameters of all claim types for a given municipality.
@@ -14,29 +12,29 @@ import be.unamur.hermes.common.enums.ClaimId;
 public class RequestParameterSet {
 
     private final String municipality;
-    private final Map<ClaimId, RequestParameters> claims;
+    private final Map<String, RequestParameters> claims;
 
     public RequestParameterSet(String municipality) {
 	super();
 	this.municipality = municipality;
-	this.claims = new EnumMap<>(ClaimId.class);
+	this.claims = new HashMap<>();
     }
 
     public String getMunicipality() {
 	return municipality;
     }
 
-    public boolean isActivated(ClaimId claimId) {
-	RequestParameters claimType = getClaimType(claimId);
+    public boolean isActivated(String requestTypeId) {
+	RequestParameters claimType = getClaimType(requestTypeId);
 	return claimType == null ? false : claimType.isActivated();
     }
 
-    public RequestParameters getClaimType(ClaimId claimId) {
-	return claims.get(claimId);
+    public RequestParameters getClaimType(String requestTypeId) {
+	return claims.get(requestTypeId);
     }
 
-    public String getParameter(ClaimId claimId, String parameterId) {
-	RequestParameters claimType = getClaimType(claimId);
+    public String getParameter(String requestTypeId, String parameterId) {
+	RequestParameters claimType = getClaimType(requestTypeId);
 	return claimType == null ? null : claimType.getParameter(parameterId);
     }
 
@@ -49,7 +47,7 @@ public class RequestParameterSet {
 	return "ClaimParameterSet [municipality=" + municipality + ", claims=" + claims + "]";
     }
 
-    void addClaimParameters(ClaimId id, RequestParameters claim) {
-	claims.put(id, claim);
+    void addClaimParameters(String requestTypeId, RequestParameters claim) {
+	claims.put(requestTypeId, claim);
     }
 }

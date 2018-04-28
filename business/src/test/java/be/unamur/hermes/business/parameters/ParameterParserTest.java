@@ -12,7 +12,6 @@ import java.util.Map;
 import org.junit.Test;
 import org.w3c.dom.Document;
 
-import be.unamur.hermes.common.enums.ClaimId;
 import be.unamur.hermes.common.util.XMLUtil;
 
 public class ParameterParserTest {
@@ -40,9 +39,9 @@ public class ParameterParserTest {
 	    Map<String, RequestParameterSet> municipalities = parser.parse(is);
 	    assertNotNull(municipalities);
 	    RequestParameterSet parameters = municipalities.get(KEY_NAMUR);
-	    boolean nationalityClaimActivated = parameters.isActivated(ClaimId.NATIONALITY_CERTIFICATE);
+	    boolean nationalityClaimActivated = parameters.isActivated("nationalityCertificate");
 	    assertFalse("Nationality Certificate of Namur is activated", nationalityClaimActivated);
-	    boolean parkingPermActivated = parameters.isActivated(ClaimId.PARKING_PERMISSION);
+	    boolean parkingPermActivated = parameters.isActivated("parkingCard");
 	    assertTrue("Nationality Certificate of Namur is not activated", parkingPermActivated);
 	} catch (Exception e) {
 	    e.printStackTrace();
@@ -57,7 +56,7 @@ public class ParameterParserTest {
 	    Document doc = XMLUtil.toDocument(is);
 	    RequestParameterSet cps = parser.parseMunicipality(doc, KEY_GEMBLOUX);
 	    assertNotNull("Expected Gembloux", cps);
-	    Object nestedParameter1 = cps.getParameter(ClaimId.PARKING_PERMISSION, "nestingParam/nestedParam1");
+	    Object nestedParameter1 = cps.getParameter("parkingCard", "nestingParam/nestedParam1");
 	    assertNotNull("Expected 'nestingParam1/nestedParam1'", nestedParameter1);
 	    assertEquals("nestedValue1", String.valueOf(nestedParameter1));
 	} catch (Exception e) {

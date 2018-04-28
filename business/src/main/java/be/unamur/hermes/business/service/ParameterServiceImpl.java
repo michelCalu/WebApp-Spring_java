@@ -9,12 +9,12 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import be.unamur.hermes.business.exception.BusinessException;
+import be.unamur.hermes.business.parameters.ParameterParser;
 import be.unamur.hermes.business.parameters.RequestParameterSet;
 import be.unamur.hermes.business.parameters.RequestParameters;
-import be.unamur.hermes.business.parameters.ParameterParser;
-import be.unamur.hermes.common.enums.ClaimId;
 
 @Service
 public class ParameterServiceImpl implements ParameterService {
@@ -24,12 +24,11 @@ public class ParameterServiceImpl implements ParameterService {
     private Map<String, RequestParameterSet> parameterCache;
 
     @Override
-    public boolean isActivated(String municipality, String claimId) {
-	ClaimId id = ClaimId.getClaimId(claimId);
-	if (id == null)
-	    throw new BusinessException("Unknown claim type '" + claimId + "'");
+    public boolean isActivated(String municipality, String requestTypeId) {
+	if (!StringUtils.hasText(requestTypeId))
+	    throw new BusinessException("Unknown claim type '" + requestTypeId + "'");
 	RequestParameterSet parameterSet = getSet(municipality);
-	return parameterSet == null ? false : parameterSet.isActivated(id);
+	return parameterSet == null ? false : parameterSet.isActivated(requestTypeId);
     }
 
     @Override
@@ -39,12 +38,11 @@ public class ParameterServiceImpl implements ParameterService {
     }
 
     @Override
-    public RequestParameters getRequestType(String municipality, String claimId) {
-	ClaimId id = ClaimId.getClaimId(claimId);
-	if (id == null)
-	    throw new BusinessException("Unknown claim type '" + claimId + "'");
+    public RequestParameters getRequestType(String municipality, String requestTypeId) {
+	if (!StringUtils.hasText(requestTypeId))
+	    throw new BusinessException("Unknown claim type '" + requestTypeId + "'");
 	RequestParameterSet parameterSet = getSet(municipality);
-	return parameterSet == null ? null : parameterSet.getClaimType(id);
+	return parameterSet == null ? null : parameterSet.getClaimType(requestTypeId);
     }
 
     @Override
