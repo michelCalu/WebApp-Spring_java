@@ -8,15 +8,18 @@ public class Municipality {
     private long id;
     private String name;
     private List<Department> departments;
+    private String mayorName;
 
     public Municipality(){};
 
     public Municipality(long id,
                         String name,
-                        List<Department> departments){
+                        List<Department> departments,
+                        String mayorName){
         this.id = id;
         this.name = name;
         this.departments = departments;
+        this.mayorName = mayorName;
     }
 
 
@@ -36,6 +39,14 @@ public class Municipality {
         departments.add(department);
     }
 
+    public String getMayorName() {
+        return mayorName;
+    }
+
+    public void setMayorName(String mayorName) {
+        this.mayorName = mayorName;
+    }
+
 
     @Override
     public boolean equals(Object o) {
@@ -44,13 +55,14 @@ public class Municipality {
         Municipality municipality = (Municipality) o;
         return id == municipality.id &&
                 Objects.equals(name, municipality.name) &&
-                Objects.equals(departments, municipality.departments);
+                Objects.equals(departments, municipality.departments) &&
+                Objects.equals(mayorName, municipality.mayorName);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, name, departments);
+        return Objects.hash(id, name, departments, mayorName);
     }
 
     @Override
@@ -59,6 +71,7 @@ public class Municipality {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", departments=" + departments +
+                ", mayorName='" + mayorName + '\'' +
                 '}';
     }
 }

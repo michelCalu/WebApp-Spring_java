@@ -1,24 +1,21 @@
-DROP TABLE IF EXISTS t_mandataries;
-DROP TABLE IF EXISTS t_mandatary_roles;
 DROP TABLE IF EXISTS t_departments_skills;
 DROP TABLE IF EXISTS t_skills;
 DROP TABLE IF EXISTS t_departments_employees;
 DROP TABLE IF EXISTS t_departments;
 DROP TABLE IF EXISTS t_events;
+DROP TABLE IF EXISTS t_event_types;
 DROP TABLE IF EXISTS t_requests;
-DROP TABLE IF EXISTS t_municipalities_address;
 DROP TABLE IF EXISTS t_municipalities;
+DROP TABLE IF EXISTS t_req_statusses;
 DROP TABLE IF EXISTS t_request_types;
+DROP TABLE IF EXISTS t_mandataries;
+DROP TABLE IF EXISTS t_mandatary_roles;
+DROP TABLE IF EXISTS t_companies;
 DROP TABLE IF EXISTS t_employees;
 DROP TABLE IF EXISTS t_citizen_accounts;
-DROP TABLE IF EXISTS t_companies;
 DROP TABLE IF EXISTS t_citizens;
 DROP TABLE IF EXISTS t_user_statusses;
 DROP TABLE IF EXISTS t_addresses;
-DROP TABLE IF EXISTS t_companies;
-DROP TABLE IF EXISTS t_req_statusses;
-DROP TABLE IF EXISTS t_event_types;
-DROP TABLE IF EXISTS t_events;
 
 
 
@@ -33,10 +30,9 @@ CREATE TABLE t_addresses (
   country VARCHAR(255)    NOT NULL
 );
 
-
 CREATE TABLE t_user_statusses (
   statusID      INT   PRIMARY KEY     NOT NULL AUTO_INCREMENT,
-  statusValue   VARCHAR(255)            NOT NULL
+  statusCode   VARCHAR(255)            NOT NULL UNIQUE
 );
 
 CREATE TABLE t_citizens (
@@ -48,20 +44,18 @@ CREATE TABLE t_citizens (
   phone         VARCHAR(255),
   nationalRegisterNb VARCHAR(255) NOT NULL UNIQUE ,
   birthdate     DATE,
-  activated     BOOLEAN DEFAULT FALSE,
-  FOREIGN KEY (addressID) REFERENCES t_addresses(addressID)
+  userStatus    INT,
+  FOREIGN KEY (addressID) REFERENCES t_addresses(addressID),
+  FOREIGN KEY (userStatus) REFERENCES t_user_statusses(statusID)
 );
 
 
 CREATE TABLE t_citizen_accounts (
   citizenLogin  INT  PRIMARY KEY NOT NULL,
   citizenPwd    VARCHAR(255)  NOT NULL,
-  accountState  INT       NOT NULL,
 
-  FOREIGN KEY (citizenLogin) REFERENCES t_citizens(citizenID),
-  FOREIGN KEY (accountState) REFERENCES t_user_statusses(statusID)
+  FOREIGN KEY (citizenLogin) REFERENCES t_citizens(citizenID)
 );
-
 
 
 CREATE TABLE t_employees (
@@ -87,9 +81,9 @@ CREATE TABLE t_companies (
   vatNb     	VARCHAR(255),
   address     	INT       		NOT NULL,
   judicialForm  VARCHAR(255)  	NOT NULL,
-  CompanyOwner  INT			  	NOT NULL,
+  contactPerson  INT			  	NOT NULL,
 
-  UNIQUE (companyOwner,companyNb)
+  FOREIGN KEY (contactPerson) REFERENCES t_citizens(citizenID)
 );
 
 
@@ -112,7 +106,7 @@ CREATE TABLE t_mandataries(
 );
 
 CREATE TABLE t_request_types (
-	requestTypeID INT PRIMARY KEY NOT NULL,
+	requestTypeID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
 	description VARCHAR(255),
 	CONSTRAINT UC_Description UNIQUE (description)
 );
@@ -129,6 +123,7 @@ CREATE TABLE t_municipalities (
   address   INT       NOT NULL,
   email   VARCHAR(255)  NOT NULL,
   phone   VARCHAR(255)  NOT NULL,
+  mayorName VARCHAR(255) NOT NULL,
 
   FOREIGN KEY  (address) REFERENCES t_addresses(addressID)
 
@@ -139,7 +134,8 @@ CREATE TABLE t_requests (
   requestID		INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
   requestTypeID	INT 			NOT NULL,
   citizenID		INT				NOT NULL,
-  employeeID	INT				NOT NULL,
+  companyNb   VARCHAR(255),
+  employeeID	INT,
   municipalityID INT      NOT NULL,
   statusID    INT       NOT NULL,
   lastChangeBy  INT       NOT NULL,
@@ -151,6 +147,8 @@ CREATE TABLE t_requests (
     REFERENCES t_request_types(requestTypeID),
   FOREIGN KEY(citizenID)
     REFERENCES t_citizens(citizenID),
+  FOREIGN KEY (companyNb)
+    REFERENCES t_companies(companyNb),
   FOREIGN KEY(employeeID)
     REFERENCES t_employees(employeeID),
   FOREIGN KEY(municipalityID)
@@ -163,7 +161,7 @@ CREATE TABLE t_requests (
 
 CREATE TABLE t_event_types (
   eventTypeID   INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  eventDesc VARCHAR(255)  NOT NULL
+  eventDesc VARCHAR(255)  NOT NULL UNIQUE
 );
 
 
@@ -200,8 +198,7 @@ CREATE TABLE t_departments_employees (
 
   PRIMARY KEY (departmentID,employeeID),
   FOREIGN KEY (departmentID) REFERENCES t_departments(departmentID),
-  FOREIGN KEY (employeeID) REFERENCES t_employees(employeeID),
-  UNIQUE (departmentID,employeeID)
+  FOREIGN KEY (employeeID) REFERENCES t_employees(employeeID)
 );
 
 CREATE TABLE t_skills (
@@ -215,7 +212,6 @@ CREATE TABLE t_departments_skills (
 
   PRIMARY KEY (departmentID, skillID),
   FOREIGN KEY (departmentID) REFERENCES t_departments(departmentID),
-  FOREIGN KEY (skillID) REFERENCES t_skills(skillID),
-  UNIQUE (departmentID, skillID)
+  FOREIGN KEY (skillID) REFERENCES t_skills(skillID)
 );
 

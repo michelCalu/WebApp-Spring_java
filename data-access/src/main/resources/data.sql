@@ -1,4 +1,7 @@
 -- test data
+# TODO  Update data.sql file (like add UserStatus etc ...)
+# TODO Actually we can't add a new citizen because there is no UserStatus
+/*
 insert into t_request_types values(1,"nationalityCertificate");
 
 insert into t_addresses values(null,"Avenue de la Reine", 279,"A",1020,"Jette", "Région de Bruxelles-Capitale", "Belgique");
@@ -19,3 +22,4 @@ insert into t_req_statusses values (1, "New");
 insert into t_req_statusses values (2, "Ongoing");
 
 insert into t_requests values(null, 1, 1, 1, 1, 1, 1, "HERM001", "my ref", "JETTE001");
+*/

@@ -2,6 +2,7 @@ package be.unamur.hermes.dataaccess.repository;
 
 import be.unamur.hermes.dataaccess.entity.Address;
 import be.unamur.hermes.dataaccess.entity.Citizen;
+import be.unamur.hermes.dataaccess.entity.UserStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -65,6 +66,7 @@ public class CitizenRepositoryImpl implements CitizenRepository {
                 citizen.getBirthdate()
         };
 
+        //TODO add default value for status
         int[] types = {
                 Types.VARCHAR,
                 Types.VARCHAR,
@@ -98,7 +100,7 @@ public class CitizenRepositoryImpl implements CitizenRepository {
     private static final String createNew =
             "INSERT INTO t_citizens (" +
                     "firstName, lastName, addressID, mail, phone, " +
-                    "nationalRegisterNb, birthdate, activated) VALUES " +
+                    "nationalRegisterNb, birthdate, userStatus) VALUES " +
                     "(?, ?, ?, ?, ?, ?, ?, FALSE)";
 
     private static final String updateActivate =
@@ -116,6 +118,7 @@ public class CitizenRepositoryImpl implements CitizenRepository {
                 rs.getString(6),
                 rs.getString(7),
                 rs.getDate(8).toLocalDate(),
-                rs.getBoolean(9));
+                // TODO add a way to map int value to user status or add a citizenStatusRepository
+                new UserStatus());
     }
 }

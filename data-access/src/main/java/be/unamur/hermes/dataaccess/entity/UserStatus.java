@@ -5,14 +5,14 @@ import java.util.Objects;
 public class UserStatus {
 
     private long id;
-    private String value;
+    private String code;
 
     public UserStatus() {
     }
 
-    public UserStatus(long id, String value) {
+    public UserStatus(long id, String code) {
         this.id = id;
-        this.value = value;
+        this.code = code;
     }
 
     public long getId() {
@@ -23,12 +23,12 @@ public class UserStatus {
         this.id = id;
     }
 
-    public String getValue() {
-        return value;
+    public String getCode() {
+        return code;
     }
 
-    public void setValue(String value) {
-        this.value = value;
+    public void setCode(String code) {
+        this.code = code;
     }
 
     @Override
@@ -37,20 +37,20 @@ public class UserStatus {
         if (!(o instanceof UserStatus)) return false;
         UserStatus that = (UserStatus) o;
         return id == that.id &&
-                Objects.equals(value, that.value);
+                Objects.equals(code, that.code);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, value);
+        return Objects.hash(id, code);
     }
 
     @Override
     public String toString() {
         return "UserStatus{" +
                 "id=" + id +
-                ", value='" + value + '\'' +
+                ", code='" + code + '\'' +
                 '}';
     }
 }

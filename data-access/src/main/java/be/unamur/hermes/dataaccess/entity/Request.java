@@ -12,12 +12,14 @@ public class Request {
 
     // only used for database retrieval
     private Long citizenId;
+    private Long companyId;
     private Long employeeId;
     private Long typeId;
 
     // derived information
     private Employee assignee;
     private Citizen citizen;
+    private Company company;
 
     Request() {
 	// no-op
@@ -58,6 +60,14 @@ public class Request {
 	this.citizen = citizen;
     }
 
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
+    }
+
     public Long getId() {
 	return id;
     }
@@ -92,6 +102,16 @@ public class Request {
     public void setEmployeeId(Long employeeId) {
 	this.employeeId = employeeId;
     }
+
+    @JsonIgnore
+    public Long getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(Long companyId) {
+        this.companyId = companyId;
+    }
+
 
     @Override
     public String toString() {
