@@ -24,12 +24,13 @@ DROP TABLE IF EXISTS t_events;
 
 CREATE TABLE t_addresses (
   addressID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  country VARCHAR(255)    NOT NULL,
-  state VARCHAR(255)      NOT NULL,
-  zipCode INT             NOT NULL,
   street VARCHAR(255)     NOT NULL,
-  streetNb INT            NOT NULL
-  /* nbSuffix VARCHAR(4)  ,         */
+  streetNb INT            NOT NULL,
+  nbSuffix VARCHAR(4)     ,
+  zipCode INT             NOT NULL,
+  municipality VARCHAR (255) NOT NULL,
+  state VARCHAR(255)      NOT NULL,
+  country VARCHAR(255)    NOT NULL
 );
 
 
@@ -86,11 +87,9 @@ CREATE TABLE t_companies (
   vatNb     	VARCHAR(255),
   address     	INT       		NOT NULL,
   judicialForm  VARCHAR(255)  	NOT NULL,
-  CompanyOwner  INT			  	NOT NULL,     /* 1 mandatory Owner p/ company */
+  CompanyOwner  INT			  	NOT NULL,
 
-  FOREIGN KEY (address) REFERENCES t_addresses(addressID),
-  FOREIGN KEY (companyOwner) REFERENCES t_citizens(citizenID)
-  /* useless because the companyNb is the primary key so is unique UNIQUE (companyOwner,companyNb) */
+  UNIQUE (companyOwner,companyNb)
 );
 
 
@@ -129,11 +128,10 @@ CREATE TABLE t_municipalities (
   name    VARCHAR(255)  NOT NULL UNIQUE,
   address   INT       NOT NULL,
   email   VARCHAR(255)  NOT NULL,
-  mayor   INT       NOT NULl, /* TODO remove this ? */
   phone   VARCHAR(255)  NOT NULL,
 
-  FOREIGN KEY  (address) REFERENCES t_addresses(addressID),
-  FOREIGN KEY  (mayor) REFERENCES t_employees(employeeID)
+  FOREIGN KEY  (address) REFERENCES t_addresses(addressID)
+
 );
 
 
@@ -141,27 +139,26 @@ CREATE TABLE t_requests (
   requestID		INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
   requestTypeID	INT 			NOT NULL,
   citizenID		INT				NOT NULL,
-  employeeID	INT						,
-  status 		INT				NOT NULL,
-/*  municipalityID INT      NOT NULL,
+  employeeID	INT				NOT NULL,
+  municipalityID INT      NOT NULL,
   statusID    INT       NOT NULL,
   lastChangeBy  INT       NOT NULL,
   systemRef   VARCHAR(255)  NOT NULL,
   userRef   VARCHAR(255)  ,
-  municipalityRef VARCHAR(255)  NOT NULL,*/
+  municipalityRef VARCHAR(255)  NOT NULL,
 
   FOREIGN KEY(requestTypeID)
     REFERENCES t_request_types(requestTypeID),
   FOREIGN KEY(citizenID)
     REFERENCES t_citizens(citizenID),
   FOREIGN KEY(employeeID)
-    REFERENCES t_employees(employeeID)/*,
+    REFERENCES t_employees(employeeID),
   FOREIGN KEY(municipalityID)
     REFERENCES t_municipalities(municipalityID),
   FOREIGN KEY(statusID)
    REFERENCES t_req_statusses(statusID),
   FOREIGN KEY(lastChangeBy)
-    REFERENCES t_employees(employeeID)*/
+    REFERENCES t_employees(employeeID)
 );
 
 CREATE TABLE t_event_types (
@@ -222,32 +219,3 @@ CREATE TABLE t_departments_skills (
   UNIQUE (departmentID, skillID)
 );
 
-CREATE TABLE t_municipalities_address ( /* Is this table really necessary ? */
-  addressID   INT NOT NULL ,
-  municipalityID  INT NOT NULL ,
-
-  PRIMARY KEY (addressID, municipalityID),
-  FOREIGN KEY (addressID) REFERENCES t_addresses(addressID),
-  FOREIGN KEY (municipalityID) REFERENCES t_municipalities(municipalityID)
-
-)
-
-/*
--- test data
-insert into t_claim_types values(1,"Certificat de nationalité");
-insert into t_people values(null,"Thomas","Elskens");
-insert into t_people values(null,"Fabian","Germeau");
-insert into t_citizens values (null, 1, 1);
-insert into t_employees values(null,2);
-insert into t_claims values(null,1,1,1);
-*/
-
-/*
--- test data
-insert into t_claim_types values(1,"Certificat de nationalité");
-insert into t_people values(null,"Thomas","Elskens");
-insert into t_people values(null,"Fabian","Germeau");
-insert into t_citizens values (null, 1, 1);
-insert into t_employees values(null,2);
-insert into t_claims values(null,1,1,1);
-*/
