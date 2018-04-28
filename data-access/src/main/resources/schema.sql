@@ -114,7 +114,7 @@ CREATE TABLE t_request_types (
 CREATE TABLE t_req_statusses (
   statusID    INT   PRIMARY KEY NOT NULL AUTO_INCREMENT,
   statusName    VARCHAR(255),
-  CONSTRAINT UC_statusNAme UNIQUE (statusName)
+  CONSTRAINT UC_statusName UNIQUE (statusName)
 );
 
 

@@ -2,6 +2,9 @@
 insert into t_request_types values(null,"nationalityCertificate");
 insert into t_request_types values(null,"parkingCard");
 
+insert into t_req_statusses values (null, "New");
+insert into t_req_statusses values (null, "Ongoing");
+
 --test data
 
 insert into t_addresses values(null,"Avenue de la Reine", 279,"A",1020,"Jette", "Région de Bruxelles-Capitale", "Belgique");
@@ -17,8 +20,4 @@ insert into t_employees values(null,"Fabian","Germeau",2,
 
 
 insert into t_municipalities values(1, "Jette", 1, "info@jette.be", "02/654.12.20", "Hervé Doyen");
-
-insert into t_req_statusses values (1, "New");
-insert into t_req_statusses values (2, "Ongoing");
-
 insert into t_requests values(null, 1, 1, null, 1, 1, 1, 1, "HERM001", "my ref", "JETTE001");
