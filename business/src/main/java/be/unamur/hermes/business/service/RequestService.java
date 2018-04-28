@@ -14,6 +14,8 @@ public interface RequestService {
 
     List<Request> findByDepartmentId(long departmentId);
 
+    List<Request> findByAssigneeId(long assigneeId);
+
     List<Request> find(long citizenId, long requestTypeId);
 
     long create(CreateRequest newClaim);

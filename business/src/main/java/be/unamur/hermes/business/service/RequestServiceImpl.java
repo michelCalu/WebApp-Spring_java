@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import be.unamur.hermes.business.exception.BusinessException;
-import be.unamur.hermes.common.enums.ClaimStatus;
 import be.unamur.hermes.dataaccess.entity.CreateRequest;
 import be.unamur.hermes.dataaccess.entity.Request;
 import be.unamur.hermes.dataaccess.entity.RequestType;
@@ -32,7 +31,6 @@ public class RequestServiceImpl implements RequestService {
     @Override
     public long create(CreateRequest newRequest) {
 	// TODO validate with Authentification
-	newRequest.setStatus(ClaimStatus.NEW.getId());
 	String type = newRequest.getType();
 	if (!StringUtils.hasText(type))
 	    throw new BusinessException("Request type is mandatory");
@@ -61,6 +59,11 @@ public class RequestServiceImpl implements RequestService {
     @Override
     public List<Request> findByDepartmentId(long departmentId) {
 	return requestRepository.findbyDepartmentId(departmentId);
+    }
+
+    @Override
+    public List<Request> findByAssigneeId(long assigneeId) {
+	return requestRepository.findbyAssigneeId(assigneeId);
     }
 
     @Override

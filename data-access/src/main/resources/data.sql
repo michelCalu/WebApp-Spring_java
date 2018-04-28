@@ -1,8 +1,7 @@
--- test data
-# TODO  Update data.sql file (like add UserStatus etc ...)
-# TODO Actually we can't add a new citizen because there is no UserStatus
-/*
-insert into t_request_types values(1,"nationalityCertificate");
+-- bootstrap data
+insert into t_request_types values(null,"nationalityCertificate");
+
+--test data
 
 insert into t_addresses values(null,"Avenue de la Reine", 279,"A",1020,"Jette", "Région de Bruxelles-Capitale", "Belgique");
 insert into t_addresses values(null,"Place du miroir", 1,null,1020,"Jette", "Région de Bruxelles-Capitale", "Belgique");
@@ -16,10 +15,9 @@ insert into t_employees values(null,"Fabian","Germeau",2,
 			"someAccountNumber",'2018-04-01','M',"bachelor",0,0);
 
 
-insert into t_municipalities values(1, "Jette", 1, "info@jette.be", "02/654.12.20");
+insert into t_municipalities values(1, "Jette", 1, "info@jette.be", "02/654.12.20", "Hervé Doyen");
 
 insert into t_req_statusses values (1, "New");
 insert into t_req_statusses values (2, "Ongoing");
 
-insert into t_requests values(null, 1, 1, 1, 1, 1, 1, "HERM001", "my ref", "JETTE001");
-*/
+insert into t_requests values(null, 1, 1, null, 1, 1, 1, 1, "HERM001", "my ref", "JETTE001");

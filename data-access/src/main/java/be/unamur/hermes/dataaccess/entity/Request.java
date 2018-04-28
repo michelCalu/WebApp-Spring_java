@@ -2,13 +2,14 @@ package be.unamur.hermes.dataaccess.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import be.unamur.hermes.common.enums.ClaimStatus;
-
 public class Request {
 
     private Long id;
-    private int status;
+
     private String type;
+    private String userRef;
+    private String systemRef;
+    private String municipalityRef;
 
     // only used for database retrieval
     private Long citizenId;
@@ -20,6 +21,7 @@ public class Request {
     private Employee assignee;
     private Citizen citizen;
     private Company company;
+    private String status;
 
     Request() {
 	// no-op
@@ -31,16 +33,11 @@ public class Request {
 	this.typeId = typeId;
     }
 
-    @JsonIgnore
-    public int getStatusId() {
+    public String getStatus() {
 	return status;
     }
 
-    public String getStatus() {
-	return ClaimStatus.values()[status].name();
-    }
-
-    public void setStatus(int status) {
+    public void setStatus(String status) {
 	this.status = status;
     }
 
@@ -61,11 +58,11 @@ public class Request {
     }
 
     public Company getCompany() {
-        return company;
+	return company;
     }
 
     public void setCompany(Company company) {
-        this.company = company;
+	this.company = company;
     }
 
     public Long getId() {
@@ -105,13 +102,36 @@ public class Request {
 
     @JsonIgnore
     public Long getCompanyId() {
-        return companyId;
+	return companyId;
     }
 
     public void setCompanyId(Long companyId) {
-        this.companyId = companyId;
+	this.companyId = companyId;
     }
 
+    public String getUserRef() {
+	return userRef;
+    }
+
+    public void setUserRef(String userRef) {
+	this.userRef = userRef;
+    }
+
+    public String getSystemRef() {
+	return systemRef;
+    }
+
+    public void setSystemRef(String systemRef) {
+	this.systemRef = systemRef;
+    }
+
+    public String getMunicipalityRef() {
+	return municipalityRef;
+    }
+
+    public void setMunicipalityRef(String municipalityRef) {
+	this.municipalityRef = municipalityRef;
+    }
 
     @Override
     public String toString() {

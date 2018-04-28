@@ -49,11 +49,16 @@ public class RequestController {
     @GetMapping
     public ResponseEntity<List<Request>> getRequests(@RequestParam("citizenId") Optional<Long> citizenId,
 	    @RequestParam("requestTypeId") Optional<Long> requestTypeId,
-	    @RequestParam("departmentId") Optional<Long> departmentId) {
+	    @RequestParam("departmentId") Optional<Long> departmentId,
+	    @RequestParam("assigneeId") Optional<Long> assigneeId) {
 	try {
 	    List<Request> data = null;
 	    if (departmentId.isPresent()) {
 		data = requestService.findByDepartmentId(departmentId.get());
+		return ResponseEntity.status(HttpStatus.OK).body(data);
+	    }
+	    if (assigneeId.isPresent()) {
+		data = requestService.findByAssigneeId(assigneeId.get());
 		return ResponseEntity.status(HttpStatus.OK).body(data);
 	    }
 	    if (!citizenId.isPresent())

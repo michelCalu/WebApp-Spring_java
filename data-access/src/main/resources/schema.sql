@@ -112,8 +112,9 @@ CREATE TABLE t_request_types (
 );
 
 CREATE TABLE t_req_statusses (
-  statusID    INT   PRIMARY KEY NOT NULL,
-  statusName    VARCHAR(255)
+  statusID    INT   PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  statusName    VARCHAR(255),
+  CONSTRAINT UC_statusNAme UNIQUE (statusName)
 );
 
 
@@ -136,7 +137,7 @@ CREATE TABLE t_requests (
   citizenID		INT				NOT NULL,
   companyNb   VARCHAR(255),
   employeeID	INT,
-  municipalityID INT      NOT NULL,
+  departmentID INT      NOT NULL,
   statusID    INT       NOT NULL,
   lastChangeBy  INT       NOT NULL,
   systemRef   VARCHAR(255)  NOT NULL,
@@ -151,8 +152,8 @@ CREATE TABLE t_requests (
     REFERENCES t_companies(companyNb),
   FOREIGN KEY(employeeID)
     REFERENCES t_employees(employeeID),
-  FOREIGN KEY(municipalityID)
-    REFERENCES t_municipalities(municipalityID),
+  FOREIGN KEY(departmentID)
+    REFERENCES t_departments(departmentID),
   FOREIGN KEY(statusID)
    REFERENCES t_req_statusses(statusID),
   FOREIGN KEY(lastChangeBy)

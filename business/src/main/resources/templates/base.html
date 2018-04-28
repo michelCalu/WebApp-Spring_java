@@ -51,9 +51,9 @@
 		<td>Réference Hermès : </td>
 	</tr>
 	<tr>
-		<td>TODO</td>
-		<td>TODO</td>
-		<td>TODO</td>
+		<td th:text="${#strings.toString(request.userRef)}"></td>
+		<td th:text="${#strings.toString(request.municipalityRef)}"></td>
+		<td th:text="${#strings.toString(request.systemRef)}"></td>
 	</tr>
 </table>
 <br/>

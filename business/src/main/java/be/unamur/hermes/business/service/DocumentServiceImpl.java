@@ -18,7 +18,6 @@ import org.thymeleaf.templateresolver.TemplateResolver;
 import com.google.common.base.Charsets;
 
 import be.unamur.hermes.business.document.DocumentCreationRequest;
-import be.unamur.hermes.common.enums.ClaimStatus;
 import be.unamur.hermes.common.util.PDFCreator;
 import be.unamur.hermes.dataaccess.entity.Address;
 import be.unamur.hermes.dataaccess.entity.Citizen;
@@ -101,12 +100,12 @@ public class DocumentServiceImpl implements DocumentService {
 	Citizen mayor = new Citizen(1L, "mayorLastName", "mayorFistName", null, "mayorMail@commune.be", "mayorPhone",
 		"mayorNRN", null, null);
 	Citizen requestor = new Citizen(2L, "requestorLastName", "requestorFirstName",
-		new Address(3, "Belgium", "Gembloux", 1230, "Rue Haute", 130), "requestorMail@hotmail.com",
+		new Address(3, "Rue Haute", 130, "B", 1230, "Gembloux", "BRC", "Belgium"), "requestorMail@hotmail.com",
 		"requestorPhone", "requestorNRN", LocalDate.of(1970, 5, 1), null);
 	Municipality munip = new Municipality();
 	munip.setName("Gembloux");
 	munip.setMayor(mayor);
-	munip.setAddress(new Address(2L, "Belgium", "Gembloux", 1230, "Rue Champs d'Eglise", 13));
+	munip.setAddress(new Address(2L, "Rue Champs d'Eglise", 13, null, 1230, "Gembloux", "Wallonie", "Belgium"));
 	Department dep = new Department();
 	Employee officer = new Employee(1L, "officerLastName", "officerFirstName", null, "officerMail@commune.be",
 		"officerPhone", "officerNRN", LocalDate.of(1983, 11, 13), "officerAccountNumber", null, 'M', null, 0,
@@ -116,7 +115,7 @@ public class DocumentServiceImpl implements DocumentService {
 		0);
 	dep.setManager(manager);
 	dep.setMunicipality(munip);
-	dep.setAddress(new Address(1L, "Belgium", "Gembloux", 1230, "Rue Champs d'Eglise", 12));
+	dep.setAddress(new Address(1L, "Rue Champs d'Eglise", 12, null, 1230, "Gembloux", "Wallonie", "Belgium"));
 	dep.setName("Service de population de Gembloux");
 	dep.setEmail("population-gembloux@commune.be");
 	dep.setPhoneNumber("populationPhoneNumber");
@@ -126,7 +125,7 @@ public class DocumentServiceImpl implements DocumentService {
 	Request request = new Request(1L, 1L);
 	request.setAssignee(officer);
 	request.setCitizen(requestor);
-	request.setStatus(ClaimStatus.DONE.getId());
+	request.setStatus("Done");
 	request.setSystemRef("HERM-REF");
 	request.setUserRef("USER_REF");
 

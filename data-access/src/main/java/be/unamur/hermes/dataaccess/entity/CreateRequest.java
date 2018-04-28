@@ -6,7 +6,6 @@ public class CreateRequest {
     private Long requestTypeId;
     private String type;
     private Long citizen;
-    private int status;
 
     public CreateRequest() {
     }
@@ -34,14 +33,5 @@ public class CreateRequest {
 
     public void setRequestTypeId(Long requestTypeId) {
 	this.requestTypeId = requestTypeId;
-    }
-
-    @JsonIgnore
-    public int getStatus() {
-	return status;
-    }
-
-    public void setStatus(int status) {
-	this.status = status;
     }
 }
