@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="base :: common-head" />
+<body th:inline="text">
+<table>
+	<tr>
+		<td>[[${municipality.name}]] <br/></td>
+		<td style="width:60%;">   </td>
+	</tr>
+	<tr>
+		<td>[[${municipality.address.streetNb}]], [[${municipality.address.street}]] <br/>
+			[[${municipality.address.zipCode}]] [[${municipality.address.state}]]
+		</td>
+		<td>   </td>
+	</tr>
+</table>
+<br/>
+<h1 style="text-align: center">CARTE DE STATIONNEMENT</h1>
+<br/>
+<p>Plaque d’immatriculation du véhicule : TODO.</p>
+<p>Numéro de la carte : TODO.</p>
+<p>Période de validité de la carte : du TODO au TODO compris.</p>
+<br/>
+<br/>
+<div th:replace="base :: base-message-footer-table"> </div>
+</body>
+</html>

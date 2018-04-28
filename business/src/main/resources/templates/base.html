@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:fragment="common-head">
+        <meta charset="utf-8"/>
+        <style>
+        	table {
+        		width: 100%;
+        	}
+        	td {
+			    border: 1px solid #dddddd;
+			    text-align: left;
+			    padding: 8px;
+			}
+        </style>
+    </div>
+</head>
+<body th:inline="text">
+<div th:fragment="base-message-header">
+<table>
+	<tr>
+		<td th:text="${municipality.name}"></td>
+		<td th:text="${officer.lastName}+' '+${officer.firstName}"></td>
+	</tr>
+	<tr>
+		<td>   </td>
+		<td th:text="${department.name}"></td>
+	</tr>
+	<tr>
+		<td >[[${municipality.address.streetNb}]], [[${municipality.address.street}]] <br/>
+			[[${municipality.address.zipCode}]] [[${municipality.address.state}]]
+		</td>
+		<td>[[${department.address.streetNb}]], [[${department.address.street}]] <br/>
+			[[${department.address.zipCode}]] [[${department.address.state}]]
+		</td>
+	</tr>
+	<tr>
+		<td th:text="${municipality.phoneNumber}"></td>
+		<td th:text="${department.phoneNumber}"></td>
+	</tr>
+	<tr>
+		<td th:text="${municipality.email}"></td>
+		<td th:text="${department.email}"></td>
+	</tr>
+</table>
+<br/>
+<table>
+	<tr>
+		<td>Votre référence : </td>
+		<td>Notre référence : </td>
+		<td>Réference Hermès : </td>
+	</tr>
+	<tr>
+		<td>TODO</td>
+		<td>TODO</td>
+		<td>TODO</td>
+	</tr>
+</table>
+<br/>
+CONCERNE : [[${title}]]
+<br/>
+Le [[${#temporals.format(date,'dd/MM/yyyy')}]]
+<br/>
+<br/>
+Madame, Monsieur,
+<br/>
+<br/>
+</div>
+
+<div th:fragment="base-message-footer">
+<br/>
+<br/>
+Je vous prie d'agréer, Madame, Monsieur, l'expression de nos sentiments distingués.
+<br/>
+<br/>
+<br/>
+<table th:fragment="base-message-footer-table">
+	<tr>
+		<td th:text="${municipality.mayor.lastName}+' '+${municipality.mayor.firstName}"></td>
+		<td th:text="${department.manager.lastName}+' '+${department.manager.lastName}"></td>
+	</tr>
+	<tr>
+		<td>Bourgmestre de la commune de <br/> [[${municipality.name}]]</td>
+		<td>Service [[${department.name}]]</td>
+	</tr>
+</table>
+</div>
+</body>
+</html>

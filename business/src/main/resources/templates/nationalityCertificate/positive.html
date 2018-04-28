@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="base :: common-head" />
+<body th:inline="text">
+<div th:replace="base :: base-message-header"></div>
+<div>
+<p>
+Par la présente, nous avons le plaisir de vous délivrer votre certificat de nationalité belge.
+</p>
+<p th:object="${requestor}">
+Le nommé, [[*{lastName}]], [[*{firstName}]], né(e) le [[*{#temporals.format(birthdate,'dd/MM/yyyy')}]], ayant pour numéro de registre national [[*{nationalRegisterNb}]], 
+<strong><ins>est certifié de nationalité belge</ins></strong>.
+</p>
+</div>
+<div th:replace="base :: base-message-footer"> </div>
+</body>
+</html>
