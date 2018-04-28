@@ -55,7 +55,6 @@ public class DocumentServiceImpl implements DocumentService {
 	String templateName = positive ? "nationalityCertificate/positive" : "nationalityCertificate/negative";
 	Context context = initContext(document);
 	context.setVariable("title", "Demande de certificat de nationalité");
-	context.setVariable("date", LocalDate.now());
 	return templateEngine.process(templateName, context);
     }
 
@@ -64,7 +63,6 @@ public class DocumentServiceImpl implements DocumentService {
 	String templateName = positive ? "nationalityCertificate/positive" : "nationalityCertificate/negative";
 	Context context = initContext(document);
 	context.setVariable("title", "Demande de certificat de nationalité");
-	context.setVariable("date", LocalDate.now().toString());
 	templateEngine.process(templateName, context, writer);
     }
 
@@ -72,25 +70,23 @@ public class DocumentServiceImpl implements DocumentService {
 	String templateName = positive ? "parkingCard/positive" : "parkingCard/negative";
 	Context context = initContext(document);
 	context.setVariable("title", "Demande de carte de stationnement pour riverain ou visiteur");
-	context.setVariable("date", LocalDate.now());
 	return templateEngine.process(templateName, context);
     }
 
     public String getParkingCard(DocumentCreationRequest document) {
 	Context context = initContext(document);
-	context.setVariable("date", LocalDate.now());
 	return templateEngine.process("parkingCard/card", context);
     }
 
     public String getPayment(DocumentCreationRequest document) {
 	Context context = initContext(document);
-	context.setVariable("date", LocalDate.now());
 	context.setVariable("title", "Invitation à payer");
 	return templateEngine.process("parkingCard/payment", context);
     }
 
     protected Context initContext(DocumentCreationRequest document) {
 	Context result = new Context(Locale.FRENCH);
+	result.setVariable("date", LocalDate.now());
 	result.setVariable("requestor", document.getRequestor());
 	result.setVariable("request", document.getRequest());
 	result.setVariable("officer", document.getOfficer());
@@ -103,10 +99,10 @@ public class DocumentServiceImpl implements DocumentService {
     public static void main(String[] args) {
 	DocumentCreationRequest doc = new DocumentCreationRequest();
 	Citizen mayor = new Citizen(1L, "mayorLastName", "mayorFistName", null, "mayorMail@commune.be", "mayorPhone",
-		"mayorNRN", null, true);
+		"mayorNRN", null, null);
 	Citizen requestor = new Citizen(2L, "requestorLastName", "requestorFirstName",
 		new Address(3, "Belgium", "Gembloux", 1230, "Rue Haute", 130), "requestorMail@hotmail.com",
-		"requestorPhone", "requestorNRN", LocalDate.of(1970, 5, 1), true);
+		"requestorPhone", "requestorNRN", LocalDate.of(1970, 5, 1), null);
 	Municipality munip = new Municipality();
 	munip.setName("Gembloux");
 	munip.setMayor(mayor);
@@ -131,6 +127,9 @@ public class DocumentServiceImpl implements DocumentService {
 	request.setAssignee(officer);
 	request.setCitizen(requestor);
 	request.setStatus(ClaimStatus.DONE.getId());
+	request.setSystemRef("HERM-REF");
+	request.setUserRef("USER_REF");
+
 	doc.setRequest(request);
 	DocumentServiceImpl service = new DocumentServiceImpl();
 	String result = service.getNationalityCertificate(true, doc);
