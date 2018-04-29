@@ -190,7 +190,7 @@ CREATE TABLE t_request_field_values (
   requestFieldValueID 	INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
   fieldCode 			VARCHAR(255) NOT NULL,
   requestID				INT NOT NULL,
-  # fieldValue XOR fieldFile: either one or the other is present (both nullable, therefore)
+  -- fieldValue XOR fieldFile: either one or the other is present (both nullable, therefore)
   fieldValue			VARCHAR(255),
   fieldFile				LONGBLOB,
   
