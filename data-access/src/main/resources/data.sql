@@ -19,15 +19,16 @@ insert into t_request_field_definitions values("companyParkingCardCarColour", 3,
 insert into t_request_field_definitions values("companyParkingCardPlateNumber", 3, "string", true);
 insert into t_request_field_definitions values("companyParkingCardGreenCard", 3, "binary", true);
 insert into t_request_field_definitions values("companyParkingCardVisitorProof", 3, "binary", true);
+insert into t_req_statusses values(null,"new");
+insert into t_req_statusses values(null,"ongoing");
+insert into t_req_statusses values(null,"awaitingInfo");
+insert into t_req_statusses values(null,"rejected");
+insert into t_req_statusses values(null,"accepted");
 
-
-insert into t_user_statusses values(1, "pendingValidation");
-insert into t_user_statusses values(2, "active");
-
-insert into t_req_statusses values (1, "New");
-insert into t_req_statusses values (2, "Ongoing");
 
 -- test data
+insert into t_user_accounts values(null,"ROLE_USER","$2a$10$nci/VfQ6BffNStE8ECXmq.7/fs4FBGTghAOfijxmMcx4r7A7JZOdK","active");
+insert into t_user_accounts values(null,"ROLE_USER","myPassword","active");
 
 insert into t_addresses values(1,"Avenue de la Reine", 279,"A",1020,"Jette", "Région de Bruxelles-Capitale", "Belgique");
 insert into t_addresses values(2,"Place du miroir", 1,null,1020,"Jette", "Région de Bruxelles-Capitale", "Belgique");
@@ -42,7 +43,7 @@ insert into t_citizens values(2,"David","Fernandez",5,"dfernandez1612@gmail.com"
 insert into t_employees values(1,"Fabian","Germeau",2,
 			"fabian.germeau@cetic.be",
 			"somePhone","someNRN",'1970-01-01',
-			"someAccountNumber",'2018-04-01','M',"bachelor",0,0);
+			"someAccountNumber",'2018-04-01','M',"bachelor",0,0,2);
 
 insert into t_employees values(2,"Degryse","Killian",6,
 			"killian.degryse@hotmail.com",
@@ -54,8 +55,8 @@ insert into t_employees values(2,"Degryse","Killian",6,
 insert into t_municipalities values(1, "Jette", 1, "info@jette.be", "02/654.12.20", "Hervé Doyen");
 insert into t_municipalities values(2, "Ganshoren", 4, "ganshoren@ganshoren.irisnet.be", "02/465.12.77", "Robert Genard");
 
-insert into t_departments values(1, 1, "Population & État civil", 1, null);
-insert into t_departments values(2, 1, "État civil étrangers", 1, 1);
+insert into t_departments values(1, 1, "Population & état civil", 1, null);
+insert into t_departments values(2, 1, "état civil étrangers", 1, 1);
 insert into t_departments values(3, 1, "Mobilité", 1, null);
 insert into t_departments values(4, 2, "Population", 2, null);
 insert into t_departments values(5, 2, "Stationnement", 2, null);

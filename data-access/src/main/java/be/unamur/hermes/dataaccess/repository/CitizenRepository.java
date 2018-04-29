@@ -1,8 +1,9 @@
 package be.unamur.hermes.dataaccess.repository;
 
-import be.unamur.hermes.dataaccess.entity.Citizen;
-
 import java.util.List;
+
+import be.unamur.hermes.dataaccess.entity.Citizen;
+import be.unamur.hermes.dataaccess.entity.UserAccount;
 
 public interface CitizenRepository {
 
@@ -17,5 +18,7 @@ public interface CitizenRepository {
     long create(Citizen citizen);
 
     void activate(long citizenId);
+
+    UserAccount findAccount(String nationalRegistrationNb);
 
 }

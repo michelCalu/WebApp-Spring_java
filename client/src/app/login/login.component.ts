@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AlertService, MockAuthService } from '../_services';
+import { AlertService, AuthenticationService } from '../_services';
 
 @Component({
     moduleId: module.id,
@@ -10,14 +10,16 @@ export class LoginComponent {
     username: string;
     password: string;
 
-    constructor(private router: Router, private authService: MockAuthService, private alertService: AlertService) { }
+    constructor(private router: Router, private authService: AuthenticationService, private alertService: AlertService) { }
 
     login(): void {
-        this.authService.login(this.username, this.password).subscribe(success => {
+      const enriched = this.username + '_ctz' ;
+        this.authService.login(enriched, this.password).subscribe(
+        success => {
             if (success) {
-                this.router.navigate(['/myrequests']);
+                this.router.navigate(['myrequests']);
             } else {
-                this.alertService.error('Nom d\'utilisateur ou mot de passe incorrecte');
+                this.alertService.error('Nom d\'utilisateur ou mot de passe incorrect');
             }
         });
     }

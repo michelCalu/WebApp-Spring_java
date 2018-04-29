@@ -13,101 +13,94 @@ public abstract class User {
     private String nationalRegisterNb;
     private LocalDate birthdate;
 
-    public User(){};
+    public User() {
+    };
 
-    public User(
-            String firstName,
-            String lastName,
-            Address address,
-            String mail,
-            String phone,
-            String nationalRegisterNb,
-            LocalDate birthdate) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.address = address;
-        this.mail = mail;
-        this.phone = phone;
-        this.nationalRegisterNb = nationalRegisterNb;
-        this.birthdate = birthdate;
+    public User(String firstName, String lastName, Address address, String mail, String phone,
+	    String nationalRegisterNb, LocalDate birthdate) {
+	this.firstName = firstName;
+	this.lastName = lastName;
+	this.address = address;
+	this.mail = mail;
+	this.phone = phone;
+	this.nationalRegisterNb = nationalRegisterNb;
+	this.birthdate = birthdate;
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof User)) return false;
-        User user = (User) o;
-        return Objects.equals(firstName, user.firstName) &&
-                Objects.equals(lastName, user.lastName) &&
-                Objects.equals(address, user.address) &&
-                Objects.equals(mail, user.mail) &&
-                Objects.equals(phone, user.phone) &&
-                Objects.equals(nationalRegisterNb, user.nationalRegisterNb) &&
-                Objects.equals(birthdate, user.birthdate);
+	if (this == o)
+	    return true;
+	if (!(o instanceof User))
+	    return false;
+	User user = (User) o;
+	return Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName)
+		&& Objects.equals(address, user.address) && Objects.equals(mail, user.mail)
+		&& Objects.equals(phone, user.phone) && Objects.equals(nationalRegisterNb, user.nationalRegisterNb)
+		&& Objects.equals(birthdate, user.birthdate);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(firstName, lastName, address, mail, phone, nationalRegisterNb, birthdate);
+	return Objects.hash(firstName, lastName, address, mail, phone, nationalRegisterNb, birthdate);
     }
-
 
     // ------------------------- Getters and Setters ------------------------- //
 
     public Address getAddress() {
-        return address;
+	return address;
     }
 
     public void setAddress(Address address) {
-        this.address = address;
+	this.address = address;
     }
 
     public String getMail() {
-        return mail;
+	return mail;
     }
 
     public void setMail(String mail) {
-        this.mail = mail;
+	this.mail = mail;
     }
 
     public String getPhone() {
-        return phone;
+	return phone;
     }
 
     public void setPhone(String phone) {
-        this.phone = phone;
+	this.phone = phone;
     }
 
     public String getNationalRegisterNb() {
-        return nationalRegisterNb;
+	return nationalRegisterNb;
     }
 
     public void setNationalRegisterNb(String nationalRegisterNb) {
-        this.nationalRegisterNb = nationalRegisterNb;
+	this.nationalRegisterNb = nationalRegisterNb;
     }
 
     public LocalDate getBirthdate() {
-        return birthdate;
+	return birthdate;
     }
 
     public void setBirthdate(LocalDate birthdate) {
-        this.birthdate = birthdate;
+	this.birthdate = birthdate;
     }
 
     public String getFirstName() {
-        return firstName;
+	return firstName;
     }
 
     public void setFirstName(String firstName) {
-        this.firstName = firstName;
+	this.firstName = firstName;
     }
 
     public String getLastName() {
-        return lastName;
+	return lastName;
     }
 
     public void setLastName(String lastName) {
-        this.lastName = lastName;
+	this.lastName = lastName;
     }
 }

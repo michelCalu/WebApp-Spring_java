@@ -1,16 +1,19 @@
 package be.unamur.hermes.dataaccess.repository;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Repository;
-
-import be.unamur.hermes.dataaccess.entity.Employee;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.util.Arrays;
 import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
+
+import be.unamur.hermes.common.enums.UserStatus;
+import be.unamur.hermes.common.enums.UserType;
+import be.unamur.hermes.dataaccess.entity.Employee;
+import be.unamur.hermes.dataaccess.entity.UserAccount;
 
 @Repository
 public class EmployeeRepositoryImpl implements EmployeeRepository {
@@ -26,19 +29,19 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
 
     @Override
     public Employee findByName(String firstname, String lastname) {
-	    return jdbcTemplate.queryForObject(queryByName, new Object[] { firstname, lastname }, this::buildEmployee);
+	return jdbcTemplate.queryForObject(queryByName, new Object[] { firstname, lastname }, this::buildEmployee);
     }
 
     @Override
     public Employee findById(long employeeId) {
-    	if (employeeId == 0)
-	        return null;
-	    return jdbcTemplate.queryForObject(queryById, new Object[] { employeeId }, this::buildEmployee);
+	if (employeeId == 0)
+	    return null;
+	return jdbcTemplate.queryForObject(queryById, new Object[] { employeeId }, this::buildEmployee);
     }
 
     @Override
     public List<Employee> findAll() {
-        return jdbcTemplate.query(queryAll, this::buildEmployee);
+	return jdbcTemplate.query(queryAll, this::buildEmployee);
     }
 
     @Override
@@ -55,43 +58,48 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
 	jdbcTemplate.update(createNew, values, types);
     }
 
+    @Override
+    public UserAccount findAccount(String nationalRegistrationNb) {
+	return jdbcTemplate.queryForObject(queryAccountByNRN, new Object[] { nationalRegistrationNb },
+		this::buildAccount);
+    }
 
     // queries
     private static final String queryById = //
-            "SELECT * FROM t_employees e WHERE e.employeeID = ? ";
+	    "SELECT * FROM t_employees e WHERE e.employeeID = ? ";
+
+    private static final String queryAccountByNRN = //
+	    "SELECT e.employeeID, e.userAccountID, e.nationalRegisterNb, ua.roles, ua.userStatus, ua.password FROM t_employees e"
+		    + " JOIN t_user_accounts ua ON e.userAccountID = ua.userAccountID WHERE e.nationalRegisterNb = ?";
 
     private static final String queryByName = //
-            "SELECT * FROM t_employees e WHERE e.firstname = ? AND e.lastname = ?";
+	    "SELECT * FROM t_employees e WHERE e.firstname = ? AND e.lastname = ?";
 
     private static final String queryAll = //
-            "SELECT * FROM t_employees";
+	    "SELECT * FROM t_employees";
 
     private static final String createNew = //
-            "INSERT INTO t_employees (" +
-                    "firstName, lastName, address, " +
-                    "mail, phone, nationalRegistreNb, " +
-                    "birthdate, accountNumber, arrivalDate, " +
-                    "gender, civilStatus, dependentChildren, dependentPeople) " +
-                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
+	    "INSERT INTO t_employees (" + "firstName, lastName, address, " + "mail, phone, nationalRegistreNb, "
+		    + "birthdate, accountNumber, arrivalDate, "
+		    + "gender, civilStatus, dependentChildren, dependentPeople) "
+		    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     // Other methods
-    private Employee buildEmployee(ResultSet rs, int rowNum) throws SQLException{
-        return new Employee(
-                rs.getLong(1),
-                rs.getString(2),
-                rs.getString(3),
-                addressRepository.findById(rs.getLong(4)),
-                rs.getString(5),
-                rs.getString(6),
-                rs.getString(7),
-                rs.getDate(8).toLocalDate(),
-                rs.getString(9),
-                rs.getDate(10).toLocalDate(),
-                rs.getString(11).charAt(0),
-                rs.getString(12),
-                rs.getInt(13),
-                rs.getInt(14)
-                );
+    private Employee buildEmployee(ResultSet rs, int rowNum) throws SQLException {
+	return new Employee(rs.getLong(1), rs.getString(2), rs.getString(3), addressRepository.findById(rs.getLong(4)),
+		rs.getString(5), rs.getString(6), rs.getString(7), rs.getDate(8).toLocalDate(), rs.getString(9),
+		rs.getDate(10).toLocalDate(), rs.getString(11).charAt(0), rs.getString(12), rs.getInt(13),
+		rs.getInt(14));
+    }
+
+    private UserAccount buildAccount(ResultSet rs, int rowNum) throws SQLException {
+	long technicalId = rs.getLong(1);
+	long userAccountId = rs.getLong(2);
+	String nrn = rs.getString(3);
+	String[] roles = rs.getString(4).split(",");
+	UserStatus userStatus = UserStatus.getStatus(rs.getString(5));
+	String password = rs.getString(6);
+	return new UserAccount(userAccountId, technicalId, nrn, UserType.EMPLOYEE, userStatus, password,
+		Arrays.asList(roles));
     }
 }

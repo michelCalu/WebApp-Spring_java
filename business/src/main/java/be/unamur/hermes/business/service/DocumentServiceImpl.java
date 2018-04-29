@@ -98,10 +98,10 @@ public class DocumentServiceImpl implements DocumentService {
     public static void main(String[] args) {
 	DocumentCreationRequest doc = new DocumentCreationRequest();
 	Citizen mayor = new Citizen(1L, "mayorLastName", "mayorFistName", null, "mayorMail@commune.be", "mayorPhone",
-		"mayorNRN", null, null);
+		"mayorNRN", null);
 	Citizen requestor = new Citizen(2L, "requestorLastName", "requestorFirstName",
 		new Address(3, "Rue Haute", 130, "B", 1230, "Gembloux", "BRC", "Belgium"), "requestorMail@hotmail.com",
-		"requestorPhone", "requestorNRN", LocalDate.of(1970, 5, 1), null);
+		"requestorPhone", "requestorNRN", LocalDate.of(1970, 5, 1));
 	Municipality munip = new Municipality();
 	munip.setName("Gembloux");
 	munip.setMayor(mayor);
