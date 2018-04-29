@@ -38,7 +38,7 @@ export class MockAuthService {
     private _simulateLoginBackend(username: string, password): Observable<any> {
         if (username === 'root' && password === 'root') {
             const user = new User();
-            user.name = 'John Doe';
+            //user.name = 'John Doe';
             user.id = 1;
             user.token = 'a JWT token';
             return Observable.of(user);

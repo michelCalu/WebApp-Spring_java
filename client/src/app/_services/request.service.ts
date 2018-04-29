@@ -22,7 +22,7 @@ export class RequestService {
     const requestBody = new CreateRequest();
     requestBody.citizen = citizenId;
     requestBody.type = requestType;
-    return this.http.post<boolean>(this.serverAddress + '/requests', requestBody, {observe: 'response'}).map(
+    return this.http.post<boolean>('/requests', requestBody, {observe: 'response'}).map(
      resp =>  resp.headers.has('Location'));
   }
 

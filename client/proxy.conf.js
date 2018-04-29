@@ -4,9 +4,9 @@ const PROXY_CONFIG = [
       "/about",
       "/citizens",
       "/requests",
-      "/login"
+      "/auth"
     ],
-    "target": "http://localhost:8080",
+    "target": "http://localhost:8888",
     "secure": false,
     "logLevel": "debug"
   }

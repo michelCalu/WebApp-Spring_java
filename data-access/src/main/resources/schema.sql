@@ -16,7 +16,16 @@ DROP TABLE IF EXISTS t_citizen_accounts;
 DROP TABLE IF EXISTS t_citizens;
 DROP TABLE IF EXISTS t_user_statusses;
 DROP TABLE IF EXISTS t_addresses;
+DROP TABLE IF EXISTS t_user_accounts;
 
+CREATE TABLE t_user_accounts (
+  userAccountID			INT PRIMARY KEY 		NOT NULL AUTO_INCREMENT,
+  roles		    		VARCHAR(255) 			NOT NULL,
+  password				VARCHAR(255) 			NOT NULL,
+  userStatus
+  	ENUM('created','active','disabled')			NOT NULL 
+);
+  
 
 
 CREATE TABLE t_addresses (
@@ -30,11 +39,6 @@ CREATE TABLE t_addresses (
   country VARCHAR(255)    NOT NULL
 );
 
-CREATE TABLE t_user_statusses (
-  statusID      INT   PRIMARY KEY     NOT NULL AUTO_INCREMENT,
-  statusCode   VARCHAR(255)            NOT NULL UNIQUE
-);
-
 CREATE TABLE t_citizens (
   citizenID  INT PRIMARY KEY   NOT NULL AUTO_INCREMENT,
   firstName     VARCHAR(255)      NOT NULL,
@@ -44,17 +48,9 @@ CREATE TABLE t_citizens (
   phone         VARCHAR(255),
   nationalRegisterNb VARCHAR(255) NOT NULL UNIQUE ,
   birthdate     DATE,
-  userStatus    INT,
+  userAccountID	INT,
   FOREIGN KEY (addressID) REFERENCES t_addresses(addressID),
-  FOREIGN KEY (userStatus) REFERENCES t_user_statusses(statusID)
-);
-
-
-CREATE TABLE t_citizen_accounts (
-  citizenLogin  INT  PRIMARY KEY NOT NULL,
-  citizenPwd    VARCHAR(255)  NOT NULL,
-
-  FOREIGN KEY (citizenLogin) REFERENCES t_citizens(citizenID)
+  FOREIGN KEY (userAccountID) REFERENCES t_user_accounts(userAccountID)
 );
 
 
@@ -73,7 +69,9 @@ CREATE TABLE t_employees (
   civilStatus   VARCHAR(255)      NOT NULL,
   dependentChildren INT           NOT NULL,
   dependentPeople   INT           NOT NULL,
-  FOREIGN KEY (addressID)  REFERENCES t_addresses(addressID)
+  userAccountID	INT,
+  FOREIGN KEY (addressID)  REFERENCES t_addresses(addressID),
+  FOREIGN KEY (userAccountID) REFERENCES t_user_accounts(userAccountID)
 );
 
 CREATE TABLE t_companies (

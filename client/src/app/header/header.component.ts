@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs/Observable';
-import { AlertService, MockAuthService } from './../_services/index';
+import { AlertService, AuthenticationService } from './../_services/index';
 import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -29,11 +29,11 @@ export class HeaderComponent implements OnInit {
     currentLanguage: string;
     isLoggedIn$: Observable<boolean>;
 
-    constructor(private mockAuthService: MockAuthService, private alertService: AlertService,
+    constructor(private authService: AuthenticationService, private alertService: AlertService,
         private translateService: TranslateService) { }
 
     ngOnInit() {
-        this.isLoggedIn$ = this.mockAuthService.isLoggedIn;
+        this.isLoggedIn$ = this.authService.isLoggedIn;
         // TODO this should be done once, somewhere, for the whole application
         // language and fallback language
         this.translateService.setDefaultLang('fr');
@@ -42,7 +42,7 @@ export class HeaderComponent implements OnInit {
     }
 
     onLogout() {
-        this.mockAuthService.logout();
+        this.authService.logout();
         this.alertService.success('Vous êtes déconnecté');
     }
 

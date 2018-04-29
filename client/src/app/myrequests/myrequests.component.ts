@@ -5,6 +5,7 @@ import { CitizenService } from '../_services/citizen.service';
 import { RequestService, MockAuthService } from '../_services';
 import { Observable } from 'rxjs/Observable';
 import { CitizenRequest } from '../_models/citizen-request.model';
+import { AuthenticationService } from '../_services/authentication.service';
 
 @Component({
     moduleId: module.id,
@@ -15,10 +16,10 @@ export class MyRequestsComponent implements OnInit {
 
     citizenRequests$: Observable<CitizenRequest[]>;
 
-    constructor(private requestService: RequestService, private authService: MockAuthService) {}
+    constructor(private requestService: RequestService, private authService: AuthenticationService) {}
 
     ngOnInit() {
-        const currentUser = this.authService.getUser();
+        const currentUser = this.authService.getCurrentUser();
         this.citizenRequests$ = this.requestService.getCitizenRequests(currentUser.id);
     }
 }

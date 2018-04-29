@@ -1,8 +1,9 @@
 package be.unamur.hermes.dataaccess.repository;
 
-import be.unamur.hermes.dataaccess.entity.Employee;
-
 import java.util.List;
+
+import be.unamur.hermes.dataaccess.entity.Employee;
+import be.unamur.hermes.dataaccess.entity.UserAccount;
 
 public interface EmployeeRepository {
 
@@ -13,5 +14,7 @@ public interface EmployeeRepository {
     List<Employee> findAll();
 
     void create(Employee employee);
+
+    public UserAccount findAccount(String nationalRegistrationNb);
 
 }
