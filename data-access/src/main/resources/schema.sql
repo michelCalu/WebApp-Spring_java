@@ -1,10 +1,12 @@
 DROP TABLE IF EXISTS t_departments_skills;
 DROP TABLE IF EXISTS t_skills;
 DROP TABLE IF EXISTS t_departments_employees;
-DROP TABLE IF EXISTS t_departments;
 DROP TABLE IF EXISTS t_events;
 DROP TABLE IF EXISTS t_event_types;
+DROP TABLE IF EXISTS t_request_field_values;
+DROP TABLE IF EXISTS t_request_field_definitions;
 DROP TABLE IF EXISTS t_requests;
+DROP TABLE IF EXISTS t_departments;
 DROP TABLE IF EXISTS t_municipalities;
 DROP TABLE IF EXISTS t_req_statusses;
 DROP TABLE IF EXISTS t_request_types;
@@ -128,6 +130,20 @@ CREATE TABLE t_municipalities (
 
 );
 
+CREATE TABLE t_departments (
+  departmentID        INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  municipalityID      INT NOT NULL,
+  name                VARCHAR(255)  NOT NULL,
+  headOfDepartmentID  INT NOT NULL,
+  parentDepartmentID  INT,
+
+  FOREIGN KEY(headOfDepartmentID)
+    REFERENCES t_employees(employeeID),
+  FOREIGN KEY(parentDepartmentID)
+    REFERENCES t_departments(departmentID),
+  FOREIGN KEY(municipalityID)
+    REFERENCES t_municipalities (municipalityID)
+);
 
 CREATE TABLE t_requests (
   requestID		INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -158,11 +174,35 @@ CREATE TABLE t_requests (
     REFERENCES t_employees(employeeID)
 );
 
+CREATE TABLE t_request_field_definitions (
+  fieldCode 			VARCHAR(255)  PRIMARY KEY NOT NULL,
+  requestTypeID			INT NOT NULL,  
+  fieldType				VARCHAR(255) NOT NULL,
+  required				BOOLEAN NOT NULL,
+  
+  FOREIGN KEY(requestTypeID)
+    REFERENCES t_request_types(requestTypeID)
+);
+
+CREATE TABLE t_request_field_values (
+  requestFieldValueID 	INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  fieldCode 			VARCHAR(255) NOT NULL,
+  requestID				INT NOT NULL,
+  -- fieldValue XOR fieldFile: either one or the other is present (both nullable, therefore)
+  fieldValue			VARCHAR(255),
+  fieldFile				LONGBLOB,
+  
+  FOREIGN KEY(fieldCode)
+    REFERENCES t_request_field_definitions(fieldCode),
+  FOREIGN KEY(requestID)
+    REFERENCES t_requests(requestID),
+  UNIQUE (requestID, fieldCode)
+);
+
 CREATE TABLE t_event_types (
   eventTypeID   INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
   eventDesc VARCHAR(255)  NOT NULL UNIQUE
 );
-
 
 CREATE TABLE t_events (
   eventID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -174,21 +214,6 @@ CREATE TABLE t_events (
   FOREIGN KEY (eventType) REFERENCES t_event_types(eventTypeID),
   FOREIGN KEY (author) REFERENCES t_employees(employeeID),
   FOREIGN KEY (request) REFERENCES t_requests(requestID)
-);
-
-CREATE TABLE t_departments (
-  departmentID        INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  municipalityID      INT NOT NULL,
-  name                VARCHAR(255)  NOT NULL,
-  headOfDepartmentID  INT NOT NULL,
-  parentDepartmentID  INT,
-
-  FOREIGN KEY(headOfDepartmentID)
-    REFERENCES t_employees(employeeID),
-  FOREIGN KEY(parentDepartmentID)
-    REFERENCES t_departments(departmentID),
-  FOREIGN KEY(municipalityID)
-    REFERENCES t_municipalities (municipalityID)
 );
 
 CREATE TABLE t_departments_employees (
@@ -213,4 +238,3 @@ CREATE TABLE t_departments_skills (
   FOREIGN KEY (departmentID) REFERENCES t_departments(departmentID),
   FOREIGN KEY (skillID) REFERENCES t_skills(skillID)
 );
-
