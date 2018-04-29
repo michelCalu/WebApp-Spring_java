@@ -26,9 +26,8 @@ export class RequestService {
      resp =>  resp.headers.has('Location'));
   }
 
-  public createRequestWithFileUploads(request: CitizenRequest, files: Array<any> /* file ? */): Observable<boolean> {
-
-    return this.http.post(this.serverAddress + '/requests', {request: request, files: files})
+  public createRequestWithFileUploads(request: CitizenRequest/*, files: Array<any>*/): Observable<boolean> {
+    return this.http.post(this.serverAddress + '/requests', /*{request: request, files: files}*/ request)
             .map(res => true)
             .catch(err => Observable.of(false));
 

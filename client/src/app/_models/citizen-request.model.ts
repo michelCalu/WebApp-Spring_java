@@ -4,5 +4,5 @@ export class CitizenRequest {
     status: string;
     assignee: any; // employee
     citizen: any; // citizen
-    data: any;
+    data: Array<any>;
 }

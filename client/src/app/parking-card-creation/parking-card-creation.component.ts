@@ -47,14 +47,24 @@ export class ParkingCardCreationComponent implements OnInit {
         this.loading = true;
         const request = new CitizenRequest();
         request.type =  'parkingCard';
-        request.data = {
-            carMake : this.form.get('carMake').value,
-            carModel: this.form.get('carModel').value,
-            colour: this.form.get('colour').value,
-            carRegistrationNumber: this.form.get('carRegistrationNumber').value
-        };
+        request.data = [{
+                fieldCode: 'citizenParkingCardCarMake',
+                fieldValue: this.form.get('carMake').value
+            }, {
+                fieldCode: 'citizenParkingCardCarModel',
+                fieldValue: this.form.get('carModel').value
+            }, {
+                fieldCode: 'citizenParkingCardCarColour',
+                fieldValue: this.form.get('colour').value
+            }, {
+                fieldCode: 'citizenParkingCardPlateNumber',
+                fieldValue: this.form.get('carRegistrationNumber').value
+            }, {
+            fieldCode: 'citizenParkingCardGreenCard',
+            fieldFile : this.form.get('insurance_certificate').value
+        }];
 
-        this.requestService.createRequestWithFileUploads(request, [this.form.get('insurance_certificate').value]).subscribe(success => {
+        this.requestService.createRequestWithFileUploads(request).subscribe(success => {
             this.loading = false;
             if (success) {
                 this.router.navigate(['/myrequests']);
