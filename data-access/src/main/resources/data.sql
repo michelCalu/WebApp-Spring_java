@@ -1,6 +1,25 @@
 -- bootstrap data
 insert into t_request_types values(1,"nationalityCertificate");
-insert into t_request_types values(2,"parkingCard");
+insert into t_request_types values(2,"citizenParkingCard");
+insert into t_request_types values(3,"companyParkingCard");
+ 
+insert into t_request_field_definitions values("citizenParkingCardCarMaker", 2, "string", true);
+insert into t_request_field_definitions values("citizenParkingCardCarModel", 2, "string", true);
+insert into t_request_field_definitions values("citizenParkingCardCarColour", 2, "string", true);
+insert into t_request_field_definitions values("citizenParkingCardPlateNumber", 2, "string", true);
+insert into t_request_field_definitions values("citizenParkingCardGreenCard", 2, "binary", true);
+insert into t_request_field_definitions values("citizenParkingCardUserProof", 2, "binary", false);
+
+insert into t_request_field_definitions values("companyParkingCardContactPersonEmail", 3, "string", true);
+insert into t_request_field_definitions values("companyParkingCardUserFirstName", 3, "string", true);
+insert into t_request_field_definitions values("companyParkingCardUserLastName", 3, "string", true);
+insert into t_request_field_definitions values("companyParkingCardCarMaker", 3, "string", true);
+insert into t_request_field_definitions values("companyParkingCardCarModel", 3, "string", true);
+insert into t_request_field_definitions values("companyParkingCardCarColour", 3, "string", true);
+insert into t_request_field_definitions values("companyParkingCardPlateNumber", 3, "string", true);
+insert into t_request_field_definitions values("companyParkingCardGreenCard", 3, "binary", true);
+insert into t_request_field_definitions values("companyParkingCardVisitorProof", 3, "binary", true);
+
 
 insert into t_user_statusses values(1, "pendingValidation");
 insert into t_user_statusses values(2, "active");
@@ -39,5 +58,13 @@ insert into t_departments values(1, 1, "Population & État civil", 1, null);
 insert into t_departments values(2, 1, "État civil étrangers", 1, 1);
 insert into t_departments values(3, 1, "Mobilité", 1, null);
 insert into t_departments values(4, 2, "Population", 2, null);
+insert into t_departments values(5, 2, "Stationnement", 2, null);
 
 insert into t_requests values(1, 1, 1, null, 1, 1, 1, 1, "HERM001", "my ref", "JETTE001");
+insert into t_requests values(2, 2, 2, null, 2, 5, 2, 2, "HERM002", "a parking ref.", "GANSH001");
+
+insert into t_request_field_values values(1, "citizenParkingCardCarMaker", 2, "Fiat", null);
+insert into t_request_field_values values(2, "citizenParkingCardCarModel", 2, "Punto", null);
+insert into t_request_field_values values(3, "citizenParkingCardCarColour", 2, "red", null);
+insert into t_request_field_values values(4, "citizenParkingCardPlateNumber", 2, "123456", null);
+insert into t_request_field_values values(5, "citizenParkingCardGreenCard", 2, null, "TODO: should be the BLOB");
