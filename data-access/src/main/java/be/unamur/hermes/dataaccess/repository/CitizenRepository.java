@@ -15,10 +15,7 @@ public interface CitizenRepository {
 
     List<Citizen> findPending();
 
-    long create(Citizen citizen);
-
-    void activate(long citizenId);
+    long create(Citizen citizen, long userAccountId);
 
     UserAccount findAccount(String nationalRegistrationNb);
-
 }

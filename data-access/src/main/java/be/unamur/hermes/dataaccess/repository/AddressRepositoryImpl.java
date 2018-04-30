@@ -2,10 +2,12 @@ package be.unamur.hermes.dataaccess.repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Types;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
 import be.unamur.hermes.dataaccess.entity.Address;
@@ -23,10 +25,13 @@ public class AddressRepositoryImpl implements AddressRepository {
     private final int COL_COUNTRY = 8;
 
     private final JdbcTemplate jdbcTemplate;
+    private final SimpleJdbcInsert inserter;
 
     @Autowired
     public AddressRepositoryImpl(JdbcTemplate jdbcTemplate) {
 	this.jdbcTemplate = jdbcTemplate;
+	this.inserter = new SimpleJdbcInsert(jdbcTemplate.getDataSource()).withTableName("t_addresses")
+		.usingGeneratedKeyColumns("addressID");
     }
 
     @Override
@@ -36,18 +41,20 @@ public class AddressRepositoryImpl implements AddressRepository {
 
     @Override
     public long create(Address address) {
-	Object[] values = { address.getCountry(), address.getState(), address.getZipCode(), address.getStreet(),
-		address.getStreetNb() };
-	int[] types = { Types.VARCHAR, Types.VARCHAR, Types.INTEGER, Types.VARCHAR, Types.INTEGER };
-	return jdbcTemplate.update(createNew, values, types);
+	Map<String, Object> params = new HashMap<>();
+	params.put("street", address.getStreet());
+	params.put("streetNb", address.getStreetNb());
+	params.put("nbSuffix", address.getNbSuffix());
+	params.put("zipCode", address.getZipCode());
+	params.put("municipality", address.getMunicipality());
+	params.put("state", address.getState());
+	params.put("country", address.getCountry());
+	return (Long) inserter.executeAndReturnKey(params);
     }
 
     // queries
     private static final String queryById = //
 	    "SELECT * FROM t_addresses a WHERE a.addressID = ?";
-
-    private static final String createNew = //
-	    "INSERT INTO t_addresses (country, state, " + "zipCode, street, streetNb) VALUES " + "(?, ?, ?, ?, ?)";
 
     // Other methods
     private Address buildAddress(ResultSet rs, int rowNum) throws SQLException {

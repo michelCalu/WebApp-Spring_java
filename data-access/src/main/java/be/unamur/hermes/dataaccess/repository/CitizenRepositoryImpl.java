@@ -2,12 +2,13 @@ package be.unamur.hermes.dataaccess.repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Types;
-import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
 import be.unamur.hermes.common.enums.UserStatus;
@@ -20,11 +21,14 @@ public class CitizenRepositoryImpl implements CitizenRepository {
 
     private final JdbcTemplate jdbcTemplate;
     private final AddressRepository addressRepository;
+    private final SimpleJdbcInsert citizenInserter;
 
     @Autowired
     public CitizenRepositoryImpl(final JdbcTemplate jdbcTemplate, final AddressRepository addressRepository) {
 	this.jdbcTemplate = jdbcTemplate;
 	this.addressRepository = addressRepository;
+	this.citizenInserter = new SimpleJdbcInsert(jdbcTemplate.getDataSource()).withTableName("t_citizens")
+		.usingGeneratedKeyColumns("citizenID");
     }
 
     @Override
@@ -48,20 +52,18 @@ public class CitizenRepositoryImpl implements CitizenRepository {
     }
 
     @Override
-    public long create(Citizen citizen) {
+    public long create(Citizen citizen, long userAccountId) {
 	long addressID = addressRepository.create(citizen.getAddress());
-	Object[] values = { citizen.getFirstName(), citizen.getLastName(), addressID, citizen.getMail(),
-		citizen.getPhone(), citizen.getNationalRegisterNb(), citizen.getBirthdate() };
-
-	// TODO add default value for status
-	int[] types = { Types.VARCHAR, Types.VARCHAR, Types.INTEGER, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR,
-		Types.VARCHAR };
-	return jdbcTemplate.update(createNew, values, types);
-    }
-
-    @Override
-    public void activate(long citizenId) {
-	jdbcTemplate.update(updateActivate, citizenId);
+	Map<String, Object> params = new HashMap<>();
+	params.put("firstName", citizen.getFirstName());
+	params.put("lastName", citizen.getLastName());
+	params.put("addressID", addressID);
+	params.put("mail", citizen.getMail());
+	params.put("phone", citizen.getPhone());
+	params.put("nationalRegisterNb", citizen.getNationalRegisterNb());
+	params.put("birthdate", citizen.getBirthdate());
+	params.put("userAccountID", userAccountId);
+	return (Long) citizenInserter.executeAndReturnKey(params);
     }
 
     @Override
@@ -81,12 +83,8 @@ public class CitizenRepositoryImpl implements CitizenRepository {
 
     private static final String queryAll = "SELECT * FROM t_citizens";
 
-    private static final String queryPending = "SELECT * FROM t_citizens c WHERE c.activated = FALSE";
-
-    private static final String createNew = "INSERT INTO t_citizens (" + "firstName, lastName, addressID, mail, phone, "
-	    + "nationalRegisterNb, birthdate, userStatus) VALUES " + "(?, ?, ?, ?, ?, ?, ?, FALSE)";
-
-    private static final String updateActivate = "UPDATE t_citizens c SET c.activated = TRUE WHERE c.id = ?";
+    private static final String queryPending = //
+	    "SELECT * FROM t_citizens c JOIN t_user_accounts ua ON c.userAccountID = ua.userAccountID WHERE ua.userStatus = 'CREATED'";
 
     // Other methods
     private Citizen buildCitizen(ResultSet rs, int rowNum) throws SQLException {
@@ -98,10 +96,10 @@ public class CitizenRepositoryImpl implements CitizenRepository {
 	long technicalId = rs.getLong(1);
 	long userAccountId = rs.getLong(2);
 	String nrn = rs.getString(3);
-	String[] roles = rs.getString(4).split(",");
+	String rolesString = rs.getString(4);
 	UserStatus userStatus = UserStatus.getStatus(rs.getString(5));
 	String password = rs.getString(6);
 	return new UserAccount(userAccountId, technicalId, nrn, UserType.CITIZEN, userStatus, password,
-		Arrays.asList(roles));
+		UserAccount.prepareAuthorities(rolesString));
     }
 }

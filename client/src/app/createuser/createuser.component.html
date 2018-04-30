@@ -16,14 +16,16 @@
 	  <input [(ngModel)]="citizen.birthdate" type="date" placeholder="aaaa-MM-jjTHH:mm" name="birthdate" class="form-control" id="birthdate">
 	  <label for="country">Pays:</label>
 	  <input [(ngModel)]="citizen.address.country" type="text" placeholder="Ex: Belgique" name="country" class="form-control" id="country" required>
-	  <label for="state">Commune:</label>
-	  <input [(ngModel)]="citizen.address.state" type="text" placeholder="Ex: Bruxelles Capital" name="state" class="form-control" id="state" required>
+	  <label for="municipality">Commune:</label>
+	  <input [(ngModel)]="citizen.address.municipality" type="text" placeholder="Ex: Bruxelles" name="state" class="form-control" id="municipality" required>
 	  <label for="street">Rue:</label>
 	  <input [(ngModel)]="citizen.address.street" type="text" placeholder="Boulevard Anspach" name="street" class="form-control" id="street" required>
 	  <label for="streetNb">Numéro de rue:</label>
-	  <input [(ngModel)]="citizen.address.streetNb" type="text" placeholder="Ex: 42B" name="streetNb" class="form-control" id="streetNb">
+	  <input [(ngModel)]="citizen.address.streetNb" type="text" placeholder="Ex: 42" name="streetNb" class="form-control" id="streetNb">
 	  <label for="zipCode">Code postal</label>
 	  <input [(ngModel)]="citizen.address.zipCode" type="text" placeholder="Ex: 1000" name="zipCode" class="form-control" id="zipCode" required>
+	  <label for="password">Mot de passe :</label>
+	  <input [(ngModel)]="citizen.password" type="text" name="password" class="form-control" id="password" required />
 	  <button class="btn btn-success" [class.btn-danger]="!inscriptionForm.form.valid"(click)="createCitizen()" [disabled]="!inscriptionForm.form.valid">Create</button>
 	</form>
   </div>

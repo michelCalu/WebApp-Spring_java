@@ -21,7 +21,7 @@ public interface CitizenService {
 
     List<Citizen> findPending();
 
-    long register(Citizen citizen);
+    long register(Citizen citizen) throws BusinessException;
 
     Boolean validateNRN(String citizenID) throws NRNNotValidException, NRNServiceAccessException;
 

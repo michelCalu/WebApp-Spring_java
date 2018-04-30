@@ -36,7 +36,6 @@ public class CitizensController {
     }
 
     // CREATE
-
     @PostMapping
     public ResponseEntity<Object> createCitizen(@RequestBody Citizen citizen) throws URISyntaxException {
 	try {

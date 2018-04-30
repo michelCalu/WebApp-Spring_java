@@ -29,6 +29,8 @@ insert into t_req_statusses values(null,"accepted");
 -- test data
 insert into t_user_accounts values(null,"ROLE_USER","$2a$10$nci/VfQ6BffNStE8ECXmq.7/fs4FBGTghAOfijxmMcx4r7A7JZOdK","active");
 insert into t_user_accounts values(null,"ROLE_USER","myPassword","active");
+insert into t_user_accounts values(null,"ROLE_USER","myPassword","active");
+insert into t_user_accounts values(null,"ROLE_USER","myPassword","active");
 
 insert into t_addresses values(1,"Avenue de la Reine", 279,"A",1020,"Jette", "Région de Bruxelles-Capitale", "Belgique");
 insert into t_addresses values(2,"Place du miroir", 1,null,1020,"Jette", "Région de Bruxelles-Capitale", "Belgique");
@@ -37,18 +39,18 @@ insert into t_addresses values(4,"Avenue de Charles-Quint", 140,null,1083,"Gansh
 insert into t_addresses values(5,"Avenue Van Overbeke", 12, "B",1083,"Ganshoren", "Région de Bruxelles-Capitale", "Belgique");
 insert into t_addresses values(6,"Rue du Noyer", 43, null, 1000,"Bruxelles", "Région de Bruxelles-Capitale", "Belgique");
 
-insert into t_citizens values(1,"Thomas","Elskens",1,"thomaselskens@hotmail.com",null,"NRN_Thomas","1983-11-13",2);
+insert into t_citizens values(1,"Thomas","Elskens",1,"thomaselskens@hotmail.com",null,"NRN_Thomas","1983-11-13",1);
 insert into t_citizens values(2,"David","Fernandez",5,"dfernandez1612@gmail.com",null,"NRN_David","1983-12-16",2);
 
 insert into t_employees values(1,"Fabian","Germeau",2,
 			"fabian.germeau@cetic.be",
 			"somePhone","someNRN",'1970-01-01',
-			"someAccountNumber",'2018-04-01','M',"bachelor",0,0,2);
+			"someAccountNumber",'2018-04-01','M',"bachelor",0,0,3);
 
 insert into t_employees values(2,"Degryse","Killian",6,
 			"killian.degryse@hotmail.com",
 			"somePhone","NRN_Killian",'1990-01-01',
-			"someAccountNumber",'2018-04-16','M',"bachelor",0,0);
+			"someAccountNumber",'2018-04-16','M',"bachelor",0,0,4);
             
             
 

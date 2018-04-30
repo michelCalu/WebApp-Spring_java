@@ -55,10 +55,16 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
-	http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().exceptionHandling()
-		.authenticationEntryPoint(restAuthenticationEntryPoint).and().authorizeRequests().antMatchers("/auth")
-		.permitAll().anyRequest().authenticated().and().addFilterBefore(
-			new TokenAuthenticationFilter(tokenHelper, accountService), BasicAuthenticationFilter.class);
+	http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) //
+		.and().exceptionHandling()//
+		.authenticationEntryPoint(restAuthenticationEntryPoint);
+	http.authorizeRequests() //
+		.antMatchers("/auth").permitAll() // allow access for connexion
+		.antMatchers(HttpMethod.POST, "/citizens").permitAll() // allow access for registration
+		.antMatchers(HttpMethod.OPTIONS).permitAll() // make browser/Angular happy
+		.anyRequest().authenticated();
+	http.addFilterBefore(new TokenAuthenticationFilter(tokenHelper, accountService),
+		BasicAuthenticationFilter.class);
 	http.csrf().disable();
     }
 

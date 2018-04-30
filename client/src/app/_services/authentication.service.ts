@@ -40,6 +40,7 @@ export class AuthenticationService {
     }
 
     logout() {
+      this.loggedIn$.next(false);
         // remove user from local storage to log user out
         localStorage.removeItem('currentUser');
     }

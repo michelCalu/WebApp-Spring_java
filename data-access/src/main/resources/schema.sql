@@ -37,7 +37,7 @@ CREATE TABLE t_addresses (
   nbSuffix VARCHAR(4)     ,
   zipCode INT             NOT NULL,
   municipality VARCHAR (255) NOT NULL,
-  state VARCHAR(255)      NOT NULL,
+  state VARCHAR(255)      ,
   country VARCHAR(255)    NOT NULL
 );
 

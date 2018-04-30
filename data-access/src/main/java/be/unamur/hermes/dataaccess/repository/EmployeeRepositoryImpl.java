@@ -2,12 +2,13 @@ package be.unamur.hermes.dataaccess.repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Types;
-import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
 import be.unamur.hermes.common.enums.UserStatus;
@@ -20,11 +21,14 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
 
     private final JdbcTemplate jdbcTemplate;
     private final AddressRepository addressRepository;
+    private final SimpleJdbcInsert inserter;
 
     @Autowired
     public EmployeeRepositoryImpl(final JdbcTemplate jdbcTemplate, final AddressRepository addressRepository) {
 	this.jdbcTemplate = jdbcTemplate;
 	this.addressRepository = addressRepository;
+	this.inserter = new SimpleJdbcInsert(jdbcTemplate.getDataSource()).withTableName("t_employees")
+		.usingGeneratedKeyColumns("employeeID");
     }
 
     @Override
@@ -45,17 +49,24 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
     }
 
     @Override
-    public void create(Employee employee) {
+    public long create(Employee employee, long userAccountID) {
 	long addressID = addressRepository.create(employee.getAddress());
-	Object[] values = { employee.getFirstName(), employee.getLastName(), addressID, employee.getMail(),
-		employee.getPhone(), employee.getNationalRegisterNb(), employee.getBirthdate(),
-		employee.getAccountNumber(), employee.getArrivalDate(), employee.getGender(), employee.getCivilStatus(),
-		employee.getDependentChildren(), employee.getDependentPeople() };
-
-	int[] types = { Types.VARCHAR, Types.VARCHAR, Types.INTEGER, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR,
-		Types.VARCHAR, Types.VARCHAR, Types.TIMESTAMP, Types.CHAR, Types.VARCHAR, Types.INTEGER,
-		Types.INTEGER };
-	jdbcTemplate.update(createNew, values, types);
+	Map<String, Object> params = new HashMap<>();
+	params.put("firstName", employee.getFirstName());
+	params.put("lastName", employee.getLastName());
+	params.put("addressID", addressID);
+	params.put("mail", employee.getMail());
+	params.put("phone", employee.getPhone());
+	params.put("nationalRegistreNb", employee.getNationalRegisterNb());
+	params.put("birthdate", employee.getBirthdate());
+	params.put("accountNumber", employee.getAccountNumber());
+	params.put("arrivalDate", employee.getArrivalDate());
+	params.put("gender", employee.getGender());
+	params.put("civilStatus", employee.getCivilStatus());
+	params.put("dependentChildren", employee.getDependentChildren());
+	params.put("dependentPeople", employee.getDependentPeople());
+	params.put("userAccountID", userAccountID);
+	return (Long) inserter.executeAndReturnKey(params);
     }
 
     @Override
@@ -78,12 +89,6 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
     private static final String queryAll = //
 	    "SELECT * FROM t_employees";
 
-    private static final String createNew = //
-	    "INSERT INTO t_employees (" + "firstName, lastName, address, " + "mail, phone, nationalRegistreNb, "
-		    + "birthdate, accountNumber, arrivalDate, "
-		    + "gender, civilStatus, dependentChildren, dependentPeople) "
-		    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
     // Other methods
     private Employee buildEmployee(ResultSet rs, int rowNum) throws SQLException {
 	return new Employee(rs.getLong(1), rs.getString(2), rs.getString(3), addressRepository.findById(rs.getLong(4)),
@@ -96,10 +101,10 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
 	long technicalId = rs.getLong(1);
 	long userAccountId = rs.getLong(2);
 	String nrn = rs.getString(3);
-	String[] roles = rs.getString(4).split(",");
+	String roles = rs.getString(4);
 	UserStatus userStatus = UserStatus.getStatus(rs.getString(5));
 	String password = rs.getString(6);
 	return new UserAccount(userAccountId, technicalId, nrn, UserType.EMPLOYEE, userStatus, password,
-		Arrays.asList(roles));
+		UserAccount.prepareAuthorities(roles));
     }
 }

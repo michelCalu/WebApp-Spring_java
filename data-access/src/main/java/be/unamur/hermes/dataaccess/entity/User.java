@@ -3,8 +3,12 @@ package be.unamur.hermes.dataaccess.entity;
 import java.time.LocalDate;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
+
 public abstract class User {
 
+    private long id;
     private String firstName;
     private String lastName;
     private Address address;
@@ -12,6 +16,9 @@ public abstract class User {
     private String phone;
     private String nationalRegisterNb;
     private LocalDate birthdate;
+
+    @JsonProperty(access = Access.WRITE_ONLY)
+    private String password;
 
     public User() {
     };
@@ -47,6 +54,14 @@ public abstract class User {
     }
 
     // ------------------------- Getters and Setters ------------------------- //
+
+    public long getId() {
+	return id;
+    }
+
+    public void setId(long id) {
+	this.id = id;
+    }
 
     public Address getAddress() {
 	return address;
@@ -103,4 +118,13 @@ public abstract class User {
     public void setLastName(String lastName) {
 	this.lastName = lastName;
     }
+
+    public String getPassword() {
+	return password;
+    }
+
+    public void setPassword(String password) {
+	this.password = password;
+    }
+
 }

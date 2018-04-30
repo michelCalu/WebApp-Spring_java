@@ -1,4 +1,4 @@
-package be.unamur.hermes.web.security;
+package be.unamur.hermes.common.util;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 

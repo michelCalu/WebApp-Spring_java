@@ -16,5 +16,5 @@ public interface EmployeeService {
 
     List<Employee> findAll();
 
-    void register(Employee employee);
+    long register(Employee employee);
 }

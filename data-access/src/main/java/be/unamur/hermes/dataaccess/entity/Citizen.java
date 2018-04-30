@@ -5,14 +5,13 @@ import java.util.Objects;
 
 public class Citizen extends User {
 
-    private long id;
-
     public Citizen() {
     }
 
     public Citizen(long id, String firstName, String lastName, Address address, String mail, String phone,
 	    String nationalRegisterNb, LocalDate birthdate) {
 	super(firstName, lastName, address, mail, phone, nationalRegisterNb, birthdate);
+	setId(id);
     }
 
     @Override
@@ -23,16 +22,11 @@ public class Citizen extends User {
 	    return false;
 	if (!super.equals(o))
 	    return false;
-	Citizen that = (Citizen) o;
-	return id == that.id;
+	return true;
     }
 
     @Override
     public int hashCode() {
-	return Objects.hash(super.hashCode(), id);
-    }
-
-    public long getId() {
-	return id;
+	return Objects.hash(super.hashCode());
     }
 }

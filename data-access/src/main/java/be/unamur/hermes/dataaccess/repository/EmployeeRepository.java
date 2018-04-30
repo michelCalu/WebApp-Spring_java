@@ -13,8 +13,7 @@ public interface EmployeeRepository {
 
     List<Employee> findAll();
 
-    void create(Employee employee);
+    long create(Employee employee, long userAccountId);
 
     public UserAccount findAccount(String nationalRegistrationNb);
-
 }
