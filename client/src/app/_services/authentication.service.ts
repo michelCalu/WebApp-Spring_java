@@ -12,7 +12,7 @@ import { TranslateService } from '@ngx-translate/core';
 
 @Injectable()
 export class AuthenticationService {
-  
+
   serverAddress = configData.serverAddress;
 
   private loggedIn$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(this.getCurrentUser() ? true : false);
@@ -20,7 +20,7 @@ export class AuthenticationService {
     get isLoggedIn() {
         return this.loggedIn$.asObservable();
     }
-  
+
   constructor(private http: HttpClient, private messageService: AlertService, private translateService: TranslateService) { }
 
     login(username: string, password: string): Observable<boolean> {

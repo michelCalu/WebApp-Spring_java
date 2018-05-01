@@ -18,6 +18,7 @@ import { MyProfileComponent } from './myprofile/index';
 import { MyRequestsComponent } from './myrequests/index';
 import { NationalityCertificateCreationComponent} from './nationality-certificate-creation';
 import { NewRequestComponent } from './newrequest/index';
+import { CreateEmployeeComponent } from './create_employee';
 import { RegisterComponent } from './register/index';
 import { TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -42,6 +43,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     MyRequestsComponent,
     EmployeeDashboardComponent,
     NewRequestComponent,
+    CreateEmployeeComponent,
     NationalityCertificateCreationComponent,
     ParkingCardCreationComponent,
     RegisterComponent

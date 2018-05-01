@@ -7,6 +7,11 @@
         <li class="nav-item" class="disabled"><a class="nav-link" routerLink="" style="color: red">{{'mycompanies' | translate}}</a></li>
         <li class="nav-item"><a class="nav-link" routerLink="home" (click)="onLogout()">{{'logout' | translate}}</a></li>
         <li class="nav-item"><a class="nav-link" (click)="switchLanguage()"> {{currentLanguage === 'fr' ? 'en' : 'fr'}}</a></li>
+
+        <!-- TODO these here below are not for citizens, but for employees -->
+        <li class="nav-item"><a class="nav-link" routerLink="employee_dashboard">{{'employee_dashboard' | translate}}</a></li>
+        <!-- TODO this should only be seen by admins -->
+        <li class="nav-item"><a class="nav-link" routerLink="create_employee">{{'create_employee' | translate}}</a></li>
     </ul>
 </div>
 

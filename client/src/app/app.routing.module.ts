@@ -12,6 +12,7 @@ import { NewRequestComponent } from './newrequest';
 import { NationalityCertificateCreationComponent } from './nationality-certificate-creation';
 import { ParkingCardCreationComponent } from './parking-card-creation';
 import { EmployeeDashboardComponent } from './employee_dashboard';
+import { CreateEmployeeComponent } from './create_employee';
 
 const appRoutes: Routes = [
   // routes protected with AuthGuard
@@ -23,6 +24,7 @@ const appRoutes: Routes = [
       { path: 'myrequests', component: MyRequestsComponent },
       { path: 'newrequest', component: NewRequestComponent },
       { path: 'employee_dashboard', component: EmployeeDashboardComponent },
+      { path: 'create_employee', component: CreateEmployeeComponent },
       { path: 'newrequest/nationality', component: NationalityCertificateCreationComponent},
       { path: 'newrequest/parking', component: ParkingCardCreationComponent},
 

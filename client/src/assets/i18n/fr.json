@@ -10,6 +10,9 @@
     "carRegistrationNumber": "Immatriculation",
     "colour": "Couleur",
     "connectAsEmployee": "Se connecter en tant qu'employé",
+    "create_employee": "créer un employé",
+
+    "employee_dashboard": "inbox d'employé",
 
     "home": "accueil",
 
@@ -38,4 +41,5 @@
     "status": "statut",
 
     "type": "type"
+
 }
