@@ -10,6 +10,7 @@
     "colour": "Colour",
     "connectAsEmployee": "Login as an employee",
     "create_employee": "create an employee",
+    "createEmployee.title": "Create a new employee",
 
     "employee_dashboard": "employee inbox",
 
