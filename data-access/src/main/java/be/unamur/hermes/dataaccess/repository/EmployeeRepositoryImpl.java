@@ -1,20 +1,19 @@
 package be.unamur.hermes.dataaccess.repository;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import be.unamur.hermes.common.enums.UserStatus;
+import be.unamur.hermes.common.enums.UserType;
+import be.unamur.hermes.dataaccess.entity.Employee;
+import be.unamur.hermes.dataaccess.entity.UserAccount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
-import be.unamur.hermes.common.enums.UserStatus;
-import be.unamur.hermes.common.enums.UserType;
-import be.unamur.hermes.dataaccess.entity.Employee;
-import be.unamur.hermes.dataaccess.entity.UserAccount;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Repository
 public class EmployeeRepositoryImpl implements EmployeeRepository {
@@ -57,7 +56,7 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
 	params.put("addressID", addressID);
 	params.put("mail", employee.getMail());
 	params.put("phone", employee.getPhone());
-	params.put("nationalRegistreNb", employee.getNationalRegisterNb());
+	params.put("nationalRegisterNb", employee.getNationalRegisterNb());
 	params.put("birthdate", employee.getBirthdate());
 	params.put("accountNumber", employee.getAccountNumber());
 	params.put("arrivalDate", employee.getArrivalDate());
