@@ -3,6 +3,7 @@ package be.unamur.hermes.business.service;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import be.unamur.hermes.common.enums.UserType;
+import be.unamur.hermes.dataaccess.dto.UpdateUserAccount;
 
 public interface UserAccountService extends UserDetailsService {
 
@@ -16,5 +17,7 @@ public interface UserAccountService extends UserDetailsService {
 	int index = userName.lastIndexOf("_");
 	return userName.substring(0, index);
     }
+
+    void updateCitizenAccount(long citizenId, UpdateUserAccount update);
 
 }

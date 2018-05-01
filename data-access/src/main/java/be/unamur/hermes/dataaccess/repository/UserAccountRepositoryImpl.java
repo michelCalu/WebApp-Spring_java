@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
+import be.unamur.hermes.dataaccess.dto.UpdateUserAccount;
 import be.unamur.hermes.dataaccess.entity.UserAccount;
 
 @Repository
@@ -17,8 +18,8 @@ public class UserAccountRepositoryImpl implements UserAccountRepository {
     private final SimpleJdbcInsert accountInserter;
 
     // queries
-    private static final String updateActivate = //
-	    "UPDATE t_user_accounts ua SET ua.userStatus = 'active' WHERE ua.userAccountID = ?";
+    private static final String updateQuery = //
+	    "UPDATE t_user_accounts ua SET ua.%s = ? WHERE ua.userAccountID = ?";
 
     @Autowired
     public UserAccountRepositoryImpl(JdbcTemplate jdbcTemplate) {
@@ -38,7 +39,10 @@ public class UserAccountRepositoryImpl implements UserAccountRepository {
     }
 
     @Override
-    public void activate(long userAccountID) {
-	jdbcTemplate.update(updateActivate, userAccountID);
+    public void update(long userAccountID, UpdateUserAccount account) {
+	if (account.getStatus() != null)
+	    jdbcTemplate.update(String.format(updateQuery, "userStatus"), account.getStatus(), userAccountID);
+	if (account.getPassword() != null)
+	    jdbcTemplate.update(String.format(updateQuery, "password"), account.getPassword(), userAccountID);
     }
 }

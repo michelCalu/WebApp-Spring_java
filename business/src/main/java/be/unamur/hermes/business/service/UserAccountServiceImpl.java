@@ -6,9 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import be.unamur.hermes.business.exception.BusinessException;
 import be.unamur.hermes.common.enums.UserType;
+import be.unamur.hermes.dataaccess.dto.UpdateUserAccount;
+import be.unamur.hermes.dataaccess.entity.UserAccount;
+import be.unamur.hermes.dataaccess.repository.UserAccountRepository;
 
 @Service
 public class UserAccountServiceImpl implements UserAccountService {
@@ -17,12 +21,15 @@ public class UserAccountServiceImpl implements UserAccountService {
 
     private final CitizenService citizenService;
     private final EmployeeService employeeService;
+    private final UserAccountRepository accountRepository;
 
     @Autowired
-    public UserAccountServiceImpl(CitizenService citizenService, EmployeeService employeeService) {
+    public UserAccountServiceImpl(CitizenService citizenService, EmployeeService employeeService,
+	    UserAccountRepository accountRepository) {
 	super();
 	this.citizenService = citizenService;
 	this.employeeService = employeeService;
+	this.accountRepository = accountRepository;
     }
 
     @Override
@@ -45,5 +52,12 @@ public class UserAccountServiceImpl implements UserAccountService {
 	    logger.error("Unknown user", ex);
 	    throw new UsernameNotFoundException("Unknown user", ex);
 	}
+    }
+
+    @Override
+    @Transactional
+    public void updateCitizenAccount(long citizenId, UpdateUserAccount update) {
+	UserAccount citizenAccount = citizenService.findAccount(citizenId);
+	accountRepository.update(citizenAccount.getAccountUserId(), update);
     }
 }

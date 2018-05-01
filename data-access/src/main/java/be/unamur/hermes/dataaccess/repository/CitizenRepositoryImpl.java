@@ -72,6 +72,11 @@ public class CitizenRepositoryImpl implements CitizenRepository {
 		this::buildAccount);
     }
 
+    @Override
+    public UserAccount findAccount(long citizenId) {
+	return jdbcTemplate.queryForObject(queryAccountByCitizenId, new Object[] { citizenId }, this::buildAccount);
+    }
+
     // Queries
     private static final String queryById = "SELECT * FROM t_citizens c WHERE c.citizenID = ?";
 
@@ -80,6 +85,10 @@ public class CitizenRepositoryImpl implements CitizenRepository {
     private static final String queryAccountByNRN = //
 	    "SELECT c.citizenID, c.userAccountID, c.nationalRegisterNb, ua.roles, ua.userStatus, ua.password FROM t_citizens c"
 		    + " JOIN t_user_accounts ua ON c.userAccountID = ua.userAccountID WHERE c.nationalRegisterNb = ?";
+
+    private static final String queryAccountByCitizenId = //
+	    "SELECT c.citizenID, c.userAccountID, c.nationalRegisterNb, ua.roles, ua.userStatus, ua.password FROM t_citizens c"
+		    + " JOIN t_user_accounts ua ON c.userAccountID = ua.userAccountID WHERE c.citizenID = ?";
 
     private static final String queryAll = "SELECT * FROM t_citizens";
 

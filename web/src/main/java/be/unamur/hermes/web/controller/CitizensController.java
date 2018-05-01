@@ -16,10 +16,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import be.unamur.hermes.business.exception.BusinessException;
 import be.unamur.hermes.business.service.CitizenService;
 import be.unamur.hermes.business.service.UserAccountService;
+import be.unamur.hermes.dataaccess.dto.UpdateUserAccount;
 import be.unamur.hermes.dataaccess.entity.Citizen;
 
 @RestController
@@ -42,9 +44,10 @@ public class CitizensController {
 	    long id = citizenService.register(citizen);
 	    HttpHeaders responseHeaders = new HttpHeaders();
 	    responseHeaders.setLocation(new URI("/citizens/" + id));
-	    return new ResponseEntity<>(responseHeaders, HttpStatus.CREATED);
+	    URI location = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}").buildAndExpand(id).toUri();
+	    return ResponseEntity.created(location).build();
 	} catch (BusinessException be) {
-	    return new ResponseEntity<>(be, HttpStatus.BAD_REQUEST);
+	    return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 	}
     }
 
@@ -60,7 +63,7 @@ public class CitizensController {
 	try {
 	    return new ResponseEntity<>(citizenService.findById(citizenID), HttpStatus.OK);
 	} catch (BusinessException be) {
-	    return new ResponseEntity<>(be, HttpStatus.BAD_REQUEST);
+	    return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 	}
     }
 
@@ -70,7 +73,7 @@ public class CitizensController {
 	try {
 	    return new ResponseEntity<>(citizenService.findByName(firstName, lastName), HttpStatus.OK);
 	} catch (BusinessException be) {
-	    return new ResponseEntity<>(be, HttpStatus.BAD_REQUEST);
+	    return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 	}
     }
 
@@ -80,6 +83,16 @@ public class CitizensController {
     }
 
     // UPDATE
+    @PatchMapping(path = "/account/{citizenID}")
+    public ResponseEntity<Object> updateAccount(@RequestBody UpdateUserAccount accountUpdate,
+	    @PathVariable("citizenID") Long citizenID) {
+	try {
+	    userAccountService.updateCitizenAccount(citizenID, accountUpdate);
+	    return new ResponseEntity<Object>(HttpStatus.OK);
+	} catch (BusinessException be) {
+	    return new ResponseEntity<Object>(HttpStatus.BAD_REQUEST);
+	}
+    }
 
     @PatchMapping(path = "/{citizenID}")
     public ResponseEntity<Citizen> updateCitizen(@RequestBody Map<String, Object> updates,
@@ -89,7 +102,7 @@ public class CitizensController {
 	    Citizen updatedCitizen = citizenService.findById(citizenID);
 	    return new ResponseEntity<Citizen>(updatedCitizen, HttpStatus.OK);
 	} catch (BusinessException be) {
-	    return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+	    return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 	}
     }
 }

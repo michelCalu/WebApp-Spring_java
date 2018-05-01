@@ -1,5 +1,6 @@
 package be.unamur.hermes.web.controller;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import be.unamur.hermes.business.service.RequestService;
 import be.unamur.hermes.dataaccess.entity.CreateRequest;
@@ -76,13 +78,10 @@ public class RequestController {
     public ResponseEntity<Void> createRequest(@RequestBody CreateRequest newRequest, HttpServletRequest request,
 	    HttpServletResponse response) {
 	try {
-	    Long requestId = requestService.create(newRequest);
-	    if (requestId != null) {
-		ResponseEntity<Void> result = ResponseEntity.status(HttpStatus.CREATED).build();
-		response.addHeader("Location", String.format("/requests/{%s}", String.valueOf(requestId)));
-		return result;
-	    }
-	    return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+	    long requestId = requestService.create(newRequest);
+	    URI location = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}").buildAndExpand(requestId)
+		    .toUri();
+	    return ResponseEntity.created(location).build();
 	} catch (Exception ex) {
 	    logger.error("Bad request", ex);
 	    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);

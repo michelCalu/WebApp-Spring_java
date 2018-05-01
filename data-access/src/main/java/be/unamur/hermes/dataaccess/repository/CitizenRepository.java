@@ -18,4 +18,6 @@ public interface CitizenRepository {
     long create(Citizen citizen, long userAccountId);
 
     UserAccount findAccount(String nationalRegistrationNb);
+
+    UserAccount findAccount(long citizenId);
 }

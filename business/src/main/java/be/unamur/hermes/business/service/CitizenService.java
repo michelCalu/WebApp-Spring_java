@@ -17,6 +17,8 @@ public interface CitizenService {
 
     UserAccount findAccount(String nationalRegistrationNb) throws BusinessException;
 
+    UserAccount findAccount(long citizenId) throws BusinessException;
+
     List<Citizen> findAll();
 
     List<Citizen> findPending();

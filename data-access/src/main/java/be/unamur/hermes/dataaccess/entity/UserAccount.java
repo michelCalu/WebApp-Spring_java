@@ -41,6 +41,10 @@ public class UserAccount extends org.springframework.security.core.userdetails.U
 	this.technicalId = technicalId;
     }
 
+    public long getAccountUserId() {
+	return accountUserId;
+    }
+
     /**
      * 
      * @return the corresponding employeeId or citizenId

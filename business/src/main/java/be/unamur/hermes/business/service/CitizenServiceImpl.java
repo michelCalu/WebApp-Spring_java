@@ -139,6 +139,15 @@ public class CitizenServiceImpl implements CitizenService {
     }
 
     @Override
+    public UserAccount findAccount(long citizenId) throws BusinessException {
+	try {
+	    return citizenRepository.findAccount(citizenId);
+	} catch (EmptyResultDataAccessException e) {
+	    throw new BusinessException("Account not found !");
+	}
+    }
+
+    @Override
     public void update(Long citizenId, Map<String, Object> updates) {
 	// TODO Auto-generated method stub
 
