@@ -18,6 +18,7 @@ import org.thymeleaf.templateresolver.TemplateResolver;
 import com.google.common.base.Charsets;
 
 import be.unamur.hermes.business.document.DocumentCreationRequest;
+import be.unamur.hermes.business.document.DocumentHelper;
 import be.unamur.hermes.common.util.PDFCreator;
 import be.unamur.hermes.dataaccess.entity.Address;
 import be.unamur.hermes.dataaccess.entity.Citizen;
@@ -91,15 +92,16 @@ public class DocumentServiceImpl implements DocumentService {
 	result.setVariable("officer", document.getOfficer());
 	result.setVariable("department", document.getDepartment());
 	result.setVariable("municipality", document.getDepartment().getMunicipality());
+	result.setVariable("util", new DocumentHelper());
 	return result;
     }
 
     // debugging
     public static void main(String[] args) {
 	DocumentCreationRequest doc = new DocumentCreationRequest();
-	Citizen mayor = new Citizen(1L, "mayorLastName", "mayorFistName", null, "mayorMail@commune.be", "mayorPhone",
+	Citizen mayor = new Citizen(1L, "mayorFirstName", "mayorLastName", null, "mayorMail@commune.be", "mayorPhone",
 		"mayorNRN", null);
-	Citizen requestor = new Citizen(2L, "requestorLastName", "requestorFirstName",
+	Citizen requestor = new Citizen(2L, "requestorFirstName", "requestorLastName",
 		new Address(3, "Rue Haute", 130, "B", 1230, "Gembloux", "BRC", "Belgium"), "requestorMail@hotmail.com",
 		"requestorPhone", "requestorNRN", LocalDate.of(1970, 5, 1));
 	Municipality munip = new Municipality();
@@ -107,10 +109,10 @@ public class DocumentServiceImpl implements DocumentService {
 	munip.setMayor(mayor);
 	munip.setAddress(new Address(2L, "Rue Champs d'Eglise", 13, null, 1230, "Gembloux", "Wallonie", "Belgium"));
 	Department dep = new Department();
-	Employee officer = new Employee(1L, "officerLastName", "officerFirstName", null, "officerMail@commune.be",
+	Employee officer = new Employee(1L, "officerFirstName", "officerLastName", null, "officerMail@commune.be",
 		"officerPhone", "officerNRN", LocalDate.of(1983, 11, 13), "officerAccountNumber", null, 'M', null, 0,
 		0);
-	Employee manager = new Employee(1L, "managerLastName", "managerFirstName", null, "managerMail@commune.be",
+	Employee manager = new Employee(1L, "managerFirstName", "managerLastName", null, "managerMail@commune.be",
 		"managerPhone", "managerNRN", LocalDate.of(1983, 11, 13), "managerAccountNumber", null, 'M', null, 0,
 		0);
 	dep.setManager(manager);
@@ -131,8 +133,8 @@ public class DocumentServiceImpl implements DocumentService {
 
 	doc.setRequest(request);
 	DocumentServiceImpl service = new DocumentServiceImpl();
-	String result = service.getNationalityCertificate(true, doc);
-	// service.getParkingCardDecision(false, doc);
+	String result = service.getNationalityCertificate(false, doc);
+	// service.getParkingCardDecision(true, doc);
 	// service.getPayment(doc);
 	// service.getParkingCard(doc);
 	System.out.println(result);

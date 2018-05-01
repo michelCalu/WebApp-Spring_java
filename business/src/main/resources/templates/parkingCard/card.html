@@ -8,8 +8,8 @@
 		<td style="width:60%;">   </td>
 	</tr>
 	<tr>
-		<td>[[${municipality.address.streetNb}]], [[${municipality.address.street}]] <br/>
-			[[${municipality.address.zipCode}]] [[${municipality.address.state}]]
+		<td>[[${util.getAddressLine1(municipality.address)}]] <br/>
+			[[${util.getAddressLine2(municipality.address)}]]
 		</td>
 		<td>   </td>
 	</tr>

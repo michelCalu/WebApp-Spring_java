@@ -20,18 +20,18 @@
 <table>
 	<tr>
 		<td th:text="${municipality.name}"></td>
-		<td th:text="${officer.lastName}+' '+${officer.firstName}"></td>
+		<td th:text="${util.formatName(officer)}"></td>
 	</tr>
 	<tr>
 		<td>   </td>
 		<td th:text="${department.name}"></td>
 	</tr>
 	<tr>
-		<td >[[${municipality.address.streetNb}]], [[${municipality.address.street}]] <br/>
-			[[${municipality.address.zipCode}]] [[${municipality.address.state}]]
+		<td >[[${util.getAddressLine1(municipality.address)}]]<br/>
+			[[${util.getAddressLine2(municipality.address)}]]
 		</td>
-		<td>[[${department.address.streetNb}]], [[${department.address.street}]] <br/>
-			[[${department.address.zipCode}]] [[${department.address.state}]]
+		<td>[[${util.getAddressLine1(department.address)}]] <br/>
+			[[${util.getAddressLine2(department.address)}]]
 		</td>
 	</tr>
 	<tr>
@@ -59,7 +59,7 @@
 <br/>
 CONCERNE : [[${title}]]
 <br/>
-Le [[${#temporals.format(date,'dd/MM/yyyy')}]]
+Le [[${util.format(date)}]]
 <br/>
 <br/>
 Madame, Monsieur,
@@ -76,8 +76,8 @@ Je vous prie d'agréer, Madame, Monsieur, l'expression de nos sentiments disting
 <br/>
 <table th:fragment="base-message-footer-table">
 	<tr>
-		<td th:text="${municipality.mayor.lastName}+' '+${municipality.mayor.firstName}"></td>
-		<td th:text="${department.manager.lastName}+' '+${department.manager.lastName}"></td>
+		<td th:text="${util.formatName(municipality.mayor)}"></td>
+		<td th:text="${util.formatName(department.manager)}"></td>
 	</tr>
 	<tr>
 		<td>Bourgmestre de la commune de <br/> [[${municipality.name}]]</td>
