@@ -6,7 +6,9 @@ import { AlertService } from './alert.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/map'
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable()
 export class AuthenticationService {
@@ -19,7 +21,7 @@ export class AuthenticationService {
         return this.loggedIn$.asObservable();
     }
   
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private messageService: AlertService, private translateService: TranslateService) { }
 
     login(username: string, password: string): Observable<boolean> {
      const requestBody = new AuthenticationRequest();
@@ -37,7 +39,12 @@ export class AuthenticationService {
                 } else {
                     return false;
                 }
+            })
+            .catch(err => {
+                this.messageService.error(this.translateService.instant('authentication.service.getError'));
+                return Observable.of(false);
             });
+
     }
 
     logout() {

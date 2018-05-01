@@ -3,7 +3,15 @@
 	<label for="firstName">Utilisateur:</label>
 	<input class="form-control" [(ngModel)]="username" placeholder="Nom d'utilisateur" name="user" class="form-control"  id="user">
 	<label for="password">Mot de passe:</label>
-	<input type="password" class="form-control" [(ngModel)]="password" placeholder="Votre mot de passe" name="password" id="password">
+    <input type="password" class="form-control" [(ngModel)]="password" placeholder="Votre mot de passe" name="password" id="password">
+    
+    <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="" id="isEmployee" [(ngModel)]="isEmployee">
+            <label class="form-check-label" for="isEmployee">
+              {{'connectAsEmployee' | translate}}
+            </label>
+      </div>
+
 	<button class="btn btn-success" (click)="login()">Se connecter</button>
 <!-- 	<button class="btn btn-success" (click)="logout()">Se déconnecter</button> -->
 </div>
