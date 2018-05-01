@@ -33,7 +33,7 @@ export class CitizenService {
   }
 
   public getCitizen(user: User): Observable<Citizen> {
-    return this.http.get<Citizen>(this.serverAddress + `citizens/${user.id}`);
+    return this.http.get<Citizen>(this.serverAddress + `/citizens/${user.id}`);
   }
 
  /*
