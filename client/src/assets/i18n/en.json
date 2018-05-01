@@ -2,11 +2,13 @@
     "actions": "actions",
     "additionalComment": "Additional communication",
     "assignee": "assignee",
+    "authentication.service.getError" : "Rejected authentication",
 
     "carMake": "Car make",
     "carModel": "Model",
     "carRegistrationNumber": "Registration number",
     "colour": "Colour",
+    "connectAsEmployee": "Login as an employee",
 
     "home": "home",
 

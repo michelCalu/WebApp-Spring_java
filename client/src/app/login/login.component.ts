@@ -9,11 +9,12 @@ import { AlertService, AuthenticationService } from '../_services';
 export class LoginComponent {
     username: string;
     password: string;
+    isEmployee = false;
 
     constructor(private router: Router, private authService: AuthenticationService, private alertService: AlertService) { }
 
     login(): void {
-      const enriched = this.username + '_ctz' ;
+      const enriched = this.username + (this.isEmployee ? '_empl' : '_ctz') ;
         this.authService.login(enriched, this.password).subscribe(
         success => {
             if (success) {

@@ -2,12 +2,14 @@
     "actions": "actions",
     "additionalComment": "Communication libre",
     "assignee": "gestionnaire",
+    "authentication.service.getError" : "Authentification refusée",
 
 
     "carMake": "Marque",
     "carModel": "Modèle",
     "carRegistrationNumber": "Immatriculation",
     "colour": "Couleur",
+    "connectAsEmployee": "Se connecter en tant qu'employé",
 
     "home": "accueil",
 
