@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { RequestService, AlertService, MockAuthService, CitizenService } from '../_services';
+import { RequestService, AlertService, CitizenService, AuthenticationService } from '../_services';
 import { CitizenRequest, Citizen } from '../_models';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -18,11 +18,11 @@ export class NationalityCertificateCreationComponent implements OnInit {
       private router: Router,
       private requestService: RequestService,
       private alertService: AlertService,
-      private authService: MockAuthService,
+      private authService: AuthenticationService,
       private citizenService: CitizenService) {}
 
     ngOnInit() {
-      const currentUser = this.authService.getUser();
+      const currentUser = this.authService.getCurrentUser();
       this.citizenService.getCitizen(currentUser).subscribe(
         data => this.requestor = data,
         err => this.alertService.error('Citoyen inconnu'));

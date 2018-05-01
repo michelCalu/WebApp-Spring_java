@@ -22,7 +22,7 @@ DROP TABLE IF EXISTS t_user_accounts;
 
 CREATE TABLE t_user_accounts (
   userAccountID			INT PRIMARY KEY 		NOT NULL AUTO_INCREMENT,
-  roles		    		VARCHAR(255) 			NOT NULL,
+  roles		    		ENUM('ROLE_USER','ROLE_ADMIN') 			NOT NULL,
   password				VARCHAR(255) 			NOT NULL,
   userStatus
   	ENUM('created','active','disabled')			NOT NULL 
