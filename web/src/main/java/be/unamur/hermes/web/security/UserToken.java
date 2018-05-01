@@ -10,6 +10,7 @@ public class UserToken {
 
     public UserToken(String access_token, Long technicalId) {
 	this.token = access_token;
+	this.id = technicalId;
     }
 
     public String getToken() {
