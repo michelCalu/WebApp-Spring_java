@@ -36,20 +36,4 @@ export class CitizenService {
     return this.http.get<Citizen>(this.serverAddress + `/citizens/${user.id}`);
   }
 
- /*
-  public showFolders(){
-    return this.http.get("/myfolders");
-  }
-
-  public showProfile() {
-    return this.http.get("/myprofile");
-  }
-
-  public showRequests() {
-    return this.http.get("/myrequests");
-  }
-*/
-  /*public newRequest(){
-    return this.http.post("/newrequest", request);
-  }*/
 }

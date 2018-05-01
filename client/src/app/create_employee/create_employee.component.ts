@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Employee } from '../_models';
-import { AlertService } from '../_services';
+import { AlertService, EmployeeService } from '../_services';
+import { Router } from '@angular/router';
 
 @Component({
     templateUrl: 'create_employee.component.html'
@@ -10,13 +11,17 @@ export class CreateEmployeeComponent {
 
     employee = new Employee();
 
-	constructor(/*private citizenService: CitizenService,*/ private alertService: AlertService) { }
+    constructor(private employeeService: EmployeeService, private alertService: AlertService, private router: Router) { }
 
-	createEmployee(): void {
-        console.log(' truc');
-		// this.citizenService.createCitizen(this.citizen).subscribe(
-		// 	data => this.alertService.success('Enregistrement réussi'),
-		// 	error => this.alertService.error('Échec dans l\'enregistrement')
-		// );
-	}
+    createEmployee(): void {
+        this.employeeService.createEmployee(this.employee).subscribe(success => {
+            if (success) {
+                this.alertService.success('Enregistrement réussi', true);
+                this.router.navigate(['/create_employee']);
+            } else {
+                this.alertService.error('Échec dans l\'enregistrement', true);
+                this.router.navigate(['/create_employee']);
+            }
+        });
+    }
 }
