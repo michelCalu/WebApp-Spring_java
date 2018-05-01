@@ -13,8 +13,8 @@ Montant à payer : TODO €
 <p>
 Destinataire : <br/>
 [[${municipality.name}]] <br/>
-[[${municipality.address.streetNb}]], [[${municipality.address.street}]] <br/>
-[[${municipality.address.zipCode}]] [[${municipality.address.state}]]
+[[${util.getAddressLine1(municipality.address)}]] <br/>
+[[${util.getAddressLine2(municipality.address)}]]
 </p>
 <p>
 Communication libre : TODO
