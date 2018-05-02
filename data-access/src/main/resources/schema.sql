@@ -136,13 +136,16 @@ CREATE TABLE t_departments (
   name                VARCHAR(255)  NOT NULL,
   headOfDepartmentID  INT NOT NULL,
   parentDepartmentID  INT,
+  addressID			  INT, -- if null, same as municipality address
 
   FOREIGN KEY(headOfDepartmentID)
     REFERENCES t_employees(employeeID),
   FOREIGN KEY(parentDepartmentID)
     REFERENCES t_departments(departmentID),
   FOREIGN KEY(municipalityID)
-    REFERENCES t_municipalities (municipalityID)
+    REFERENCES t_municipalities (municipalityID),
+  FOREIGN KEY(addressID)
+    REFERENCES t_addresses(addressID)
 );
 
 CREATE TABLE t_requests (

@@ -4,7 +4,7 @@
 		<requestType id="nationalityCertificate">
 			<activated>true</activated>
 		</requestType>
-		<requestType id="perm-parking" >
+		<requestType id="parkingCard" >
 			<activated>false</activated>
 			<!-- TODO -->
 			<fee>3690</fee>
@@ -15,7 +15,7 @@
 		<requestType id="nationalityCertificate">
 			<activated>true</activated>
 		</requestType>
-		<requestType id="perm-parking" >
+		<requestType id="parkingCard" >
 			<activated>false</activated>
 			<!-- TODO -->
 			<fee>7810</fee>

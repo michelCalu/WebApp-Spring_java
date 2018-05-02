@@ -57,7 +57,7 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
 	params.put("addressID", addressID);
 	params.put("mail", employee.getMail());
 	params.put("phone", employee.getPhone());
-	params.put("nationalRegistreNb", employee.getNationalRegisterNb());
+	params.put("nationalRegisterNb", employee.getNationalRegisterNb());
 	params.put("birthdate", employee.getBirthdate());
 	params.put("accountNumber", employee.getAccountNumber());
 	params.put("arrivalDate", employee.getArrivalDate());
