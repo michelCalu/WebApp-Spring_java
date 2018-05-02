@@ -13,6 +13,8 @@ export class RequestDetailComponent implements OnInit {
     @Input()
     request: CitizenRequest;
     citizen: Citizen;
+    selectedAction = 'accept';
+    possibleActions = ['accept', 'reject', 'requestModification'];
 
     constructor(private authService: AuthenticationService, private citizenService: CitizenService) {}
 
