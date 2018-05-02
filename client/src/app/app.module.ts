@@ -27,6 +27,7 @@ import { EmployeeDashboardComponent } from './employee_dashboard';
 import { RequestDetailComponent } from './request-detail';
 import { CitizenDetailComponent } from './citizen-detail';
 import { NationalityRequestDataComponent } from './nationality-request-data/nationality-request-data.component';
+import { NrnDataComponent } from './nrn-data';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -52,7 +53,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     RegisterComponent,
     RequestDetailComponent,
     CitizenDetailComponent,
-    NationalityRequestDataComponent
+    NationalityRequestDataComponent,
+    NrnDataComponent
   ],
   imports: [
     AppRoutingModule,
