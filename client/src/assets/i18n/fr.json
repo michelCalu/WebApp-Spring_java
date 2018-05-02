@@ -3,6 +3,7 @@
     "accept": "accepter",
     "additionalComment": "Communication libre",
     "assignee": "gestionnaire",
+    "assignThisRequest" : "S'assigner cette demande",
     "authentication.service.getError" : "Authentification refusée",
 
 

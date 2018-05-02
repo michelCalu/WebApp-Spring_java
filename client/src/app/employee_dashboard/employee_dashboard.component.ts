@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { RequestService, AuthenticationService } from '../_services';
-import { CitizenRequest } from '../_models';
+import { CitizenRequest, User } from '../_models';
 import { Observable } from 'rxjs/Observable';
 
 @Component({
@@ -10,13 +10,19 @@ import { Observable } from 'rxjs/Observable';
 
 export class EmployeeDashboardComponent implements OnInit {
 
+    currentUser: User;
     selectedRequest: CitizenRequest;
     serviceRequests$: Observable<CitizenRequest[]>;
 
     constructor(private requestService: RequestService, private authService: AuthenticationService) {}
 
     ngOnInit() {
-        const currentUser = this.authService.getCurrentUser();
+        this.currentUser = this.authService.getCurrentUser();
         this.serviceRequests$ = this.requestService.getDepartmentRequests(5 /* TODO: should be the departmentId of the employee */);
+    }
+
+    assign (request: CitizenRequest) {
+        this.requestService.assignThisRequest(this.currentUser.id, request)
+            .subscribe( /* TODO */ );
     }
 }

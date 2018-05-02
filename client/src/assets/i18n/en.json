@@ -3,6 +3,7 @@
     "actions": "actions",
     "additionalComment": "Additional communication",
     "assignee": "assignee",
+    "assignThisRequest" : "Get this request assigned",
     "authentication.service.getError" : "Rejected authentication",
 
     "carMake": "Car make",

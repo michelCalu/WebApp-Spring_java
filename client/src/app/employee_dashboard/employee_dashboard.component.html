@@ -11,6 +11,7 @@
 					<th scope="col">{{'status' | translate}}</th>
                     <th scope="col">{{'assignee' | translate}}</th>
                     <th></th>
+                    <th></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -21,6 +22,7 @@
                     <td> {{ request.status }}</td> <!-- TODO should be | translate -->
                     <td> {{ request.assignee.firstName + ' ' + request.assignee.lastName }} </td>
                     <td><button class="btn btn-success" (click)="selectedRequest = request">{{'details'| translate}}</button></td>
+                    <td><button class="btn btn-success" [disabled] = "request.assignee" (click)="assign(request)">{{'assignThisRequest'| translate}}</button></td>
 				</tr>
 			</tbody>
 		</table>

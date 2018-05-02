@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import 'rxjs/add/operator/catch';
 import { CitizenRequest, Citizen } from '../_models';
-import { HttpHeaders } from '@angular/common/http';
 import * as configData from '../configuration-data';
 import { AlertService } from './alert.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -50,6 +49,11 @@ export class RequestService {
             });
 
     }
+
+    assignThisRequest(employeeId: number, request: CitizenRequest): Observable<boolean> {
+        throw new Error("Method not implemented.");
+    }
+
 }
 
 class CreateRequest {
