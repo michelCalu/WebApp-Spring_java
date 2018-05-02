@@ -1,6 +1,7 @@
 <div class="col-md-9 col-md-offset-3">
 	<h1> truc employee dashboard </h1>
 	<div class="container">
+        TODO: should display the requests of his/her DEPARTMENT(S)
 		<table *ngIf="(serviceRequests$ | async)?.length; else noRequests" class="table table-striped">
 			<thead>
 				<tr>
@@ -15,18 +16,18 @@
 			<tbody>
 				<tr *ngFor="let request of (serviceRequests$ | async)">
                     <td scope="row">{{request.type | translate}}</td>
+                    <td> {{ request.userRef }}</td>
                     <td> ** TODO **</td>
-                    <td> ** TODO **</td>
-                    <td> {{request.status <!-- TODO should be | translate -->}}</td>
-                    <td> ** TODO **</td>
+                    <td> {{ request.status }}</td> <!-- TODO should be | translate -->
+                    <td> ** TODO ** </td>
                     <td><button class="btn btn-success">{{'details'| translate}}</button></td>
 				</tr>
 			</tbody>
 		</table>
 		<ng-template #noRequests>
 			<div>Votre service n'a pas encore reçu des demandes</div>
-		</ng-template>
-
+        </ng-template>
+        
 	</div>
 
 </div>

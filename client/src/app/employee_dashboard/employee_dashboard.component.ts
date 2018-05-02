@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { RequestService, MockAuthService } from '../_services';
+import { RequestService, AuthenticationService } from '../_services';
 import { CitizenRequest } from '../_models';
 import { Observable } from 'rxjs/Observable';
 
@@ -12,10 +12,10 @@ export class EmployeeDashboardComponent implements OnInit {
 
     serviceRequests$: Observable<CitizenRequest[]>;
 
-    constructor(private requestService: RequestService, private authService: MockAuthService) {}
+    constructor(private requestService: RequestService, private authService: AuthenticationService) {}
 
     ngOnInit() {
-        const currentUser = this.authService.getUser();
+        const currentUser = this.authService.getCurrentUser();
         this.serviceRequests$ = this.requestService.getServiceRequests(currentUser.id);
     }
 }
