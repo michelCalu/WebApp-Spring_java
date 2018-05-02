@@ -15,6 +15,7 @@ DROP TABLE IF EXISTS t_companies;
 DROP TABLE IF EXISTS t_employees;
 DROP TABLE IF EXISTS t_citizen_accounts;
 DROP TABLE IF EXISTS t_citizens;
+DROP TABLE IF EXISTS t_municipalities;
 DROP TABLE IF EXISTS t_user_statusses;
 DROP TABLE IF EXISTS t_user_accounts;
 DROP TABLE IF EXISTS t_municipalities;
@@ -42,6 +43,18 @@ CREATE TABLE t_addresses (
   country VARCHAR(255)    NOT NULL
 );
 
+CREATE TABLE t_municipalities (
+  municipalityID  INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  name    VARCHAR(255)  NOT NULL UNIQUE,
+  address   INT       NOT NULL,
+  email   VARCHAR(255)  NOT NULL,
+  phone   VARCHAR(255)  NOT NULL,
+  mayorName VARCHAR(255) NOT NULL,
+
+  FOREIGN KEY  (address) REFERENCES t_addresses(addressID)
+
+);
+
 CREATE TABLE t_citizens (
   citizenID  INT PRIMARY KEY   NOT NULL AUTO_INCREMENT,
   firstName     VARCHAR(255)      NOT NULL,
@@ -51,9 +64,11 @@ CREATE TABLE t_citizens (
   phone         VARCHAR(255),
   nationalRegisterNb VARCHAR(255) NOT NULL UNIQUE ,
   birthdate     DATE,
+  municipalityID  INT             NOT NULL,
   userAccountID	INT,
   FOREIGN KEY (addressID) REFERENCES t_addresses(addressID),
-  FOREIGN KEY (userAccountID) REFERENCES t_user_accounts(userAccountID)
+  FOREIGN KEY (userAccountID) REFERENCES t_user_accounts(userAccountID),
+  FOREIGN KEY (municipalityID) REFERENCES t_municipalities(municipalityID)
 );
 
 
@@ -116,19 +131,6 @@ CREATE TABLE t_req_statusses (
   statusID    INT   PRIMARY KEY NOT NULL AUTO_INCREMENT,
   statusName    VARCHAR(255),
   CONSTRAINT UC_statusName UNIQUE (statusName)
-);
-
-
-CREATE TABLE t_municipalities (
-  municipalityID  INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  name    VARCHAR(255)  NOT NULL UNIQUE,
-  address   INT       NOT NULL,
-  email   VARCHAR(255)  NOT NULL,
-  phone   VARCHAR(255)  NOT NULL,
-  mayorName VARCHAR(255) NOT NULL,
-
-  FOREIGN KEY  (address) REFERENCES t_addresses(addressID)
-
 );
 
 CREATE TABLE t_departments (

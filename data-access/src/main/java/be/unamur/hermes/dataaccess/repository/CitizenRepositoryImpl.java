@@ -21,12 +21,16 @@ public class CitizenRepositoryImpl implements CitizenRepository {
 
     private final JdbcTemplate jdbcTemplate;
     private final AddressRepository addressRepository;
+    private final MunicipalityRepository municipalityRepository;
     private final SimpleJdbcInsert citizenInserter;
 
     @Autowired
-    public CitizenRepositoryImpl(final JdbcTemplate jdbcTemplate, final AddressRepository addressRepository) {
+    public CitizenRepositoryImpl(final JdbcTemplate jdbcTemplate,
+                                 final AddressRepository addressRepository,
+                                 final MunicipalityRepository municipalityRepository) {
 	this.jdbcTemplate = jdbcTemplate;
 	this.addressRepository = addressRepository;
+	this.municipalityRepository = municipalityRepository;
 	this.citizenInserter = new SimpleJdbcInsert(jdbcTemplate.getDataSource()).withTableName("t_citizens")
 		.usingGeneratedKeyColumns("citizenID");
     }
@@ -62,6 +66,7 @@ public class CitizenRepositoryImpl implements CitizenRepository {
 	params.put("phone", citizen.getPhone());
 	params.put("nationalRegisterNb", citizen.getNationalRegisterNb());
 	params.put("birthdate", citizen.getBirthdate());
+	params.put("municipalityID", citizen.getMunicipality().getId());
 	params.put("userAccountID", userAccountId);
 	return (Long) citizenInserter.executeAndReturnKey(params);
     }
@@ -97,8 +102,16 @@ public class CitizenRepositoryImpl implements CitizenRepository {
 
     // Other methods
     private Citizen buildCitizen(ResultSet rs, int rowNum) throws SQLException {
-	return new Citizen(rs.getLong(1), rs.getString(2), rs.getString(3), addressRepository.findById(rs.getLong(4)),
-		rs.getString(5), rs.getString(6), rs.getString(7), rs.getDate(8).toLocalDate());
+	return new Citizen(
+	        rs.getLong(1),
+            rs.getString(2),
+            rs.getString(3),
+            addressRepository.findById(rs.getLong(4)),
+		    rs.getString(5),
+            rs.getString(6),
+            rs.getString(7),
+            rs.getDate(8).toLocalDate(),
+            municipalityRepository.findById(rs.getLong(9)));
     }
 
     private UserAccount buildAccount(ResultSet rs, int rowNum) throws SQLException {
