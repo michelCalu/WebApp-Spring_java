@@ -36,6 +36,7 @@
     "requestDate": "date demande",
     "request.service.getError": "Erreur dans la recherche de demandes",
 
+    "service.citizen.errorGetCitizen" : "Citoyen inconnu",
     "signin": "se connecter",
     "signup": "s'inscrire",
     "status": "statut",

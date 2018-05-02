@@ -23,9 +23,9 @@ export class NationalityCertificateCreationComponent implements OnInit {
 
     ngOnInit() {
       const currentUser = this.authService.getCurrentUser();
-      this.citizenService.getCitizen(currentUser).subscribe(
-        data => this.requestor = data,
-        err => this.alertService.error('Citoyen inconnu'));
+      this.citizenService.getCitizen(currentUser).
+        map(data => this.requestor = data).
+        subscribe();
     }
 
     sendRequest() {

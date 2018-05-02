@@ -25,6 +25,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ParkingCardCreationComponent } from './parking-card-creation';
 import { EmployeeDashboardComponent } from './employee_dashboard';
 import { RequestDetailComponent } from './request-detail';
+import { CitizenDetailComponent } from './citizen-detail';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -48,7 +49,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     NationalityCertificateCreationComponent,
     ParkingCardCreationComponent,
     RegisterComponent,
-    RequestDetailComponent
+    RequestDetailComponent,
+    CitizenDetailComponent
   ],
   imports: [
     AppRoutingModule,

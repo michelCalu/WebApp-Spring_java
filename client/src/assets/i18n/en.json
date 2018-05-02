@@ -34,6 +34,7 @@
     "requestDate": "request date",
     "request.service.getError": "Error retrieving the requests",
 
+    "service.citizen.errorGetCitizen" : "Unknown citizen",
     "signin": "sign in",
     "signup": "sign up",
     "status": "status",

@@ -5,6 +5,8 @@ import { Citizen, Address } from '../_models/index';
 import { User } from '../_models/index';
 import { Observable } from 'rxjs';
 import * as configData from '../configuration-data';
+import { AlertService } from '.';
+import { TranslateService } from '@ngx-translate/core';
 
 // const httpOptions = {
 //   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -15,41 +17,28 @@ export class CitizenService {
 
     serverAddress = configData.serverAddress;
 
-  constructor(private http: HttpClient) {
-  }
+    constructor(private http: HttpClient, private messageService: AlertService, private translateService: TranslateService) { }
 
-  public getAbout() {
-    return this.http.get('/about');
-  }
+    public getAbout() {
+        return this.http.get('/about');
+    }
 
-  public createCitizen(citizen: Citizen): Observable<any> {
-    console.log('CREATING CITIZEN : ' + JSON.stringify(citizen));
-    return this.http.post(this.serverAddress + '/citizens', citizen);
-  }
-// to test login
+    public createCitizen(citizen: Citizen): Observable<any> {
+        console.log('CREATING CITIZEN : ' + JSON.stringify(citizen));
+        return this.http.post(this.serverAddress + '/citizens', citizen);
+    }
+    // to test login
 
-  public login(user: User) {
-    return this.http.post(this.serverAddress + '/login', user);
-  }
+    public login(user: User) {
+        return this.http.post(this.serverAddress + '/login', user);
+    }
 
-  public getCitizen(user: User): Observable<Citizen> {
-    return this.http.get<Citizen>(this.serverAddress + `/citizens/${user.id}`);
-  }
+    public getCitizen(user: User): Observable<Citizen> {
+        return this.http.get<Citizen>(this.serverAddress + `/citizens/${user.id}`)
+            .catch(err => {
+                this.messageService.error(this.translateService.instant('service.citizen.errorGetCitizen'));
+                return Observable.of(null);
+            });
+    }
 
- /*
-  public showFolders(){
-    return this.http.get("/myfolders");
-  }
-
-  public showProfile() {
-    return this.http.get("/myprofile");
-  }
-
-  public showRequests() {
-    return this.http.get("/myrequests");
-  }
-*/
-  /*public newRequest(){
-    return this.http.post("/newrequest", request);
-  }*/
 }
