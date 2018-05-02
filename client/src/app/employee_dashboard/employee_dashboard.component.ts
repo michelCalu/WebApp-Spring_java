@@ -10,6 +10,7 @@ import { Observable } from 'rxjs/Observable';
 
 export class EmployeeDashboardComponent implements OnInit {
 
+    selectedRequest: CitizenRequest;
     serviceRequests$: Observable<CitizenRequest[]>;
 
     constructor(private requestService: RequestService, private authService: AuthenticationService) {}

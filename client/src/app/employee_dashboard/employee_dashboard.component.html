@@ -27,6 +27,10 @@
 		<ng-template #noRequests>
 			<div>Votre service n'a pas encore reçu des demandes</div>
         </ng-template>
+
+        <div *ngIf="selectedRequest">
+            <request-detail (request)="selectedRequest"></request-detail>
+        </div>
         
 	</div>
 
