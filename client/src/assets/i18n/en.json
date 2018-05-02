@@ -38,6 +38,7 @@
     "request.service.getError": "Error retrieving the requests",
 
     "service.citizen.errorGetCitizen" : "Unknown citizen",
+    "service.citizen.errorGetNrn" : "Unknown national register number",
     "signin": "sign in",
     "signup": "sign up",
     "status": "status",

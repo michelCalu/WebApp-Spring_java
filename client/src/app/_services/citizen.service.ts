@@ -41,4 +41,13 @@ export class CitizenService {
             });
     }
 
+    public getNrnData(nrn: string): Observable<Object> {
+        return this.http.get(this.serverAddress + `/nrn/${nrn}`)
+            .catch(err => {
+                this.messageService.error(this.translateService.instant('service.citizen.errorGetNrn'));
+                return Observable.of(null);
+            });
+
+    }
+
 }

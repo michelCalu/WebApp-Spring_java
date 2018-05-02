@@ -1,2 +1,12 @@
 <h1>Requête de nationalité </h1>
-// TODO 
+// TODO données sur la requête (création, etc)
+
+<h2> Informations du registre national </h2>
+<div *ngIf="(nrnData$ | async) as nrnData">
+    <ul class="list-group">
+        <li class="list-group-item"> {{nrnData.status === 'VALID' ? 'Valide' : "Non valide"}} (//TODO changer couleur ou quoi)</li>
+        <li class="list-group-item"> {{nrnData.belgian ? 'Belge' : 'Étranger' }}</li>
+        <li class="list-group-item"> {{nrnData.alive ? 'Vivant' : 'Non vivant' }}</li>
+    </ul>
+</div>
+<br>

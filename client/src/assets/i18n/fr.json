@@ -40,6 +40,7 @@
     "request.service.getError": "Erreur dans la recherche de demandes",
 
     "service.citizen.errorGetCitizen" : "Citoyen inconnu",
+    "service.citizen.errorGetNrn" : "Numéro de registre national non reconnu",
     "signin": "se connecter",
     "signup": "s'inscrire",
     "status": "statut",

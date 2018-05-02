@@ -1,19 +1,8 @@
 <div class="container">
     <citizen-detail *ngIf="citizen" [citizen]="citizen"></citizen-detail>
-    <nationality-request-data *ngIf="request && request.type === 'nationalityCertificate'"></nationality-request-data>
-    <app-nrn-data [citizen]="citizen"></app-nrn-data>
-    <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="actions" data-toggle="dropdown" aria-haspopup="true"
-            aria-expanded="false">
-            actions
-        </button>
-        <div class="dropdown-menu" aria-labelledby="actions">
-            <button class="dropdown-item" type="button">{{ 'accept' | translate }}</button>
-            <button class="dropdown-item" type="button"> {{ 'reject' | translate }}</button>
-            <button class="dropdown-item" type="button"> {{ 'requestModification' | translate }}</button>
-        </div>
-    </div>
+    <nationality-request-data *ngIf="citizen && request && request.type === 'nationalityCertificate'" [request]="request" [citizen]="citizen"></nationality-request-data>
 
+    <h2> Actions </h2>
     <select class="custom-select" [(ngModel)]="selectedAction" placeholder="Enter email">
         <option *ngFor="let action of possibleActions" [value]="action">{{ action | translate }}</option>
     </select>
