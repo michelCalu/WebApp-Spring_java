@@ -17,11 +17,6 @@ export class EmployeeDashboardComponent implements OnInit {
 
     ngOnInit() {
         const currentUser = this.authService.getCurrentUser();
-        this.serviceRequests$ = this.requestService.getServiceRequests(currentUser.id);
-        this.serviceRequests$.subscribe(requests => {
-            if (requests.length) {
-                this.selectedRequest = requests[0];
-            }
-        });
+        this.serviceRequests$ = this.requestService.getDepartmentRequests(5 /* TODO: should be the departmentId of the employee */);
     }
 }

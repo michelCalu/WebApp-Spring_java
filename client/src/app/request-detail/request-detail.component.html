@@ -1,7 +1,7 @@
 <div class="container">
     <citizen-detail *ngIf="citizen" [citizen]="citizen"></citizen-detail>
     <nationality-request-data *ngIf="citizen && request && request.type === 'nationalityCertificate'" [request]="request" [citizen]="citizen"></nationality-request-data>
-
+    <parking-request-data *ngIf=" request && request.type === 'citizenParkingCard'" [request]="request" ></parking-request-data>
     <h2> Actions </h2>
     <select class="custom-select" [(ngModel)]="selectedAction" placeholder="Enter email">
         <option *ngFor="let action of possibleActions" [value]="action">{{ action | translate }}</option>

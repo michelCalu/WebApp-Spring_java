@@ -41,9 +41,9 @@ export class RequestService {
             });
     }
 
-    getServiceRequests(serviceID: number): Observable<CitizenRequest[]> {
+    getDepartmentRequests(departmentID: number): Observable<CitizenRequest[]> {
         return this.http
-            .get(this.serverAddress + '/requests?serviceId=' + serviceID)
+        .get(this.serverAddress + '/requests?departmentId=' + departmentID)
             .catch(err => {
                 this.messageService.error(this.translateService.instant('request.service.getError'));
                 return [];
