@@ -5,7 +5,7 @@ import { Citizen, Address } from '../_models/index';
 import { User } from '../_models/index';
 import { Observable } from 'rxjs';
 import * as configData from '../configuration-data';
-import { AlertService } from '.';
+import { AlertService } from './alert.service';
 import { TranslateService } from '@ngx-translate/core';
 
 // const httpOptions = {

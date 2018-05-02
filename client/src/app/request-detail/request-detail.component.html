@@ -1,3 +1,4 @@
 <div class="container">
     <citizen-detail *ngIf="citizen" [citizen]="citizen"></citizen-detail>
+    <nationality-request-data *ngIf="request && request.type === 'nationalityCertificate'"></nationality-request-data>
 </div>

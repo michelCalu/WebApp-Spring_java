@@ -26,6 +26,7 @@ import { ParkingCardCreationComponent } from './parking-card-creation';
 import { EmployeeDashboardComponent } from './employee_dashboard';
 import { RequestDetailComponent } from './request-detail';
 import { CitizenDetailComponent } from './citizen-detail';
+import { NationalityRequestDataComponent } from './nationality-request-data/nationality-request-data.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -50,7 +51,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     ParkingCardCreationComponent,
     RegisterComponent,
     RequestDetailComponent,
-    CitizenDetailComponent
+    CitizenDetailComponent,
+    NationalityRequestDataComponent
   ],
   imports: [
     AppRoutingModule,
