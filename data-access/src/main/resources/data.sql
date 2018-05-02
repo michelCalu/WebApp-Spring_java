@@ -43,9 +43,16 @@ insert into t_addresses values(4,"Avenue de Charles-Quint", 140,null,1083,"Gansh
 insert into t_addresses values(5,"Avenue Van Overbeke", 12, "B",1083,"Ganshoren", "Région de Bruxelles-Capitale", "Belgique");
 insert into t_addresses values(6,"Rue du Noyer", 43, null, 1000,"Bruxelles", "Région de Bruxelles-Capitale", "Belgique");
 
-insert into t_citizens values(1,"Thomas","Elskens",1,"thomaselskens@hotmail.com",null,"NRN_Thomas","1983-11-13",1);
-insert into t_citizens values(2,"David","Fernandez",5,"dfernandez1612@gmail.com",null,"david","1983-12-16",2);
-insert into t_citizens values(3,"Michel","Calu",3,"michel@unamur.be",null,"12345612312","1976-12-16",5);
+insert into t_municipalities values(1, "Jette", 1, "info@jette.be", "02/654.12.20", "Hervé Doyen");
+insert into t_municipalities values(2, "La Hulpe", 3, "lahulpe@municipality.com", "LaHulpePhone", "La Hulpe Mayor");
+insert into t_municipalities values(3, "Ganshoren", 4, "ganshoren@ganshoren.irisnet.be", "02/465.12.77", "Robert Genard");
+insert into t_municipalities values(4, "Bruxelles", 6, "bruxelles@municipality.com", "BruxellesPhone", "Bruxelles Mayor");
+insert into t_municipalities values(5, "Roux", 7, "roux@municipality.com", "RouxPhone", "Roux Mayor");
+
+insert into t_citizens values(1,"Thomas","Elskens",1,"thomaselskens@hotmail.com",null,"NRN_Thomas","1983-11-13",1,1);
+insert into t_citizens values(2,"David","Fernandez",5,"dfernandez1612@gmail.com",null,"david","1983-12-16",3,2);
+insert into t_citizens values(3,"Michel","Calu",3,"michel@unamur.be",null,"12345612312","1976-12-16",2,5);
+insert into t_citizens values(4,"Fabian","Germeau",7,"germeau.fabian@gmail.com",null,"NRN_Fabian","1991-07-02",5,3);
 
 insert into t_employees values(1,"Fabian","Germeau",2,
 			"fabian.germeau@cetic.be",
@@ -61,11 +68,6 @@ insert into t_employees values(3,"Admin","X",6,
 			"admin@admin.com",
 			"somePhone","00000000000",'1990-01-01',
 			"someAccountNumber",'2018-04-16','M',"bachelor",0,0,6);
-            
-            
-
-insert into t_municipalities values(1, "Jette", 1, "info@jette.be", "02/654.12.20", "Hervé Doyen");
-insert into t_municipalities values(2, "Ganshoren", 4, "ganshoren@ganshoren.irisnet.be", "02/465.12.77", "Robert Genard");
 
 insert into t_departments values(1, 1, "Population & état civil", 1, null,null);
 insert into t_departments values(2, 1, "état civil étrangers", 1, 1,null);
