@@ -54,6 +54,10 @@ export class RequestService {
         throw new Error("Method not implemented.");
     }
 
+    performAction(request: CitizenRequest, action: string, aditionalData: Object) {
+        throw new Error("Method not implemented.");
+    }
+
 }
 
 class CreateRequest {
