@@ -28,6 +28,7 @@ import { RequestDetailComponent } from './request-detail';
 import { CitizenDetailComponent } from './citizen-detail';
 import { NationalityRequestDataComponent } from './nationality-request-data/nationality-request-data.component';
 import { ParkingRequestDataComponent } from './parking-request-data';
+import { ValidateCitizensComponent } from './validate_citizens/validate_citizens.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -54,7 +55,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     RequestDetailComponent,
     CitizenDetailComponent,
     NationalityRequestDataComponent,
-    ParkingRequestDataComponent
+    ParkingRequestDataComponent,
+    ValidateCitizensComponent
   ],
   imports: [
     AppRoutingModule,

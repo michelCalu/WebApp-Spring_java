@@ -46,6 +46,8 @@
     "signup": "s'inscrire",
     "status": "statut",
 
-    "type": "type"
+    "type": "type",
+
+    "validateCitizens": "valider inscriptions"
 
 }
