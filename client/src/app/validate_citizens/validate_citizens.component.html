@@ -15,7 +15,7 @@
                     <td> {{ citizen.firstName + ' ' + citizen.lastName }}</td>
                     <td> {{ citizen.nationalRegisterNb }} </td>
                     <td><button class="btn btn-success" (click)="selectedCitizen = citizen">{{'viewDetails'| translate}}</button></td>
-                    <td><button class="btn btn-success" > {{'validate' | translate}}</button></td>
+                    <td><button class="btn btn-success" (click)="validate(citizen)"> {{'validate' | translate}}</button></td>
 				</tr>
 			</tbody>
 		</table>

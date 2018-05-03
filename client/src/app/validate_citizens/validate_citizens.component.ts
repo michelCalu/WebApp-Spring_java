@@ -18,4 +18,12 @@ export class ValidateCitizensComponent implements OnInit {
     ngOnInit() {
         this.pendingCitizens$ = this.citizenService.getPendingCitizens();
     }
+
+    validate(citizen: Citizen) {
+        this.citizenService.validateCitizenAccount(citizen).subscribe(success => {
+            if (success) {
+                this.pendingCitizens$ = this.citizenService.getPendingCitizens();
+            }
+        });
+    }
 }

@@ -41,6 +41,15 @@ export class CitizenService {
             });
     }
 
+    validateCitizenAccount(citizen: Citizen): Observable<boolean> {
+        return this.http.patch(this.serverAddress + `/citizens/account/${citizen.id}`, {'status' : 'active'})
+        .map(res => true)
+        .catch(err => {
+            this.messageService.error(this.translateService.instant('service.citizen.errorValidateCitizen'));
+            return Observable.of(false);
+        });
+    }
+
     public getNrnData(nrn: string): Observable<Object> {
         return this.http.get(this.serverAddress + `/nrn/${nrn}`)
             .catch(err => {

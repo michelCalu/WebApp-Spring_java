@@ -44,6 +44,7 @@
 
     "service.citizen.errorGetCitizen" : "Citoyen inconnu",
     "service.citizen.errorGetNrn" : "Numéro de registre national non reconnu",
+    "service.citizen.errorValidateCitizen": "Impossible de valider le compte du citoyen",
     "signin": "se connecter",
     "signup": "s'inscrire",
     "status": "statut",

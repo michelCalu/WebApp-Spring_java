@@ -42,6 +42,7 @@
 
     "service.citizen.errorGetCitizen" : "Unknown citizen",
     "service.citizen.errorGetNrn" : "Unknown national register number",
+    "service.citizen.errorValidateCitizen": "Unable to validate the citizen's account",
     "signin": "sign in",
     "signup": "sign up",
     "status": "status",
