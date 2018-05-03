@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
@@ -21,6 +22,7 @@ public class DocumentRepositoryImpl implements DocumentRepository {
     private static final String findDocumentIdsByRequest = //
 	    "SELECT documentID FROM t_documents WHERE requestID = ?";
 
+    @Autowired
     public DocumentRepositoryImpl(JdbcTemplate jdbc) {
 	super();
 	this.jdbc = jdbc;
