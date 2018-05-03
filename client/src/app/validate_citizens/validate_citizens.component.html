@@ -1,2 +1,36 @@
+<div class="col-md-9 col-md-offset-3">
+	<h1> {{'validateCitizens' |translate}} </h1>
+	<div class="container">
+		<table *ngIf="(pendingCitizens$ | async)?.length; else noCitizens" class="table table-striped">
+			<thead>
+				<tr>
+                    <th scope="col">{{'name' | translate}}</th>
+                    <th> {{'nationalRegisterNumber' | translate }}</th>
+                    <th></th>
+                    <th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngFor="let citizen of (pendingCitizens$ | async)">
+                    <td> {{ citizen.firstName + ' ' + citizen.lastName }}</td>
+                    <td> {{ citizen.nationalRegisterNb }} </td>
+                    <td><button class="btn btn-success" (click)="selectedCitizen = citizen">{{'viewNationalRegisterDetails'| translate}}</button></td>
+                    <td><button class="btn btn-success" > {{'validate' | translate}}</button></td>
+				</tr>
+			</tbody>
+		</table>
+		<ng-template #noCitizens>
+			<div>Votre service n'a pas d'inscriptions en attente</div>
+        </ng-template>
 
-validate CITIZENS 
+        <div *ngIf="selectedCitizen">
+            SELECTED CITIZEN
+            <!-- TODO  -->
+            <!-- <request-detail [request]="selectedRequest"></request-detail> -->
+        </div>
+        
+	</div>
+
+</div>
+validate CITIZENS : {{ pendingCitizens$ | async }}
+

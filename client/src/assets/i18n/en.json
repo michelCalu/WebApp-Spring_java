@@ -25,6 +25,8 @@
     "mydocuments": "my documents",
     "myrequests": "my requests",
 
+    "name": "name",
+    "nationalRegisterNumber": "national register number",
     "nationalityCertificate": "nationality certificate",
     "newrequest": "new request",    
     
@@ -46,6 +48,8 @@
 
     "type": "type",
 
-    "validateCitizens": "validate inscriptions"
+    "validate": "validate",
+    "validateCitizens": "validate inscriptions",
+    "viewNationalRegisterDetails": "See national register details"
 
 }

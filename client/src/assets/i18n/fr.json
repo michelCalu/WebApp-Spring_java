@@ -27,6 +27,8 @@
     "myprofile": "mon profile",
     "myrequests": "mes demandes",
 
+    "name": "nom",
+    "nationalRegisterNumber": "numéro de registre national",
     "nationalityCertificate": "certificat de nationalité",
     "newrequest": "nouvelle demande",    
     
@@ -48,6 +50,8 @@
 
     "type": "type",
 
-    "validateCitizens": "valider inscriptions"
+    "validate": "valider",
+    "validateCitizens": "valider inscriptions",
+    "viewNationalRegisterDetails": "voir détails Registre National"
 
 }

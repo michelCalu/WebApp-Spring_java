@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Citizen } from '../_models/citizen.model';
+import { CitizenService } from '../_services/citizen.service';
+import { Observable } from 'rxjs/Observable';
 
 
 @Component({
@@ -7,6 +10,12 @@ import { Component, OnInit } from '@angular/core';
 
 export class ValidateCitizensComponent implements OnInit {
 
+    pendingCitizens$: Observable<Citizen[]>;
+    selectedCitizen: Citizen;
+
+        constructor(private citizenService: CitizenService) { }
+
     ngOnInit() {
+        this.pendingCitizens$ = this.citizenService.getPendingCitizens();
     }
 }

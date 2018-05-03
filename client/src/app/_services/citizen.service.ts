@@ -47,7 +47,14 @@ export class CitizenService {
                 this.messageService.error(this.translateService.instant('service.citizen.errorGetNrn'));
                 return Observable.of(null);
             });
+    }
 
+    public getPendingCitizens( /*TODO should be filtered by commune*/): Observable<Citizen[]> {
+        return this.http.get<Citizen[]>(this.serverAddress + '/citizens/pending' /* TODO should be citizens?status="pending"*/)
+            .catch(err => {
+                this.messageService.error(this.translateService.instant('service.citizen.errorGetCitizen'));
+                return Observable.of(null);
+            });
     }
 
 }
