@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import 'rxjs/add/operator/catch';
 import { CitizenRequest, Citizen } from '../_models';
-import { HttpHeaders } from '@angular/common/http';
 import * as configData from '../configuration-data';
 import { AlertService } from './alert.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -41,15 +40,24 @@ export class RequestService {
             });
     }
 
-    getServiceRequests(serviceID: number): Observable<CitizenRequest[]> {
+    getDepartmentRequests(departmentID: number): Observable<CitizenRequest[]> {
         return this.http
-            .get(this.serverAddress + '/requests?serviceId=' + serviceID)
+        .get(this.serverAddress + '/requests?departmentId=' + departmentID)
             .catch(err => {
                 this.messageService.error(this.translateService.instant('request.service.getError'));
                 return [];
             });
 
     }
+
+    assignThisRequest(employeeId: number, request: CitizenRequest): Observable<boolean> {
+        throw new Error("Method not implemented.");
+    }
+
+    performAction(request: CitizenRequest, action: string, aditionalData: Object) {
+        throw new Error("Method not implemented.");
+    }
+
 }
 
 class CreateRequest {

@@ -1,7 +1,9 @@
 {
+    "accept": "accept",
     "actions": "actions",
     "additionalComment": "Additional communication",
     "assignee": "assignee",
+    "assignThisRequest" : "Get this request assigned",
     "authentication.service.getError" : "Rejected authentication",
 
     "carMake": "Car make",
@@ -32,9 +34,13 @@
     "parkingCard": "Parking card",
 
     "reference": "reference",
+    "reject": "reject",
     "requestDate": "request date",
+    "requestModification": "request modification",
     "request.service.getError": "Error retrieving the requests",
 
+    "service.citizen.errorGetCitizen" : "Unknown citizen",
+    "service.citizen.errorGetNrn" : "Unknown national register number",
     "signin": "sign in",
     "signup": "sign up",
     "status": "status",

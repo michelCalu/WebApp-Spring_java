@@ -72,8 +72,8 @@ public class RequestRepositoryImpl implements RequestRepository {
 
     @Override
     public List<Request> findByCitizen(long citizenId, long requestTypeId) {
-	List<Request> requests = jdbcTemplate.query(queryByDepartmentId, new Object[] { citizenId, requestTypeId },
-		new RequestRowMapper());
+	List<Request> requests = jdbcTemplate.query(queryByCitizenIdAndRequestType,
+		new Object[] { citizenId, requestTypeId }, new RequestRowMapper());
 	requests.stream().forEach(this::fillRequest);
 	return requests;
     }
@@ -87,7 +87,7 @@ public class RequestRepositoryImpl implements RequestRepository {
 
     @Override
     public List<Request> findbyDepartmentId(long departmentId) {
-	List<Request> requests = jdbcTemplate.query(queryByCitizenIdAndRequestType, new Object[] { departmentId },
+	List<Request> requests = jdbcTemplate.query(queryByDepartmentId, new Object[] { departmentId },
 		new RequestRowMapper());
 	requests.stream().forEach(this::fillRequest);
 	return requests;

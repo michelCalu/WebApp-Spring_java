@@ -67,11 +67,11 @@ insert into t_employees values(3,"Admin","X",6,
 insert into t_municipalities values(1, "Jette", 1, "info@jette.be", "02/654.12.20", "Hervé Doyen");
 insert into t_municipalities values(2, "Ganshoren", 4, "ganshoren@ganshoren.irisnet.be", "02/465.12.77", "Robert Genard");
 
-insert into t_departments values(1, 1, "Population & état civil", 1, null);
-insert into t_departments values(2, 1, "état civil étrangers", 1, 1);
-insert into t_departments values(3, 1, "Mobilité", 1, null);
-insert into t_departments values(4, 2, "Population", 2, null);
-insert into t_departments values(5, 2, "Stationnement", 2, null);
+insert into t_departments values(1, 1, "Population & état civil", 1, null,null);
+insert into t_departments values(2, 1, "état civil étrangers", 1, 1,null);
+insert into t_departments values(3, 1, "Mobilité", 1, null,null);
+insert into t_departments values(4, 2, "Population", 2, null,null);
+insert into t_departments values(5, 2, "Stationnement", 2, null,null);
 
 insert into t_requests values(1, 1, 1, null, 1, 1, 1, 1, "HERM001", "my ref", "JETTE001");
 insert into t_requests values(2, 2, 2, null, 2, 5, 2, 2, "HERM002", "a parking ref.", "GANSH001");

@@ -1,0 +1,15 @@
+<div class="container">
+    <h2>Informations citoyen</h2>
+    <div>
+        <span>Nom : </span>{{citizen.lastName}}</div>
+    <div>
+        <span>Prénom : </span>{{citizen.firstName}}</div>
+    <div>
+        <span>Date de naissance : </span>{{citizen.birthdate | date:"dd/MM/yyyy"}}</div>
+    <div>
+        <span>Numéro de registre national : </span>{{citizen.nationalRegisterNb}}</div>
+    <div>
+        <span>Adresse : </span>{{citizen.address.street}} {{citizen.address.streetNb}}, {{citizen.address.state}}</div>
+    <div>
+        <span>Adresse électronique : </span>{{citizen.mail}}</div>
+</div>

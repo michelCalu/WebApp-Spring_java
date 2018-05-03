@@ -1,7 +1,9 @@
 {
     "actions": "actions",
+    "accept": "accepter",
     "additionalComment": "Communication libre",
     "assignee": "gestionnaire",
+    "assignThisRequest" : "S'assigner cette demande",
     "authentication.service.getError" : "Authentification refusée",
 
 
@@ -34,9 +36,13 @@
     "parkingCard": "Carte de stationnement",
 
     "reference": "référence",
+    "reject": "refuser",
     "requestDate": "date demande",
+    "requestModification": "demander modification",
     "request.service.getError": "Erreur dans la recherche de demandes",
 
+    "service.citizen.errorGetCitizen" : "Citoyen inconnu",
+    "service.citizen.errorGetNrn" : "Numéro de registre national non reconnu",
     "signin": "se connecter",
     "signup": "s'inscrire",
     "status": "statut",

@@ -2,12 +2,21 @@ package be.unamur.hermes.dataaccess.entity;
 
 public class Department {
 
+    private long id;
     private String name;
     private Address address;
     private Employee manager;
     private String email;
     private String phoneNumber;
     private Municipality municipality;
+
+    public long getId() {
+	return id;
+    }
+
+    public void setId(long id) {
+	this.id = id;
+    }
 
     public String getName() {
 	return name;

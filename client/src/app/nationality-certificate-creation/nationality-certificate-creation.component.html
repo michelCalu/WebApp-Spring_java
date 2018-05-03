@@ -3,13 +3,7 @@
 	<h2> {{'newrequest' | translate}} </h2>
 	<div class="row">
 		<div class="col-md-6">
-			<h2>Informations demandeur</h2>
-			<div><span>Nom : </span>{{requestor.lastName}}</div>
-			<div><span>Prénom : </span>{{requestor.firstName}}</div>
-			<div><span>Date de naissance : </span>{{requestor.birthdate | date:"dd/MM/yyyy"}}</div>
-			<div><span>Numéro de registre national : </span>{{requestor.nationalRegisterNb}}</div>
-			<div><span>Adresse : </span>{{requestor.address.street}} {{requestor.address.streetNb}}, {{requestor.address.state}}</div>
-			<div><span>Adresse électronique : </span>{{requestor.mail}}</div>
+            <citizen-detail [citizen]="requestor"></citizen-detail>
 			<button class="btn btn-success" (click)="sendRequest()">Envoyer demande</button>
 			<button class="btn btn-success" (click)="cancelRequest()">Annuler</button>
 		</div>

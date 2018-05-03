@@ -42,7 +42,7 @@ public class ParameterParserTest {
 	    boolean nationalityClaimActivated = parameters.isActivated("nationalityCertificate");
 	    assertFalse("Nationality Certificate of Namur is activated", nationalityClaimActivated);
 	    boolean parkingPermActivated = parameters.isActivated("parkingCard");
-	    assertTrue("Nationality Certificate of Namur is not activated", parkingPermActivated);
+	    assertTrue("Parking Card of Namur is not activated", parkingPermActivated);
 	} catch (Exception e) {
 	    e.printStackTrace();
 	    fail(e.getMessage());
