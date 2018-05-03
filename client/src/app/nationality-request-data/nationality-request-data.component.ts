@@ -9,19 +9,11 @@ import { Observable } from 'rxjs/Observable';
     templateUrl: 'nationality-request-data.component.html'
 })
 
-export class NationalityRequestDataComponent implements OnInit {
+export class NationalityRequestDataComponent {
 
     @Input()
     request: CitizenRequest;
     @Input()
     citizen: Citizen;
 
-    nrnData$: Observable<Object>;
-
-
-    constructor(private citizenService: CitizenService) { }
-
-    ngOnInit(): void {
-        this.nrnData$ = this.citizenService.getNrnData(this.citizen.nationalRegisterNb);
-    }
 }

@@ -25,6 +25,8 @@
     "mydocuments": "my documents",
     "myrequests": "my requests",
 
+    "name": "name",
+    "nationalRegisterNumber": "national register number",
     "nationalityCertificate": "nationality certificate",
     "newrequest": "new request",    
     
@@ -40,10 +42,16 @@
 
     "service.citizen.errorGetCitizen" : "Unknown citizen",
     "service.citizen.errorGetNrn" : "Unknown national register number",
+    "service.citizen.errorValidateCitizen": "Unable to validate the citizen's account",
     "signin": "sign in",
     "signup": "sign up",
     "status": "status",
 
-    "type": "type"
+    "type": "type",
+
+    "validate": "validate",
+    "validateCitizens": "validate inscriptions",
+    "viewDetails": "view details",
+    "viewNationalRegisterDetails": "See national register details"
 
 }

@@ -41,13 +41,29 @@ export class CitizenService {
             });
     }
 
+    validateCitizenAccount(citizen: Citizen): Observable<boolean> {
+        return this.http.patch(this.serverAddress + `/citizens/account/${citizen.id}`, {'status' : 'active'})
+        .map(res => true)
+        .catch(err => {
+            this.messageService.error(this.translateService.instant('service.citizen.errorValidateCitizen'));
+            return Observable.of(false);
+        });
+    }
+
     public getNrnData(nrn: string): Observable<Object> {
         return this.http.get(this.serverAddress + `/nrn/${nrn}`)
             .catch(err => {
                 this.messageService.error(this.translateService.instant('service.citizen.errorGetNrn'));
                 return Observable.of(null);
             });
+    }
 
+    public getPendingCitizens( /*TODO should be filtered by commune*/): Observable<Citizen[]> {
+        return this.http.get<Citizen[]>(this.serverAddress + '/citizens/pending' /* TODO should be citizens?status="pending"*/)
+            .catch(err => {
+                this.messageService.error(this.translateService.instant('service.citizen.errorGetCitizen'));
+                return Observable.of(null);
+            });
     }
 
 }
