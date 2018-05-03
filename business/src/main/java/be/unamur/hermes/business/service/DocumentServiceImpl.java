@@ -131,7 +131,7 @@ public class DocumentServiceImpl implements DocumentService {
 	munip.setAddress(new Address(2L, "Rue Champs d'Eglise", 13, null, 1230, "Gembloux", "Wallonie", "Belgium"));
 	Citizen requestor = new Citizen(2L, "requestorFirstName", "requestorLastName",
 			new Address(3, "Rue Haute", 130, "B", 1230, "Gembloux", "BRC", "Belgium"), "requestorMail@hotmail.com",
-			"requestorPhone", "requestorNRN", LocalDate.of(1970, 5, 1), munip);
+			"requestorPhone", "requestorNRN", LocalDate.of(1970, 5, 1));
 	Department dep = new Department();
 	Employee officer = new Employee(1L, "officerFirstName", "officerLastName", null, "officerMail@commune.be",
 		"officerPhone", "officerNRN", LocalDate.of(1983, 11, 13), "officerAccountNumber", null, 'M', null, 0,

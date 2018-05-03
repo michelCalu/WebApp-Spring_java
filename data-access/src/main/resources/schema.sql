@@ -64,11 +64,9 @@ CREATE TABLE t_citizens (
   phone         VARCHAR(255),
   nationalRegisterNb VARCHAR(255) NOT NULL UNIQUE ,
   birthdate     DATE,
-  municipalityID  INT             NOT NULL,
   userAccountID	INT,
   FOREIGN KEY (addressID) REFERENCES t_addresses(addressID),
-  FOREIGN KEY (userAccountID) REFERENCES t_user_accounts(userAccountID),
-  FOREIGN KEY (municipalityID) REFERENCES t_municipalities(municipalityID)
+  FOREIGN KEY (userAccountID) REFERENCES t_user_accounts(userAccountID)
 );
 
 

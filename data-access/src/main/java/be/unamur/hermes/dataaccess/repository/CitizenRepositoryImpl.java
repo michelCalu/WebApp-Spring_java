@@ -66,7 +66,6 @@ public class CitizenRepositoryImpl implements CitizenRepository {
 	params.put("phone", citizen.getPhone());
 	params.put("nationalRegisterNb", citizen.getNationalRegisterNb());
 	params.put("birthdate", citizen.getBirthdate());
-	params.put("municipalityID", citizen.getMunicipality().getId());
 	params.put("userAccountID", userAccountId);
 	return (Long) citizenInserter.executeAndReturnKey(params);
     }
@@ -110,8 +109,7 @@ public class CitizenRepositoryImpl implements CitizenRepository {
 		    rs.getString(5),
             rs.getString(6),
             rs.getString(7),
-            rs.getDate(8).toLocalDate(),
-            municipalityRepository.findById(rs.getLong(9)));
+            rs.getDate(8).toLocalDate());
     }
 
     private UserAccount buildAccount(ResultSet rs, int rowNum) throws SQLException {

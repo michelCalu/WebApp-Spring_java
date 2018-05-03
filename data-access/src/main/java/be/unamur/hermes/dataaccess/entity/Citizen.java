@@ -5,25 +5,14 @@ import java.util.Objects;
 
 public class Citizen extends User {
 
-	private Municipality municipality;
-
     public Citizen() {
     }
 
     public Citizen(long id, String firstName, String lastName, Address address, String mail, String phone,
-	    String nationalRegisterNb, LocalDate birthdate, Municipality municipality) {
+	    String nationalRegisterNb, LocalDate birthdate) {
 	super(firstName, lastName, address, mail, phone, nationalRegisterNb, birthdate);
 	setId(id);
-	this.municipality = municipality;
     }
-
-	public Municipality getMunicipality() {
-		return municipality;
-	}
-
-	public void setMunicipality(Municipality municipality) {
-		this.municipality = municipality;
-	}
 
 	@Override
     public boolean equals(Object o) {
