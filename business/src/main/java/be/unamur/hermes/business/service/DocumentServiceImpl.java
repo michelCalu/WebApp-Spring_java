@@ -2,7 +2,6 @@ package be.unamur.hermes.business.service;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.Writer;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
@@ -90,13 +89,6 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     @Override
-    public void getNationalityCertificate(boolean positive, DocumentCreationRequest document, Writer writer) {
-	String templateName = positive ? "nationalityCertificate/positive" : "nationalityCertificate/negative";
-	Context context = initContext(document);
-	context.setVariable("title", "Demande de certificat de nationalité");
-	templateEngine.process(templateName, context, writer);
-    }
-
     public String getParkingCardDecision(boolean positive, DocumentCreationRequest document) {
 	String templateName = positive ? "parkingCard/positive" : "parkingCard/negative";
 	Context context = initContext(document);
@@ -104,11 +96,13 @@ public class DocumentServiceImpl implements DocumentService {
 	return templateEngine.process(templateName, context);
     }
 
+    @Override
     public String getParkingCard(DocumentCreationRequest document) {
 	Context context = initContext(document);
 	return templateEngine.process("parkingCard/card", context);
     }
 
+    @Override
     public String getPayment(DocumentCreationRequest document) {
 	Context context = initContext(document);
 	context.setVariable("title", "Invitation à payer");

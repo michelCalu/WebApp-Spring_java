@@ -1,7 +1,6 @@
 package be.unamur.hermes.business.service;
 
 import java.io.InputStream;
-import java.io.Writer;
 import java.util.List;
 
 import be.unamur.hermes.business.document.DocumentCreationRequest;
@@ -13,10 +12,11 @@ public interface DocumentService {
      */
     String getNationalityCertificate(boolean positive, DocumentCreationRequest document);
 
-    /**
-     * Writes the html-formatted output to the writer given in parameter.
-     */
-    void getNationalityCertificate(boolean positive, DocumentCreationRequest document, Writer writer);
+    String getParkingCardDecision(boolean positive, DocumentCreationRequest document);
+
+    String getParkingCard(DocumentCreationRequest document);
+
+    String getPayment(DocumentCreationRequest document);
 
     InputStream findDocumentById(long documentId);
 
