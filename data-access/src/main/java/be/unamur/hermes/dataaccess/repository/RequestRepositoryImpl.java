@@ -13,7 +13,6 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
 import be.unamur.hermes.dataaccess.entity.Citizen;
-import be.unamur.hermes.dataaccess.entity.CreateRequest;
 import be.unamur.hermes.dataaccess.entity.Employee;
 import be.unamur.hermes.dataaccess.entity.Request;
 import be.unamur.hermes.dataaccess.entity.RequestStatus;
@@ -102,9 +101,9 @@ public class RequestRepositoryImpl implements RequestRepository {
     }
 
     @Override
-    public long create(CreateRequest newRequest) {
+    public long create(Request newRequest) {
 	Map<String, Object> parameters = new HashMap<>();
-	parameters.put("requestTypeID", newRequest.getRequestTypeId());
+	parameters.put("requestTypeID", newRequest.getTypeId());
 	parameters.put("citizenID", newRequest.getCitizen());
 	RequestStatus newStatus = findRequestStatusByName(RequestRepository.STATUS_NEW);
 	parameters.put("status", newStatus.getId());

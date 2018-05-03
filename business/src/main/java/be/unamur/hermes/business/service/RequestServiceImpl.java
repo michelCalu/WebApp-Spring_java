@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import be.unamur.hermes.business.exception.BusinessException;
-import be.unamur.hermes.dataaccess.entity.CreateRequest;
 import be.unamur.hermes.dataaccess.entity.Request;
 import be.unamur.hermes.dataaccess.entity.RequestType;
 import be.unamur.hermes.dataaccess.repository.RequestRepository;
@@ -29,7 +28,7 @@ public class RequestServiceImpl implements RequestService {
     }
 
     @Override
-    public long create(CreateRequest newRequest) {
+    public long create(Request newRequest) {
 	// TODO validate with Authentification
 	String type = newRequest.getType();
 	if (!StringUtils.hasText(type))
@@ -37,7 +36,7 @@ public class RequestServiceImpl implements RequestService {
 	RequestType requestType = requestRepository.findRequestTypeByDescription(type);
 	if (requestType == null)
 	    throw new BusinessException("Unknown request type:" + type);
-	newRequest.setRequestTypeId(requestType.getRequestTypeId());
+	newRequest.setType(requestType.getRequestTypeId());
 	return requestRepository.create(newRequest);
     }
 

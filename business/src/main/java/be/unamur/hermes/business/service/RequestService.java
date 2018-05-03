@@ -2,7 +2,6 @@ package be.unamur.hermes.business.service;
 
 import java.util.List;
 
-import be.unamur.hermes.dataaccess.entity.CreateRequest;
 import be.unamur.hermes.dataaccess.entity.Request;
 import be.unamur.hermes.dataaccess.entity.RequestType;
 
@@ -18,7 +17,7 @@ public interface RequestService {
 
     List<Request> find(long citizenId, long requestTypeId);
 
-    long create(CreateRequest newClaim);
+    long create(Request newClaim);
 
     RequestType findRequestTypeByDescription(String description);
 
