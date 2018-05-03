@@ -7,7 +7,6 @@ DROP TABLE IF EXISTS t_request_field_values;
 DROP TABLE IF EXISTS t_request_field_definitions;
 DROP TABLE IF EXISTS t_requests;
 DROP TABLE IF EXISTS t_departments;
-DROP TABLE IF EXISTS t_municipalities;
 DROP TABLE IF EXISTS t_req_statusses;
 DROP TABLE IF EXISTS t_request_types;
 DROP TABLE IF EXISTS t_mandataries;
@@ -17,8 +16,9 @@ DROP TABLE IF EXISTS t_employees;
 DROP TABLE IF EXISTS t_citizen_accounts;
 DROP TABLE IF EXISTS t_citizens;
 DROP TABLE IF EXISTS t_user_statusses;
-DROP TABLE IF EXISTS t_addresses;
 DROP TABLE IF EXISTS t_user_accounts;
+DROP TABLE IF EXISTS t_municipalities;
+DROP TABLE IF EXISTS t_addresses;
 
 CREATE TABLE t_user_accounts (
   userAccountID			INT PRIMARY KEY 		NOT NULL AUTO_INCREMENT,
