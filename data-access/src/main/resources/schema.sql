@@ -73,8 +73,10 @@ CREATE TABLE t_employees (
   dependentChildren INT           NOT NULL,
   dependentPeople   INT           NOT NULL,
   userAccountID	INT,
+  departmentID	INT,
   FOREIGN KEY (addressID)  REFERENCES t_addresses(addressID),
-  FOREIGN KEY (userAccountID) REFERENCES t_user_accounts(userAccountID)
+  FOREIGN KEY (userAccountID) REFERENCES t_user_accounts(userAccountID),
+  FOREIGN KEY (departmentID) REFERENCES t_departments(departmentID)
 );
 
 CREATE TABLE t_companies (

@@ -5,6 +5,8 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
@@ -15,14 +17,14 @@ import be.unamur.hermes.dataaccess.entity.Employee;
 import be.unamur.hermes.dataaccess.entity.Municipality;
 
 @Repository
-public class DepartmentRepositoryImpl implements DepartmentRepository {
+public class DepartmentRepositoryImpl implements DepartmentRepository, ApplicationContextAware {
 
     private final JdbcTemplate jdbc;
     private final SimpleJdbcInsert inserter;
 
-    private final MunicipalityRepository municipalityRepository;
+    private MunicipalityRepository municipalityRepository;
     private final AddressRepository addressRepository;
-    private final EmployeeRepository employeeRepository;
+    private EmployeeRepository employeeRepository;
 
     // queries
     private static final String findById = //
@@ -31,15 +33,19 @@ public class DepartmentRepositoryImpl implements DepartmentRepository {
 	    "SELECT * FROM t_departments WHERE municipalityID = ?";
 
     @Autowired
-    public DepartmentRepositoryImpl(JdbcTemplate jdbc, MunicipalityRepository municipalityRepository,
-	    AddressRepository addressRepository, EmployeeRepository employeeRepository) {
+    public DepartmentRepositoryImpl(JdbcTemplate jdbc, AddressRepository addressRepository) {
 	super();
 	this.jdbc = jdbc;
 	this.addressRepository = addressRepository;
-	this.municipalityRepository = municipalityRepository;
-	this.employeeRepository = employeeRepository;
 	this.inserter = new SimpleJdbcInsert(jdbc.getDataSource()).withTableName("t_departments")
 		.usingGeneratedKeyColumns("departmentID");
+    }
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) {
+	// avoiding circular reference
+	this.employeeRepository = applicationContext.getBean(EmployeeRepository.class);
+	this.municipalityRepository = applicationContext.getBean(MunicipalityRepository.class);
     }
 
     @Override

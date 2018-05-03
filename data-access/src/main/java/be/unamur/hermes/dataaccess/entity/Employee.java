@@ -11,6 +11,7 @@ public class Employee extends User {
     private String civilStatus;
     private int dependentChildren;
     private int dependentPeople;
+    private long departmentId;
 
     Employee() {
     }
@@ -96,5 +97,13 @@ public class Employee extends User {
 
     public void setDependentPeople(int dependentPeople) {
 	this.dependentPeople = dependentPeople;
+    }
+
+    public long getDepartmentId() {
+	return this.departmentId;
+    }
+
+    public void setDepartmentId(long departmentId) {
+	this.departmentId = departmentId;
     }
 }

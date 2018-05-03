@@ -50,17 +50,17 @@ insert into t_citizens values(3,"Michel","Calu",3,"michel@unamur.be",null,"12345
 insert into t_employees values(1,"Fabian","Germeau",2,
 			"fabian.germeau@cetic.be",
 			"somePhone","someNRN",'1970-01-01',
-			"someAccountNumber",'2018-04-01','M',"bachelor",0,0,3);
+			"someAccountNumber",'2018-04-01','M',"bachelor",0,0,3,1);
 
 insert into t_employees values(2,"Degryse","Killian",6,
 			"killian.degryse@hotmail.com",
 			"somePhone","NRN_Killian",'1990-01-01',
-			"someAccountNumber",'2018-04-16','M',"bachelor",0,0,4);
+			"someAccountNumber",'2018-04-16','M',"bachelor",0,0,4,1);
 
 insert into t_employees values(3,"Admin","X",6,
 			"admin@admin.com",
 			"somePhone","00000000000",'1990-01-01',
-			"someAccountNumber",'2018-04-16','M',"bachelor",0,0,6);
+			"someAccountNumber",'2018-04-16','M',"bachelor",0,0,6,2);
             
             
 
