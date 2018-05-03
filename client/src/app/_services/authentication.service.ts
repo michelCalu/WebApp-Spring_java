@@ -6,6 +6,7 @@ import { AlertService } from './alert.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { TranslateService } from '@ngx-translate/core';
@@ -27,7 +28,7 @@ export class AuthenticationService {
      const requestBody = new AuthenticationRequest();
       requestBody.password = password;
       requestBody.username = username;
-      
+
       return this.http.post<User>(this.serverAddress + '/auth', requestBody)
             .map(user => {
                 // login successful if there's a jwt token in the response
@@ -52,7 +53,7 @@ export class AuthenticationService {
         // remove user from local storage to log user out
         localStorage.removeItem('currentUser');
     }
-  
+
   getCurrentUser(): User {
     return JSON.parse(localStorage.getItem('currentUser'));
   }

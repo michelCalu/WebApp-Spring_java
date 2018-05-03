@@ -30,7 +30,9 @@ export class NationalityCertificateCreationComponent implements OnInit {
 
     sendRequest() {
       console.log('CITZENID BEFORE REQUEST : ' + this.requestor.id);
-      this.requestService.createRequest(this.requestor.id, 'nationalityCertificate').subscribe(success => {
+      this.request.citizen = this.requestor;
+      this.request.type = 'nationalityCertificate';
+      this.requestService.createRequestWithFileUploads(this.request).subscribe(success => {
           if (success) {
               this.router.navigate(['/myrequests']);
               this.alertService.success('Demande de certificat de nationalité bien envoyée');

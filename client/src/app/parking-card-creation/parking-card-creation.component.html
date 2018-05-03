@@ -1,42 +1,41 @@
-<div class="col-md-12 col-md-offset-3">
+<div class="col-md-12 col-md-offset-3" *ngIf="requestor">
 	<h1> {{'parkingCard' | translate}}</h1>
 	<h2>{{ 'newrequest' | translate}}</h2>
-	<div class="row">        
+	<div class="row">
 		<div class="col-md-6">
 			<h2>Informations demandeur</h2>
 			<ul>
-				<li>Nom : ...</li>
-				<li>Prénom : ...</li>
-				<li>...</li>
-            </ul>
+				<div><span>Nom : </span>{{requestor.lastName}}</div>
+        <div><span>Prénom : </span>{{requestor.firstName}}</div>
+      </ul>
 
-             <form [formGroup]="form" (ngSubmit)="onSubmit()">
-            
-                    <div class="form-group">
-                      <label for="car_make">{{'carMake' | translate}}</label>
-                      <input type="text" class="form-control" id="car_make" formControlName="carMake">
-                    </div>
-                    <div class="form-group">
-                        <label for="car_model">{{'carModel' | translate}}</label>
-                        <input type="text" class="form-control" id="car_model" formControlName="carModel">
-                    </div>
-                    <div class="form-group">
-                        <label for="colour">{{'colour' | translate}}</label>
-                        <input type="text" class="form-control" id="colour" formControlName="colour">
-                    </div>
-                    <div class="form-group">
-                        <label for="car_registration_number">{{'carRegistrationNumber' | translate}}</label>
-                        <input type="text" class="form-control" id="car_registration_number" formControlName="carRegistrationNumber">
-                    </div>
-                    <div class="form-group">
-                      <label for="insurance_certificate">{{'insuranceCertificate' | translate}}</label>
-                      <input type="file" id="insurance_certificate" (change)="onFileChange($event)" #fileInput required>
-                      <button type="button" class="btn btn-sm btn-default" (click)="clearFile()">clear file</button>
-                    </div>
-                    <!-- TODO include awsome font for spinner -->
-                    <button type="submit" [disabled]="form.invalid || !fileLoaded || loading" class="btn btn-success">Submit <span *ngIf="loading"><i class="fa fa-spinner fa-spin fa-fw">Loading</i></span></button>
-           
-            </form>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+        <div class="form-group">
+          <label for="car_make">{{'carMake' | translate}}</label>
+          <input type="text" class="form-control" id="car_make" formControlName="carMake">
+        </div>
+        <div class="form-group">
+          <label for="car_model">{{'carModel' | translate}}</label>
+          <input type="text" class="form-control" id="car_model" formControlName="carModel">
+        </div>
+        <div class="form-group">
+          <label for="colour">{{'colour' | translate}}</label>
+          <input type="text" class="form-control" id="colour" formControlName="colour">
+        </div>
+        <div class="form-group">
+          <label for="car_registration_number">{{'carRegistrationNumber' | translate}}</label>
+          <input type="text" class="form-control" id="car_registration_number" formControlName="carRegistrationNumber">
+        </div>
+        <div class="form-group">
+          <label for="insurance_certificate">{{'insuranceCertificate' | translate}}</label>
+          <input type="file" id="insurance_certificate" (change)="onFileChange($event)" #fileInput required>
+          <button type="button" class="btn btn-sm btn-default" (click)="clearFile()">clear file</button>
+        </div>
+        <!-- TODO include awsome font for spinner -->
+        <button type="submit" [disabled]="form.invalid || !fileLoaded || loading" class="btn btn-success">Submit <span *ngIf="loading"><i class="fa fa-spinner fa-spin fa-fw">Loading</i></span></button>
+
+      </form>
 		</div>
     </div>
 </div>

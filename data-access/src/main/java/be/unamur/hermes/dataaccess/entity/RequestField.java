@@ -5,7 +5,6 @@ import java.util.Objects;
 
 public class RequestField {
 
-    private Request request;
     private String code;
     private Boolean required;
     private String fieldType;
@@ -14,26 +13,16 @@ public class RequestField {
 
     public RequestField(){};
 
-    public RequestField(Request request,
-                        String code,
+    public RequestField(String code,
                         Boolean required,
                         String fieldType,
                         String value,
                         byte[] file){
-        this.request = request;
         this.code = code;
         this.required = required;
         this.fieldType = fieldType;
         this.value = value;
         this.file = file;
-    }
-
-    public Request getRequest() {
-        return request;
-    }
-
-    public void setRequest(Request request) {
-        this.request = request;
     }
 
     public String getCode() {
@@ -81,8 +70,7 @@ public class RequestField {
         if (this == o) return true;
         if (!(o instanceof RequestField)) return false;
         RequestField that = (RequestField) o;
-        return Objects.equals(request, that.request) &&
-                Objects.equals(code, that.code) &&
+        return Objects.equals(code, that.code) &&
                 Objects.equals(required, that.required) &&
                 Objects.equals(fieldType, that.fieldType) &&
                 Objects.equals(value, that.value) &&
@@ -92,7 +80,7 @@ public class RequestField {
     @Override
     public int hashCode() {
 
-        int result = Objects.hash(request, code, required, fieldType, value);
+        int result = Objects.hash(code, required, fieldType, value);
         result = 31 * result + Arrays.hashCode(file);
         return result;
     }
@@ -100,7 +88,6 @@ public class RequestField {
     @Override
     public String toString() {
         return "RequestField{" +
-                "request=" + request +
                 ", code='" + code + '\'' +
                 ", required=" + required +
                 ", fieldType='" + fieldType + '\'' +

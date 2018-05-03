@@ -2,12 +2,13 @@ package be.unamur.hermes.business.service;
 
 import java.util.List;
 
+import be.unamur.hermes.dataaccess.entity.Request;
+import be.unamur.hermes.dataaccess.entity.RequestField;
+import be.unamur.hermes.dataaccess.repository.RequestFieldRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import be.unamur.hermes.business.exception.BusinessException;
-import be.unamur.hermes.dataaccess.entity.Request;
 import be.unamur.hermes.dataaccess.entity.RequestType;
 import be.unamur.hermes.dataaccess.repository.RequestRepository;
 
@@ -15,11 +16,13 @@ import be.unamur.hermes.dataaccess.repository.RequestRepository;
 public class RequestServiceImpl implements RequestService {
 
     private final RequestRepository requestRepository;
+    private final RequestFieldRepository requestFieldRepository;
 
     @Autowired
-    public RequestServiceImpl(RequestRepository claimRepository) {
+    public RequestServiceImpl(RequestRepository requestRepository, RequestFieldRepository requestFieldRepository) {
 	super();
-	this.requestRepository = claimRepository;
+	this.requestRepository = requestRepository;
+	this.requestFieldRepository = requestFieldRepository;
     }
 
     @Override
@@ -30,13 +33,18 @@ public class RequestServiceImpl implements RequestService {
     @Override
     public long create(Request newRequest) {
 	// TODO validate with Authentification
-	String type = newRequest.getType();
-	if (!StringUtils.hasText(type))
-	    throw new BusinessException("Request type is mandatory");
-	RequestType requestType = requestRepository.findRequestTypeByDescription(type);
-	if (requestType == null)
-	    throw new BusinessException("Unknown request type:" + type);
-	newRequest.setType(requestType.getRequestTypeId());
+	RequestType requestType = newRequest.getType();
+	if (findRequestTypeById(requestType.getId()) == null)
+	    throw new BusinessException("Unknown request type:" + requestType.getDescription());
+	for(RequestField field : newRequest.getData()){
+	    if(field.getFieldType().equals("String") && field.getFile() != null)
+	        throw new BusinessException("Field type doesn't match field content ! Expected 'String' got 'File'");
+	    if(field.getFieldType().equals("File") && field.getValue() != null)
+	        throw new BusinessException("Field type doesn't match field content ! Expected 'File' got 'String'");
+	    if(field.getValue() == null && field.getFile() == null)
+	        throw new BusinessException("No value or file is attached to this field !");
+	    requestFieldRepository.createRequestField(field);
+	}
 	return requestRepository.create(newRequest);
     }
 

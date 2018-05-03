@@ -2,26 +2,33 @@ package be.unamur.hermes.dataaccess.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import java.util.List;
+
 public class Request {
 
     private Long id;
 
-    private String type;
     private String userRef;
     private String systemRef;
     private String municipalityRef;
 
     // only used for database retrieval
     private Long citizenId;
-    private Long companyId;
+    private String companyNb;
     private Long employeeId;
+    private Long departmentId;
     private Long typeId;
+    private Long statusId;
+    private List<Long> dataIds;
 
     // derived information
     private Employee assignee;
     private Citizen citizen;
     private Company company;
-    private String status;
+    private Department department;
+    private RequestType type;
+    private RequestStatus status;
+    private List<RequestField> data;
 
     Request() {
 	// no-op
@@ -33,11 +40,11 @@ public class Request {
 	this.typeId = typeId;
     }
 
-    public String getStatus() {
+    public RequestStatus getStatus() {
 	return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(RequestStatus status) {
 	this.status = status;
     }
 
@@ -69,12 +76,24 @@ public class Request {
 	return id;
     }
 
-    public String getType() {
+    public RequestType getType() {
 	return type;
     }
 
-    public void setType(String type) {
+    public void setType(RequestType type) {
 	this.type = type;
+    }
+
+    public List<RequestField> getData() {
+        return data;
+    }
+
+    public void addRequestField(RequestField requestField) {
+        this.data.add(requestField);
+    }
+
+    public void addRequestFields(List<RequestField> requestFields) {
+        this.data.addAll(requestFields);
     }
 
     @JsonIgnore
@@ -101,12 +120,22 @@ public class Request {
     }
 
     @JsonIgnore
-    public Long getCompanyId() {
-	return companyId;
+    public String getCompanyNb() {
+	return companyNb;
     }
 
-    public void setCompanyId(Long companyId) {
-	this.companyId = companyId;
+    public void setCompanyId(String companyNb) {
+	this.companyNb = companyNb;
+    }
+
+    @JsonIgnore
+    public Long getDepartmentId() {
+        return departmentId;
+    }
+
+    @JsonIgnore
+    public List<Long> getDataIds() {
+        return dataIds;
     }
 
     public String getUserRef() {

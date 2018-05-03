@@ -1,6 +1,6 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
-import { RequestService, AlertService } from '../_services';
-import { CitizenRequest } from '../_models';
+import {RequestService, AlertService, CitizenService, AuthenticationService} from '../_services';
+import {Citizen, CitizenRequest} from '../_models';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 
@@ -16,11 +16,17 @@ export class ParkingCardCreationComponent implements OnInit {
     fileLoaded: boolean;
     form: FormGroup;
     loading = false;
+    requestor: Citizen;
 
     @ViewChild('fileInput') fileInput: ElementRef;
 
-    constructor(private router: Router, private requestService: RequestService,
-        private alertService: AlertService, private fb: FormBuilder) { }
+    constructor(
+      private router: Router,
+      private requestService: RequestService,
+      private alertService: AlertService,
+      private fb: FormBuilder,
+      private authService: AuthenticationService,
+      private citizenService: CitizenService) { }
 
     ngOnInit() {
         this.form = this.fb.group({
@@ -30,6 +36,10 @@ export class ParkingCardCreationComponent implements OnInit {
             carRegistrationNumber: ['', Validators.required],
             insurance_certificate: null
         });
+      const currentUser = this.authService.getCurrentUser();
+      this.citizenService.getCitizen(currentUser).subscribe(
+        data => this.requestor = data,
+        err => this.alertService.error('Citoyen inconnu'));
 
     }
 
@@ -46,7 +56,8 @@ export class ParkingCardCreationComponent implements OnInit {
     onSubmit() {
         this.loading = true;
         const request = new CitizenRequest();
-        request.type =  'parkingCard';
+        request.type =  'citizenParkingCard';
+        request.citizen = this.requestor;
         request.data = [{
                 fieldCode: 'citizenParkingCardCarMake',
                 fieldValue: this.form.get('carMake').value

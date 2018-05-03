@@ -24,12 +24,7 @@ import com.google.common.base.Charsets;
 import be.unamur.hermes.business.document.DocumentCreationRequest;
 import be.unamur.hermes.business.document.DocumentHelper;
 import be.unamur.hermes.common.util.PDFCreator;
-import be.unamur.hermes.dataaccess.entity.Address;
-import be.unamur.hermes.dataaccess.entity.Citizen;
-import be.unamur.hermes.dataaccess.entity.Department;
-import be.unamur.hermes.dataaccess.entity.Employee;
-import be.unamur.hermes.dataaccess.entity.Municipality;
-import be.unamur.hermes.dataaccess.entity.Request;
+import be.unamur.hermes.dataaccess.entity.*;
 import be.unamur.hermes.dataaccess.repository.DocumentRepository;
 
 @Service
@@ -148,10 +143,11 @@ public class DocumentServiceImpl implements DocumentService {
 	doc.setDepartment(dep);
 	doc.setRequestor(requestor);
 	doc.setOfficer(officer);
+	RequestStatus requestStatus = new RequestStatus(0, "Done");
 	Request request = new Request(1L, 1L);
 	request.setAssignee(officer);
 	request.setCitizen(requestor);
-	request.setStatus("Done");
+	request.setStatus(requestStatus);
 	request.setSystemRef("HERM-REF");
 	request.setUserRef("USER_REF");
 

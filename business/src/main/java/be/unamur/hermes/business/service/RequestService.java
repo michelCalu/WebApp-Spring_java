@@ -3,11 +3,12 @@ package be.unamur.hermes.business.service;
 import java.util.List;
 
 import be.unamur.hermes.dataaccess.entity.Request;
+import be.unamur.hermes.dataaccess.entity.RequestField;
 import be.unamur.hermes.dataaccess.entity.RequestType;
 
 public interface RequestService {
 
-    Request find(long claimId);
+    Request find(long requestId);
 
     List<Request> findByCitizenId(long citizenId);
 
@@ -17,8 +18,8 @@ public interface RequestService {
 
     List<Request> find(long citizenId, long requestTypeId);
 
-    long create(Request newClaim);
-
+    long create(Request newRequest);
+    
     RequestType findRequestTypeByDescription(String description);
 
     RequestType findRequestTypeById(long id);
