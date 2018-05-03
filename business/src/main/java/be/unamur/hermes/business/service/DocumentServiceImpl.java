@@ -1,12 +1,17 @@
 package be.unamur.hermes.business.service;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Writer;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Locale;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
@@ -26,18 +31,28 @@ import be.unamur.hermes.dataaccess.entity.Department;
 import be.unamur.hermes.dataaccess.entity.Employee;
 import be.unamur.hermes.dataaccess.entity.Municipality;
 import be.unamur.hermes.dataaccess.entity.Request;
+import be.unamur.hermes.dataaccess.repository.DocumentRepository;
 
 @Service
 public class DocumentServiceImpl implements DocumentService {
 
+    private static Logger logger = LoggerFactory.getLogger(DocumentServiceImpl.class);
+
     private final TemplateEngine templateEngine;
     private final TemplateResolver templateResolver;
+    private final DocumentRepository documentRepository;
 
-    public DocumentServiceImpl() {
+    @Autowired
+    public DocumentServiceImpl(DocumentRepository documentRepository) {
+	this.documentRepository = documentRepository;
 	this.templateEngine = new TemplateEngine();
 	this.templateResolver = initResolver();
 	this.templateEngine.setTemplateResolver(templateResolver);
 	this.templateEngine.addDialect(new Java8TimeDialect());
+    }
+
+    private DocumentServiceImpl() {
+	this(null);
     }
 
     private TemplateResolver initResolver() {
@@ -48,6 +63,22 @@ public class DocumentServiceImpl implements DocumentService {
 	result.setCharacterEncoding(Charsets.UTF_8.name());
 	result.setCacheable(false);
 	return result;
+    }
+
+    @Override
+    public InputStream findDocumentById(long documentId) {
+	String htmlContents = documentRepository.getDocument(documentId);
+	try {
+	    return PDFCreator.createPDF(htmlContents);
+	} catch (IOException e) {
+	    logger.error("PDF creation failed", e);
+	}
+	return null;
+    }
+
+    @Override
+    public List<Long> findDocumentByRequest(long requestId) {
+	return documentRepository.getDocumentIds(requestId);
     }
 
     @Override

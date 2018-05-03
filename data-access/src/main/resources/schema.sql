@@ -19,6 +19,7 @@ DROP TABLE IF EXISTS t_user_statusses;
 DROP TABLE IF EXISTS t_user_accounts;
 DROP TABLE IF EXISTS t_municipalities;
 DROP TABLE IF EXISTS t_addresses;
+DROP TABLE IF EXISTS t_documents;
 
 CREATE TABLE t_user_accounts (
   userAccountID			INT PRIMARY KEY 		NOT NULL AUTO_INCREMENT,
@@ -240,4 +241,10 @@ CREATE TABLE t_departments_skills (
   PRIMARY KEY (departmentID, skillID),
   FOREIGN KEY (departmentID) REFERENCES t_departments(departmentID),
   FOREIGN KEY (skillID) REFERENCES t_skills(skillID)
+);
+
+CREATE TABLE t_documents (
+  documentID 	INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  requestID 	INT NOT NULL,
+  contents 		TEXT NOT NULL 
 );
