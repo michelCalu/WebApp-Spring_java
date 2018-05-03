@@ -52,6 +52,7 @@
 
     "validate": "valider",
     "validateCitizens": "valider inscriptions",
+    "viewDetails": "voir détails",
     "viewNationalRegisterDetails": "voir détails Registre National"
 
 }

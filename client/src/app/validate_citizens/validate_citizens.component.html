@@ -14,7 +14,7 @@
 				<tr *ngFor="let citizen of (pendingCitizens$ | async)">
                     <td> {{ citizen.firstName + ' ' + citizen.lastName }}</td>
                     <td> {{ citizen.nationalRegisterNb }} </td>
-                    <td><button class="btn btn-success" (click)="selectedCitizen = citizen">{{'viewNationalRegisterDetails'| translate}}</button></td>
+                    <td><button class="btn btn-success" (click)="selectedCitizen = citizen">{{'viewDetails'| translate}}</button></td>
                     <td><button class="btn btn-success" > {{'validate' | translate}}</button></td>
 				</tr>
 			</tbody>
@@ -24,13 +24,11 @@
         </ng-template>
 
         <div *ngIf="selectedCitizen">
-            SELECTED CITIZEN
-            <!-- TODO  -->
-            <!-- <request-detail [request]="selectedRequest"></request-detail> -->
+            <citizen-detail  [citizen]="selectedCitizen"></citizen-detail>
+            <nrn-details [citizen]="selectedCitizen"></nrn-details>
         </div>
         
 	</div>
 
 </div>
-validate CITIZENS : {{ pendingCitizens$ | async }}
 

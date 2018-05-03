@@ -50,6 +50,7 @@
 
     "validate": "validate",
     "validateCitizens": "validate inscriptions",
+    "viewDetails": "view details",
     "viewNationalRegisterDetails": "See national register details"
 
 }

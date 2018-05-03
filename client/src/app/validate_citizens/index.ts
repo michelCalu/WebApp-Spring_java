@@ -1,1 +1,1 @@
-export * from './create_employee.component';
+export * from './validate_citizens.component';
