@@ -28,6 +28,8 @@
     "myprofile": "mon profile",
     "myrequests": "mes demandes",
 
+    "name": "nom",
+    "nationalRegisterNumber": "numéro de registre national",
     "nationalityCertificate": "certificat de nationalité",
     "newrequest": "nouvelle demande",    
     
@@ -43,10 +45,16 @@
 
     "service.citizen.errorGetCitizen" : "Citoyen inconnu",
     "service.citizen.errorGetNrn" : "Numéro de registre national non reconnu",
+    "service.citizen.errorValidateCitizen": "Impossible de valider le compte du citoyen",
     "signin": "se connecter",
     "signup": "s'inscrire",
     "status": "statut",
 
-    "type": "type"
+    "type": "type",
+
+    "validate": "valider",
+    "validateCitizens": "valider inscriptions",
+    "viewDetails": "voir détails",
+    "viewNationalRegisterDetails": "voir détails Registre National"
 
 }

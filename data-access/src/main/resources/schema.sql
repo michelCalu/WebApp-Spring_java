@@ -19,6 +19,7 @@ DROP TABLE IF EXISTS t_user_statusses;
 DROP TABLE IF EXISTS t_user_accounts;
 DROP TABLE IF EXISTS t_municipalities;
 DROP TABLE IF EXISTS t_addresses;
+DROP TABLE IF EXISTS t_documents;
 
 CREATE TABLE t_user_accounts (
   userAccountID			INT PRIMARY KEY 		NOT NULL AUTO_INCREMENT,
@@ -72,8 +73,10 @@ CREATE TABLE t_employees (
   dependentChildren INT           NOT NULL,
   dependentPeople   INT           NOT NULL,
   userAccountID	INT,
+  departmentID	INT,
   FOREIGN KEY (addressID)  REFERENCES t_addresses(addressID),
-  FOREIGN KEY (userAccountID) REFERENCES t_user_accounts(userAccountID)
+  FOREIGN KEY (userAccountID) REFERENCES t_user_accounts(userAccountID),
+  FOREIGN KEY (departmentID) REFERENCES t_departments(departmentID)
 );
 
 CREATE TABLE t_companies (
@@ -240,4 +243,10 @@ CREATE TABLE t_departments_skills (
   PRIMARY KEY (departmentID, skillID),
   FOREIGN KEY (departmentID) REFERENCES t_departments(departmentID),
   FOREIGN KEY (skillID) REFERENCES t_skills(skillID)
+);
+
+CREATE TABLE t_documents (
+  documentID 	INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  requestID 	INT NOT NULL,
+  contents 		TEXT NOT NULL 
 );

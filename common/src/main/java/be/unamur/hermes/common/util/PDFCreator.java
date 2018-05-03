@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -38,6 +39,25 @@ public class PDFCreator {
 	    e.printStackTrace();
 	    return;
 	}
+    }
+
+    public static InputStream createPDF(String htmlContents) throws IOException {
+	WriterProperties writerProperties = new WriterProperties();
+	// Add metadata
+	writerProperties.addXmpMetadata();
+	Path temp = Files.createTempFile("hermes_", "_doc");
+	try (//
+		InputStream is = new ByteArrayInputStream(htmlContents.getBytes(StandardCharsets.UTF_8));
+		OutputStream out = Files.newOutputStream(temp, StandardOpenOption.WRITE, StandardOpenOption.CREATE);) {
+	    PdfWriter pdfWriter = new PdfWriter(out, writerProperties);
+	    PdfDocument pdfDoc = new PdfDocument(pdfWriter);
+	    ConverterProperties props = new ConverterProperties();
+	    FontProvider fp = new FontProvider();
+	    fp.addStandardPdfFonts();
+	    props.setFontProvider(fp);
+	    HtmlConverter.convertToPdf(htmlContents, pdfDoc, props);
+	}
+	return Files.newInputStream(temp, StandardOpenOption.READ);
     }
 
     // debugging

@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import be.unamur.hermes.business.service.DocumentService;
 import be.unamur.hermes.business.service.RequestService;
 import be.unamur.hermes.dataaccess.entity.CreateRequest;
 import be.unamur.hermes.dataaccess.entity.Request;
@@ -32,10 +33,12 @@ public class RequestController {
     private static Logger logger = LoggerFactory.getLogger(RequestController.class);
 
     private final RequestService requestService;
+    private final DocumentService documentService;
 
     @Autowired
-    public RequestController(RequestService requestService) {
+    public RequestController(RequestService requestService, DocumentService documentService) {
 	this.requestService = requestService;
+	this.documentService = documentService;
     }
 
     @GetMapping(path = "/{requestId}")
@@ -87,4 +90,5 @@ public class RequestController {
 	    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
 	}
     }
+
 }
