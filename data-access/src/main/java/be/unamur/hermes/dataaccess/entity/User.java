@@ -127,4 +127,18 @@ public abstract class User {
 	this.password = password;
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", address=" + address +
+                ", mail='" + mail + '\'' +
+                ", phone='" + phone + '\'' +
+                ", nationalRegisterNb='" + nationalRegisterNb + '\'' +
+                ", birthdate=" + birthdate +
+                ", password='" + password + '\'' +
+                '}';
+    }
 }

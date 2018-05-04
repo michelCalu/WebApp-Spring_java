@@ -79,8 +79,6 @@ public class RequestController {
     @PostMapping
     public ResponseEntity<Void> createRequest(@RequestBody Request newRequest, HttpServletRequest request,
 	    HttpServletResponse response) {
-		System.out.println("YOLO BIATCH !");
-		System.out.println(newRequest.toString());
 	try {
 	    long requestId = requestService.create(newRequest);
 	    URI location = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}").buildAndExpand(requestId)
