@@ -6,8 +6,6 @@ import be.unamur.hermes.dataaccess.entity.Request;
 import be.unamur.hermes.dataaccess.entity.RequestStatus;
 import be.unamur.hermes.dataaccess.entity.RequestType;
 
-import java.util.List;
-
 public interface RequestRepository {
 
     public static final String STATUS_NEW = "New";
@@ -29,4 +27,6 @@ public interface RequestRepository {
     RequestType findRequestTypeById(long id);
 
     RequestStatus findRequestStatusById(long id);
+
+    void updateStatus(Request request);
 }
