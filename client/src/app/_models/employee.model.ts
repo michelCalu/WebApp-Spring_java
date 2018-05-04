@@ -11,7 +11,7 @@ export class Employee {
   nationalRegisterNb: string;
   birthdate: Date;
   password: string; // for creation only (when id is null)
-  
+
   accountNumber: string;
   arrivalDate: Date;
   gender: string;
