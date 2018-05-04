@@ -3,6 +3,7 @@ import {RequestService, AlertService, CitizenService, AuthenticationService} fro
 import {Citizen, CitizenRequest} from '../_models';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import {RequestField} from "../_models/request-field.model";
 
 @Component({
     moduleId: module.id,
@@ -17,6 +18,12 @@ export class ParkingCardCreationComponent implements OnInit {
     form: FormGroup;
     loading = false;
     requestor: Citizen;
+    //TODO : Not sure about this ... but it may work
+    carMake = new RequestField();
+    carModel = new RequestField();
+    carColour = new RequestField();
+    carRegistrationNumber = new RequestField();
+    greenCard = new RequestField();
 
     @ViewChild('fileInput') fileInput: ElementRef;
 
@@ -26,7 +33,19 @@ export class ParkingCardCreationComponent implements OnInit {
       private alertService: AlertService,
       private fb: FormBuilder,
       private authService: AuthenticationService,
-      private citizenService: CitizenService) { }
+      private citizenService: CitizenService) {
+
+      this.carMake.code = 'citizenParkingCardCarMake';
+      this.carMake.fieldType = 'String';
+      this.carModel.code = 'citizenParkingCardCarModel';
+      this.carModel.fieldType = 'String';
+      this.carColour.code = 'citizenParkingCardCarColour';
+      this.carColour.fieldType = 'String';
+      this.carRegistrationNumber.code = 'citizenParkingCardPlateNumber';
+      this.carRegistrationNumber.fieldType = 'String';
+      this.greenCard.code = 'citizenParkingCardGreenCard';
+      this.greenCard.fieldType = 'File';
+    }
 
     ngOnInit() {
         this.form = this.fb.group({
@@ -56,24 +75,16 @@ export class ParkingCardCreationComponent implements OnInit {
     onSubmit() {
         this.loading = true;
         const request = new CitizenRequest();
-        request.type =  'citizenParkingCard';
+        request.typeDescription = 'citizenParkingCard';
         request.citizen = this.requestor;
-        request.data = [{
-                fieldCode: 'citizenParkingCardCarMake',
-                fieldValue: this.form.get('carMake').value
-            }, {
-                fieldCode: 'citizenParkingCardCarModel',
-                fieldValue: this.form.get('carModel').value
-            }, {
-                fieldCode: 'citizenParkingCardCarColour',
-                fieldValue: this.form.get('colour').value
-            }, {
-                fieldCode: 'citizenParkingCardPlateNumber',
-                fieldValue: this.form.get('carRegistrationNumber').value
-            }, {
-            fieldCode: 'citizenParkingCardGreenCard',
-            fieldFile : this.form.get('insurance_certificate').value
-        }];
+
+        this.carMake.fieldValue = this.form.get('carMake').value;
+        this.carModel.fieldValue = this.form.get('carModel').value;
+        this.carColour.fieldValue = this.form.get('colour').value;
+        this.carRegistrationNumber.fieldValue = this.form.get('carRegistrationNumber').value;
+        this.greenCard.fieldFile = this.form.get('insurance_certificate').value;
+
+        request.data = [this.carMake, this.carModel, this.carColour, this.carRegistrationNumber/*, this.greenCard*/];
 
         this.requestService.createRequestWithFileUploads(request).subscribe(success => {
             this.loading = false;

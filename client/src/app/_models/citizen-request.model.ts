@@ -1,3 +1,5 @@
+import { RequestField } from "./request-field.model";
+
 export class CitizenRequest {
     assignee: any; // employee
     citizen: any; // citizen
@@ -6,7 +8,11 @@ export class CitizenRequest {
     municipalityRef: string;
     status: string;
     systemRef: string;
-    type: string;
+    typeDescription: string;
     userRef: string;
-    data: Array<any>;
+    data: Array<RequestField>;
+
+    constructor(){
+      this.data = [];
+    }
 }
