@@ -51,9 +51,8 @@ insert into t_municipalities values(3, "Roux", 7, "roux@municipality.com", "Roux
 insert into t_citizens values(1,"Thomas","Elskens",1,"thomaselskens@hotmail.com",null,"NRN_Thomas","1983-11-13",1);
 insert into t_citizens values(2,"David","Fernandez",5,"dfernandez1612@gmail.com",null,"david","1983-12-16",2);
 insert into t_citizens values(3,"Michel","Calu",3,"michel@unamur.be",null,"12345612312","1976-12-16",5);
-insert into t_citizens values(4,"Michel","Calu",3,"michel@unamur.be",null,"12345612313","1976-12-16",7);
 insert into t_citizens values(4,"Fabian","Germeau",7,"germeau.fabian@gmail.com",null,"NRN_Fabian","1991-07-02",3);
-
+insert into t_citizens values(5,"Vishnu","Barbu",3,"michel@unamur.be",null,"12345612313","1976-12-16",7);
 
 
 insert into t_employees values(1,"Fabian","Germeau",2,
