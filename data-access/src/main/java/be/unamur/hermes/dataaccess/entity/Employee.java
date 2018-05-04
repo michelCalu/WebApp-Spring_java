@@ -1,6 +1,7 @@
 package be.unamur.hermes.dataaccess.entity;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 
 public class Employee extends User {
@@ -11,7 +12,7 @@ public class Employee extends User {
     private String civilStatus;
     private int dependentChildren;
     private int dependentPeople;
-    private long departmentId;
+    private List<Long> departmentIds;
 
     Employee() {
     }
@@ -99,11 +100,11 @@ public class Employee extends User {
 	this.dependentPeople = dependentPeople;
     }
 
-    public long getDepartmentId() {
-	return this.departmentId;
+    public List<Long> getDepartmentIds() {
+	return this.departmentIds;
     }
 
-    public void setDepartmentId(long departmentId) {
-	this.departmentId = departmentId;
+    public void setDepartmentIds(List<Long> departmentIds) {
+	this.departmentIds = departmentIds;
     }
 }
