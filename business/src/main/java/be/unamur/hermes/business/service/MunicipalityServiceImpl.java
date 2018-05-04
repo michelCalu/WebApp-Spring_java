@@ -1,39 +1,50 @@
 package be.unamur.hermes.business.service;
 
-import be.unamur.hermes.dataaccess.entity.Municipality;
-import be.unamur.hermes.dataaccess.repository.MunicipalityRepository;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import be.unamur.hermes.dataaccess.entity.Municipality;
+import be.unamur.hermes.dataaccess.repository.MunicipalityRepository;
 
 @Service
-public class MunicipalityServiceImpl implements MunicipalityService{
+public class MunicipalityServiceImpl implements MunicipalityService {
 
     private MunicipalityRepository municipalityRepository;
 
     @Autowired
     public MunicipalityServiceImpl(MunicipalityRepository municipalityRepository) {
-        this.municipalityRepository = municipalityRepository;
+	this.municipalityRepository = municipalityRepository;
     }
 
     @Override
     public Municipality findByAddress(Long addressID) {
-        return null;
+	return municipalityRepository.findByAddress(addressID);
     }
 
     @Override
     public Municipality findByZIPcode(Long zipcode) {
-        return null;
+	return municipalityRepository.findByZipCode(zipcode);
     }
 
     @Override
     public List<Municipality> findAll() {
-        return null;
+	return municipalityRepository.findAll();
     }
 
     @Override
-    public void activate(Municipality municipality) {
+    public long activate(Municipality municipality) {
+	return municipalityRepository.create(municipality);
+    }
 
+    @Override
+    public Municipality findById(long municipalityID) {
+	return municipalityRepository.findById(municipalityID);
+    }
+
+    @Override
+    public Municipality findByName(String name) {
+	return municipalityRepository.findByName(name);
     }
 }

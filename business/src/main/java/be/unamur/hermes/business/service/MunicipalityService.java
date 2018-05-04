@@ -1,18 +1,20 @@
 package be.unamur.hermes.business.service;
 
-import be.unamur.hermes.dataaccess.entity.Municipality;
-
 import java.util.List;
+
+import be.unamur.hermes.dataaccess.entity.Municipality;
 
 public interface MunicipalityService {
 
-    Municipality findByAddress (Long addressID);
+    Municipality findById(long municipalityID);
 
-    Municipality findByZIPcode (Long zipcode);
+    Municipality findByAddress(Long addressID);
+
+    Municipality findByZIPcode(Long zipcode);
+
+    Municipality findByName(String name);
 
     List<Municipality> findAll();
 
-    void activate (Municipality municipality);
-
-
+    long activate(Municipality municipality);
 }
