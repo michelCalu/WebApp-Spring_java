@@ -1,8 +1,9 @@
 export class Department {
-  departmentID: number;
-  municipalityID: number;
+  id: number;
   name: string;
-  headOfDepartmentID: number;
-  parentDepartmentID: number;
-  addressID: number;
+  address: any; // address
+  manager: any; // employee
+  email: string;
+  phoneNumber: string;
+  municipality: any; // municipality
 }
