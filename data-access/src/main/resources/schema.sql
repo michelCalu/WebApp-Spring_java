@@ -18,7 +18,6 @@ DROP TABLE IF EXISTS t_citizens;
 DROP TABLE IF EXISTS t_municipalities;
 DROP TABLE IF EXISTS t_user_statusses;
 DROP TABLE IF EXISTS t_user_accounts;
-DROP TABLE IF EXISTS t_municipalities;
 DROP TABLE IF EXISTS t_addresses;
 DROP TABLE IF EXISTS t_documents;
 
@@ -46,7 +45,7 @@ CREATE TABLE t_addresses (
 CREATE TABLE t_municipalities (
   municipalityID  INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
   name    VARCHAR(255)  NOT NULL UNIQUE,
-  address   INT       NOT NULL,
+  address   INT       NOT NULL UNIQUE, -- no multiple municipalities at same address
   email   VARCHAR(255)  NOT NULL,
   phone   VARCHAR(255)  NOT NULL,
   mayorName VARCHAR(255) NOT NULL,
