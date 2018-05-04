@@ -11,12 +11,14 @@ export class Employee {
   nationalRegisterNb: string;
   birthdate: Date;
   password: string; // for creation only (when id is null)
-  
+
   accountNumber: string;
   arrivalDate: Date;
   gender: string;
   civilStatus: string;
   dependentChildren = 0;
   dependentPeople = 0;
+
+  departmentIds: Array<number> = [];
 
 }

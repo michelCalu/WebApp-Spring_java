@@ -2,6 +2,17 @@
     <div class="container">
         <h1> {{ 'createEmployee.title' | translate }}</h1>
         <form #inscriptionForm="ngForm">
+
+            <label for="municipality"> Administration communale :</label>
+            <select class="custom-select" [(ngModel)]="selectedMunicipalityId" (ngModelChange)="municipalityChange($event)" name="municipality" placeholder="Municipality" required>
+                <option *ngFor="let municipality of (municipalities$ | async)" [value]="municipality.municipalityID"> {{municipality.name}} </option>
+            </select>
+
+            <label for="department"> Département :</label>
+            <select class="custom-select" [(ngModel)]="selectedDepartmentId" name="department" placeholder="Department" required>
+                <option *ngFor="let department of (departments$ | async)" [value]="department.id"> {{department.name}} </option>
+            </select>
+
             <label for="firstName">Prénom:</label>
             <input [(ngModel)]="employee.firstName" type="text" placeholder="Prénom" name="firstName" class="form-control" id="firstName"
                 required>
@@ -15,10 +26,11 @@
             <input [(ngModel)]="employee.nationalRegisterNb" type="text" placeholder="****** *** **" name="nationalRegisterNb" class="form-control"
                 id="nationalRegistreNb" required>
             <label for="birthdate">Date de naissance:</label>
-            <input [(ngModel)]="employee.birthdate" type="date" placeholder="aaaa-MM-jjTHH:mm" name="birthdate" class="form-control" id="birthdate">
+            <input [(ngModel)]="employee.birthdate" type="date" placeholder="aaaa-MM-jjTHH:mm" name="birthdate" class="form-control"
+                id="birthdate">
             <label for="country">Pays:</label>
-            <input [(ngModel)]="employee.address.country" type="text" placeholder="Ex: Belgique" name="country" class="form-control" id="country"
-                required>
+            <input [(ngModel)]="employee.address.country" type="text" placeholder="Ex: Belgique" name="country" class="form-control"
+                id="country" required>
             <label for="municipality">Commune:</label>
             <input [(ngModel)]="employee.address.municipality" type="text" placeholder="Ex: Bruxelles" name="state" class="form-control"
                 id="municipality" required>
@@ -54,10 +66,12 @@
             <br>
 
             <label for="dependentChildren">Nb. d'enfants dépendants</label>
-            <input [(ngModel)]="employee.dependentChildren" type="number" name="dependentChildren" class="form-control" id="dependentChildren" required>
+            <input [(ngModel)]="employee.dependentChildren" type="number" name="dependentChildren" class="form-control" id="dependentChildren"
+                required>
 
             <label for="dependentPeople">Nb. de personnes dépendantes</label>
-            <input [(ngModel)]="employee.dependentPeople" type="number" name="dependentPeople" class="form-control" id="dependentPeople" required>
+            <input [(ngModel)]="employee.dependentPeople" type="number" name="dependentPeople" class="form-control" id="dependentPeople"
+                required>
 
             <label for="password">Mot de passe :</label>
             <input [(ngModel)]="employee.password" type="password" name="password" class="form-control" id="password" required />
