@@ -12,6 +12,9 @@ import { Observable } from 'rxjs/Observable';
 export class RequestDetailComponent implements OnInit {
     @Input()
     request: CitizenRequest;
+    @Input()
+    displayEmployeeActions: boolean;
+
     citizen: Citizen;
     selectedAction = 'accept';
     possibleActions = ['accept', 'reject', 'requestModification'];
