@@ -65,9 +65,6 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
 	params.put("dependentChildren", employee.getDependentChildren());
 	params.put("dependentPeople", employee.getDependentPeople());
 	params.put("userAccountID", userAccountID);
-	if (employee.getDepartmentId() != 0) {
-	    params.put("departmentID", employee.getDepartmentId());
-	}
 	return (Long) inserter.executeAndReturnKey(params);
     }
 
@@ -97,10 +94,6 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
 		addressRepository.findById(rs.getLong(4)), rs.getString(5), rs.getString(6), rs.getString(7),
 		rs.getDate(8).toLocalDate(), rs.getString(9), rs.getDate(10).toLocalDate(), rs.getString(11).charAt(0),
 		rs.getString(12), rs.getInt(13), rs.getInt(14));
-	long departmentId = rs.getLong(16);
-	if (departmentId != 0) {
-	    result.setDepartmentId(departmentId);
-	}
 	return result;
     }
 
