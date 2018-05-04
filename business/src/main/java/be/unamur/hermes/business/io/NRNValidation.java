@@ -39,7 +39,6 @@ public final class NRNValidation {
 
             String connectionInformation = "groupe8:cWolokyZUp";
             String encodedConnectionInformation = Base64.getEncoder().encodeToString(connectionInformation.getBytes());
-            System.out.println("encoded " + encodedConnectionInformation);
 
             NRNValidationModel nrnValidationModel;
             URL url = new URL("https://91.121.217.193/validation/v1/nrn/" + NRN);
@@ -51,12 +50,10 @@ public final class NRNValidation {
             conn.setRequestProperty("Authorization","Basic " + encodedConnectionInformation);
 
             if (conn.getResponseCode() != 200) {
-                System.out.println(conn.getResponseMessage());
                 throw new RuntimeException("Failed : HTTP error code : "
                         + conn.getResponseCode());
             }
 
-            System.out.println("response code == 200");
 
             BufferedReader br = new BufferedReader(new InputStreamReader(
                     (conn.getInputStream())));

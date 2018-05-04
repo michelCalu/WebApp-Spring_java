@@ -2,12 +2,38 @@ package be.unamur.hermes.dataaccess.entity;
 
 public class Municipality {
 
+    private long id;
     private String name;
-    private Citizen mayor;
     private Address address;
     private String email;
-    private String phoneNumber;
-    private String parameters;
+    private String phone;
+    private String mayorName;
+
+    public Municipality(){};
+
+    public Municipality(
+            long id,
+            String name,
+            Address address,
+            String email,
+            String phone,
+            String mayorName
+    ){
+        this.id = id;
+        this.name = name;
+        this.address = address;
+        this.email = email;
+        this.phone = phone;
+        this.mayorName = mayorName;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public String getName() {
 	return name;
@@ -17,12 +43,12 @@ public class Municipality {
 	this.name = name;
     }
 
-    public Citizen getMayor() {
-	return mayor;
+    public String getMayorName() {
+	return mayorName;
     }
 
-    public void setMayor(Citizen mayor) {
-	this.mayor = mayor;
+    public void setMayorName(String mayorName) {
+	this.mayorName = mayorName;
     }
 
     public Address getAddress() {
@@ -41,19 +67,12 @@ public class Municipality {
 	this.email = email;
     }
 
-    public String getPhoneNumber() {
-	return phoneNumber;
+    public String getPhone() {
+	return phone;
     }
 
-    public void setPhoneNumber(String phone) {
-	this.phoneNumber = phone;
+    public void setPhone(String phone) {
+	this.phone = phone;
     }
 
-    public String getParameters() {
-	return parameters;
-    }
-
-    public void setParameters(String parameters) {
-	this.parameters = parameters;
-    }
 }

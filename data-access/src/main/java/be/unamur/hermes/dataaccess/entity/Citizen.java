@@ -14,7 +14,7 @@ public class Citizen extends User {
 	setId(id);
     }
 
-    @Override
+	@Override
     public boolean equals(Object o) {
 	if (this == o)
 	    return true;
@@ -29,4 +29,9 @@ public class Citizen extends User {
     public int hashCode() {
 	return Objects.hash(super.hashCode());
     }
+
+	@Override
+	public String toString() {
+		return "Citizen{} \n User : " + super.toString();
+	}
 }

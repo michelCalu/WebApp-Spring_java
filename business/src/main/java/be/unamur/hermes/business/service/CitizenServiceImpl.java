@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
+import be.unamur.hermes.dataaccess.repository.MunicipalityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
@@ -32,11 +33,15 @@ public class CitizenServiceImpl implements CitizenService {
 
     private CitizenRepository citizenRepository;
     private final UserAccountRepository accountRepository;
+    private MunicipalityRepository municipalityRepository;
 
     @Autowired
-    public CitizenServiceImpl(CitizenRepository citizenRepository, UserAccountRepository accountRepository) {
+    public CitizenServiceImpl(CitizenRepository citizenRepository,
+							  UserAccountRepository accountRepository,
+							  MunicipalityRepository municipalityRepository) {
 	this.citizenRepository = citizenRepository;
 	this.accountRepository = accountRepository;
+	this.municipalityRepository = municipalityRepository;
     }
 
     @Override
@@ -74,6 +79,10 @@ public class CitizenServiceImpl implements CitizenService {
 	if (!StringUtils.hasText(citizen.getPassword()))
 	    throw new BusinessException("Password is required");
 	checkCitizenAttributes(citizen);
+	// The citizen's municipality must be present in the system
+	String municipalityName = citizen.getAddress().getMunicipality();
+	if(municipalityRepository.findByName(municipalityName) == null)
+		throw new BusinessException("The citizen's municipality isn't recognize by the system.");
 	// create user account
 	String pass = PasswordUtil.encode(citizen.getPassword());
 	UserAccount citizenAccount = new UserAccount(0L, 0L, citizen.getNationalRegisterNb(), UserType.CITIZEN,

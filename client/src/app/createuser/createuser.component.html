@@ -25,7 +25,7 @@
 	  <label for="zipCode">Code postal</label>
 	  <input [(ngModel)]="citizen.address.zipCode" type="text" placeholder="Ex: 1000" name="zipCode" class="form-control" id="zipCode" required>
 	  <label for="password">Mot de passe :</label>
-	  <input [(ngModel)]="citizen.password" type="text" name="password" class="form-control" id="password" required />
+	  <input [(ngModel)]="citizen.password" type="password" name="password" class="form-control" id="password" required />
 	  <button class="btn btn-success" [class.btn-danger]="!inscriptionForm.form.valid"(click)="createCitizen()" [disabled]="!inscriptionForm.form.valid">Create</button>
 	</form>
   </div>

@@ -65,5 +65,4 @@ export class CitizenService {
                 return Observable.of(null);
             });
     }
-
 }

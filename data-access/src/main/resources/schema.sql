@@ -15,6 +15,7 @@ DROP TABLE IF EXISTS t_companies;
 DROP TABLE IF EXISTS t_employees;
 DROP TABLE IF EXISTS t_citizen_accounts;
 DROP TABLE IF EXISTS t_citizens;
+DROP TABLE IF EXISTS t_municipalities;
 DROP TABLE IF EXISTS t_user_statusses;
 DROP TABLE IF EXISTS t_user_accounts;
 DROP TABLE IF EXISTS t_municipalities;
@@ -40,6 +41,18 @@ CREATE TABLE t_addresses (
   municipality VARCHAR (255) NOT NULL,
   state VARCHAR(255)      ,
   country VARCHAR(255)    NOT NULL
+);
+
+CREATE TABLE t_municipalities (
+  municipalityID  INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  name    VARCHAR(255)  NOT NULL UNIQUE,
+  address   INT       NOT NULL,
+  email   VARCHAR(255)  NOT NULL,
+  phone   VARCHAR(255)  NOT NULL,
+  mayorName VARCHAR(255) NOT NULL,
+
+  FOREIGN KEY  (address) REFERENCES t_addresses(addressID)
+
 );
 
 CREATE TABLE t_citizens (
@@ -118,19 +131,6 @@ CREATE TABLE t_req_statusses (
   CONSTRAINT UC_statusName UNIQUE (statusName)
 );
 
-
-CREATE TABLE t_municipalities (
-  municipalityID  INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  name    VARCHAR(255)  NOT NULL UNIQUE,
-  address   INT       NOT NULL,
-  email   VARCHAR(255)  NOT NULL,
-  phone   VARCHAR(255)  NOT NULL,
-  mayorName VARCHAR(255) NOT NULL,
-
-  FOREIGN KEY  (address) REFERENCES t_addresses(addressID)
-
-);
-
 CREATE TABLE t_departments (
   departmentID        INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
   municipalityID      INT NOT NULL,
@@ -157,7 +157,9 @@ CREATE TABLE t_requests (
   employeeID	INT,
   departmentID INT      NOT NULL,
   statusID    INT       NOT NULL,
-  lastChangeBy  INT       NOT NULL,
+  /* If lastChangeBy refer an employee it could be null at the creation of the request
+  and should be in the event
+  lastChangeBy  INT,*/
   systemRef   VARCHAR(255)  NOT NULL,
   userRef   VARCHAR(255)  ,
   municipalityRef VARCHAR(255)  NOT NULL,
@@ -173,9 +175,7 @@ CREATE TABLE t_requests (
   FOREIGN KEY(departmentID)
     REFERENCES t_departments(departmentID),
   FOREIGN KEY(statusID)
-   REFERENCES t_req_statusses(statusID),
-  FOREIGN KEY(lastChangeBy)
-    REFERENCES t_employees(employeeID)
+   REFERENCES t_req_statusses(statusID)
 );
 
 CREATE TABLE t_request_field_definitions (

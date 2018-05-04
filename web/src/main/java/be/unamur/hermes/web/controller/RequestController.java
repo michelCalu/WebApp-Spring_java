@@ -23,7 +23,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import be.unamur.hermes.business.service.DocumentService;
 import be.unamur.hermes.business.service.RequestService;
-import be.unamur.hermes.dataaccess.entity.CreateRequest;
 import be.unamur.hermes.dataaccess.entity.Request;
 
 @RestController
@@ -78,7 +77,7 @@ public class RequestController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> createRequest(@RequestBody CreateRequest newRequest, HttpServletRequest request,
+    public ResponseEntity<Void> createRequest(@RequestBody Request newRequest, HttpServletRequest request,
 	    HttpServletResponse response) {
 	try {
 	    long requestId = requestService.create(newRequest);
@@ -86,9 +85,8 @@ public class RequestController {
 		    .toUri();
 	    return ResponseEntity.created(location).build();
 	} catch (Exception ex) {
-	    logger.error("Bad request", ex);
-	    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+		logger.error("Bad request", ex);
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
 	}
-    }
-
+	}
 }

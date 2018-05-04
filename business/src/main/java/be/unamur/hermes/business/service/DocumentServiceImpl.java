@@ -24,12 +24,7 @@ import com.google.common.base.Charsets;
 import be.unamur.hermes.business.document.DocumentCreationRequest;
 import be.unamur.hermes.business.document.DocumentHelper;
 import be.unamur.hermes.common.util.PDFCreator;
-import be.unamur.hermes.dataaccess.entity.Address;
-import be.unamur.hermes.dataaccess.entity.Citizen;
-import be.unamur.hermes.dataaccess.entity.Department;
-import be.unamur.hermes.dataaccess.entity.Employee;
-import be.unamur.hermes.dataaccess.entity.Municipality;
-import be.unamur.hermes.dataaccess.entity.Request;
+import be.unamur.hermes.dataaccess.entity.*;
 import be.unamur.hermes.dataaccess.repository.DocumentRepository;
 
 @Service
@@ -124,15 +119,14 @@ public class DocumentServiceImpl implements DocumentService {
     // debugging
     public static void main(String[] args) {
 	DocumentCreationRequest doc = new DocumentCreationRequest();
-	Citizen mayor = new Citizen(1L, "mayorFirstName", "mayorLastName", null, "mayorMail@commune.be", "mayorPhone",
-		"mayorNRN", null);
-	Citizen requestor = new Citizen(2L, "requestorFirstName", "requestorLastName",
-		new Address(3, "Rue Haute", 130, "B", 1230, "Gembloux", "BRC", "Belgium"), "requestorMail@hotmail.com",
-		"requestorPhone", "requestorNRN", LocalDate.of(1970, 5, 1));
+	String mayorName = "mayorFirstName mayorLastName";
 	Municipality munip = new Municipality();
 	munip.setName("Gembloux");
-	munip.setMayor(mayor);
+	munip.setMayorName(mayorName);
 	munip.setAddress(new Address(2L, "Rue Champs d'Eglise", 13, null, 1230, "Gembloux", "Wallonie", "Belgium"));
+	Citizen requestor = new Citizen(2L, "requestorFirstName", "requestorLastName",
+			new Address(3, "Rue Haute", 130, "B", 1230, "Gembloux", "BRC", "Belgium"), "requestorMail@hotmail.com",
+			"requestorPhone", "requestorNRN", LocalDate.of(1970, 5, 1));
 	Department dep = new Department();
 	Employee officer = new Employee(1L, "officerFirstName", "officerLastName", null, "officerMail@commune.be",
 		"officerPhone", "officerNRN", LocalDate.of(1983, 11, 13), "officerAccountNumber", null, 'M', null, 0,
@@ -149,10 +143,11 @@ public class DocumentServiceImpl implements DocumentService {
 	doc.setDepartment(dep);
 	doc.setRequestor(requestor);
 	doc.setOfficer(officer);
+	RequestStatus requestStatus = new RequestStatus(0, "Done");
 	Request request = new Request(1L, 1L);
 	request.setAssignee(officer);
 	request.setCitizen(requestor);
-	request.setStatus("Done");
+	request.setStatus(requestStatus);
 	request.setSystemRef("HERM-REF");
 	request.setUserRef("USER_REF");
 
