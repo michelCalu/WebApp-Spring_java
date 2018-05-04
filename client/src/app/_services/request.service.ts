@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Observable } from 'rxjs';
 import 'rxjs/add/operator/catch';
 import { CitizenRequest, Citizen } from '../_models';
@@ -17,16 +17,10 @@ export class RequestService {
         private translateService: TranslateService) {
     }
 
-    public createRequest(citizenId: number, requestType: string): Observable<boolean> {
-        const requestBody = new CreateRequest();
-        requestBody.citizen = citizenId;
-        requestBody.type = requestType;
-        return this.http.post<boolean>(/*this.serverAddress + */ '/requests', requestBody, { observe: 'response' }).map(
-            resp => resp.headers.has('Location'));
-    }
 
-    public createRequestWithFileUploads(request: CitizenRequest/*, files: Array<any>*/): Observable<boolean> {
-        return this.http.post(/*this.serverAddress + */ '/requests', /*{request: request, files: files}*/ request)
+    public createRequestWithFileUploads(formData: FormData, requestType: String): Observable<boolean> {
+        const header = new HttpHeaders({ 'enctype': 'multipart/form-data' });
+        return this.http.post(/*this.serverAddress + */'/requests?requestType=' + requestType, formData, {headers: header})
             .map(res => true)
             .catch(err => Observable.of(false));
 

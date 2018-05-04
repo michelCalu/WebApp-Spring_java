@@ -1,25 +1,22 @@
 package be.unamur.hermes.web.controller;
 
 import java.net.URI;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.NotBlank;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import be.unamur.hermes.business.exception.BusinessException;
@@ -75,11 +72,27 @@ public class RequestController {
 	}
     }
 
-    @PostMapping
-    public ResponseEntity<Void> createRequest(@RequestBody Request newRequest, HttpServletRequest request,
-	    HttpServletResponse response) {
+    @PostMapping(params = "requestType=citizenParkingCard", consumes = {"multipart/form-data"})
+    public ResponseEntity<Void> createRequest(@RequestPart("request") @NotNull @Valid Request newRequest,
+											  @RequestPart("citizenParkingCardGreenCard") @Valid @NotNull @NotBlank MultipartFile greenCard) {
 	try {
-	    long requestId = requestService.create(newRequest);
+		Map<String, MultipartFile> files = new HashMap<>();
+		files.put("citizenParkingCardGreenCard", greenCard);
+	    long requestId = requestService.create(newRequest, files);
+	    URI location = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}").buildAndExpand(requestId)
+		    .toUri();
+	    return ResponseEntity.created(location).build();
+	} catch (Exception ex) {
+		logger.error("Bad request", ex);
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+	}
+	}
+
+	@PostMapping(params = "requestType=nationalityCertificate", consumes = {"multipart/form-data"})
+    public ResponseEntity<Void> createRequest(@RequestPart("request") @Valid Request newRequest) {
+		System.out.println(newRequest);
+	try {
+	    long requestId = requestService.create(newRequest, new HashMap<>());
 	    URI location = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}").buildAndExpand(requestId)
 		    .toUri();
 	    return ResponseEntity.created(location).build();

@@ -1,10 +1,11 @@
 package be.unamur.hermes.business.service;
 
 import java.util.List;
+import java.util.Map;
 
 import be.unamur.hermes.business.exception.BusinessException;
-import be.unamur.hermes.dataaccess.entity.Request;
-import be.unamur.hermes.dataaccess.entity.RequestType;
+import be.unamur.hermes.dataaccess.entity.*;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface RequestService {
 
@@ -23,7 +24,7 @@ public interface RequestService {
 
     List<Request> find(long citizenId, long requestTypeId);
 
-    long create(Request newRequest);
+    long create(Request newRequest, Map<String, MultipartFile> codeToFiles);
 
     RequestType findRequestTypeByDescription(String description);
 

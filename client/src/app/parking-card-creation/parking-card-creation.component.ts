@@ -86,7 +86,13 @@ export class ParkingCardCreationComponent implements OnInit {
 
         request.data = [this.carMake, this.carModel, this.carColour, this.carRegistrationNumber/*, this.greenCard*/];
 
-        this.requestService.createRequestWithFileUploads(request).subscribe(success => {
+        var formData = new FormData();
+        formData.append("request",  new Blob([JSON.stringify(request)], {
+          type: "application/json"
+        }));
+        formData.append("citizenParkingCardGreenCard", this.form.get('insurance_certificate').value);
+
+        this.requestService.createRequestWithFileUploads(formData, "citizenParkingCard").subscribe(success => {
             this.loading = false;
             if (success) {
                 this.router.navigate(['/myrequests']);
