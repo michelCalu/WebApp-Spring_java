@@ -1,15 +1,14 @@
 package be.unamur.hermes.dataaccess.repository;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import be.unamur.hermes.dataaccess.dto.UpdateUserAccount;
+import be.unamur.hermes.dataaccess.entity.UserAccount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
-import be.unamur.hermes.dataaccess.dto.UpdateUserAccount;
-import be.unamur.hermes.dataaccess.entity.UserAccount;
+import java.util.HashMap;
+import java.util.Map;
 
 @Repository
 public class UserAccountRepositoryImpl implements UserAccountRepository {
@@ -45,4 +44,6 @@ public class UserAccountRepositoryImpl implements UserAccountRepository {
 	if (account.getPassword() != null)
 	    jdbcTemplate.update(String.format(updateQuery, "password"), account.getPassword(), userAccountID);
     }
+
+
 }

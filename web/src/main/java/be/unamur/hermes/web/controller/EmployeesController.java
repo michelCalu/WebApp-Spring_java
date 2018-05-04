@@ -1,25 +1,19 @@
 package be.unamur.hermes.web.controller;
 
-import java.net.URI;
-import java.util.List;
-
+import be.unamur.hermes.business.exception.BusinessException;
+import be.unamur.hermes.business.service.EmployeeService;
+import be.unamur.hermes.dataaccess.entity.Employee;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import be.unamur.hermes.business.exception.BusinessException;
-import be.unamur.hermes.business.service.EmployeeService;
-import be.unamur.hermes.dataaccess.entity.Employee;
+import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping({ "/employees" })
@@ -47,6 +41,20 @@ public class EmployeesController {
 	    return ResponseEntity.badRequest().build();
 	}
     }
+
+
+	@RequestMapping(path = "/{employeeID}", method = RequestMethod.DELETE)
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	public ResponseEntity<Employee> deleteEmployee(@PathVariable(value = "employeeID") long employeeID) {
+		try {
+			employeeService.suspendAccount(employeeID);
+			return ResponseEntity.status(HttpStatus.OK).body(null);
+		} catch (BusinessException ex) {
+			logger.error("Disable account failed", ex);
+			throw new BusinessException("Disable account failed"+ex);
+		}
+	}
+
 
     @GetMapping
     public ResponseEntity<List<Employee>> showEmployees() {
