@@ -19,9 +19,16 @@ export class MunicipalityService {
     public getDepartmentsByMunicipalityId(municipalityId: number): Observable<Department[]> {
         return this.http.get<Department[]>(/*this.serverAddress + */ '/departments?municipalityId=' + municipalityId)
             .catch(err => {
-                this.messageService.error(this.translateService.instant('service.deparment.municipalityNotFound'));
+                this.messageService.error(this.translateService.instant('service.department.municipalityNotFound'));
                 return [];
             });
+    }
 
+    public getMunicipalities(): Observable<Municipality[]> {
+        return this.http.get<Municipality[]>(/*this.serverAddress + */ '/municipalities')
+            .catch(err => {
+                this.messageService.error(this.translateService.instant('service.department.municipalityNotFound'));
+                return [];
+            });
     }
 }

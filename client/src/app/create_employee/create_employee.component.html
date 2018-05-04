@@ -5,7 +5,7 @@
 
             <label for="municipality"> Administration communale :</label>
             <select class="custom-select" [(ngModel)]="selectedMunicipalityId" (ngModelChange)="municipalityChange($event)" name="municipality" placeholder="Municipality" required>
-                <option *ngFor="let municipality of (municipalities$ | async)" [value]="municipality.municipalityID"> {{municipality.name}} </option>
+                <option *ngFor="let municipality of (municipalities$ | async)" [value]="municipality.id"> {{municipality.name}} </option>
             </select>
 
             <label for="department"> Département :</label>

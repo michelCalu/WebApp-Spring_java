@@ -46,7 +46,7 @@
     "service.citizen.errorGetCitizen" : "Citoyen inconnu",
     "service.citizen.errorGetNrn" : "Numéro de registre national non reconnu",
     "service.citizen.errorValidateCitizen": "Impossible de valider le compte du citoyen",
-    "service.deparment.municipalityNotFound": "Impossible de trouver les services de la commune",
+    "service.department.municipalityNotFound": "Impossible de trouver les services de la commune",
     "signin": "se connecter",
     "signup": "s'inscrire",
     "status": "statut",

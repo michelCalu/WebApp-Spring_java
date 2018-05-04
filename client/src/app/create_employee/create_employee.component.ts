@@ -20,16 +20,7 @@ export class CreateEmployeeComponent implements OnInit {
         private alertService: AlertService, private router: Router) { }
 
     ngOnInit() {
-
-        // TODO replace by actual call
-        // const mockMunicipality = new Municipality();
-        // mockMunicipality.municipalityID = 1;
-        // mockMunicipality.name = 'mockMunicipality';
-        // const mockMunicipalityBis = new Municipality();
-        // mockMunicipalityBis.municipalityID = 2;
-        // mockMunicipalityBis.name = 'no utilizar';
-        // this.municipalities$ = Observable.of([mockMunicipality, mockMunicipalityBis]);
-
+        this.municipalities$ = this.municipalityService.getMunicipalities();
     }
 
     createEmployee(): void {

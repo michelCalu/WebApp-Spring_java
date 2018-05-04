@@ -1,5 +1,5 @@
 export class Municipality {
-  municipalityID: number;
+  id: number;
   name: string;
   address: any; // TODO: address
   email: string;
