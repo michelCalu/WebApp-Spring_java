@@ -31,11 +31,12 @@ public class RequestFieldRepositoryImpl implements RequestFieldRepository {
     }
 
     @Override
-    public Long createRequestField(RequestField requestField){
+    public Long createRequestField(RequestField requestField, Long requestId){
         Map<String, Object> params = new HashMap<>();
+        params.put("requestID", requestId);
         params.put("fieldCode", requestField.getCode());
-        params.put("fieldValue", requestField.getValue());
-        params.put("fieldFile", requestField.getFile());
+        params.put("fieldValue", requestField.getFieldValue());
+        params.put("fieldFile", requestField.getFieldFile());
         return (Long) inserter.executeAndReturnKey(params);
     }
 

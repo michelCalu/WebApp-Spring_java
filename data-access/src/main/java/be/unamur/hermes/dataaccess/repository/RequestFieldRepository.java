@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface RequestFieldRepository {
 
-    Long createRequestField(RequestField requestField);
+    Long createRequestField(RequestField requestField, Long requestID);
 
     List<RequestField> getFields(Long requestId);
 

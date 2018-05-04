@@ -157,7 +157,9 @@ CREATE TABLE t_requests (
   employeeID	INT,
   departmentID INT      NOT NULL,
   statusID    INT       NOT NULL,
-  lastChangeBy  INT       NOT NULL,
+  /* If lastChangeBy refer an employee it could be null at the creation of the request
+  and should be in the event
+  lastChangeBy  INT,*/
   systemRef   VARCHAR(255)  NOT NULL,
   userRef   VARCHAR(255)  ,
   municipalityRef VARCHAR(255)  NOT NULL,
@@ -173,9 +175,7 @@ CREATE TABLE t_requests (
   FOREIGN KEY(departmentID)
     REFERENCES t_departments(departmentID),
   FOREIGN KEY(statusID)
-   REFERENCES t_req_statusses(statusID),
-  FOREIGN KEY(lastChangeBy)
-    REFERENCES t_employees(employeeID)
+   REFERENCES t_req_statusses(statusID)
 );
 
 CREATE TABLE t_request_field_definitions (

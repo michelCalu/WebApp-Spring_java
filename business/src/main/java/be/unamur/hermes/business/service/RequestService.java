@@ -2,9 +2,7 @@ package be.unamur.hermes.business.service;
 
 import java.util.List;
 
-import be.unamur.hermes.dataaccess.entity.Request;
-import be.unamur.hermes.dataaccess.entity.RequestField;
-import be.unamur.hermes.dataaccess.entity.RequestType;
+import be.unamur.hermes.dataaccess.entity.*;
 
 public interface RequestService {
 

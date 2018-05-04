@@ -72,9 +72,11 @@ insert into t_departments values(2, 1, "état civil étrangers", 1, 1,null);
 insert into t_departments values(3, 1, "Mobilité", 1, null,null);
 insert into t_departments values(4, 2, "Population", 2, null,null);
 insert into t_departments values(5, 2, "Stationnement", 2, null,null);
+insert into t_departments values(6, 3, "Population", 2, null,null);
+insert into t_departments values(7, 3, "Stationnement", 2, null,null);
 
-insert into t_requests values(1, 1, 1, null, 1, 1, 1, 1, "HERM001", "my ref", "JETTE001");
-insert into t_requests values(2, 2, 2, null, 2, 5, 2, 2, "HERM002", "a parking ref.", "GANSH001");
+insert into t_requests values(1, 1, 1, null, 1, 1, 1, "HERM001", "my ref", "JETTE001");
+insert into t_requests values(2, 2, 2, null, 2, 5, 2, "HERM002", "a parking ref.", "GANSH001");
 
 insert into t_request_field_values values(1, "citizenParkingCardCarMake", 2, "Fiat", null);
 insert into t_request_field_values values(2, "citizenParkingCardCarModel", 2, "Punto", null);

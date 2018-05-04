@@ -8,21 +8,21 @@ public class RequestField {
     private String code;
     private Boolean required;
     private String fieldType;
-    private String value;
-    private byte[] file;
+    private String fieldValue;
+    private byte[] fieldFile;
 
     public RequestField(){};
 
     public RequestField(String code,
                         Boolean required,
                         String fieldType,
-                        String value,
-                        byte[] file){
+                        String fieldValue,
+                        byte[] fieldFile){
         this.code = code;
         this.required = required;
         this.fieldType = fieldType;
-        this.value = value;
-        this.file = file;
+        this.fieldValue = fieldValue;
+        this.fieldFile = fieldFile;
     }
 
     public String getCode() {
@@ -49,20 +49,20 @@ public class RequestField {
         this.fieldType = fieldType;
     }
 
-    public String getValue() {
-        return value;
+    public String getFieldValue() {
+        return fieldValue;
     }
 
-    public void setValue(String value) {
-        this.value = value;
+    public void setFieldValue(String fieldValue) {
+        this.fieldValue = fieldValue;
     }
 
-    public byte[] getFile() {
-        return file;
+    public byte[] getFieldFile() {
+        return fieldFile;
     }
 
-    public void setFile(byte[] file) {
-        this.file = file;
+    public void setFieldFile(byte[] fieldFile) {
+        this.fieldFile = fieldFile;
     }
 
     @Override
@@ -73,15 +73,15 @@ public class RequestField {
         return Objects.equals(code, that.code) &&
                 Objects.equals(required, that.required) &&
                 Objects.equals(fieldType, that.fieldType) &&
-                Objects.equals(value, that.value) &&
-                Arrays.equals(file, that.file);
+                Objects.equals(fieldValue, that.fieldValue) &&
+                Arrays.equals(fieldFile, that.fieldFile);
     }
 
     @Override
     public int hashCode() {
 
-        int result = Objects.hash(code, required, fieldType, value);
-        result = 31 * result + Arrays.hashCode(file);
+        int result = Objects.hash(code, required, fieldType, fieldValue);
+        result = 31 * result + Arrays.hashCode(fieldFile);
         return result;
     }
 
@@ -91,8 +91,8 @@ public class RequestField {
                 ", code='" + code + '\'' +
                 ", required=" + required +
                 ", fieldType='" + fieldType + '\'' +
-                ", value='" + value + '\'' +
-                ", file=" + Arrays.toString(file) +
+                ", value='" + fieldValue + '\'' +
+                ", file=" + Arrays.toString(fieldFile) +
                 '}';
     }
 }

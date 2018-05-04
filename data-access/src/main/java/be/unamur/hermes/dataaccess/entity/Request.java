@@ -2,6 +2,7 @@ package be.unamur.hermes.dataaccess.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Request {
@@ -18,6 +19,7 @@ public class Request {
     private Long employeeId;
     private Long departmentId;
     private Long typeId;
+    private String typeDescription;
     private Long statusId;
     private List<Long> dataIds;
 
@@ -28,7 +30,7 @@ public class Request {
     private Department department;
     private RequestType type;
     private RequestStatus status;
-    private List<RequestField> data;
+    private List<RequestField> data = new ArrayList<>();
 
     Request() {
 	// no-op
@@ -72,6 +74,14 @@ public class Request {
 	this.company = company;
     }
 
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
+    }
+
     public Long getId() {
 	return id;
     }
@@ -96,9 +106,13 @@ public class Request {
         this.data.addAll(requestFields);
     }
 
+    public String getTypeDescription() {
+	return typeDescription;
+    }
+
     @JsonIgnore
     public Long getTypeId() {
-	return typeId;
+        return typeId;
     }
 
     @JsonIgnore
@@ -133,6 +147,10 @@ public class Request {
         return departmentId;
     }
 
+    public void setDepartmentId(Long departmentId) {
+        this.departmentId = departmentId;
+    }
+
     @JsonIgnore
     public List<Long> getDataIds() {
         return dataIds;
@@ -164,7 +182,8 @@ public class Request {
 
     @Override
     public String toString() {
-	return "Request [id=" + id + ", typeId=" + typeId + ", status=" + status + ", citizenId=" + citizenId
-		+ ", employeeId=" + employeeId + ", assignee=" + assignee + ", citizen=" + citizen + "]";
+	return "Request [id=" + id + ", typeDescription=" + typeDescription + ", status=" + status + ", citizenId=" + citizenId
+		+ ", employeeId=" + employeeId + ", assignee=" + assignee + ", citizen=" + citizen + "" +
+            ", datas=" + data + "]";
     }
 }
