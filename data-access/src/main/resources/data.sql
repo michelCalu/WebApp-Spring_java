@@ -29,9 +29,9 @@ insert into t_req_statusses values(null,"accepted");
 -- test data
 insert into t_user_accounts values(1,"ROLE_USER","$2a$10$nci/VfQ6BffNStE8ECXmq.7/fs4FBGTghAOfijxmMcx4r7A7JZOdK","active"); -- thomas
 insert into t_user_accounts values(2,"ROLE_USER","$2a$10$fg0oXDkagxfaMl7e/i56q.BN2wyRw53WlXIV1MyL.ywbISo4bGVqi","active"); -- david
-insert into t_user_accounts values(null,"ROLE_USER","myPassword","active");--fab
-insert into t_user_accounts values(null,"ROLE_USER","myPassword","active");--killian
-insert into t_user_accounts values(5,"ROLE_USER","$2a$10$fg0oXDkagxfaMl7e/i56q.BN2wyRw53WlXIV1MyL.ywbISo4bGVqi","active"); --michel
+insert into t_user_accounts values(null,"ROLE_USER","myPassword","active"); -- fab
+insert into t_user_accounts values(null,"ROLE_USER","myPassword","active"); -- killian
+insert into t_user_accounts values(5,"ROLE_USER","$2a$10$fg0oXDkagxfaMl7e/i56q.BN2wyRw53WlXIV1MyL.ywbISo4bGVqi","active"); -- michel
 insert into t_user_accounts values(6,"ROLE_ADMIN","$2a$10$4w9Wm8gc93DpDQdyZ7SR5O.17XQMsfElDZRVbKuzaQJVi.0s.5xn.","active"); -- admin
 
 
