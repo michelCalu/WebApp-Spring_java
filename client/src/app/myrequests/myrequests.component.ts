@@ -15,6 +15,7 @@ import { AuthenticationService } from '../_services/authentication.service';
 export class MyRequestsComponent implements OnInit {
 
     citizenRequests$: Observable<CitizenRequest[]>;
+    selectedRequest: CitizenRequest;
 
     constructor(private requestService: RequestService, private authService: AuthenticationService) {}
 
