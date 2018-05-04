@@ -21,19 +21,19 @@ export class RequestService {
         const requestBody = new CreateRequest();
         requestBody.citizen = citizenId;
         requestBody.type = requestType;
-        return this.http.post<boolean>(this.serverAddress + '/requests', requestBody, { observe: 'response' }).map(
+        return this.http.post<boolean>(/*this.serverAddress + */ '/requests', requestBody, { observe: 'response' }).map(
             resp => resp.headers.has('Location'));
     }
 
     public createRequestWithFileUploads(request: CitizenRequest/*, files: Array<any>*/): Observable<boolean> {
-        return this.http.post(this.serverAddress + '/requests', /*{request: request, files: files}*/ request)
+        return this.http.post(/*this.serverAddress + */ '/requests', /*{request: request, files: files}*/ request)
             .map(res => true)
             .catch(err => Observable.of(false));
 
     }
 
     getCitizenRequests(citizenID: number): Observable<CitizenRequest[]> {
-        return this.http.get<CitizenRequest[]>(this.serverAddress + '/requests?citizenId=' + citizenID)
+        return this.http.get<CitizenRequest[]>(/*this.serverAddress + */ '/requests?citizenId=' + citizenID)
             .catch(err => {
                 this.messageService.error(this.translateService.instant('request.service.getError'));
                 return [];
@@ -42,7 +42,7 @@ export class RequestService {
 
     getDepartmentRequests(departmentID: number): Observable<CitizenRequest[]> {
         return this.http
-        .get(this.serverAddress + '/requests?departmentId=' + departmentID)
+        .get(/*this.serverAddress + */ '/requests?departmentId=' + departmentID)
             .catch(err => {
                 this.messageService.error(this.translateService.instant('request.service.getError'));
                 return [];

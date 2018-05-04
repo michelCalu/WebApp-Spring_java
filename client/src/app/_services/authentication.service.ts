@@ -29,7 +29,7 @@ export class AuthenticationService {
       requestBody.password = password;
       requestBody.username = username;
 
-      return this.http.post<User>(this.serverAddress + '/auth', requestBody)
+      return this.http.post<User>(/*this.serverAddress + */ '/auth', requestBody)
             .map(user => {
                 // login successful if there's a jwt token in the response
                 if (user && user.token) {

@@ -25,16 +25,16 @@ export class CitizenService {
 
     public createCitizen(citizen: Citizen): Observable<any> {
         console.log('CREATING CITIZEN : ' + JSON.stringify(citizen));
-        return this.http.post(this.serverAddress + '/citizens', citizen);
+        return this.http.post(/*this.serverAddress + */ '/citizens', citizen);
     }
     // to test login
 
     public login(user: User) {
-        return this.http.post(this.serverAddress + '/login', user);
+        return this.http.post(/*this.serverAddress + */ '/login', user);
     }
 
     public getCitizen(user: User): Observable<Citizen> {
-        return this.http.get<Citizen>(this.serverAddress + `/citizens/${user.id}`)
+        return this.http.get<Citizen>(/*this.serverAddress + */ `/citizens/${user.id}`)
             .catch(err => {
                 this.messageService.error(this.translateService.instant('service.citizen.errorGetCitizen'));
                 return Observable.of(null);
@@ -42,7 +42,7 @@ export class CitizenService {
     }
 
     validateCitizenAccount(citizen: Citizen): Observable<boolean> {
-        return this.http.patch(this.serverAddress + `/citizens/account/${citizen.id}`, {'status' : 'active'})
+        return this.http.patch(/*this.serverAddress + */ `/citizens/account/${citizen.id}`, {'status' : 'active'})
         .map(res => true)
         .catch(err => {
             this.messageService.error(this.translateService.instant('service.citizen.errorValidateCitizen'));
@@ -51,7 +51,7 @@ export class CitizenService {
     }
 
     public getNrnData(nrn: string): Observable<Object> {
-        return this.http.get(this.serverAddress + `/nrn/${nrn}`)
+        return this.http.get(/*this.serverAddress + */ `/nrn/${nrn}`)
             .catch(err => {
                 this.messageService.error(this.translateService.instant('service.citizen.errorGetNrn'));
                 return Observable.of(null);
@@ -59,7 +59,7 @@ export class CitizenService {
     }
 
     public getPendingCitizens( /*TODO should be filtered by commune*/): Observable<Citizen[]> {
-        return this.http.get<Citizen[]>(this.serverAddress + '/citizens/pending' /* TODO should be citizens?status="pending"*/)
+        return this.http.get<Citizen[]>(/*this.serverAddress + */ '/citizens/pending' /* TODO should be citizens?status="pending"*/)
             .catch(err => {
                 this.messageService.error(this.translateService.instant('service.citizen.errorGetCitizen'));
                 return Observable.of(null);
