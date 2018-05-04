@@ -32,7 +32,13 @@ export class NationalityCertificateCreationComponent implements OnInit {
       console.log('CITZENID BEFORE REQUEST : ' + this.requestor.id);
       this.request.citizen = this.requestor;
       this.request.typeDescription = 'nationalityCertificate';
-      this.requestService.createRequestWithFileUploads(this.request).subscribe(success => {
+
+      var formData = new FormData();
+      formData.append("request",  new Blob([JSON.stringify(this.request)], {
+        type: "application/json"
+      }));
+
+      this.requestService.createRequestWithFileUploads(formData, 'nationalityCertificate').subscribe(success => {
           if (success) {
               this.router.navigate(['/myrequests']);
               this.alertService.success('Demande de certificat de nationalité bien envoyée');

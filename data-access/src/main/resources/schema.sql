@@ -198,8 +198,7 @@ CREATE TABLE t_request_field_values (
   FOREIGN KEY(fieldCode)
     REFERENCES t_request_field_definitions(fieldCode),
   FOREIGN KEY(requestID)
-    REFERENCES t_requests(requestID),
-  UNIQUE (requestID, fieldCode)
+    REFERENCES t_requests(requestID)
 );
 
 CREATE TABLE t_event_types (
