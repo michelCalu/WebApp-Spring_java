@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import be.unamur.hermes.business.service.DocumentService;
+import be.unamur.hermes.business.exception.BusinessException;
 import be.unamur.hermes.business.service.RequestService;
 import be.unamur.hermes.dataaccess.entity.Request;
 
@@ -32,12 +33,10 @@ public class RequestController {
     private static Logger logger = LoggerFactory.getLogger(RequestController.class);
 
     private final RequestService requestService;
-    private final DocumentService documentService;
 
     @Autowired
-    public RequestController(RequestService requestService, DocumentService documentService) {
+    public RequestController(RequestService requestService) {
 	this.requestService = requestService;
-	this.documentService = documentService;
     }
 
     @GetMapping(path = "/{requestId}")
@@ -85,8 +84,18 @@ public class RequestController {
 		    .toUri();
 	    return ResponseEntity.created(location).build();
 	} catch (Exception ex) {
-		logger.error("Bad request", ex);
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+	    logger.error("Bad request", ex);
+	    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
 	}
+    }
+
+    @PatchMapping
+    public ResponseEntity<Object> updateAccount(@RequestBody Request updatedRequest) {
+	try {
+	    requestService.update(updatedRequest);
+	    return ResponseEntity.ok().build();
+	} catch (BusinessException be) {
+	    return new ResponseEntity<Object>(HttpStatus.BAD_REQUEST);
 	}
+    }
 }

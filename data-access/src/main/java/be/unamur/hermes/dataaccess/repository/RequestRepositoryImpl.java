@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import be.unamur.hermes.dataaccess.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -14,8 +13,10 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
 import be.unamur.hermes.dataaccess.entity.Citizen;
+import be.unamur.hermes.dataaccess.entity.Department;
 import be.unamur.hermes.dataaccess.entity.Employee;
 import be.unamur.hermes.dataaccess.entity.Request;
+import be.unamur.hermes.dataaccess.entity.RequestField;
 import be.unamur.hermes.dataaccess.entity.RequestStatus;
 import be.unamur.hermes.dataaccess.entity.RequestType;
 
@@ -40,10 +41,12 @@ public class RequestRepositoryImpl implements RequestRepository {
 	    "SELECT rt.requestTypeID, rt.description FROM t_request_types rt WHERE rt.description = ? ";
     private static final String queryRequestTypeById = //
 	    "SELECT rt.requestTypeID, rt.description FROM t_request_types rt WHERE rt.requestTypeID = ? ";
-    private static final String querStatusTypeById = //
+    private static final String queryStatusTypeById = //
 	    "SELECT st.statusID, st.statusName FROM t_req_statusses st WHERE st.statusID = ? ";
-    private static final String querStatusTypeByName = //
+    private static final String queryStatusTypeByName = //
 	    "SELECT st.statusID, st.statusName FROM t_req_statusses st WHERE st.statusName = ? ";
+    private static final String updateStatus = //
+	    "UPDATE t_requests SET statusID = ? WHERE requestID = ? ";
 
     private final JdbcTemplate jdbcTemplate;
     private final SimpleJdbcInsert inserter;
@@ -55,7 +58,7 @@ public class RequestRepositoryImpl implements RequestRepository {
     @Autowired
     public RequestRepositoryImpl(JdbcTemplate jdbcTemplate, CitizenRepository citizenRepository,
 	    EmployeeRepository employeeRepository, RequestFieldRepository requestFieldRepository,
-								 DepartmentRepository departmentRepository) {
+	    DepartmentRepository departmentRepository) {
 	super();
 	this.jdbcTemplate = jdbcTemplate;
 	this.inserter = new SimpleJdbcInsert(jdbcTemplate.getDataSource()).withTableName("t_requests")
@@ -134,12 +137,18 @@ public class RequestRepositoryImpl implements RequestRepository {
 
     @Override
     public RequestStatus findRequestStatusById(long id) {
-	return jdbcTemplate.queryForObject(querStatusTypeById, new Object[] { id },
+	return jdbcTemplate.queryForObject(queryStatusTypeById, new Object[] { id },
 		(rs, rowId) -> new RequestStatus(rs.getLong(1), rs.getString(2)));
     }
 
+    @Override
+    public void updateStatus(Request request) {
+	RequestStatus status = request.getStatus();
+	jdbcTemplate.update(updateStatus, status.getId(), request.getId());
+    }
+
     private RequestStatus findRequestStatusByName(String name) {
-	return jdbcTemplate.queryForObject(querStatusTypeByName, new Object[] { name },
+	return jdbcTemplate.queryForObject(queryStatusTypeByName, new Object[] { name },
 		(rs, rowId) -> new RequestStatus(rs.getLong(1), rs.getString(2)));
     }
 
@@ -162,11 +171,11 @@ public class RequestRepositoryImpl implements RequestRepository {
 	@Override
 	public Request mapRow(ResultSet rs, int rowNum) throws SQLException {
 	    Request request = new Request(rs.getLong(1), rs.getLong(2));
-		request.setCitizenId(rs.getLong(3));
-		request.setEmployeeId(rs.getLong(5));
-		request.setDepartmentId(rs.getLong(6));
-		Long statusId = rs.getLong(7);
-		RequestStatus status = findRequestStatusById(statusId);
+	    request.setCitizenId(rs.getLong(3));
+	    request.setEmployeeId(rs.getLong(5));
+	    request.setDepartmentId(rs.getLong(6));
+	    Long statusId = rs.getLong(7);
+	    RequestStatus status = findRequestStatusById(statusId);
 	    request.setStatus(status);
 	    request.setSystemRef(rs.getString(8));
 	    request.setUserRef(rs.getString(9));
