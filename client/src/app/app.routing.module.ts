@@ -18,7 +18,7 @@ import { ValidateCitizensComponent } from './validate_citizens/validate_citizens
 const appRoutes: Routes = [
   // routes protected with AuthGuard
   { path: '', canActivate: [AuthGuard], children: [
-      { path: '', component: HomeComponent },
+      { path: '', component: LoginComponent },
       { path: 'home', component: HomeComponent },
       { path: 'myfolders', component: MyFoldersComponent },
       { path: 'myprofile', component: MyProfileComponent },
@@ -34,7 +34,7 @@ const appRoutes: Routes = [
   // unprotected routes:
   { path: 'login', component: LoginComponent },
   { path: 'createuser', component: CreateUserComponent },
-  { path: '**', redirectTo: '/home', pathMatch: 'full'}
+  { path: '**', redirectTo: '/login', pathMatch: 'full'}
 
 ];
 
