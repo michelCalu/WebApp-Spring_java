@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Employee, Municipality, Department } from '../_models';
-import { AlertService, EmployeeService } from '../_services';
+import { AlertService, EmployeeService, MunicipalityService } from '../_services';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
@@ -16,19 +16,11 @@ export class CreateEmployeeComponent implements OnInit {
     selectedDepartmentId: number;
     employee = new Employee();
 
-    constructor(private employeeService: EmployeeService, private alertService: AlertService, private router: Router) { }
+    constructor(private employeeService: EmployeeService, private municipalityService: MunicipalityService,
+        private alertService: AlertService, private router: Router) { }
 
     ngOnInit() {
-
-        // TODO replace by actual call
-        // const mockMunicipality = new Municipality();
-        // mockMunicipality.municipalityID = 1;
-        // mockMunicipality.name = 'mockMunicipality';
-        // const mockMunicipalityBis = new Municipality();
-        // mockMunicipalityBis.municipalityID = 2;
-        // mockMunicipalityBis.name = 'no utilizar';
-        // this.municipalities$ = Observable.of([mockMunicipality, mockMunicipalityBis]);
-
+        this.municipalities$ = this.municipalityService.getMunicipalities();
     }
 
     createEmployee(): void {
@@ -45,7 +37,7 @@ export class CreateEmployeeComponent implements OnInit {
     }
 
     municipalityChange(municipalityID: number) {
-        this.departments$ = this.employeeService.getDepartmentsByMunicipalityId(municipalityID);
+        this.departments$ = this.municipalityService.getDepartmentsByMunicipalityId(municipalityID);
         this.selectedDepartmentId = null;
     }
 }

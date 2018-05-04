@@ -21,12 +21,4 @@ export class EmployeeService {
             .catch(err => Observable.of(false));
     }
 
-    public getDepartmentsByMunicipalityId(municipalityId: number): Observable<Department[]> {
-        return this.http.get<Department[]>(/*this.serverAddress + */ '/departments?municipalityId=' + municipalityId)
-            .catch(err => {
-                this.messageService.error(this.translateService.instant('service.deparment.municipalityNotFound'));
-                return [];
-            });
-
-    }
 }
