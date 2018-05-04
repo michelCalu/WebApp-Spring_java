@@ -15,10 +15,10 @@
 			</thead>
 			<tbody>
 				<tr *ngFor="let request of (serviceRequests$ | async)">
-                    <td scope="row">{{request.type | translate}}</td>
+                    <td scope="row">{{request.type.description | translate}}</td>
                     <td> {{ request.userRef }}</td>
                     <td> ** TODO **</td>
-                    <td> {{ request.status }}</td> <!-- TODO should be | translate -->
+                    <td> {{ request.status.name | translate }}</td> 
                     <td> {{ request.assignee.firstName + ' ' + request.assignee.lastName }} </td>
                     <td><button class="btn btn-success" (click)="selectedRequest = request">{{'details'| translate}}</button></td>
                     <td><button class="btn btn-success" [disabled] = "request.assignee" (click)="assign(request)">{{'assignThisRequest'| translate}}</button></td>

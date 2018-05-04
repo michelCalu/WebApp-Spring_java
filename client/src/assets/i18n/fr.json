@@ -1,10 +1,13 @@
+
 {
     "actions": "actions",
     "accept": "accepter",
+    "accepted": "acceptée",
     "additionalComment": "Communication libre",
     "assignee": "gestionnaire",
     "assignThisRequest" : "S'assigner cette demande",
     "authentication.service.getError" : "Authentification refusée",
+    "awaitingInfo": "en attente d'information",
 
 
     "carMake": "Marque",
@@ -31,6 +34,7 @@
     "name": "nom",
     "nationalRegisterNumber": "numéro de registre national",
     "nationalityCertificate": "certificat de nationalité",
+    "new": "nouvelle",
     "newrequest": "nouvelle demande",    
     
     "ongoing": "en cours",
@@ -39,6 +43,7 @@
 
     "reference": "référence",
     "reject": "refuser",
+    "rejected": "refusée",
     "requestDate": "date demande",
     "requestModification": "demander modification",
     "request.service.getError": "Erreur dans la recherche de demandes",
