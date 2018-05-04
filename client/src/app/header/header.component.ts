@@ -46,6 +46,14 @@ export class HeaderComponent implements OnInit {
         this.alertService.success('Vous êtes déconnecté');
     }
 
+    isCitizen(): boolean {
+        return this.authService.getCurrentUser().type === 'citizen';
+    }
+
+    isEmployee(): boolean {
+        return this.authService.getCurrentUser().type === 'employee';
+    }
+
     switchLanguage() {
         const newLanguage = this.currentLanguage === 'fr' ? 'en' : 'fr';
         this.translateService.use(newLanguage);

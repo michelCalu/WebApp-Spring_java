@@ -14,8 +14,7 @@ export class LoginComponent {
     constructor(private router: Router, private authService: AuthenticationService, private alertService: AlertService) { }
 
     login(): void {
-      const enriched = this.username + (this.isEmployee ? '_empl' : '_ctz') ;
-        this.authService.login(enriched, this.password).subscribe(
+        this.authService.login(this.username, this.password, this.isEmployee ? 'employee' : 'citizen').subscribe(
         success => {
             if (success) {
                 this.router.navigate(['myrequests']);
