@@ -10,9 +10,11 @@ export class CitizenRequest {
     systemRef: string;
     typeDescription: string;
     userRef: string;
-    data: Array<RequestField>;
+    data: Array<RequestField> = [];
+    department: any; // department
+    type: any;
 
-    constructor(){
-      this.data = [];
-    }
+    // constructor(){
+    //   this.data = [];
+    // }
 }

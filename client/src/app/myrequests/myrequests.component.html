@@ -8,16 +8,16 @@
 			<thead>
 				<tr>
 					<th scope="col">{{'type' | translate}}</th>
-					<th scope="col">{{'requestDate' | translate}}</th>
+					<th scope="col">{{'reference' | translate}}</th>
 					<th scope="col">{{'status' | translate}}</th>
 					<th scope="col">{{'actions' | translate}}</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr *ngFor="let request of (citizenRequests$ | async)">
-					<th scope="row">{{request.type | translate}}</th>
-					<td>--</td> <!-- TODO -->
-					<td>{{request.status | translate}}</td>
+					<th>{{request.type.description | translate}}</th>
+					<td>{{ request.municipalityRef }}</td> <!-- TODO -->
+					<td>{{request.status.name | translate}}</td>
 					<td>--</td>
 				</tr>
 			</tbody>
