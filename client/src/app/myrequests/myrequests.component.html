@@ -1,6 +1,5 @@
 <div class="col-md-9 col-md-offset-3">
 	<h1>{{'myrequests' | translate}}</h1>
-	<div> ... Espace de recherche ici ...</div>
 	<br>
 	<br>
 	<div class="container">
@@ -18,13 +17,17 @@
 					<th>{{request.type.description | translate}}</th>
 					<td>{{ request.municipalityRef }}</td> <!-- TODO -->
 					<td>{{request.status.name | translate}}</td>
-					<td>--</td>
+					<td><button class="btn btn-success" (click)="selectedRequest = request">{{'details'| translate}}</button></td>
 				</tr>
 			</tbody>
 		</table>
 		<ng-template #noRequests>
 			<div>Vous n'avez pas encore introduit des demandes</div>
-		</ng-template>
+        </ng-template>
+        
+        <div *ngIf="selectedRequest">
+            <request-detail [request]="selectedRequest"></request-detail>
+        </div>
 
 	</div>
 
