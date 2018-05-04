@@ -17,7 +17,8 @@ export class LoginComponent {
         this.authService.login(this.username, this.password, this.isEmployee ? 'employee' : 'citizen').subscribe(
         success => {
             if (success) {
-                this.router.navigate(['myrequests']);
+                const url = this.isEmployee ? 'employee_dashboard' : 'myrequests';
+                this.router.navigate([url]);
             } else {
                 this.alertService.error('Nom d\'utilisateur ou mot de passe incorrect');
             }
