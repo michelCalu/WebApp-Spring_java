@@ -16,7 +16,7 @@ export class EmployeeService {
 
     public createEmployee(employee: Employee): Observable<boolean> {
         return this.http.post<boolean>(this.serverAddress + '/employees', employee, { observe: 'response' }).
-            map(resp => resp.headers.has('Location'))
+            map(resp => resp.status === 201)
             .catch(err => Observable.of(false));
     }
 }
