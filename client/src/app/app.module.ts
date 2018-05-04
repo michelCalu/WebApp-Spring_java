@@ -30,6 +30,7 @@ import { NationalityRequestDataComponent } from './nationality-request-data/nati
 import { ParkingRequestDataComponent } from './parking-request-data';
 import { ValidateCitizensComponent } from './validate_citizens/validate_citizens.component';
 import { NrnDetailsComponent } from './nrn-details';
+import { MunicipalityService } from './_services/municipality.service';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -81,6 +82,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     AuthenticationService,
     CitizenService,
     EmployeeService,
+    MunicipalityService,
     RequestService,
     {
       provide: HTTP_INTERCEPTORS,
