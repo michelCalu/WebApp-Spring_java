@@ -19,4 +19,6 @@ export class Employee {
   dependentChildren = 0;
   dependentPeople = 0;
 
+  departmentIds: Array<number> = [];
+
 }

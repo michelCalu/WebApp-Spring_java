@@ -1,19 +1,38 @@
-import { Component } from '@angular/core';
-import { Employee } from '../_models';
+import { Component, OnInit } from '@angular/core';
+import { Employee, Municipality, Department } from '../_models';
 import { AlertService, EmployeeService } from '../_services';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 @Component({
     templateUrl: 'create_employee.component.html'
 })
 
-export class CreateEmployeeComponent {
+export class CreateEmployeeComponent implements OnInit {
 
+    departments$: Observable<Department[]>;
+    municipalities$: Observable<Municipality[]>;
+    selectedMunicipalityId: number;
+    selectedDepartmentId: number;
     employee = new Employee();
 
     constructor(private employeeService: EmployeeService, private alertService: AlertService, private router: Router) { }
 
+    ngOnInit() {
+
+        // TODO replace by actual call
+        // const mockMunicipality = new Municipality();
+        // mockMunicipality.municipalityID = 1;
+        // mockMunicipality.name = 'mockMunicipality';
+        // const mockMunicipalityBis = new Municipality();
+        // mockMunicipalityBis.municipalityID = 2;
+        // mockMunicipalityBis.name = 'no utilizar';
+        // this.municipalities$ = Observable.of([mockMunicipality, mockMunicipalityBis]);
+
+    }
+
     createEmployee(): void {
+        this.employee.departmentIds.push(this.selectedDepartmentId);
         this.employeeService.createEmployee(this.employee).subscribe(success => {
             if (success) {
                 this.alertService.success('Enregistrement réussi', true);
@@ -23,5 +42,10 @@ export class CreateEmployeeComponent {
                 this.router.navigate(['/create_employee']);
             }
         });
+    }
+
+    municipalityChange(municipalityID: number) {
+        this.departments$ = this.employeeService.getDepartmentsByMunicipalityId(municipalityID);
+        this.selectedDepartmentId = null;
     }
 }
