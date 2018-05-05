@@ -60,7 +60,7 @@ public class RequestServiceImpl implements RequestService {
         Department department = findRequestDepartment(newRequest);
         newRequest.setDepartment(department);
         newRequest.setSystemRef(generateSystemRef(newRequest));
-        newRequest.setMunicipalityRef(Long.toString(department.getMunicipality().getId()));
+        newRequest.setMunicipalityRef(generateMunicipalityRef(newRequest));
 
 		Long newRequestId = requestRepository.create(newRequest);
 
@@ -193,4 +193,11 @@ public class RequestServiceImpl implements RequestService {
 		.toString(requestRepository.findByCitizen(request.getCitizen().getId()).size());
 	return "REQ_" + citizenNRN + "_" + nbOfCreatedRequest;
     }
+
+	private String generateMunicipalityRef(Request request) {
+    	Municipality municipality = request.getDepartment().getMunicipality();
+		String nbOfCreatedRequest = Integer
+				.toString(requestRepository.findbyDepartmentId(municipality.getId()).size());
+		return "REQ_" + municipality.getName().replaceAll("\\s+","") + "_" + nbOfCreatedRequest;
+	}
 }
