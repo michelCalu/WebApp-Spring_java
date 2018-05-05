@@ -4,7 +4,7 @@
     <parking-request-data *ngIf=" request && request.type.description === 'citizenParkingCard'" [request]="request" ></parking-request-data>
     <div [hidden]="!displayEmployeeActions || request.status.name === 'accepted' || request.status.name === 'rejected'">        
         <h2> Actions </h2>
-        <span [hidden]="request.assignee"> Pour effectuer, une action veuillez assigner la demande d'abord </span>
+        <span [hidden]="request.assignee"> Pour effectuer une action, veuillez assigner la demande d'abord </span>
         <select class="custom-select" [(ngModel)]="selectedAction" [disabled]="! request.assignee">
             <option *ngFor="let action of possibleActions" [value]="action">{{ action | translate }}</option>
         </select>
