@@ -47,6 +47,8 @@ public class RequestRepositoryImpl implements RequestRepository {
 	    "SELECT st.statusID, st.statusName FROM t_req_statusses st WHERE st.statusName = ? ";
     private static final String updateStatus = //
 	    "UPDATE t_requests SET statusID = ? WHERE requestID = ? ";
+    private static final String updateAssignee = //
+	    "UPDATE t_requests SET employeeID = ? WHERE requestID = ?";
 
     private final JdbcTemplate jdbcTemplate;
     private final SimpleJdbcInsert inserter;
@@ -147,6 +149,11 @@ public class RequestRepositoryImpl implements RequestRepository {
 	jdbcTemplate.update(updateStatus, status.getId(), request.getId());
     }
 
+    @Override
+    public void updateAssignee(Request request) {
+	jdbcTemplate.update(updateAssignee, request.getAssignee().getId(), request.getId());
+    }
+
     private RequestStatus findRequestStatusByName(String name) {
 	return jdbcTemplate.queryForObject(queryStatusTypeByName, new Object[] { name },
 		(rs, rowId) -> new RequestStatus(rs.getLong(1), rs.getString(2)));
@@ -183,4 +190,5 @@ public class RequestRepositoryImpl implements RequestRepository {
 	    return request;
 	}
     }
+
 }

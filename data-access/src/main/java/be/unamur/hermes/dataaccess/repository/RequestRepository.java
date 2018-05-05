@@ -29,4 +29,6 @@ public interface RequestRepository {
     RequestStatus findRequestStatusById(long id);
 
     void updateStatus(Request request);
+
+    void updateAssignee(Request request);
 }
