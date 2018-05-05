@@ -14,7 +14,8 @@ export class EmployeeDashboardComponent implements OnInit {
     currentUser: User;
     selectedRequest: CitizenRequest;
     serviceRequests$: Observable<CitizenRequest[]>;
-    employee: Employee;
+    // employee: Employee;
+    departmentId: number;
 
     constructor(private requestService: RequestService, private employeeService: EmployeeService,
                     private authService: AuthenticationService) {}
@@ -23,16 +24,22 @@ export class EmployeeDashboardComponent implements OnInit {
         this.currentUser = this.authService.getCurrentUser();
         const currentEmployee = this.employeeService.getEmployeeById(this.currentUser.id);
         const employeeDepartments = currentEmployee.flatMap(employee => employee.departmentIds);
-        this.serviceRequests$ = employeeDepartments.flatMap(departmentId => this.requestService.getDepartmentRequests(departmentId));
+        this.serviceRequests$ = employeeDepartments.flatMap(departmentId => {
+            this.departmentId = departmentId;
+            return this.requestService.getDepartmentRequests(departmentId);
+        });
     }
 
     assign (request: CitizenRequest) {
         this.requestService.assignThisRequest(this.currentUser.id, request)
             .subscribe( success => {
                 if (success) {
-                    // refresh requests
-                    this.serviceRequests$ = this.requestService.getDepartmentRequests(this.employee.id);
+                    this.refresh();
                 }
             });
+    }
+
+    refresh() {
+        this.serviceRequests$ = this.requestService.getDepartmentRequests(this.departmentId);
     }
 }

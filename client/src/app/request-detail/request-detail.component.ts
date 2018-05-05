@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { CitizenRequest, Citizen } from '../_models';
 import { AuthenticationService, CitizenService, RequestService, AlertService } from '../_services';
 import { Observable } from 'rxjs/Observable';
@@ -14,6 +14,8 @@ export class RequestDetailComponent implements OnInit {
     request: CitizenRequest;
     @Input()
     displayEmployeeActions: boolean;
+    @Output()
+    requestUpdated = new EventEmitter<void>();
 
     citizen: Citizen;
     selectedAction = 'accept';
@@ -30,6 +32,7 @@ export class RequestDetailComponent implements OnInit {
         this.requestService.performAction(this.request, this.selectedAction, null).subscribe(success => {
           if (success) {
             this.alertService.success('Action performed !');
+            this.requestUpdated.emit();
           } else {
             this.alertService.error('Action failed !');
           }

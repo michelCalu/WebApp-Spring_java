@@ -1,5 +1,5 @@
 <div class="col-md-9 col-md-offset-3">
-	<h1> {{ 'employee_dashboard' | translate }} </h1>
+    <h1> {{ 'employee_dashboard' | translate }} </h1>
 	<div class="container">
 		<table *ngIf="(serviceRequests$ | async)?.length; else noRequests" class="table table-striped">
 			<thead>
@@ -30,7 +30,7 @@
         </ng-template>
 
         <div *ngIf="selectedRequest">
-            <request-detail [request]="selectedRequest" [displayEmployeeActions]="true"></request-detail>
+            <request-detail [request]="selectedRequest" [displayEmployeeActions]="true" (requestUpdated)="refresh()"></request-detail>
         </div>
         
 	</div>
