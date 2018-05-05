@@ -6,7 +6,7 @@
 				<tr>
                     <th scope="col">{{'type' | translate}}</th>
                     <th scope="col">{{'reference' | translate}}</th>
-					<th scope="col">{{'requestDate' | translate}}</th>
+					<!-- <th scope="col">{{'requestDate' | translate}}</th> -->
 					<th scope="col">{{'status' | translate}}</th>
                     <th scope="col">{{'assignee' | translate}}</th>
                     <th></th>
@@ -17,7 +17,7 @@
 				<tr *ngFor="let request of (serviceRequests$ | async)">
                     <td scope="row">{{request.type.description | translate}}</td>
                     <td> {{ request.userRef }}</td>
-                    <td> ** TODO **</td>
+                    <!-- <td> ** TODO **</td> -->
                     <td> {{ request.status.name | translate }}</td> 
                     <td> {{ request.assignee ? (request.assignee.firstName + ' ' + request.assignee.lastName) : '' }} </td>
                     <td><button class="btn btn-success" (click)="selectedRequest = request">{{'details'| translate}}</button></td>

@@ -44,6 +44,7 @@
     "rejected": "rejected",
     "requestDate": "request date",
     "requestModification": "request modification",
+    "request.service.assignError": "Cannot assign request",
     "request.service.getError": "Error retrieving the requests",
 
     "service.citizen.errorGetCitizen" : "Unknown citizen",

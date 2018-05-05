@@ -45,7 +45,13 @@ export class RequestService {
     }
 
     assignThisRequest(employeeId: number, request: CitizenRequest): Observable<boolean> {
-        throw new Error("Method not implemented.");
+        const body = {id: request.id, assignee: { id: employeeId}};
+        return this.http.patch('/requests', body)
+            .map(res => true )
+            .catch(error => {
+                this.messageService.error(this.translateService.instant('request.service.assignError'));
+                return Observable.of(false);
+            });
     }
 
     performAction(request: CitizenRequest, action: string, additionalData: Object): Observable<Boolean> {
