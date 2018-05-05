@@ -21,4 +21,12 @@ export class EmployeeService {
             .catch(err => Observable.of(false));
     }
 
+    public getEmployeeById(id: number): Observable <Employee> {
+        return this.http.get<Employee>(/*this.serverAddress + */ `/employees/${id}`)
+        .catch(err => {
+            this.messageService.error(this.translateService.instant('service.employee.errorGetEmployee'));
+            return Observable.of(null);
+        });
+    }
+
 }

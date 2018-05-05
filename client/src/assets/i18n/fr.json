@@ -52,6 +52,7 @@
     "service.citizen.errorGetNrn" : "Numéro de registre national non reconnu",
     "service.citizen.errorValidateCitizen": "Impossible de valider le compte du citoyen",
     "service.department.municipalityNotFound": "Impossible de trouver les services de la commune",
+    "service.employee.errorGetEmployee" : "Employée inconnu",
     "signin": "se connecter",
     "signup": "s'inscrire",
     "status": "statut",
@@ -62,5 +63,6 @@
     "validateCitizens": "valider inscriptions",
     "viewDetails": "voir détails",
     "viewNationalRegisterDetails": "voir détails Registre National"
+    
 
 }

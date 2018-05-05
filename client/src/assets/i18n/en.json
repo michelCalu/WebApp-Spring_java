@@ -49,6 +49,7 @@
     "service.citizen.errorGetNrn" : "Unknown national register number",
     "service.citizen.errorValidateCitizen": "Unable to validate the citizen's account",
     "service.department.municipalityNotFound": "Unable to find the departments of this municipality",
+    "service.employee.errorGetEmployee" : "Unknown employee",
     "signin": "sign in",
     "signup": "sign up",
     "status": "status",
