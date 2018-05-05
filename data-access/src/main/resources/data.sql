@@ -2,6 +2,8 @@
 insert into t_request_types values(1,"nationalityCertificate");
 insert into t_request_types values(2,"citizenParkingCard");
 insert into t_request_types values(3,"companyParkingCard");
+
+insert into t_request_field_definitions values("nationalityCertificateReference", 1, "string", false);
  
 insert into t_request_field_definitions values("citizenParkingCardCarMake", 2, "string", true);
 insert into t_request_field_definitions values("citizenParkingCardCarModel", 2, "string", true);
