@@ -5,6 +5,7 @@ import be.unamur.hermes.common.enums.Authority;
 import be.unamur.hermes.common.enums.UserStatus;
 import be.unamur.hermes.common.enums.UserType;
 import be.unamur.hermes.common.util.PasswordUtil;
+import be.unamur.hermes.dataaccess.dto.UpdateUserAccount;
 import be.unamur.hermes.dataaccess.entity.Employee;
 import be.unamur.hermes.dataaccess.entity.UserAccount;
 import be.unamur.hermes.dataaccess.repository.EmployeeRepository;
@@ -65,7 +66,28 @@ public class EmployeeServiceImpl implements EmployeeService {
 	return employeeRepository.create(employee, userAccountId);
     }
 
-    @Override
+	@Override
+	public void suspendAccount(long employeeID) throws BusinessException {
+		long acctId;
+		UserAccount account;
+		Employee employee;
+    	try {
+			 employee = employeeRepository.findById(employeeID);
+			 account = employeeRepository.findAccount(employee.getNationalRegisterNb());
+		}catch (EmptyResultDataAccessException e){
+			throw new BusinessException("Employee not found !");
+		}
+		acctId = account.getAccountUserId();
+    	if(!account.getStatus().getValue().equals("disabled")) {
+			UpdateUserAccount update = new UpdateUserAccount();
+			update.setStatus("disabled");
+			accountRepository.update(acctId, update);
+		}else{
+    		throw new BusinessException("Account is already disabled");
+		}
+	}
+
+	@Override
     public UserAccount findAccount(String nationalRegistrationNb) throws BusinessException {
 	try {
 	    return employeeRepository.findAccount(nationalRegistrationNb);
@@ -73,4 +95,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 	    throw new BusinessException("Account not found !");
 	}
     }
+
+
 }
