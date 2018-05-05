@@ -60,7 +60,6 @@ public class RequestServiceImpl implements RequestService {
         Department department = findRequestDepartment(newRequest);
         newRequest.setDepartment(department);
         newRequest.setSystemRef(generateSystemRef(newRequest));
-        newRequest.setUserRef(Long.toString(newRequest.getCitizen().getId()));
         newRequest.setMunicipalityRef(Long.toString(department.getMunicipality().getId()));
 
 		Long newRequestId = requestRepository.create(newRequest);

@@ -34,13 +34,7 @@ export class NationalityCertificateCreationComponent implements OnInit {
       console.log('CITZENID BEFORE REQUEST : ' + this.requestor.id);
       this.request.citizen = this.requestor;
       this.request.typeDescription = 'nationalityCertificate';
-
-      const referenceField = new RequestField();
-      referenceField.code = 'nationalityCertificateReference';
-      referenceField.fieldType = 'String';
-      referenceField.fieldValue = this.reference;
-
-      this.request.data = [referenceField];
+      this.request.userRef = this.reference;
 
       var formData = new FormData();
       formData.append("request",  new Blob([JSON.stringify(this.request)], {

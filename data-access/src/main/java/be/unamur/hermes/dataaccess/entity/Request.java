@@ -182,8 +182,26 @@ public class Request {
 
     @Override
     public String toString() {
-	return "Request [id=" + id + ", typeDescription=" + typeDescription + ", status=" + status + ", citizenId=" + citizenId
-		+ ", employeeId=" + employeeId + ", assignee=" + assignee + ", citizen=" + citizen + "" +
-            ", datas=" + data + "]";
+        return "Request{" +
+                "id=" + id +
+                ", userRef='" + userRef + '\'' +
+                ", systemRef='" + systemRef + '\'' +
+                ", municipalityRef='" + municipalityRef + '\'' +
+                ", citizenId=" + citizenId +
+                ", companyNb='" + companyNb + '\'' +
+                ", employeeId=" + employeeId +
+                ", departmentId=" + departmentId +
+                ", typeId=" + typeId +
+                ", typeDescription='" + typeDescription + '\'' +
+                ", statusId=" + statusId +
+                ", dataIds=" + dataIds +
+                ", assignee=" + assignee +
+                ", citizen=" + citizen +
+                ", company=" + company +
+                ", department=" + department +
+                ", type=" + type +
+                ", status=" + status +
+                ", data=" + data +
+                '}';
     }
 }
