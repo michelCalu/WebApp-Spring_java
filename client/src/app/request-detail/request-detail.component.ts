@@ -31,10 +31,10 @@ export class RequestDetailComponent implements OnInit {
     performAction(): void {
         this.requestService.performAction(this.request, this.selectedAction, null).subscribe(success => {
           if (success) {
-            this.alertService.success('Action performed !');
+            this.alertService.success('Action effectuée !');
             this.requestUpdated.emit();
           } else {
-            this.alertService.error('Action failed !');
+            this.alertService.error('Action échouée !');
           }
         });
     }
