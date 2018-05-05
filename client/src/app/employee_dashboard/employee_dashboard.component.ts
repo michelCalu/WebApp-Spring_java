@@ -21,11 +21,9 @@ export class EmployeeDashboardComponent implements OnInit {
 
     ngOnInit() {
         this.currentUser = this.authService.getCurrentUser();
-        this.serviceRequests$ = this. employeeService.getEmployeeById(this.currentUser.id)
-                                    .flatMap(employee => {
-                                        this.employee = employee;
-                                        return this.requestService.getDepartmentRequests(employee.id);
-                                    });
+        const currentEmployee = this.employeeService.getEmployeeById(this.currentUser.id);
+        const employeeDepartments = currentEmployee.flatMap(employee => employee.departmentIds);
+        this.serviceRequests$ = employeeDepartments.flatMap(departmentId => this.requestService.getDepartmentRequests(departmentId));
     }
 
     assign (request: CitizenRequest) {
