@@ -11,6 +11,7 @@
     "carMake": "Car make",
     "carModel": "Model",
     "carRegistrationNumber": "Registration number",
+    "citizenParkingCard": "Citizen parking card",
     "colour": "Colour",
     "connectAsEmployee": "Login as an employee",
     "create_employee": "create an employee",
