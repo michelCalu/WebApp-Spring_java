@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { RequestService, AlertService, CitizenService, AuthenticationService } from '../_services';
 import { CitizenRequest, Citizen } from '../_models';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import {RequestField} from "../_models/request-field.model";
 
 @Component({
     moduleId: module.id,
@@ -13,6 +13,8 @@ export class NationalityCertificateCreationComponent implements OnInit {
 
   requestor: Citizen;
   request = new CitizenRequest();
+  reference: string;
+
 
     constructor(
       private router: Router,
@@ -32,6 +34,13 @@ export class NationalityCertificateCreationComponent implements OnInit {
       console.log('CITZENID BEFORE REQUEST : ' + this.requestor.id);
       this.request.citizen = this.requestor;
       this.request.typeDescription = 'nationalityCertificate';
+
+      const referenceField = new RequestField();
+      referenceField.code = 'nationalityCertificateReference';
+      referenceField.fieldType = 'String';
+      referenceField.fieldValue = this.reference;
+
+      this.request.data = [referenceField];
 
       var formData = new FormData();
       formData.append("request",  new Blob([JSON.stringify(this.request)], {
