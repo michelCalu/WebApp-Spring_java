@@ -2,11 +2,12 @@
     <citizen-detail *ngIf="citizen" [citizen]="citizen"></citizen-detail>
     <nationality-request-data *ngIf="citizen && request && request.type.description === 'nationalityCertificate'" [request]="request" [citizen]="citizen"></nationality-request-data>
     <parking-request-data *ngIf=" request && request.type.description === 'citizenParkingCard'" [request]="request" ></parking-request-data>
-    <div *ngIf="displayEmployeeActions">
+    <div [hidden]="!displayEmployeeActions">        
         <h2> Actions </h2>
-        <select class="custom-select" [(ngModel)]="selectedAction">
+        <span [hidden]="request.assignee"> Pour effectuer, une action veuillez assigner la demande d'abord </span>
+        <select class="custom-select" [(ngModel)]="selectedAction" [disabled]="! request.assignee">
             <option *ngFor="let action of possibleActions" [value]="action">{{ action | translate }}</option>
         </select>
-        <button class="btn btn-primary" [disabled]="!selectedAction" (click)="performAction()"> OK </button>
+        <button class="btn btn-primary" [disabled]="!selectedAction" (click)="performAction()" [disabled]="!request.assignee"> OK </button>
     </div>
 </div>
