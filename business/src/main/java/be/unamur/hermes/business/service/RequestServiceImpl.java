@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import be.unamur.hermes.business.exception.BusinessException;
 import be.unamur.hermes.dataaccess.entity.Citizen;
@@ -20,7 +21,6 @@ import be.unamur.hermes.dataaccess.repository.DepartmentRepository;
 import be.unamur.hermes.dataaccess.repository.MunicipalityRepository;
 import be.unamur.hermes.dataaccess.repository.RequestFieldRepository;
 import be.unamur.hermes.dataaccess.repository.RequestRepository;
-import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class RequestServiceImpl implements RequestService {
@@ -50,43 +50,43 @@ public class RequestServiceImpl implements RequestService {
 
     @Override
     public long create(Request newRequest, Map<String, MultipartFile> codeToFiles) {
-	    // TODO validate with Authentification
-        // Setting basic info
-	    RequestType requestType = findRequestTypeByDescription(newRequest.getTypeDescription());
-	    newRequest.setType(requestType);
-	    if (requestType == null)
-	        throw new BusinessException("Unknown request type:" + requestType.getDescription());
+	// TODO validate with Authentification
+	// Setting basic info
+	RequestType requestType = findRequestTypeByDescription(newRequest.getTypeDescription());
+	newRequest.setType(requestType);
+	if (requestType == null)
+	    throw new BusinessException("Unknown request type:" + requestType.getDescription());
 
-        Department department = findRequestDepartment(newRequest);
-        newRequest.setDepartment(department);
-        newRequest.setSystemRef(generateSystemRef(newRequest));
-        newRequest.setUserRef(Long.toString(newRequest.getCitizen().getId()));
-        newRequest.setMunicipalityRef(Long.toString(department.getMunicipality().getId()));
+	Department department = findRequestDepartment(newRequest);
+	newRequest.setDepartment(department);
+	newRequest.setSystemRef(generateSystemRef(newRequest));
+	newRequest.setUserRef(Long.toString(newRequest.getCitizen().getId()));
+	newRequest.setMunicipalityRef(Long.toString(department.getMunicipality().getId()));
 
-        Long newRequestId = requestRepository.create(newRequest);
-        try {
-            for(String code : codeToFiles.keySet()){
-                RequestField requestField = new RequestField();
-                requestField.setCode(code);
-                requestField.setFieldType("File");
-                requestField.setFieldFile(codeToFiles.get(code).getBytes());
-                newRequest.addRequestField(requestField);
-                requestFieldRepository.createRequestField(requestField, newRequestId);
-            }
-        } catch (IOException e) {
-            throw new BusinessException("Error when receiving files.");
-        }
-
-	    for(RequestField field : newRequest.getData()){
-	        if(field.getFieldType().equals("String") && field.getFieldFile() != null)
-	            throw new BusinessException("Field type doesn't match field content ! Expected 'String' got 'File'");
-	        if(field.getFieldType().equals("File") && field.getFieldValue() != null)
-	            throw new BusinessException("Field type doesn't match field content ! Expected 'File' got 'String'");
-	        if(field.getFieldValue() == null && field.getFieldFile() == null)
-	            throw new BusinessException("No value or file is attached to this field !");
-	        requestFieldRepository.createRequestField(field, newRequestId);
+	Long newRequestId = requestRepository.create(newRequest);
+	try {
+	    for (String code : codeToFiles.keySet()) {
+		RequestField requestField = new RequestField();
+		requestField.setCode(code);
+		requestField.setFieldType("File");
+		requestField.setFieldFile(codeToFiles.get(code).getBytes());
+		newRequest.addRequestField(requestField);
+		requestFieldRepository.createRequestField(requestField, newRequestId);
 	    }
-	    return newRequestId;
+	} catch (IOException e) {
+	    throw new BusinessException("Error when receiving files.");
+	}
+
+	for (RequestField field : newRequest.getData()) {
+	    if (field.getFieldType().equals("String") && field.getFieldFile() != null)
+		throw new BusinessException("Field type doesn't match field content ! Expected 'String' got 'File'");
+	    if (field.getFieldType().equals("File") && field.getFieldValue() != null)
+		throw new BusinessException("Field type doesn't match field content ! Expected 'File' got 'String'");
+	    if (field.getFieldValue() == null && field.getFieldFile() == null)
+		throw new BusinessException("No value or file is attached to this field !");
+	    requestFieldRepository.createRequestField(field, newRequestId);
+	}
+	return newRequestId;
     }
 
     @Override
@@ -136,6 +136,11 @@ public class RequestServiceImpl implements RequestService {
 	    }
 	    // for all statusses : update status
 	    requestRepository.updateStatus(updatedRequest);
+	    return;
+	}
+
+	if (updatedRequest.getAssignee() != null) {
+	    requestRepository.updateAssignee(updatedRequest);
 	}
     }
 

@@ -117,6 +117,9 @@ public class DocumentServiceImpl implements DocumentService {
 	result.setVariable("requestor", request.getCitizen());
 	result.setVariable("request", request);
 	result.setVariable("officer", request.getAssignee());
+	if (request.getDepartment().getAddress() == null) {
+	    request.getDepartment().setAddress(request.getDepartment().getMunicipality().getAddress());
+	}
 	result.setVariable("department", request.getDepartment());
 	result.setVariable("municipality", request.getDepartment().getMunicipality());
 	result.setVariable("util", new DocumentHelper());
