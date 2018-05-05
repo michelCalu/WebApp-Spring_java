@@ -68,6 +68,14 @@ export class RequestService {
         this.messageService.error('not implemented');
       }
     }
+
+    getRequestById(requestId: number): Observable<CitizenRequest> {
+        return this.http.get<CitizenRequest>(/*this.serverAddress + */ '/requests/' + requestId)
+        .catch(err => {
+            this.messageService.error(this.translateService.instant('request.service.getError'));
+            return Observable.of(null);
+        });
+    }
 }
 
 class CreateRequest {
