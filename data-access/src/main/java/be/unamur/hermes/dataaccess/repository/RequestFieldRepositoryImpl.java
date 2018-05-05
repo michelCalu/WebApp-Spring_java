@@ -49,10 +49,10 @@ public class RequestFieldRepositoryImpl implements RequestFieldRepository {
     private RequestField buildRequestField(ResultSet rs, int rowNum) throws SQLException {
         return new RequestField(
                 rs.getString(2),
-                rs.getBoolean(5),
+                rs.getBoolean(9),
+                rs.getString(6),
                 rs.getString(4),
-                rs.getString(7),
-                rs.getBlob(8).getBytes(1, (int) rs.getBlob(8).length())
+                rs.getBlob(5) == null ? null : rs.getBlob(5).getBytes(1, (int) rs.getBlob(5).length())
         );
     }
 }
