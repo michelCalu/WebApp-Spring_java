@@ -32,13 +32,17 @@ export class CitizenService {
     public login(user: User) {
         return this.http.post(/*this.serverAddress + */ '/login', user);
     }
-
-    public getCitizen(user: User): Observable<Citizen> {
-        return this.http.get<Citizen>(/*this.serverAddress + */ `/citizens/${user.id}`)
+  
+    public getCitizenById (id: number) : Observable<Citizen> {
+        return this.http.get<Citizen>(/*this.serverAddress + */ `/citizens/${id}`)
             .catch(err => {
                 this.messageService.error(this.translateService.instant('service.citizen.errorGetCitizen'));
                 return Observable.of(null);
             });
+    }
+
+    public getCitizen(user: User): Observable<Citizen> {
+      return this.getCitizenById(user.id);
     }
 
     validateCitizenAccount(citizen: Citizen): Observable<boolean> {

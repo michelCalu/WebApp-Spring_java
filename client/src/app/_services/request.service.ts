@@ -48,10 +48,20 @@ export class RequestService {
         throw new Error("Method not implemented.");
     }
 
-    performAction(request: CitizenRequest, action: string, aditionalData: Object) {
-        throw new Error("Method not implemented.");
+    performAction(request: CitizenRequest, action: string, additionalData: Object): Observable<Boolean> {
+      console.log('Performing action ' + action + 'on request : ' + JSON.stringify(request));
+      if (action === 'accept') {
+        return this.http.patch('/requests', {'id':request.id, 'status': {'id': 5, 'name': 'accepted'}})
+          .map(res => true )
+          .catch(error => Observable.of(false));
+      } else if (action === 'reject') {
+         return this.http.patch('/requests', {'id':request.id, 'status': {'id': 4, 'name': 'rejected'}})
+           .map(res =>true).
+           catch(err => Observable.of(false));
+      } else{
+        this.messageService.error('not implemented');
+      }
     }
-
 }
 
 class CreateRequest {

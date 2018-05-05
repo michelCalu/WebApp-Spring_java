@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CitizenRequest, Citizen } from '../_models';
-import { AuthenticationService, CitizenService, RequestService } from '../_services';
+import { AuthenticationService, CitizenService, RequestService, AlertService } from '../_services';
 import { Observable } from 'rxjs/Observable';
 
 
@@ -17,16 +17,20 @@ export class RequestDetailComponent implements OnInit {
     possibleActions = ['accept', 'reject', 'requestModification'];
 
     constructor(private authService: AuthenticationService, private citizenService: CitizenService,
-                private requestService: RequestService) {}
+                private requestService: RequestService, private alertService: AlertService) {}
 
     ngOnInit(): void {
-        const currentUser = this.authService.getCurrentUser();
-        this.citizenService.getCitizen(currentUser)
-            .map(citizen => this.citizen = citizen)
-            .subscribe();
+     this.citizen = this.request.citizen
     }
 
     performAction(): void {
-        this.requestService.performAction(this.request, this.selectedAction, null);
+        this.requestService.performAction(this.request, this.selectedAction, null).subscribe(success => {
+          if (success) {
+            this.ngOnInit;
+            this.alertService.success("Action performed !");
+          } else {
+            this.alertService.error("Action failed !");
+          }
+        });
     }
 }
