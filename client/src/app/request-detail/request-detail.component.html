@@ -2,7 +2,7 @@
     <citizen-detail *ngIf="citizen" [citizen]="citizen"></citizen-detail>
     <nationality-request-data *ngIf="citizen && request && request.type.description === 'nationalityCertificate'" [request]="request" [citizen]="citizen"></nationality-request-data>
     <parking-request-data *ngIf=" request && request.type.description === 'citizenParkingCard'" [request]="request" ></parking-request-data>
-    <div [hidden]="!displayEmployeeActions">        
+    <div [hidden]="!displayEmployeeActions || request.status.name === 'accepted' || request.status.name === 'rejected'">        
         <h2> Actions </h2>
         <span [hidden]="request.assignee"> Pour effectuer, une action veuillez assigner la demande d'abord </span>
         <select class="custom-select" [(ngModel)]="selectedAction" [disabled]="! request.assignee">
