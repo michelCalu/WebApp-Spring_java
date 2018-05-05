@@ -41,5 +41,6 @@ export class EmployeeDashboardComponent implements OnInit {
 
     refresh() {
         this.serviceRequests$ = this.requestService.getDepartmentRequests(this.departmentId);
+        this.selectedRequest = null;
     }
 }
