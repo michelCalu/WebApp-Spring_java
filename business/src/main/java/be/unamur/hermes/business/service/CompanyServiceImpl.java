@@ -1,10 +1,11 @@
 package be.unamur.hermes.business.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import be.unamur.hermes.business.exception.BusinessException;
 import be.unamur.hermes.dataaccess.entity.Company;
 import be.unamur.hermes.dataaccess.repository.CompanyRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 @Service
 public class CompanyServiceImpl implements CompanyService {
@@ -13,28 +14,21 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Autowired
     public CompanyServiceImpl(CompanyRepository companyRepository) {
-        this.companyRepository = companyRepository;
-    }
-
-
-    @Override
-    public Company findByName(String firstName, String lastname) throws BusinessException {
-        return null;
+	this.companyRepository = companyRepository;
     }
 
     @Override
-    public Company findByOwner(Long ownerCitizenId) throws BusinessException {
-        return null;
-    }
-
-
-    @Override
-    public Company findByEntrepriseNumber(String entrepriseNumber) throws BusinessException {
-        return null;
+    public Company findByCompanyNumber(String entrepriseNumber) throws BusinessException {
+	return companyRepository.findById(entrepriseNumber);
     }
 
     @Override
     public Company findByVAT(String vatNb) throws BusinessException {
-        return null;
+	return companyRepository.findByVAT(vatNb);
+    }
+
+    @Override
+    public String create(Company company) {
+	return companyRepository.create(company);
     }
 }

@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,8 +41,6 @@ public class CitizensController {
     public ResponseEntity<Object> createCitizen(@RequestBody Citizen citizen) throws URISyntaxException {
 	try {
 	    long id = citizenService.register(citizen);
-	    HttpHeaders responseHeaders = new HttpHeaders();
-	    responseHeaders.setLocation(new URI("/citizens/" + id));
 	    URI location = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}").buildAndExpand(id).toUri();
 	    return ResponseEntity.created(location).build();
 	} catch (BusinessException be) {

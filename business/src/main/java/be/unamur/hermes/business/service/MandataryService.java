@@ -1,20 +1,21 @@
 package be.unamur.hermes.business.service;
 
-import be.unamur.hermes.dataaccess.entity.Company;
-import be.unamur.hermes.dataaccess.entity.Mandatary;
-import be.unamur.hermes.dataaccess.entity.MandataryRole;
-
 import java.util.List;
+
+import be.unamur.hermes.dataaccess.entity.Mandatary;
 
 public interface MandataryService {
 
-    Mandatary findByCitizen (Long CitizenId);
+    List<Mandatary> findByCitizen(Long citizenId);
 
-    List<Mandatary> findByCompany (String EntrepriseNb);
+    List<Mandatary> findByCompany(String entrepriseNb);
 
-    List<Mandatary> findAll ();
+    List<Mandatary> findByCompany(String entrepriseNb, String role);
 
-    Long register (Mandatary mandatary, Company company, MandataryRole mandataryRole);
+    Mandatary findById(long id);
 
+    List<Mandatary> findAll();
+
+    Long register(Mandatary mandatary);
 
 }

@@ -93,28 +93,22 @@ CREATE TABLE t_companies (
   companyNb   	VARCHAR(255)  	PRIMARY KEY NOT NULL,
   vatNb     	VARCHAR(255),
   address     	INT       		NOT NULL,
-  judicialForm  VARCHAR(255)  	NOT NULL,
-  contactPerson  INT			  	NOT NULL,
+  legalForm  	VARCHAR(255)  	NOT NULL,
+  contactPerson VARCHAR(255)	NOT NULL,
 
   FOREIGN KEY (contactPerson) REFERENCES t_citizens(citizenID)
 );
 
-
-CREATE TABLE t_mandatary_roles(
-  roleID    INT PRIMARY KEY   NOT NULL AUTO_INCREMENT,
-  roleName  VARCHAR(255)  NOT NULL
-);
-
-
 CREATE TABLE t_mandataries(
-  mandataryID   INT PRIMARY KEY NOT NULL,
-  citizenID   	INT  NOT NULL,
-  companyNb   	VARCHAR(255)  NOT NULL,
-  role      	INT       	NOT NULL,
+  mandataryID   INT PRIMARY KEY 	NOT NULL AUTO_INCREMENT,
+  citizenID   	INT  				NOT NULL,
+  companyNb   	VARCHAR(255)  		NOT NULL,
+  role      	
+  	ENUM('owner','manager','reader')       	
+  									NOT NULL,
 
   FOREIGN KEY (citizenID) REFERENCES t_citizens(citizenID),
   FOREIGN KEY (companyNb) REFERENCES t_companies(companyNb),
-  FOREIGN KEY (role) REFERENCES t_mandatary_roles(roleID),
   UNIQUE (citizenID, companyNb, role)
 );
 
