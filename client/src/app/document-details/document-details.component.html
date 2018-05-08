@@ -1,11 +1,10 @@
 <h2> Documents génerés </h2>
-<!-- <div *ngIf="(nrnData$ | async) as nrnData">
-    <ul class="list-group" *ngIf="nrnData.status === 'VALID'; else invalid">
-        <li class="list-group-item"> {{nrnData.belgian ? 'Belge' : 'Étranger' }}</li>
-        <li class="list-group-item"> {{nrnData.alive ? 'Vivant' : 'Non vivant' }}</li>
+<div *ngIf="(documents$ | async) as documents">
+     <ul class="list-group" *ngIf="documents.length; else noDocuments">
+        <li *ngFor="let document of documents" class="list-group-item"> {{ document.id }}</li>
     </ul>
-    <ng-template #invalid>
-        Numéro de registre national invalide
+    <ng-template #noDocuments>
+        Aucun document trouvé
     </ng-template>
-</div>
-<br> -->
+</div> 
+<br> 

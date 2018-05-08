@@ -19,6 +19,8 @@
     "create_employee": "créer un employé",
     "createEmployee.title": "Créer un nouvel employé",
 
+    "documents.service.getError": "Erreur dans la recherche des documents",
+
     "employee_dashboard": "inbox d'employé",
 
     "home": "accueil",

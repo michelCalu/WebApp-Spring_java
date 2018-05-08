@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { CitizenRequest, Citizen } from '../_models';
-import { CitizenService } from '../_services';
+import { CitizenRequest, Citizen, RequestDocument } from '../_models';
+import { CitizenService, DocumentService } from '../_services';
 import { Observable } from 'rxjs/Observable';
 
 
@@ -9,8 +9,17 @@ import { Observable } from 'rxjs/Observable';
     templateUrl: 'document-details.component.html'
 })
 
-export class DocumentDetailsComponent {
+export class DocumentDetailsComponent implements OnInit {
 
-    constructor() { }
+    @Input()
+    request: CitizenRequest;
+
+    documents$: Observable<RequestDocument[]>;
+
+    constructor(private documentService: DocumentService) { }
+
+    ngOnInit(): void {
+        this.documents$ = this.documentService.getRequestDocuments(this.request.id);
+    }
 
 }

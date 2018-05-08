@@ -3,7 +3,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 
-import { AlertService, AuthenticationService, CitizenService, MockAuthService, RequestService, EmployeeService } from './_services/index';
+import { AlertService, AuthenticationService, CitizenService, MockAuthService, RequestService, EmployeeService, 
+            DocumentService } from './_services/index';
 import { AlertComponent } from './_directives/index';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app.routing.module';
@@ -86,6 +87,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     EmployeeService,
     MunicipalityService,
     RequestService,
+    DocumentService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: JwtInterceptor,
