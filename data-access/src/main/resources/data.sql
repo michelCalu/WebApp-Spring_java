@@ -88,3 +88,11 @@ insert into t_request_field_values values(2, "citizenParkingCardCarModel", 2, "P
 insert into t_request_field_values values(3, "citizenParkingCardCarColour", 2, "red", null);
 insert into t_request_field_values values(4, "citizenParkingCardPlateNumber", 2, "123456", null);
 insert into t_request_field_values values(5, "citizenParkingCardGreenCard", 2, null, "TODO: should be the BLOB");
+
+insert into t_document_titles values (1, "citizen parking card");
+insert into t_document_titles values (2, "citizen parking payment notice");
+insert into t_document_titles values (3, "citizen parking confirmation");
+insert into t_document_titles values (4, "Nationality Certificate");
+insert into t_documents values (1, 2, "contents", 1);
+insert into t_documents values (2, 2, "contents", 2);
+insert into t_documents values (3, 2, "contents", 3);

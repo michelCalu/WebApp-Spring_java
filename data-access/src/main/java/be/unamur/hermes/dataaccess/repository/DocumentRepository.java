@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface DocumentRepository {
 
-    long create(long requestId, String contents);
+    long create(long requestId, String contents, long documentTitle);
 
     String getDocument(long documentId);
 

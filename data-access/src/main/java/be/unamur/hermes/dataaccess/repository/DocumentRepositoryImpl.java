@@ -1,13 +1,13 @@
 package be.unamur.hermes.dataaccess.repository;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Repository
 public class DocumentRepositoryImpl implements DocumentRepository {
@@ -20,7 +20,7 @@ public class DocumentRepositoryImpl implements DocumentRepository {
 	    "SELECT contents FROM t_documents WHERE documentID = ?";
 
     private static final String findDocumentIdsByRequest = //
-	    "SELECT documentID FROM t_documents WHERE requestID = ?";
+	    "SELECT documentID, documentTitle FROM t_documents WHERE requestID = ?";
 
     @Autowired
     public DocumentRepositoryImpl(JdbcTemplate jdbc) {
@@ -41,10 +41,11 @@ public class DocumentRepositoryImpl implements DocumentRepository {
     }
 
     @Override
-    public long create(long requestId, String contents) {
+    public long create(long requestId, String contents, long documentTitle ) {
 	Map<String, Object> params = new HashMap<>();
 	params.put("requestID", requestId);
 	params.put("contents", contents);
+	params.put("documentTitle", documentTitle);
 	return (Long) inserter.executeAndReturnKey(params);
     }
 }

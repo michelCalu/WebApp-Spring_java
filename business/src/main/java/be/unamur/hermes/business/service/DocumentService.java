@@ -1,9 +1,9 @@
 package be.unamur.hermes.business.service;
 
+import be.unamur.hermes.dataaccess.entity.Request;
+
 import java.io.InputStream;
 import java.util.List;
-
-import be.unamur.hermes.dataaccess.entity.Request;
 
 /**
  * The DocumentService has a double purpose :
@@ -17,13 +17,13 @@ import be.unamur.hermes.dataaccess.entity.Request;
  */
 public interface DocumentService {
 
-    long createNationalityCertificate(boolean positive, Request request);
+    long createNationalityCertificate(boolean positive, Request request, long documentTitle);
 
-    long createParkingCardDecision(boolean positive, Request request);
+    long createParkingCardDecision(boolean positive, Request request, long documentTitle);
 
-    long createParkingCard(Request request);
+    long createParkingCard(Request request, long documentTitle);
 
-    long createPayment(Request request);
+    long createPayment(Request request, long documentTitle);
 
     InputStream findDocumentById(long documentId);
 

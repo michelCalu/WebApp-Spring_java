@@ -1,11 +1,10 @@
 package be.unamur.hermes.business.service;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.time.LocalDate;
-import java.util.List;
-import java.util.Locale;
-
+import be.unamur.hermes.business.document.DocumentHelper;
+import be.unamur.hermes.common.util.PDFCreator;
+import be.unamur.hermes.dataaccess.entity.*;
+import be.unamur.hermes.dataaccess.repository.DocumentRepository;
+import com.google.common.base.Charsets;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,18 +16,11 @@ import org.thymeleaf.templatemode.StandardTemplateModeHandlers;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 import org.thymeleaf.templateresolver.TemplateResolver;
 
-import com.google.common.base.Charsets;
-
-import be.unamur.hermes.business.document.DocumentHelper;
-import be.unamur.hermes.common.util.PDFCreator;
-import be.unamur.hermes.dataaccess.entity.Address;
-import be.unamur.hermes.dataaccess.entity.Citizen;
-import be.unamur.hermes.dataaccess.entity.Department;
-import be.unamur.hermes.dataaccess.entity.Employee;
-import be.unamur.hermes.dataaccess.entity.Municipality;
-import be.unamur.hermes.dataaccess.entity.Request;
-import be.unamur.hermes.dataaccess.entity.RequestStatus;
-import be.unamur.hermes.dataaccess.repository.DocumentRepository;
+import java.io.IOException;
+import java.io.InputStream;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Locale;
 
 @Service
 public class DocumentServiceImpl implements DocumentService {
@@ -79,36 +71,36 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     @Override
-    public long createNationalityCertificate(boolean positive, Request request) {
+    public long createNationalityCertificate(boolean positive, Request request, long documentTitle) {
 	String templateName = positive ? "nationalityCertificate/positive" : "nationalityCertificate/negative";
 	Context context = initContext(request);
 	context.setVariable("title", "Demande de certificat de nationalité");
 	String contents = templateEngine.process(templateName, context);
-	return documentRepository.create(request.getId(), contents);
+	return documentRepository.create(request.getId(), contents, documentTitle );
     }
 
     @Override
-    public long createParkingCardDecision(boolean positive, Request request) {
+    public long createParkingCardDecision(boolean positive, Request request, long documentTitle) {
 	String templateName = positive ? "parkingCard/positive" : "parkingCard/negative";
 	Context context = initContext(request);
 	context.setVariable("title", "Demande de carte de stationnement pour riverain ou visiteur");
 	String contents = templateEngine.process(templateName, context);
-	return documentRepository.create(request.getId(), contents);
+	return documentRepository.create(request.getId(), contents,  documentTitle);
     }
 
     @Override
-    public long createParkingCard(Request request) {
+    public long createParkingCard(Request request, long documentTitle) {
 	Context context = initContext(request);
 	String contents = templateEngine.process("parkingCard/card", context);
-	return documentRepository.create(request.getId(), contents);
+	return documentRepository.create(request.getId(), contents, documentTitle);
     }
 
     @Override
-    public long createPayment(Request request) {
+    public long createPayment(Request request, long documentTitle) {
 	Context context = initContext(request);
 	context.setVariable("title", "Invitation à payer");
 	String contents = templateEngine.process("parkingCard/payment", context);
-	return documentRepository.create(request.getId(), contents);
+	return documentRepository.create(request.getId(), contents, documentTitle);
     }
 
     protected Context initContext(Request request) {
