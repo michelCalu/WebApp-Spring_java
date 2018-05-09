@@ -4,7 +4,7 @@ insert into t_request_types values(2,"citizenParkingCard");
 insert into t_request_types values(3,"companyParkingCard");
 
 insert into t_request_field_definitions values("nationalityCertificateReference", 1, "string", false);
- 
+
 insert into t_request_field_definitions values("citizenParkingCardCarMake", 2, "string", true);
 insert into t_request_field_definitions values("citizenParkingCardCarModel", 2, "string", true);
 insert into t_request_field_definitions values("citizenParkingCardCarColour", 2, "string", true);
@@ -58,19 +58,19 @@ insert into t_citizens values(5,"Vishnu","Barbu",3,"michel@unamur.be",null,"1234
 
 
 insert into t_employees values(1,"Fabian","Germeau",2,
-			"fabian.germeau@cetic.be",
-			"somePhone","someNRN",'1970-01-01',
-			"someAccountNumber",'2018-04-01','M',"bachelor",0,0,3);
+																 "fabian.germeau@cetic.be",
+																 "somePhone","someNRN",'1970-01-01',
+																 "someAccountNumber",'2018-04-01','M',"bachelor",0,0,3);
 
 insert into t_employees values(2,"Degryse","Killian",6,
-			"killian.degryse@hotmail.com",
-			"somePhone","NRN_Killian",'1990-01-01',
-			"someAccountNumber",'2018-04-16','M',"bachelor",0,0,4);
+																 "killian.degryse@hotmail.com",
+																 "somePhone","NRN_Killian",'1990-01-01',
+																 "someAccountNumber",'2018-04-16','M',"bachelor",0,0,4);
 
 insert into t_employees values(3,"Admin","X",6,
-			"admin@admin.com",
-			"somePhone","00000000000",'1990-01-01',
-			"someAccountNumber",'2018-04-16','M',"bachelor",0,0,6);
+																 "admin@admin.com",
+																 "somePhone","00000000000",'1990-01-01',
+																 "someAccountNumber",'2018-04-16','M',"bachelor",0,0,6);
 
 insert into t_departments values(1, 1, "Population & état civil", 1, null,null);
 insert into t_departments values(2, 1, "état civil étrangers", 1, 1,null);
@@ -89,10 +89,19 @@ insert into t_request_field_values values(3, "citizenParkingCardCarColour", 2, "
 insert into t_request_field_values values(4, "citizenParkingCardPlateNumber", 2, "123456", null);
 insert into t_request_field_values values(5, "citizenParkingCardGreenCard", 2, null, "TODO: should be the BLOB");
 
-insert into t_document_titles values (1, "citizen parking card");
-insert into t_document_titles values (2, "citizen parking payment notice");
-insert into t_document_titles values (3, "citizen parking confirmation");
-insert into t_document_titles values (4, "Nationality Certificate");
+
+insert into t_document_titles values (1, "citizeParkingCard");
+insert into t_document_titles values (2, "citizenParkingPayment");
+insert into t_document_titles values (3, "citizenParkingDecision");
+insert into t_document_titles values (4, "NationalityCertificate");
+
 insert into t_documents values (1, 2, "contents", 1);
 insert into t_documents values (2, 2, "contents", 2);
 insert into t_documents values (3, 2, "contents", 3);
+
+SELECT documentID, documentTitle FROM t_documents WHERE requestID = 2;
+
+SELECT titleID FROM t_document_titles WHERE title = "NationalityCertificate";
+
+
+
