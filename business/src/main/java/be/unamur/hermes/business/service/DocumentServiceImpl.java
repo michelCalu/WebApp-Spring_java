@@ -71,36 +71,36 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     @Override
-    public long createNationalityCertificate(boolean positive, Request request, long documentTitle) {
+    public long createNationalityCertificate(boolean positive, Request request) {
 	String templateName = positive ? "nationalityCertificate/positive" : "nationalityCertificate/negative";
 	Context context = initContext(request);
 	context.setVariable("title", "Demande de certificat de nationalité");
 	String contents = templateEngine.process(templateName, context);
-	return documentRepository.create(request.getId(), contents, documentTitle );
+	return documentRepository.create(request.getId(), contents, DocumentService.TITLE_NATIONALITY_CERTIFICATE );
     }
 
     @Override
-    public long createParkingCardDecision(boolean positive, Request request, long documentTitle) {
+    public long createParkingCardDecision(boolean positive, Request request) {
 	String templateName = positive ? "parkingCard/positive" : "parkingCard/negative";
 	Context context = initContext(request);
 	context.setVariable("title", "Demande de carte de stationnement pour riverain ou visiteur");
 	String contents = templateEngine.process(templateName, context);
-	return documentRepository.create(request.getId(), contents,  documentTitle);
+	return documentRepository.create(request.getId(), contents,  DocumentService.TITLE_PARKING_CARD_DECISION);
     }
 
     @Override
-    public long createParkingCard(Request request, long documentTitle) {
+    public long createParkingCard(Request request) {
 	Context context = initContext(request);
 	String contents = templateEngine.process("parkingCard/card", context);
-	return documentRepository.create(request.getId(), contents, documentTitle);
+	return documentRepository.create(request.getId(), contents, DocumentService.TITLE_PARKING_CARD_CITIZEN);
     }
 
     @Override
-    public long createPayment(Request request, long documentTitle) {
+    public long createPayment(Request request) {
 	Context context = initContext(request);
 	context.setVariable("title", "Invitation à payer");
 	String contents = templateEngine.process("parkingCard/payment", context);
-	return documentRepository.create(request.getId(), contents, documentTitle);
+	return documentRepository.create(request.getId(), contents, DocumentService.TITLE_PARKING_CARD_PAYMENT);
     }
 
     protected Context initContext(Request request) {

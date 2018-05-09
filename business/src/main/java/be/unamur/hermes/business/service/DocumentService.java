@@ -17,13 +17,18 @@ import java.util.List;
  */
 public interface DocumentService {
 
-    long createNationalityCertificate(boolean positive, Request request, long documentTitle);
+    public static final String TITLE_NATIONALITY_CERTIFICATE="NationalityCertificate";
+    public static final String TITLE_PARKING_CARD_CITIZEN="ParkingCardCitizen";
+    public static final String TITLE_PARKING_CARD_DECISION="ParkingCardDecision";
+    public static final String TITLE_PARKING_CARD_PAYMENT="ParkingCardPayment";
 
-    long createParkingCardDecision(boolean positive, Request request, long documentTitle);
+    long createNationalityCertificate(boolean positive, Request request);
 
-    long createParkingCard(Request request, long documentTitle);
+    long createParkingCardDecision(boolean positive, Request request);
 
-    long createPayment(Request request, long documentTitle);
+    long createParkingCard(Request request);
+
+    long createPayment(Request request);
 
     InputStream findDocumentById(long documentId);
 

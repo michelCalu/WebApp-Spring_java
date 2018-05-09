@@ -22,6 +22,9 @@ public class DocumentRepositoryImpl implements DocumentRepository {
     private static final String findDocumentIdsByRequest = //
 	    "SELECT documentID, documentTitle FROM t_documents WHERE requestID = ?";
 
+    private static final String findDocumentTitleId = //
+            "SELECT titleID FROM t_document_titles WHERE title = ?";
+
     @Autowired
     public DocumentRepositoryImpl(JdbcTemplate jdbc) {
 	super();
@@ -41,11 +44,17 @@ public class DocumentRepositoryImpl implements DocumentRepository {
     }
 
     @Override
-    public long create(long requestId, String contents, long documentTitle ) {
+    public long getDocumentTitleId(String documentTitle) {
+        return jdbc.queryForObject(findDocumentTitleId, Long.class, documentTitle);
+    }
+
+    @Override
+    public long create(long requestId, String contents, String documentTitle ) {
 	Map<String, Object> params = new HashMap<>();
+	long titleId= getDocumentTitleId(documentTitle);
 	params.put("requestID", requestId);
 	params.put("contents", contents);
-	params.put("documentTitle", documentTitle);
+	params.put("documentTitleID", titleId);
 	return (Long) inserter.executeAndReturnKey(params);
     }
 }
