@@ -2,10 +2,13 @@ package be.unamur.hermes.business.document;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 import org.springframework.util.StringUtils;
 
+import be.unamur.hermes.common.constants.EventConstants;
 import be.unamur.hermes.dataaccess.entity.Address;
+import be.unamur.hermes.dataaccess.entity.Event;
 import be.unamur.hermes.dataaccess.entity.User;
 
 /**
@@ -34,6 +37,13 @@ public class DocumentHelper {
 
     public String formatName(User user) {
 	return user.getLastName() + " " + user.getFirstName();
+    }
+
+    public String getCreationDate(List<Event> events) {
+	Event creationEvent = events.stream()
+		.filter(ev -> EventConstants.TYPE_CREATED.equalsIgnoreCase(ev.getType().getDescription())).findFirst()
+		.get();
+	return format(creationEvent.getAt().toLocalDate());
     }
 
     /**

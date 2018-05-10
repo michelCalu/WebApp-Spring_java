@@ -1,89 +1,109 @@
 package be.unamur.hermes.dataaccess.entity;
 
 import java.time.LocalDateTime;
-import java.util.Objects;
 
 public class Event {
 
     private long id;
     private EventType type;
     private LocalDateTime at;
-    private Employee author;
-    private Request request;
+    private long authorId;
+    private long requestId;
+
+    public static Event create(String eventType, long authorId, long requestId) {
+	return new Event(0L, new EventType(0L, eventType), LocalDateTime.now(), authorId, requestId);
+    }
 
     public Event() {
     }
 
-    public Event(long id, EventType type, LocalDateTime at, Employee author, Request request) {
-        this.id = id;
-        this.type = type;
-        this.at = at;
-        this.author = author;
-        this.request = request;
+    public Event(long id, EventType type, LocalDateTime at, long authorId, long requestId) {
+	this.id = id;
+	this.type = type;
+	this.at = at;
+	this.authorId = authorId;
+	this.requestId = requestId;
     }
 
     public long getId() {
-        return id;
+	return id;
     }
 
     public EventType getType() {
-        return type;
+	return type;
     }
 
     public void setType(EventType type) {
-        this.type = type;
+	this.type = type;
     }
 
     public LocalDateTime getAt() {
-        return at;
+	return at;
     }
 
     public void setAt(LocalDateTime at) {
-        this.at = at;
+	this.at = at;
     }
 
-    public Employee getAuthor() {
-        return author;
+    public long getAuthorId() {
+	return authorId;
     }
 
-    public void setAuthor(Employee author) {
-        this.author = author;
+    public void setAuthorId(long authorId) {
+	this.authorId = authorId;
     }
 
-    public Request getRequest() {
-        return request;
+    public long getRequestId() {
+	return requestId;
     }
 
-    public void setRequest(Request request) {
-        this.request = request;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Event)) return false;
-        Event event = (Event) o;
-        return id == event.id &&
-                Objects.equals(type, event.type) &&
-                Objects.equals(at, event.at) &&
-                Objects.equals(author, event.author) &&
-                Objects.equals(request, event.request);
+    public void setRequestId(long requestId) {
+	this.requestId = requestId;
     }
 
     @Override
     public int hashCode() {
+	final int prime = 31;
+	int result = 1;
+	result = prime * result + ((at == null) ? 0 : at.hashCode());
+	result = prime * result + (int) (authorId ^ (authorId >>> 32));
+	result = prime * result + (int) (id ^ (id >>> 32));
+	result = prime * result + (int) (requestId ^ (requestId >>> 32));
+	result = prime * result + ((type == null) ? 0 : type.hashCode());
+	return result;
+    }
 
-        return Objects.hash(id, type, at, author, request);
+    @Override
+    public boolean equals(Object obj) {
+	if (this == obj)
+	    return true;
+	if (obj == null)
+	    return false;
+	if (getClass() != obj.getClass())
+	    return false;
+	Event other = (Event) obj;
+	if (at == null) {
+	    if (other.at != null)
+		return false;
+	} else if (!at.equals(other.at))
+	    return false;
+	if (authorId != other.authorId)
+	    return false;
+	if (id != other.id)
+	    return false;
+	if (requestId != other.requestId)
+	    return false;
+	if (type == null) {
+	    if (other.type != null)
+		return false;
+	} else if (!type.equals(other.type))
+	    return false;
+	return true;
     }
 
     @Override
     public String toString() {
-        return "Event{" +
-                "id=" + id +
-                ", type=" + type +
-                ", at=" + at +
-                ", author=" + author +
-                ", request=" + request +
-                '}';
+	return "Event [id=" + id + ", type=" + type + ", at=" + at + ", authorId=" + authorId + ", requestId="
+		+ requestId + "]";
     }
 }

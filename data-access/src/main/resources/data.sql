@@ -28,6 +28,11 @@ insert into t_req_statusses values(null,"rejected");
 insert into t_req_statusses values(null,"accepted");
 
 
+insert into t_event_types values(null,"created");
+insert into t_event_types values(null,"updated");
+insert into t_event_types values(null,"closed");
+insert into t_event_types values(null,"assigneeChange");
+
 -- test data
 insert into t_user_accounts values(1,"ROLE_USER","$2a$10$nci/VfQ6BffNStE8ECXmq.7/fs4FBGTghAOfijxmMcx4r7A7JZOdK","active"); -- thomas
 insert into t_user_accounts values(2,"ROLE_USER","$2a$10$fg0oXDkagxfaMl7e/i56q.BN2wyRw53WlXIV1MyL.ywbISo4bGVqi","active"); -- david

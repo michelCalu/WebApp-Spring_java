@@ -1,38 +1,45 @@
 package be.unamur.hermes.business.service;
 
-import be.unamur.hermes.dataaccess.entity.*;
-import be.unamur.hermes.dataaccess.repository.EventRepository;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import be.unamur.hermes.dataaccess.entity.Event;
+import be.unamur.hermes.dataaccess.repository.EventRepository;
+
 @Service
-public class EventServiceImpl implements EventService{
+public class EventServiceImpl implements EventService {
 
     private EventRepository eventRepository;
 
     @Autowired
     public EventServiceImpl(EventRepository eventRepository) {
-        this.eventRepository = eventRepository;
-    }
-
-
-    @Override
-    public Event findByReq(Long requestID) {
-        return null;
+	this.eventRepository = eventRepository;
     }
 
     @Override
-    public Event findByCitizen(Long citizenID) {
-        return null;
+    public List<Event> findByReq(Long requestID) {
+	return eventRepository.getEventsByRequest(requestID);
     }
 
     @Override
-    public Event findByCompany(String entrepriseNb) {
-        return null;
+    public List<Event> findByAuthor(Long userAccountId) {
+	return eventRepository.getEventsByAuthor(userAccountId);
     }
 
     @Override
-    public Event findByEmployeen(Long employeeID) {
-        return null;
+    public List<Event> findByReq(Long requestID, String eventType) {
+	return eventRepository.getEventsByRequest(requestID, eventType);
+    }
+
+    @Override
+    public long create(Event event) {
+	return eventRepository.create(event);
+    }
+
+    @Override
+    public Event findById(long id) {
+	return eventRepository.getEventById(id);
     }
 }
