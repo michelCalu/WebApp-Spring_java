@@ -99,9 +99,8 @@ insert into t_documents values (1, 2, "contents", 1);
 insert into t_documents values (2, 2, "contents", 2);
 insert into t_documents values (3, 2, "contents", 3);
 
-SELECT documentID, documentTitle FROM t_documents WHERE requestID = 2;
 
-SELECT titleID FROM t_document_titles WHERE title = "NationalityCertificate";
+
 
 
 

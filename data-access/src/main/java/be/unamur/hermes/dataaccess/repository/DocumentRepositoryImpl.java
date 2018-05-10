@@ -20,7 +20,7 @@ public class DocumentRepositoryImpl implements DocumentRepository {
 	    "SELECT contents FROM t_documents WHERE documentID = ?";
 
     private static final String findDocumentIdsByRequest = //
-	    "SELECT documentID, documentTitle FROM t_documents WHERE requestID = ?";
+	    "SELECT documentID, documentTitleID FROM t_documents WHERE requestID = ?";
 
     private static final String findDocumentTitleId = //
             "SELECT titleID FROM t_document_titles WHERE title = ?";
