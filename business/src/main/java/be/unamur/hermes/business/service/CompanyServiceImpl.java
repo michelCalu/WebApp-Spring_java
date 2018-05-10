@@ -1,7 +1,6 @@
 package be.unamur.hermes.business.service;
 
 import be.unamur.hermes.business.exception.BusinessException;
-import be.unamur.hermes.dataaccess.entity.Citizen;
 import be.unamur.hermes.dataaccess.entity.Company;
 import be.unamur.hermes.dataaccess.repository.CompanyRepository;
 import be.unamur.hermes.dataaccess.repository.MunicipalityRepository;
@@ -29,7 +28,7 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public Company findByEntrepriseNb(String entrepriseNumber) throws BusinessException {
+    public Company findByCompanyNb(String entrepriseNumber) throws BusinessException {
         try {
             return companyRepository.findByCompanyNb(entrepriseNumber);
         } catch (EmptyResultDataAccessException e) {
@@ -51,7 +50,7 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     @Transactional
-    public long register(Company company, Citizen citizen) {
+    public long register(Company company) {
         //checkCompanyAttributes(company);
         String municipalityName = company.getAddress().getMunicipality();
         if(municipalityRepository.findByName(municipalityName) == null)
