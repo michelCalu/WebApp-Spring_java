@@ -40,15 +40,17 @@ insert into t_user_accounts values(7,"ROLE_USER","$2a$10$4w9Wm8gc93DpDQdyZ7SR5O.
 
 insert into t_addresses values(1,"Avenue de la Reine", 279,"A",1020,"Jette", "Région de Bruxelles-Capitale", "Belgique");
 insert into t_addresses values(2,"Place du miroir", 1,null,1020,"Jette", "Région de Bruxelles-Capitale", "Belgique");
-insert into t_addresses values(3,"Rue des combattants", 10,null,1310,"La Hulpe", "Brabant Wallon", "Belgique");
+insert into t_addresses values(3,"chaussée de la hulpe", 748,null,1310,"La Hulpe", "Brabant Wallon", "Belgique");
 insert into t_addresses values(4,"Avenue de Charles-Quint", 140,null,1083,"Ganshoren", "Région de Bruxelles-Capitale", "Belgique");
 insert into t_addresses values(5,"Avenue Van Overbeke", 12, "B",1083,"Ganshoren", "Région de Bruxelles-Capitale", "Belgique");
 insert into t_addresses values(6,"Rue du Noyer", 43, null, 1000,"Bruxelles", "Région de Bruxelles-Capitale", "Belgique");
 insert into t_addresses values(7,"Rue Sart-lez-moulins", 77, null, 6044,"Roux", "Charleroi", "Belgique");
+insert into t_addresses values(8,"Rue des combattants", 59, null, 1310,"La Hulpe", "Brabant Wallon", "Belgique");
 
 insert into t_municipalities values(1, "Jette", 1, "info@jette.be", "02/654.12.20", "Hervé Doyen");
 insert into t_municipalities values(2, "Ganshoren", 4, "ganshoren@ganshoren.irisnet.be", "02/465.12.77", "Robert Genard");
 insert into t_municipalities values(3, "Roux", 7, "roux@municipality.com", "RouxPhone", "Paul Magnette");
+insert into t_municipalities values(4, "La Hulpe", 8, "lh@municipality.com", "RouxPhone", "Paul Magnette");
 
 insert into t_citizens values(1,"Thomas","Elskens",1,"thomaselskens@hotmail.com",null,"NRN_Thomas","1983-11-13",1);
 insert into t_citizens values(2,"David","Fernandez",5,"dfernandez1612@gmail.com",null,"david","1983-12-16",2);
@@ -79,6 +81,8 @@ insert into t_departments values(4, 2, "Population", 2, null,null);
 insert into t_departments values(5, 2, "Stationnement", 2, null,null);
 insert into t_departments values(6, 3, "Population", 2, null,null);
 insert into t_departments values(7, 3, "Stationnement", 2, null,null);
+insert into t_departments values(8, 4, "Population", 2, null,null);
+insert into t_departments values(9, 4, "Stationnement", 2, null,null);
 
 insert into t_requests values(1, 1, 1, null, 1, 1, 1, "HERM001", "my ref", "JETTE001");
 insert into t_requests values(2, 2, 2, null, 2, 5, 2, "HERM002", "a parking ref.", "GANSH001");
@@ -88,3 +92,4 @@ insert into t_request_field_values values(2, "citizenParkingCardCarModel", 2, "P
 insert into t_request_field_values values(3, "citizenParkingCardCarColour", 2, "red", null);
 insert into t_request_field_values values(4, "citizenParkingCardPlateNumber", 2, "123456", null);
 insert into t_request_field_values values(5, "citizenParkingCardGreenCard", 2, null, "TODO: should be the BLOB");
+

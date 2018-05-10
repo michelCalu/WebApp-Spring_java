@@ -9,6 +9,7 @@ public class Company {
     private Address address;
     private String legalForm;
     private String contactPerson;
+    private String password;
 
     public Company() {
     }
@@ -60,6 +61,10 @@ public class Company {
     public void setContactPerson(String contactPerson) {
 	this.contactPerson = contactPerson;
     }
+
+    public String getPassword() {return password; }
+
+    public void setPassword(String password) {this.password = password; }
 
     @Override
     public boolean equals(Object o) {
