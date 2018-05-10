@@ -1,22 +1,29 @@
-import { Component } from '@angular/core';
-import { AlertService, CitizenService } from "../_services";
-import { Citizen } from "../_models/index";
+import { Component, OnInit } from '@angular/core';
+import { AlertService, CitizenService, MunicipalityService } from '../_services';
+import { Citizen, Municipality } from '../_models/index';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
-	moduleId: module.id,
-	templateUrl: './createuser.component.html',
+    moduleId: module.id,
+    templateUrl: './createuser.component.html',
 })
-export class CreateUserComponent {
+export class CreateUserComponent implements OnInit {
 
-	citizen = new Citizen();
+    municipalities$: Observable<Municipality[]>;
+    citizen = new Citizen();
 
-	constructor(private citizenService: CitizenService, private alertService: AlertService) { }
+    constructor(private citizenService: CitizenService, private alertService: AlertService,
+        private municipalityService: MunicipalityService) { }
 
-	createCitizen(): void {
-		this.citizenService.createCitizen(this.citizen).subscribe(
-			data => this.alertService.success('Enregistrement réussi'),
-			error => this.alertService.error('Échec dans l\'enregistrement')
-		);
-	}
+    ngOnInit() {
+        this.municipalities$ = this.municipalityService.getMunicipalities();
+    }
+
+    createCitizen(): void {
+        this.citizenService.createCitizen(this.citizen).subscribe(
+            data => this.alertService.success('Enregistrement réussi'),
+            error => this.alertService.error('Échec dans l\'enregistrement')
+        );
+    }
 
 }
