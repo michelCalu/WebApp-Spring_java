@@ -1,0 +1,23 @@
+<h2> Documents génerés </h2>
+<div *ngIf="(documents$ | async) as documents">
+    <table *ngIf="documents.length; else noDocuments" class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col"> Type </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let document of documents">
+                <th> TODO </th>
+                <td>
+                    <button class="btn btn-success" (click)="downloadDocument(document.id)"> Télécharger </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <ng-template #noDocuments>
+        Aucun document trouvé
+    </ng-template>
+</div>
+<br>

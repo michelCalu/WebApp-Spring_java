@@ -5,3 +5,4 @@ export * from './citizen.service';
 export * from './employee.service';
 export * from './request.service';
 export * from './municipality.service';
+export * from './document.service';

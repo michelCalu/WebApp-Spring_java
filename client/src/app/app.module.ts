@@ -3,7 +3,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 
-import { AlertService, AuthenticationService, CitizenService, MockAuthService, RequestService, EmployeeService } from './_services/index';
+import { AlertService, AuthenticationService, CitizenService, MockAuthService, RequestService, EmployeeService, 
+            DocumentService } from './_services/index';
 import { AlertComponent } from './_directives/index';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app.routing.module';
@@ -31,6 +32,7 @@ import { ParkingRequestDataComponent } from './parking-request-data';
 import { ValidateCitizensComponent } from './validate_citizens/validate_citizens.component';
 import { NrnDetailsComponent } from './nrn-details';
 import { MunicipalityService } from './_services/municipality.service';
+import { DocumentDetailsComponent } from './document-details/document-details.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -59,7 +61,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     NationalityRequestDataComponent,
     ParkingRequestDataComponent,
     ValidateCitizensComponent,
-    NrnDetailsComponent
+    NrnDetailsComponent,
+    DocumentDetailsComponent
   ],
   imports: [
     AppRoutingModule,
@@ -84,6 +87,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     EmployeeService,
     MunicipalityService,
     RequestService,
+    DocumentService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: JwtInterceptor,
