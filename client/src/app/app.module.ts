@@ -33,6 +33,7 @@ import { ValidateCitizensComponent } from './validate_citizens/validate_citizens
 import { NrnDetailsComponent } from './nrn-details';
 import { MunicipalityService } from './_services/municipality.service';
 import { DocumentDetailsComponent } from './document-details/document-details.component';
+import { RequestHistoryComponent } from './request-history/request-history.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -62,7 +63,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     ParkingRequestDataComponent,
     ValidateCitizensComponent,
     NrnDetailsComponent,
-    DocumentDetailsComponent
+    DocumentDetailsComponent,
+    RequestHistoryComponent
   ],
   imports: [
     AppRoutingModule,
