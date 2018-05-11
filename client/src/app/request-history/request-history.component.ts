@@ -18,7 +18,10 @@ export class RequestHistoryComponent implements OnInit {
     constructor(private requestService: RequestService, private alertService: AlertService) {}
 
     ngOnInit(): void {
-        this.events$ = this.requestService.getRequestEvents(this.request.id);
+        this.events$ = this.requestService.getRequestEvents(this.request.id).map(requests => {
+            requests.sort((a: RequestEvent, b: RequestEvent) => b.at.getTime() - a.at.getTime());
+            return requests;
+        });
     }
 
 }
