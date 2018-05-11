@@ -2,6 +2,7 @@ package be.unamur.hermes.dataaccess.repository;
 
 import be.unamur.hermes.dataaccess.entity.Company;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public interface CompanyRepository {
@@ -10,9 +11,7 @@ public interface CompanyRepository {
 
     List<Company> findAll();
 
-    List<Company> findPending();
-
-    long create(Company company);
+    void create(Company company) throws SQLException;
 
 
 }

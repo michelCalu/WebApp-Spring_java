@@ -9,12 +9,14 @@ public class Company {
     private Address address;
     private String legalForm;
     private String contactPerson;
+    private String companyName;
 
     public Company() {
     }
 
-    public Company(String companyNb, String vatNb, Address address, String legalForm, String contactPerson) {
+    public Company(String companyNb, String vatNb, Address address, String legalForm, String contactPerson, String companyName) {
 	this.companyNb = companyNb;
+	this.companyName = companyName;
 	this.vatNb = vatNb;
 	this.address = address;
 	this.legalForm = legalForm;
@@ -27,6 +29,14 @@ public class Company {
 
     public void setCompanyNb(String companyNb) {
 	this.companyNb = companyNb;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setcompanyname(String companyName) {
+        this.companyName = companyName;
     }
 
     public String getVatNb() {

@@ -95,6 +95,7 @@ CREATE TABLE t_companies (
   address     	INT       		NOT NULL,
   legalForm  	VARCHAR(255)  	NOT NULL,
   contactPerson INT	NOT NULL,
+  companyName   VARCHAR(255)    NOT NULL ,
 
   FOREIGN KEY (contactPerson) REFERENCES t_citizens(citizenID)
 );

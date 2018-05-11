@@ -11,8 +11,6 @@ public interface CompanyService {
 
     List<Company> findAll();
 
-    List<Company> findPending();
-
-    long register(Company company);
+    void register(Company company);
 
 }

@@ -1,6 +1,7 @@
 package be.unamur.hermes.business.service;
 
 import be.unamur.hermes.business.exception.BusinessException;
+import be.unamur.hermes.common.enums.HermesRegex;
 import be.unamur.hermes.dataaccess.entity.Company;
 import be.unamur.hermes.dataaccess.repository.CompanyRepository;
 import be.unamur.hermes.dataaccess.repository.MunicipalityRepository;
@@ -10,7 +11,9 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.SQLException;
 import java.util.List;
+import java.util.regex.Pattern;
 
 @Service
 public class CompanyServiceImpl implements CompanyService {
@@ -42,28 +45,32 @@ public class CompanyServiceImpl implements CompanyService {
         return companyRepository.findAll();
     }
 
-    @Override
-    public List<Company> findPending() {
-        return companyRepository.findPending();
-    }
 
 
     @Override
     @Transactional
-    public long register(Company company) {
+    public void register(Company company)  {
         //checkCompanyAttributes(company);
         String municipalityName = company.getAddress().getMunicipality();
         if(municipalityRepository.findByName(municipalityName) == null)
             throw new BusinessException("The company's municipality isn't recognized by the system.");
-
-        long companyId= companyRepository.create(company);
-        //TODO create mandatary
-
-        return companyId;
+        try{
+            companyRepository.create(company);
+        }catch(SQLException e){
+            throw new BusinessException("error creating company");
+        }
 
     }
 
     private void checkCompanyAttributes(Company company) throws BusinessException{
-       // TODO
+        if (!Pattern.matches(HermesRegex.VATNB.regex(), company.getCompanyNb())) {
+            throw new BusinessException("The specified VAT number is incorrect");
+        }
+        if (!Pattern.matches(HermesRegex.INTEGER.regex(), company.getCompanyNb())) {
+            throw new BusinessException("The specified lastName is incorrect");
+        }
+        if (!Pattern.matches(HermesRegex.ALLNAME.regex(), company.getLegalForm())) {
+            throw new BusinessException("The specified legal form is incorrect");
+        }
     }
 }

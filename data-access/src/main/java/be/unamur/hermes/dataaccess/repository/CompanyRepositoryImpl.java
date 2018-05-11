@@ -29,9 +29,6 @@ public class CompanyRepositoryImpl implements CompanyRepository {
     private static final String queryAll = //
             "SELECT * FROM t_companies";
 
-    private static final String queryPending = //
-            "SELECT * FROM t_companies comp JOIN t_user_accounts acc ON comp.userAccountID = acc.userAccountID WHERE acc.userStatus = 'CREATED'";
-
 
     @Autowired
     public CompanyRepositoryImpl(JdbcTemplate jdbcTemplate, AddressRepository addressRepository) {
@@ -42,15 +39,16 @@ public class CompanyRepositoryImpl implements CompanyRepository {
     }
 
     @Override
-    public long create(Company company) {
-	long address = addressRepository.create(company.getAddress());
-	Map<String, Object> params = new HashMap<>();
-	params.put("companyNb", company.getCompanyNb());
-	params.put("vatNb", company.getVatNb());
-	params.put("address", address);
-	params.put("contactPerson", company.getContactPerson());
-	params.put("legalForm", company.getLegalForm());
-	return (Long) companyInserter.executeAndReturnKey(params);
+    public void create(Company company) {
+        long address = addressRepository.create(company.getAddress());
+        Map<String, Object> params = new HashMap<>();
+        params.put("companyNb", company.getCompanyNb());
+        params.put("vatNb", company.getVatNb());
+        params.put("address", address);
+        params.put("legalForm", company.getLegalForm());
+        params.put("contactPerson", company.getContactPerson());
+        params.put("companyName", company.getCompanyName());
+        companyInserter.execute(params);
     }
 
 
@@ -64,11 +62,6 @@ public class CompanyRepositoryImpl implements CompanyRepository {
         return jdbcTemplate.query(queryAll, this::buildCompany);
     }
 
-    @Override
-    public List<Company> findPending() {
-        return jdbcTemplate.query(queryPending, this::buildCompany);
-    }
-
 
     private Company buildCompany(ResultSet rs, int row) throws SQLException {
 	Address address = addressRepository.findById(rs.getLong(3));
@@ -77,7 +70,8 @@ public class CompanyRepositoryImpl implements CompanyRepository {
             rs.getString(2),
             address,
             rs.getString(4),
-            rs.getString(5));
+            rs.getString(5),
+            rs.getString(6));
     }
 
 
