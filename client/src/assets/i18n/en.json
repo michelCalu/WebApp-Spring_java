@@ -4,6 +4,7 @@
     "actions": "actions",
     "additionalComment": "Additional communication",
     "assignee": "assignee",
+    "assigneeChange": "assignee change",
     "assignThisRequest" : "Get this request assigned",
     "authentication.service.getError" : "Rejected authentication",
     "awaitingInfo": "awaiting information",
@@ -12,9 +13,11 @@
     "carModel": "Model",
     "carRegistrationNumber": "Registration number",
     "citizenParkingCard": "Citizen parking card",
+    "closed": "closed",
     "colour": "Colour",
     "connectAsEmployee": "Login as an employee",
     "create_employee": "create an employee",
+    "created": "created",
     "createEmployee.title": "Create a new employee",
 
     "documents.service.getError": "Error retrieving the documents",
@@ -48,6 +51,7 @@
     "requestModification": "request modification",
     "request.service.assignError": "Cannot assign request",
     "request.service.getError": "Error retrieving the requests",
+    "request.service.getEvents": "Error retrieving the request's record history",
 
     "service.citizen.errorGetCitizen" : "Unknown citizen",
     "service.citizen.errorGetNrn" : "Unknown national register number",
@@ -59,6 +63,8 @@
     "status": "status",
 
     "type": "type",
+
+    "updated": "updated",
 
     "validate": "validate",
     "validateCitizens": "validate inscriptions",

@@ -8,7 +8,8 @@ const PROXY_CONFIG = [
       "/employees",
       "/auth",
       "/municipalities",
-      "/departments"
+      "/departments",
+      "/events"
     ],
     "target": "http://localhost:8888/web-1.0-SNAPSHOT/",
     "secure": false,

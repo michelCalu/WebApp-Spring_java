@@ -5,6 +5,7 @@
     "accepted": "acceptée",
     "additionalComment": "Communication libre",
     "assignee": "gestionnaire",
+    "assigneeChange": "changement de gestionnaire",
     "assignThisRequest" : "S'assigner cette demande",
     "authentication.service.getError" : "Authentification refusée",
     "awaitingInfo": "en attente d'information",
@@ -14,9 +15,11 @@
     "carModel": "Modèle",
     "carRegistrationNumber": "Immatriculation",
     "citizenParkingCard": "Carte de stationnement citoyen",
+    "closed": "clôture",
     "colour": "Couleur",
     "connectAsEmployee": "Se connecter en tant qu'employé",
     "create_employee": "créer un employé",
+    "created": "création",
     "createEmployee.title": "Créer un nouvel employé",
 
     "documents.service.getError": "Erreur dans la recherche des documents",
@@ -51,6 +54,7 @@
     "requestModification": "demander modification",
     "request.service.assignError": "Erreur dans l'assignation de la demande",
     "request.service.getError": "Erreur dans la recherche de demandes",
+    "request.service.getEvents": "Erreur dans la recherche de l'historique de la demande",
 
     "service.citizen.errorGetCitizen" : "Citoyen inconnu",
     "service.citizen.errorGetNrn" : "Numéro de registre national non reconnu",
@@ -62,6 +66,8 @@
     "status": "statut",
 
     "type": "type",
+
+    "updated": "modification",
 
     "validate": "valider",
     "validateCitizens": "valider inscriptions",

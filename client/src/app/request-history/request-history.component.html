@@ -1,17 +1,18 @@
 REQUEST HISTORY HERE 
 
 <h2> Historique de la demande </h2>
-<!-- <div class="container">
-    <citizen-detail *ngIf="citizen" [citizen]="citizen"></citizen-detail>
-    <nationality-request-data *ngIf="citizen && request && request.type.description === 'nationalityCertificate'" [request]="request" [citizen]="citizen"></nationality-request-data>
-    <parking-request-data *ngIf=" request && request.type.description === 'citizenParkingCard'" [request]="request" ></parking-request-data>
-    <request-history [request]="request"></request-history>
-    <div [hidden]="!displayEmployeeActions || request.status.name === 'accepted' || request.status.name === 'rejected'">        
-        <h2> Actions </h2>
-        <span [hidden]="request.assignee"> Pour effectuer une action, veuillez assigner la demande d'abord </span>
-        <select class="custom-select" [(ngModel)]="selectedAction" [disabled]="! request.assignee">
-            <option *ngFor="let action of possibleActions" [value]="action">{{ action | translate }}</option>
-        </select>
-        <button class="btn btn-primary" [disabled]="!selectedAction" (click)="performAction()" [disabled]="!request.assignee"> OK </button>
-    </div>
-</div> -->
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">{{ 'event'| translate}}</th>
+            <th scope="col">{{ 'date' | translate}}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let event of (events$ | async)">
+            <th>{{ event.type.description | translate }}</th>
+            <td>{{ event.at | date:'dd-MM-yyyy HH:mm' }} </td>
+        </tr>
+    </tbody>
+</table>

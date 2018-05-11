@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Observable } from 'rxjs';
 import 'rxjs/add/operator/catch';
-import { CitizenRequest, Citizen } from '../_models';
+import { CitizenRequest, Citizen, RequestEvent } from '../_models';
 import * as configData from '../configuration-data';
 import { AlertService } from './alert.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -75,6 +75,22 @@ export class RequestService {
             this.messageService.error(this.translateService.instant('request.service.getError'));
             return Observable.of(null);
         });
+    }
+
+    getRequestEvents(requestId: number): Observable<RequestEvent[]> {
+        return this.http
+            .get(/*this.serverAddress + */ '/events?requestId=' + requestId)
+            .map( (events: RequestEvent[]) => {
+                for (const event of events) {
+                    const dateArray = event.at;
+                    event.at = new Date(dateArray[0], dateArray[1], dateArray[2], dateArray[3], dateArray[4], dateArray[5]);
+                }
+                return events;
+            })
+            .catch(err => {
+                this.messageService.error(this.translateService.instant('request.service.getEvents'));
+                return [];
+            });
     }
 }
 

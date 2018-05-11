@@ -6,3 +6,4 @@ export * from './department.model';
 export * from './user.model';
 export * from './citizen-request.model';
 export * from './document.model';
+export * from './request-event.model';
