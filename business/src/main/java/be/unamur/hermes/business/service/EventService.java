@@ -1,16 +1,19 @@
 package be.unamur.hermes.business.service;
 
-import be.unamur.hermes.dataaccess.entity.*;
+import java.util.List;
+
+import be.unamur.hermes.dataaccess.entity.Event;
 
 public interface EventService {
 
-    Event findByReq (Long requestID);
+    List<Event> findByReq(Long requestID);
 
-    Event findByCitizen (Long citizenID);
+    List<Event> findByReq(Long requestID, String eventType);
 
-    Event findByCompany (String entrepriseNb);
+    List<Event> findByAuthor(Long userAccountId);
 
-    Event findByEmployeen (Long employeeID);
+    long create(Event event);
 
+    Event findById(long id);
 
 }

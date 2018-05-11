@@ -28,6 +28,11 @@ insert into t_req_statusses values(null,"rejected");
 insert into t_req_statusses values(null,"accepted");
 
 
+insert into t_event_types values(null,"created");
+insert into t_event_types values(null,"updated");
+insert into t_event_types values(null,"closed");
+insert into t_event_types values(null,"assigneeChange");
+
 -- test data
 insert into t_user_accounts values(1,"ROLE_USER","$2a$10$nci/VfQ6BffNStE8ECXmq.7/fs4FBGTghAOfijxmMcx4r7A7JZOdK","active"); -- thomas
 insert into t_user_accounts values(2,"ROLE_USER","$2a$10$fg0oXDkagxfaMl7e/i56q.BN2wyRw53WlXIV1MyL.ywbISo4bGVqi","active"); -- david
@@ -38,7 +43,7 @@ insert into t_user_accounts values(6,"ROLE_ADMIN","$2a$10$4w9Wm8gc93DpDQdyZ7SR5O
 insert into t_user_accounts values(7,"ROLE_USER","$2a$10$4w9Wm8gc93DpDQdyZ7SR5O.17XQMsfElDZRVbKuzaQJVi.0s.5xn.","created");
 
 
-insert into t_addresses values(1,"Avenue de la Reine", 279,"A",1020,"Jette", "Région de Bruxelles-Capitale", "Belgique");
+insert into t_addresses values(1,"Avenue de la Reine", 279,"A",1090,"Jette", "Région de Bruxelles-Capitale", "Belgique");
 insert into t_addresses values(2,"Place du miroir", 1,null,1020,"Jette", "Région de Bruxelles-Capitale", "Belgique");
 insert into t_addresses values(3,"Rue des combattants", 10,null,1310,"La Hulpe", "Brabant Wallon", "Belgique");
 insert into t_addresses values(4,"Avenue de Charles-Quint", 140,null,1083,"Ganshoren", "Région de Bruxelles-Capitale", "Belgique");

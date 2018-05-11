@@ -32,6 +32,9 @@ public class DocumentServiceImpl implements DocumentService {
     private final DocumentRepository documentRepository;
 
     @Autowired
+    private EventService eventService;
+
+    @Autowired
     public DocumentServiceImpl(DocumentRepository documentRepository) {
 	this.documentRepository = documentRepository;
 	this.templateEngine = new TemplateEngine();
@@ -109,6 +112,7 @@ public class DocumentServiceImpl implements DocumentService {
 	result.setVariable("requestor", request.getCitizen());
 	result.setVariable("request", request);
 	result.setVariable("officer", request.getAssignee());
+	result.setVariable("events", eventService.findByReq(request.getId()));
 	if (request.getDepartment().getAddress() == null) {
 	    request.getDepartment().setAddress(request.getDepartment().getMunicipality().getAddress());
 	}

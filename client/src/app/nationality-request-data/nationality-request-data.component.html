@@ -7,5 +7,7 @@
     <li class="list-group-item"> ref. utilisateur : {{ request.userRef }} </li>    
 </ul>
 
+<document-details *ngIf="request.status.name == 'accepted' || request.status.name == 'rejected'" [request]="request"></document-details>
+
 <nrn-details [citizen]="citizen"></nrn-details>
 <br>
