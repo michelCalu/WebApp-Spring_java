@@ -1,5 +1,7 @@
 package be.unamur.hermes.dataaccess.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.Objects;
 
 public class Company {
@@ -23,6 +25,7 @@ public class Company {
 	this.contactPerson = contactPerson;
     }
 
+    @JsonIgnore
     public String getCompanyNb() {
 	return companyNb;
     }
