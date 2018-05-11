@@ -69,8 +69,8 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     @Override
-    public List<Long> findDocumentByRequest(long requestId) {
-	return documentRepository.getDocumentIds(requestId);
+    public List<Document> findDocumentByRequest(long requestId) {
+	return documentRepository.getDocumentIdsTitles(requestId);
     }
 
     @Override

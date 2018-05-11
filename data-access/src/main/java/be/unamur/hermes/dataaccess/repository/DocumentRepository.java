@@ -1,5 +1,7 @@
 package be.unamur.hermes.dataaccess.repository;
 
+import be.unamur.hermes.dataaccess.entity.Document;
+
 import java.util.List;
 
 public interface DocumentRepository {
@@ -9,6 +11,8 @@ public interface DocumentRepository {
     String getDocument(long documentId);
 
     List<Long> getDocumentIds(long requestId);
+
+    public List<Document> getDocumentIdsTitles(long requestId);
 
     long getDocumentTitleId(String documentTitle);
 }

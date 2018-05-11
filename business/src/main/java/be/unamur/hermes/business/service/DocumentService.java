@@ -1,5 +1,6 @@
 package be.unamur.hermes.business.service;
 
+import be.unamur.hermes.dataaccess.entity.Document;
 import be.unamur.hermes.dataaccess.entity.Request;
 
 import java.io.InputStream;
@@ -17,10 +18,10 @@ import java.util.List;
  */
 public interface DocumentService {
 
-    public static final String TITLE_NATIONALITY_CERTIFICATE="NationalityCertificate";
-    public static final String TITLE_PARKING_CARD_CITIZEN="ParkingCardCitizen";
-    public static final String TITLE_PARKING_CARD_DECISION="ParkingCardDecision";
-    public static final String TITLE_PARKING_CARD_PAYMENT="ParkingCardPayment";
+    public static final String TITLE_NATIONALITY_CERTIFICATE="nationalityCertificate";
+    public static final String TITLE_PARKING_CARD_CITIZEN="citizeParkingCard";
+    public static final String TITLE_PARKING_CARD_DECISION="citizenParkingDecision";
+    public static final String TITLE_PARKING_CARD_PAYMENT="citizenParkingPayment";
 
     long createNationalityCertificate(boolean positive, Request request);
 
@@ -32,6 +33,6 @@ public interface DocumentService {
 
     InputStream findDocumentById(long documentId);
 
-    List<Long> findDocumentByRequest(long requestId);
+    List<Document> findDocumentByRequest(long requestId);
 
 }

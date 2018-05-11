@@ -1,10 +1,13 @@
 package be.unamur.hermes.dataaccess.repository;
 
+import be.unamur.hermes.dataaccess.entity.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,7 +23,10 @@ public class DocumentRepositoryImpl implements DocumentRepository {
 	    "SELECT contents FROM t_documents WHERE documentID = ?";
 
     private static final String findDocumentIdsByRequest = //
-	    "SELECT documentID, documentTitleID FROM t_documents WHERE requestID = ?";
+	    "SELECT documentID FROM t_documents WHERE requestID = ?";
+
+    private static final String queryIdsAndTitles = //
+            "SELECT documentID d, requestID r, documentTitleID t from t_documents where requestID= ?";
 
     private static final String findDocumentTitleId = //
             "SELECT titleID FROM t_document_titles WHERE title = ?";
@@ -44,6 +50,12 @@ public class DocumentRepositoryImpl implements DocumentRepository {
     }
 
     @Override
+    public List<Document> getDocumentIdsTitles(long requestId) {
+        return jdbc.query(queryIdsAndTitles, new Object[] { requestId },
+                this::buildDocument);
+    }
+
+    @Override
     public long getDocumentTitleId(String documentTitle) {
         return jdbc.queryForObject(findDocumentTitleId, Long.class, documentTitle);
     }
@@ -56,5 +68,12 @@ public class DocumentRepositoryImpl implements DocumentRepository {
 	params.put("contents", contents);
 	params.put("documentTitleID", titleId);
 	return (Long) inserter.executeAndReturnKey(params);
+    }
+
+    private Document buildDocument(ResultSet rs, int rowNum) throws SQLException {
+        return new Document(
+                rs.getLong(1),
+                rs.getLong(2),
+                rs.getLong(2));
     }
 }
