@@ -9,9 +9,11 @@ const PROXY_CONFIG = [
       "/auth",
       "/municipalities",
       "/departments",
-      "/events"
+      "/events",
+      "/mandataries",
+      "/companies"
     ],
-    "target": "http://localhost:8888/web-1.0-SNAPSHOT/",
+    "target": "http://localhost:8888",
     "secure": false,
     "logLevel": "debug"
   }
