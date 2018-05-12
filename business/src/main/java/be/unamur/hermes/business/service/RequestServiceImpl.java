@@ -141,7 +141,7 @@ public class RequestServiceImpl implements RequestService {
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void update(Request updatedRequest) throws BusinessException {
 	Request baseRequest = requestRepository.findById(updatedRequest.getId());
 	// is the request approved/rejected ?
@@ -164,8 +164,7 @@ public class RequestServiceImpl implements RequestService {
 
 	if (updatedRequest.getAssignee() != null) {
 	    requestRepository.updateAssignee(updatedRequest);
-	    long userAccountId = employeeService.findAccount(updatedRequest.getAssignee().getNationalRegisterNb())
-		    .getAccountUserId();
+	    long userAccountId = employeeService.findAccount(updatedRequest.getAssignee().getId()).getAccountUserId();
 	    Event statusEvent = Event.create(EventConstants.TYPE_ASSIGNEE_CHANGE, userAccountId,
 		    updatedRequest.getId());
 	    eventService.create(statusEvent);

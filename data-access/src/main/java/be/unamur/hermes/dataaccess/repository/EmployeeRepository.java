@@ -16,4 +16,6 @@ public interface EmployeeRepository {
     long create(Employee employee, long userAccountId);
 
     public UserAccount findAccount(String nationalRegistrationNb);
+
+    public UserAccount findAccount(long employeeId);
 }

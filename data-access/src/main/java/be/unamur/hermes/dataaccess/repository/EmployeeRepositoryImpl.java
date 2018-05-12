@@ -1,19 +1,20 @@
 package be.unamur.hermes.dataaccess.repository;
 
-import be.unamur.hermes.common.enums.UserStatus;
-import be.unamur.hermes.common.enums.UserType;
-import be.unamur.hermes.dataaccess.entity.Employee;
-import be.unamur.hermes.dataaccess.entity.UserAccount;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
-import org.springframework.stereotype.Repository;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
+import org.springframework.stereotype.Repository;
+
+import be.unamur.hermes.common.enums.UserStatus;
+import be.unamur.hermes.common.enums.UserType;
+import be.unamur.hermes.dataaccess.entity.Employee;
+import be.unamur.hermes.dataaccess.entity.UserAccount;
 
 @Repository
 public class EmployeeRepositoryImpl implements EmployeeRepository {
@@ -81,6 +82,11 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
 		this::buildAccount);
     }
 
+    @Override
+    public UserAccount findAccount(long employeeId) {
+	return jdbcTemplate.queryForObject(queryAccountById, new Object[] { employeeId }, this::buildAccount);
+    }
+
     // queries
     private static final String queryById = //
 	    "SELECT * FROM t_employees e WHERE e.employeeID = ? ";
@@ -88,6 +94,10 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
     private static final String queryAccountByNRN = //
 	    "SELECT e.employeeID, e.userAccountID, e.nationalRegisterNb, ua.roles, ua.userStatus, ua.password FROM t_employees e"
 		    + " JOIN t_user_accounts ua ON e.userAccountID = ua.userAccountID WHERE e.nationalRegisterNb = ?";
+
+    private static final String queryAccountById = //
+	    "SELECT e.employeeID, e.userAccountID, e.nationalRegisterNb, ua.roles, ua.userStatus, ua.password FROM t_employees e"
+		    + " JOIN t_user_accounts ua ON e.userAccountID = ua.userAccountID WHERE e.employeeID = ?";
 
     private static final String queryByName = //
 	    "SELECT * FROM t_employees e WHERE e.firstname = ? AND e.lastname = ?";

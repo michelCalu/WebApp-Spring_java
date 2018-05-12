@@ -1,5 +1,13 @@
 package be.unamur.hermes.business.service;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
+
 import be.unamur.hermes.business.exception.BusinessException;
 import be.unamur.hermes.common.enums.Authority;
 import be.unamur.hermes.common.enums.UserStatus;
@@ -10,13 +18,6 @@ import be.unamur.hermes.dataaccess.entity.Employee;
 import be.unamur.hermes.dataaccess.entity.UserAccount;
 import be.unamur.hermes.dataaccess.repository.EmployeeRepository;
 import be.unamur.hermes.dataaccess.repository.UserAccountRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
-
-import java.util.List;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
@@ -66,28 +67,28 @@ public class EmployeeServiceImpl implements EmployeeService {
 	return employeeRepository.create(employee, userAccountId);
     }
 
-	@Override
-	public void suspendAccount(long employeeID) throws BusinessException {
-		long acctId;
-		UserAccount account;
-		Employee employee;
-    	try {
-			 employee = employeeRepository.findById(employeeID);
-			 account = employeeRepository.findAccount(employee.getNationalRegisterNb());
-		}catch (EmptyResultDataAccessException e){
-			throw new BusinessException("Employee not found !");
-		}
-		acctId = account.getAccountUserId();
-    	if(!account.getStatus().getValue().equals("disabled")) {
-			UpdateUserAccount update = new UpdateUserAccount();
-			update.setStatus("disabled");
-			accountRepository.update(acctId, update);
-		}else{
-    		throw new BusinessException("Account is already disabled");
-		}
+    @Override
+    public void suspendAccount(long employeeID) throws BusinessException {
+	long acctId;
+	UserAccount account;
+	Employee employee;
+	try {
+	    employee = employeeRepository.findById(employeeID);
+	    account = employeeRepository.findAccount(employee.getNationalRegisterNb());
+	} catch (EmptyResultDataAccessException e) {
+	    throw new BusinessException("Employee not found !");
 	}
+	acctId = account.getAccountUserId();
+	if (!account.getStatus().getValue().equals("disabled")) {
+	    UpdateUserAccount update = new UpdateUserAccount();
+	    update.setStatus("disabled");
+	    accountRepository.update(acctId, update);
+	} else {
+	    throw new BusinessException("Account is already disabled");
+	}
+    }
 
-	@Override
+    @Override
     public UserAccount findAccount(String nationalRegistrationNb) throws BusinessException {
 	try {
 	    return employeeRepository.findAccount(nationalRegistrationNb);
@@ -96,5 +97,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
     }
 
-
+    @Override
+    public UserAccount findAccount(long employeeId) {
+	try {
+	    return employeeRepository.findAccount(employeeId);
+	} catch (EmptyResultDataAccessException e) {
+	    throw new BusinessException("Account not found !");
+	}
+    }
 }
