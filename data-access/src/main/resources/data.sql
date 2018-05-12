@@ -54,7 +54,7 @@ insert into t_municipalities values(1, "Jette", 1, "info@jette.be", "02/654.12.2
 insert into t_municipalities values(2, "Ganshoren", 4, "ganshoren@ganshoren.irisnet.be", "02/465.12.77", "Robert Genard");
 insert into t_municipalities values(3, "Roux", 7, "roux@municipality.com", "RouxPhone", "Paul Magnette");
 insert into t_municipalities values(4, "La Hulpe", 8, "lh@municipality.com", "lhPhone", "Gonzague pull rose");
-insert into t_municipalities values(5, "Liege", 9, "litche@municipality.com", "lPhone", "Moreau");
+insert into t_municipalities values(5, "Liege", 11, "litche@municipality.com", "lPhone", "Moreau");
 
 insert into t_citizens values(1,"Thomas","Elskens",1,"thomaselskens@hotmail.com",null,"NRN_Thomas","1983-11-13",1);
 insert into t_citizens values(2,"David","Fernandez",5,"dfernandez1612@gmail.com",null,"david","1983-12-16",2);
@@ -97,9 +97,9 @@ insert into t_request_field_values values(3, "citizenParkingCardCarColour", 2, "
 insert into t_request_field_values values(4, "citizenParkingCardPlateNumber", 2, "123456", null);
 insert into t_request_field_values values(5, "citizenParkingCardGreenCard", 2, null, "TODO: should be the BLOB");
 
-insert into t_companies values("111111", "BE111111",9, "sprl", 1, "world company");
-insert into t_companies values("222222", "BE222222",10, "SA", 1, "world company");
-insert into t_companies values("333333", "BE333333",11, "SNC", 1, "world company");
+insert into t_companies values("111111", "BE111111",9, "sprl", 1, "world company","created");
+insert into t_companies values("222222", "BE222222",10, "SA", 1, "world company","created");
+insert into t_companies values("333333", "BE333333",11, "SNC", 1, "world company","created");
 
 insert into t_mandataries values(1,1,"111111","owner");
 insert into t_mandataries values(2,3,"222222","owner");
