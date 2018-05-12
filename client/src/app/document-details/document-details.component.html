@@ -9,7 +9,7 @@
         </thead>
         <tbody>
             <tr *ngFor="let document of documents">
-                <th> TODO </th>
+                <th> {{document.documentTitle}} </th>
                 <td>
                     <button class="btn btn-success" (click)="downloadDocument(document.id)"> Télécharger </button>
                 </td>

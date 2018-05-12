@@ -17,12 +17,6 @@ export class DocumentService {
 
     getRequestDocuments(requestId: number): Observable<RequestDocument[]> {
         return this.http.get<RequestDocument[]>('/documents?requestId=' + requestId)
-            // TODO this shall not be needed
-            .map(res => {
-                const result = [];
-                res.forEach(documentId => result.push({id: documentId}));
-                return result;
-            })
             .catch(err => {
                 this.messageService.error(this.translateService.instant('documents.service.getError'));
                 return [];

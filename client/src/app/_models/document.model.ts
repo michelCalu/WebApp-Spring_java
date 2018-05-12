@@ -1,6 +1,7 @@
 
 export class RequestDocument {
-  id: number;
-// TODO   requestId: number;
-// TODO  code: string;
+  documentID: number;
+  documentTitleID: number;
+  documentTitle: string;
+  requestID: number;
 }
