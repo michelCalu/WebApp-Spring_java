@@ -68,6 +68,7 @@
 
     "validate": "validate",
     "validateCitizens": "validate inscriptions",
+    "validateCompanies": "validate companies",
     "viewDetails": "view details",
     "viewNationalRegisterDetails": "See national register details"
 

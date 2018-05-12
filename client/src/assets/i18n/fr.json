@@ -71,6 +71,7 @@
 
     "validate": "valider",
     "validateCitizens": "valider inscriptions",
+    "validateCompanies": "valider sociétés",
     "viewDetails": "voir détails",
     "viewNationalRegisterDetails": "voir détails Registre National"
     
