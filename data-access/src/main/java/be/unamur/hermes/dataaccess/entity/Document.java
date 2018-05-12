@@ -5,20 +5,15 @@ public class Document {
     private long documentID;
     private long requestID;
     private String contents;
-    private long documentTitleID;
+    private String documentTitle;
 
-
-    public Document(long documentID, long requestID, long documentTitleID) {
-        this.documentID = documentID;
-        this.requestID = requestID;
-        this.documentTitleID = documentTitleID;
+    public Document() {
     }
 
-    public Document(long documentID, long requestID, String contents, long documentTitleID) {
+    public Document(long requestID, long documentID, String documentTitle) {
         this.documentID = documentID;
         this.requestID = requestID;
-        this.contents = contents;
-        this.documentTitleID = documentTitleID;
+        this.documentTitle = documentTitle;
     }
 
     public long getDocumentID() {
@@ -33,10 +28,6 @@ public class Document {
         return contents;
     }
 
-    public long getDocumentTitleID() {
-        return documentTitleID;
-    }
-
     public void setDocumentID(long documentID) {
         this.documentID = documentID;
     }
@@ -49,8 +40,12 @@ public class Document {
         this.contents = contents;
     }
 
-    public void setDocumentTitleID(long documentTitleID) {
-        this.documentTitleID = documentTitleID;
+    public String getDocumentTitle() {
+        return documentTitle;
+    }
+
+    public void setDocumentTitle(String documentTitle) {
+        this.documentTitle = documentTitle;
     }
 
     @Override
@@ -59,7 +54,7 @@ public class Document {
                 "documentID=" + documentID +
                 ", requestID=" + requestID +
                 ", contents='" + contents + '\'' +
-                ", documentTitleID=" + documentTitleID +
+                ", documentTitle='" + documentTitle + '\'' +
                 '}';
     }
 }

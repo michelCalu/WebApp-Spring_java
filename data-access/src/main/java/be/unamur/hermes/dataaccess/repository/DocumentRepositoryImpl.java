@@ -26,7 +26,7 @@ public class DocumentRepositoryImpl implements DocumentRepository {
 	    "SELECT documentID FROM t_documents WHERE requestID = ?";
 
     private static final String queryIdsAndTitles = //
-            "SELECT documentID d, requestID r, documentTitleID t from t_documents where requestID= ?";
+            "SELECT d.requestID, d.documentID, t.title FROM t_documents d, t_document_titles t WHERE d.documentTitleID = t.titleID AND d.requestID = ?";
 
     private static final String findDocumentTitleId = //
             "SELECT titleID FROM t_document_titles WHERE title = ?";
@@ -72,8 +72,9 @@ public class DocumentRepositoryImpl implements DocumentRepository {
 
     private Document buildDocument(ResultSet rs, int rowNum) throws SQLException {
         return new Document(
-                rs.getLong(1),
-                rs.getLong(2),
-                rs.getLong(2));
+                rs.getLong  (1),
+                rs.getLong  (2),
+                rs.getString(3)
+        );
     }
 }
