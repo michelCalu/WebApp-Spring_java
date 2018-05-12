@@ -13,5 +13,5 @@ public interface CompanyRepository {
 
     void create(Company company) throws SQLException;
 
-
+    List<Company> findPending(long municipalityID);
 }

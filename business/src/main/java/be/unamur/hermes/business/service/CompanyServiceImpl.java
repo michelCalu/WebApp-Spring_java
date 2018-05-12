@@ -62,6 +62,11 @@ public class CompanyServiceImpl implements CompanyService {
 
     }
 
+    @Override
+    public List<Company> findPending(long municipalityID) {
+        return companyRepository.findPending(municipalityID);
+    }
+
     private void checkCompanyAttributes(Company company) throws BusinessException{
         if (!Pattern.matches(HermesRegex.VATNB.regex(), company.getCompanyNb())) {
             throw new BusinessException("The specified VAT number is incorrect");

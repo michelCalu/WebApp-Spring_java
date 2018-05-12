@@ -1,5 +1,6 @@
 package be.unamur.hermes.dataaccess.repository;
 
+import be.unamur.hermes.common.enums.UserStatus;
 import be.unamur.hermes.dataaccess.entity.Address;
 import be.unamur.hermes.dataaccess.entity.Company;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,13 @@ public class CompanyRepositoryImpl implements CompanyRepository {
     private static final String queryAll = //
             "SELECT * FROM t_companies";
 
+    private static final String queryPending = //
+            "SELECT * FROM t_companies  WHERE address in (SELECT addressID from t_addresses WHERE zipCode in"+
+                    "(SELECT zipCode from t_addresses WHERE addressID in ("+
+                    "SELECT address from t_municipalities WHERE municipalityID= ?)))"+
+                    "AND companyStatus='created'";
+
+
 
     @Autowired
     public CompanyRepositoryImpl(JdbcTemplate jdbcTemplate, AddressRepository addressRepository) {
@@ -48,7 +56,15 @@ public class CompanyRepositoryImpl implements CompanyRepository {
         params.put("legalForm", company.getLegalForm());
         params.put("contactPerson", company.getContactPerson());
         params.put("companyName", company.getCompanyName());
+        params.put("companyStatus", UserStatus.CREATED);
         companyInserter.execute(params);
+    }
+
+    @Override
+    public List<Company> findPending(long municipalityID) {
+       // return jdbcTemplate.query(queryPending, new Object[] { municipalityID }, this::buildCompany);
+        return jdbcTemplate.query(queryPending, new Object[] { municipalityID },
+                this::buildCompany);
     }
 
 
@@ -65,13 +81,16 @@ public class CompanyRepositoryImpl implements CompanyRepository {
 
     private Company buildCompany(ResultSet rs, int row) throws SQLException {
 	Address address = addressRepository.findById(rs.getLong(3));
+	UserStatus companyStatus = UserStatus.getStatus(rs.getString(7));
 	return new Company(
 	        rs.getString(1),
             rs.getString(2),
             address,
             rs.getString(4),
             rs.getString(5),
-            rs.getString(6));
+            rs.getString(6),
+            companyStatus
+    );
     }
 
 

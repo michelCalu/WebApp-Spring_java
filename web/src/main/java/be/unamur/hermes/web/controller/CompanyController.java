@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping({ "/companies" })
@@ -43,5 +44,16 @@ public class CompanyController {
     public ResponseEntity<Company> findById(@PathVariable(value = "companyNb") String companyNb) {
         Company company = companyService.findByCompanyNb(companyNb);
         return ResponseEntity.ok(company);
+    }
+
+    @GetMapping(path = "/pending")
+    public ResponseEntity<List<Company>> getDocuments(@RequestParam("municipalityID") long municipalityID) {
+        try {
+            List<Company> comps = companyService.findPending(municipalityID);
+            return ResponseEntity.ok(comps);
+        } catch (Exception ex) {
+            logger.error(ex.getMessage(), ex);
+            return ResponseEntity.badRequest().build();
+        }
     }
 }

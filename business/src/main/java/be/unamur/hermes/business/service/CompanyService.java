@@ -13,4 +13,5 @@ public interface CompanyService {
 
     void register(Company company);
 
+    List<Company> findPending(long municipalityID);
 }
