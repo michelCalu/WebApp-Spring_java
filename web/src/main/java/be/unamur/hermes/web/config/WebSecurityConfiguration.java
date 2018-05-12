@@ -58,10 +58,16 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) //
 		.and().exceptionHandling()//
 		.authenticationEntryPoint(restAuthenticationEntryPoint);
-	http.authorizeRequests() //
-		.antMatchers("/auth").permitAll() // allow access for connexion
-		.antMatchers(HttpMethod.POST, "/citizens").permitAll() // allow access for registration
-		.antMatchers(HttpMethod.OPTIONS).permitAll() // make browser/Angular happy
+	http.authorizeRequests()
+		// allow access for connexion
+		.antMatchers("/auth").permitAll()
+		// list of municipalities is necessary for connexion
+		.antMatchers(HttpMethod.GET, "/municipalities").permitAll()
+		// allow access for registration
+		.antMatchers(HttpMethod.POST, "/citizens").permitAll()
+		// make browser/Angular happy
+		.antMatchers(HttpMethod.OPTIONS).permitAll()
+		// other requests have to be authenticated
 		.anyRequest().authenticated();
 	http.addFilterBefore(new TokenAuthenticationFilter(tokenHelper, accountService),
 		BasicAuthenticationFilter.class);
