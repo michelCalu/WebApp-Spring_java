@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { CitizenRequest, Citizen } from '../_models';
 import { CitizenService } from '../_services';
 import { Observable } from 'rxjs/Observable';
@@ -9,7 +9,7 @@ import { Observable } from 'rxjs/Observable';
     templateUrl: 'nrn-details.component.html'
 })
 
-export class NrnDetailsComponent implements OnInit {
+export class NrnDetailsComponent implements OnChanges {
 
     @Input()
     citizen: Citizen;
@@ -19,7 +19,10 @@ export class NrnDetailsComponent implements OnInit {
 
     constructor(private citizenService: CitizenService) { }
 
-    ngOnInit(): void {
-        this.nrnData$ = this.citizenService.getNrnData(this.citizen.nationalRegisterNb);
+    ngOnChanges(changes: SimpleChanges): void {
+        if (changes['citizen']) {
+            this.nrnData$ = this.citizenService.getNrnData(this.citizen.nationalRegisterNb);
+        }
     }
+
 }

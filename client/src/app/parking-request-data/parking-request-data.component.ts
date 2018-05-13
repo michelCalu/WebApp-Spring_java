@@ -1,5 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { CitizenRequest  } from '../_models';
+import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { CitizenRequest } from '../_models';
 import { RequestService } from '../_services';
 
 @Component({
@@ -7,7 +7,7 @@ import { RequestService } from '../_services';
     templateUrl: 'parking-request-data.component.html'
 })
 
-export class ParkingRequestDataComponent implements OnInit {
+export class ParkingRequestDataComponent implements OnChanges {
 
     @Input()
     request: CitizenRequest;
@@ -17,12 +17,14 @@ export class ParkingRequestDataComponent implements OnInit {
 
     constructor(private requestService: RequestService) { }
 
-    ngOnInit(): void {
-        for (const field of this.request.data) {
-            if (field.fieldType !== 'binary') {
-                this.carData[field.code] = field.fieldValue;
-            } else {
-                this.carFilesData[field.code] = field;
+    ngOnChanges(changes: SimpleChanges): void {
+        if (changes['request']) {
+            for (const field of this.request.data) {
+                if (field.fieldType !== 'binary') {
+                    this.carData[field.code] = field.fieldValue;
+                } else {
+                    this.carFilesData[field.code] = field;
+                }
             }
         }
     }

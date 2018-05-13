@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, OnChanges, OnChanges, SimpleChanges } from '@angular/core';
 import { CitizenRequest, Citizen, RequestEvent } from '../_models';
 import { AuthenticationService, CitizenService, RequestService, AlertService } from '../_services';
 import { Observable } from 'rxjs/Observable';
@@ -9,7 +9,7 @@ import { Observable } from 'rxjs/Observable';
     templateUrl: 'request-history.component.html'
 })
 
-export class RequestHistoryComponent implements OnInit {
+export class RequestHistoryComponent implements OnChanges {
     @Input()
     request: CitizenRequest;
 
@@ -17,11 +17,13 @@ export class RequestHistoryComponent implements OnInit {
 
     constructor(private requestService: RequestService, private alertService: AlertService) {}
 
-    ngOnInit(): void {
-        this.events$ = this.requestService.getRequestEvents(this.request.id).map(requests => {
-            requests.sort((a: RequestEvent, b: RequestEvent) => b.at.getTime() - a.at.getTime());
-            return requests;
-        });
+    ngOnChanges(changes: SimpleChanges): void {
+        if (changes['request']) {
+            this.events$ = this.requestService.getRequestEvents(this.request.id).map(requests => {
+                requests.sort((a: RequestEvent, b: RequestEvent) => b.at.getTime() - a.at.getTime());
+                return requests;
+            });
+        }
     }
 
 }
