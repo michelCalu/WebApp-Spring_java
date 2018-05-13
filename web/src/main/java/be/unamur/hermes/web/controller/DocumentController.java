@@ -1,22 +1,17 @@
 package be.unamur.hermes.web.controller;
 
-import java.io.InputStream;
-import java.util.List;
-
-import javax.servlet.http.HttpServletResponse;
-
+import be.unamur.hermes.business.service.DocumentService;
+import be.unamur.hermes.dataaccess.entity.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StreamUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import be.unamur.hermes.business.service.DocumentService;
+import javax.servlet.http.HttpServletResponse;
+import java.io.InputStream;
+import java.util.List;
 
 @RestController
 @RequestMapping({ "/documents" })
@@ -32,9 +27,9 @@ public class DocumentController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Long>> getDocuments(@RequestParam("requestId") long requestId) {
+    public ResponseEntity<List<Document>> getDocuments(@RequestParam("requestId") long requestId) {
 	try {
-	    List<Long> ids = documentService.findDocumentByRequest(requestId);
+	    List<Document> ids = documentService.findDocumentByRequest(requestId);
 	    return ResponseEntity.ok(ids);
 	} catch (Exception ex) {
 	    logger.error(ex.getMessage(), ex);

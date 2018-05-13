@@ -1,30 +1,21 @@
 package be.unamur.hermes.business.service;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.Map;
-
+import be.unamur.hermes.business.exception.BusinessException;
+import be.unamur.hermes.common.constants.EventConstants;
+import be.unamur.hermes.common.enums.RequestStatusInfo;
+import be.unamur.hermes.dataaccess.entity.*;
+import be.unamur.hermes.dataaccess.repository.DepartmentRepository;
+import be.unamur.hermes.dataaccess.repository.MunicipalityRepository;
+import be.unamur.hermes.dataaccess.repository.RequestFieldRepository;
+import be.unamur.hermes.dataaccess.repository.RequestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import be.unamur.hermes.business.exception.BusinessException;
-import be.unamur.hermes.common.constants.EventConstants;
-import be.unamur.hermes.common.enums.RequestStatusInfo;
-import be.unamur.hermes.dataaccess.entity.Citizen;
-import be.unamur.hermes.dataaccess.entity.Department;
-import be.unamur.hermes.dataaccess.entity.Event;
-import be.unamur.hermes.dataaccess.entity.Municipality;
-import be.unamur.hermes.dataaccess.entity.Request;
-import be.unamur.hermes.dataaccess.entity.RequestField;
-import be.unamur.hermes.dataaccess.entity.RequestStatus;
-import be.unamur.hermes.dataaccess.entity.RequestType;
-import be.unamur.hermes.dataaccess.entity.UserAccount;
-import be.unamur.hermes.dataaccess.repository.DepartmentRepository;
-import be.unamur.hermes.dataaccess.repository.MunicipalityRepository;
-import be.unamur.hermes.dataaccess.repository.RequestFieldRepository;
-import be.unamur.hermes.dataaccess.repository.RequestRepository;
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class RequestServiceImpl implements RequestService {
