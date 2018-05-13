@@ -89,6 +89,7 @@ public class RequestServiceImpl implements RequestService {
 		RequestField requestField = new RequestField();
 		requestField.setCode(code);
 		requestField.setFieldType("File");
+		requestField.setFieldValue(codeToFiles.get(code).getOriginalFilename());
 		requestField.setFieldFile(codeToFiles.get(code).getBytes());
 		newRequest.addRequestField(requestField);
 		requestFieldRepository.createRequestField(requestField, newRequestId);

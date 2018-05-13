@@ -189,8 +189,9 @@ CREATE TABLE t_request_field_values (
   requestFieldValueID 	INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
   fieldCode 			VARCHAR(255) NOT NULL,
   requestID				INT NOT NULL,
-  -- fieldValue XOR fieldFile: either one or the other is present (both nullable, therefore)
-  fieldValue			VARCHAR(255),
+  -- fieldValue OR fieldValue && fieldFile
+  -- The fieldValue is the name of the file
+  fieldValue			VARCHAR(255) NOT NULL,
   fieldFile				LONGBLOB,
 
   FOREIGN KEY(fieldCode)

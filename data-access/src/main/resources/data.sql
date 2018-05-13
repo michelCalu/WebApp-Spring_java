@@ -118,7 +118,7 @@ insert into t_request_field_values values(1, "citizenParkingCardCarMake", 2, "Fi
 insert into t_request_field_values values(2, "citizenParkingCardCarModel", 2, "Punto", null);
 insert into t_request_field_values values(3, "citizenParkingCardCarColour", 2, "red", null);
 insert into t_request_field_values values(4, "citizenParkingCardPlateNumber", 2, "123456", null);
-insert into t_request_field_values values(5, "citizenParkingCardGreenCard", 2, null, "TODO: should be the BLOB");
+insert into t_request_field_values values(5, "citizenParkingCardGreenCard", 2, "file_name", "TODO: should be the BLOB");
 
 
 insert into t_document_titles values (1, "citizeParkingCard");
