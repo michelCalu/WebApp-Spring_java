@@ -17,9 +17,23 @@ export class CompanyService {
 
     public getPendingCompanies(municipalityId: number): Observable<Company[]> {
         return this.http.get<Company[]>('/companies/pending?municipalityID=' + municipalityId)
-                        .map(res => {
-                            console.log(res);
-                            return res;
-                        });
+            .map(res => {
+                console.log(res);
+                return res;
+            });
     }
+
+    validateCompany(companyNumber: string): any {
+        const body = {
+            companyNb: companyNumber,
+            companyStatus: 'active'
+        };
+        return this.http.patch(/*this.serverAddress + */ `/companies/${companyNumber}`, body)
+        .map(res => true)
+        .catch(err => {
+            this.messageService.error(this.translateService.instant('service.company.errorValidateCompany'));
+            return Observable.of(false);
+        });
+    }
+
 }

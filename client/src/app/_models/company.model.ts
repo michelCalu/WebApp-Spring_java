@@ -1,7 +1,7 @@
 import { Address } from './address.model';
 
 export class Company {
-  companyNb: number;
+  companyNb: string;
   vatNb: string;
   address: Address;
   legalForm: string;

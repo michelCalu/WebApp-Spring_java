@@ -57,6 +57,7 @@
     "service.citizen.errorGetCitizen" : "Unknown citizen",
     "service.citizen.errorGetNrn" : "Unknown national register number",
     "service.citizen.errorValidateCitizen": "Unable to validate the citizen's account",
+    "service.company.errorValidateCompany": "Unable to validate the company's account",
     "service.department.departmentNotFound": "Unable to find the municipality department",
     "service.department.municipalityNotFound": "Unable to find the departments of this municipality",
     "service.employee.errorGetEmployee" : "Unknown employee",
