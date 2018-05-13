@@ -9,11 +9,14 @@ import java.util.Optional;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
+import be.unamur.hermes.dataaccess.entity.RequestField;
 import org.hibernate.validator.constraints.NotBlank;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -79,6 +82,26 @@ public class RequestController {
 	    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
 	}
     }
+
+    @GetMapping(path="/{requestId}/file")
+	public ResponseEntity<ByteArrayResource> getRequestFile(
+			@PathVariable(value = "requestId") long requestId,
+			@RequestParam("code") String code){
+    	try {
+			RequestField field = requestService.findRequestFieldByCode(requestId, code);
+			ByteArrayResource resource = new ByteArrayResource(field.getFieldFile());
+			MediaType mediaType = new MediaType(field.getFieldFileType());
+
+			return ResponseEntity.
+					status(HttpStatus.OK).
+					contentType(mediaType).
+					contentLength(field.getFieldFile().length).
+					body(resource);
+		} catch (BusinessException ex) {
+    		logger.error("Bad request", ex);
+    		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+		}
+	}
 
     @PostMapping(params = "requestType=" + RequestService.TYPE_PARKING_CARD, consumes = { "multipart/form-data" })
     public ResponseEntity<Void> createRequest(@RequestPart("request") @NotNull @Valid Request newRequest,
