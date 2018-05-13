@@ -16,7 +16,7 @@ public class Request {
     private Citizen citizen;
     private Company company;
     private Department department;
-    private RequestType type;
+    private String typeDescription;
     private RequestStatus status;
     private List<RequestField> data = new ArrayList<>();
 
@@ -73,12 +73,12 @@ public class Request {
 	return id;
     }
 
-    public RequestType getType() {
-	return type;
+    public String getTypeDescription() {
+	return typeDescription;
     }
 
-    public void setType(RequestType type) {
-	this.type = type;
+    public void setTypeDescription(String typeDescription) {
+	this.typeDescription = typeDescription;
     }
 
     public List<RequestField> getData() {
@@ -121,6 +121,7 @@ public class Request {
     public String toString() {
 	return "Request [id=" + id + ", userRef=" + userRef + ", systemRef=" + systemRef + ", municipalityRef="
 		+ municipalityRef + ", assignee=" + assignee + ", citizen=" + citizen + ", company=" + company
-		+ ", department=" + department + ", type=" + type + ", status=" + status + ", data=" + data + "]";
+		+ ", department=" + department + ", typeDescription=" + typeDescription + ", status=" + status
+		+ ", data=" + data + "]";
     }
 }

@@ -108,7 +108,8 @@ public class RequestRepositoryImpl implements RequestRepository {
     @Override
     public long create(Request newRequest) {
 	Map<String, Object> parameters = new HashMap<>();
-	parameters.put("requestTypeID", newRequest.getType().getId());
+	long requestTypeId = findRequestTypeByDescription(newRequest.getTypeDescription()).getId();
+	parameters.put("requestTypeID", requestTypeId);
 	parameters.put("citizenID", newRequest.getCitizen().getId());
 	parameters.put("companyNb", newRequest.getCompany().getCompanyNb());
 	parameters.put("departmentID", newRequest.getDepartment().getId());
@@ -157,7 +158,7 @@ public class RequestRepositoryImpl implements RequestRepository {
     private Request fillRequest(ResultSet rs, int rowNum) throws SQLException {
 	Request request = new Request(rs.getLong(1));
 	RequestType reqType = findRequestTypeById(rs.getLong(2));
-	request.setType(reqType);
+	request.setTypeDescription(reqType.getDescription());
 	Citizen citizen = citizenRepository.findById(rs.getLong(3));
 	request.setCitizen(citizen);
 	RequestStatus status = findRequestStatusById(rs.getLong(7));

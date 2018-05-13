@@ -67,11 +67,6 @@ public class RequestServiceImpl implements RequestService {
     public long create(Request newRequest, Map<String, MultipartFile> codeToFiles) {
 	// TODO validate with Authentification
 	// Setting basic info
-	RequestType requestType = findRequestTypeByDescription(newRequest.getType().getDescription());
-	newRequest.setType(requestType);
-	if (requestType == null)
-	    throw new BusinessException("Unknown request type:" + newRequest.getType().getDescription());
-
 	Department department = findRequestDepartment(newRequest);
 	newRequest.setDepartment(department);
 	newRequest.setSystemRef(generateSystemRef(newRequest));
@@ -180,11 +175,11 @@ public class RequestServiceImpl implements RequestService {
     }
 
     private void approve(Request request) {
-	RequestType type = request.getType();
+	String type = request.getTypeDescription();
 	// TODO all this could be done much better
-	if (RequestService.TYPE_NATIONALITY_CERTIFICATE.equalsIgnoreCase(type.getDescription())) {
+	if (RequestService.TYPE_NATIONALITY_CERTIFICATE.equalsIgnoreCase(type)) {
 	    documentService.createNationalityCertificate(true, request);
-	} else if (RequestService.TYPE_PARKING_CARD.equalsIgnoreCase(type.getDescription())) {
+	} else if (RequestService.TYPE_PARKING_CARD.equalsIgnoreCase(type)) {
 	    documentService.createParkingCard(request);
 	    documentService.createParkingCardDecision(true, request);
 	    documentService.createPayment(request);
@@ -192,11 +187,11 @@ public class RequestServiceImpl implements RequestService {
     }
 
     private void reject(Request request) {
-	RequestType type = request.getType();
+	String type = request.getTypeDescription();
 	// TODO all this could be done much better
-	if (RequestService.TYPE_NATIONALITY_CERTIFICATE.equalsIgnoreCase(type.getDescription())) {
+	if (RequestService.TYPE_NATIONALITY_CERTIFICATE.equalsIgnoreCase(type)) {
 	    documentService.createNationalityCertificate(false, request);
-	} else if (RequestService.TYPE_PARKING_CARD.equalsIgnoreCase(type.getDescription())) {
+	} else if (RequestService.TYPE_PARKING_CARD.equalsIgnoreCase(type)) {
 	    documentService.createParkingCardDecision(false, request);
 	}
     }

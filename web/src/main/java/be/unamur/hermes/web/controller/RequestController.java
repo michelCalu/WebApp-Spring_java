@@ -30,7 +30,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import be.unamur.hermes.business.exception.BusinessException;
 import be.unamur.hermes.business.service.RequestService;
 import be.unamur.hermes.dataaccess.entity.Request;
-import be.unamur.hermes.dataaccess.entity.RequestType;
 
 @RestController
 @RequestMapping({ "/requests" })
@@ -87,7 +86,7 @@ public class RequestController {
 	try {
 	    Map<String, MultipartFile> files = new HashMap<>();
 	    files.put("citizenParkingCardGreenCard", greenCard);
-	    newRequest.setType(new RequestType(0L, RequestService.TYPE_PARKING_CARD));
+	    newRequest.setTypeDescription(RequestService.TYPE_PARKING_CARD);
 	    long requestId = requestService.create(newRequest, files);
 	    URI location = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}").buildAndExpand(requestId)
 		    .toUri();
@@ -103,7 +102,7 @@ public class RequestController {
     public ResponseEntity<Void> createRequest(@RequestPart("request") @Valid Request newRequest) {
 	System.out.println(newRequest);
 	try {
-	    newRequest.setType(new RequestType(0L, RequestService.TYPE_NATIONALITY_CERTIFICATE));
+	    newRequest.setTypeDescription(RequestService.TYPE_NATIONALITY_CERTIFICATE);
 	    long requestId = requestService.create(newRequest, new HashMap<>());
 	    URI location = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}").buildAndExpand(requestId)
 		    .toUri();
