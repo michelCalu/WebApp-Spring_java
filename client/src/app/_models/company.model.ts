@@ -6,8 +6,6 @@ export class Company {
   address: Address;
   legalForm: string;
   contactPerson: number;
-
-  // TODO:
-    // status: string;
-    // name: string;
+  companyName: string;
+  status: string;
 }

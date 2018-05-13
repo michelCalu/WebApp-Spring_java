@@ -73,6 +73,7 @@
     "validate": "valider",
     "validateCitizens": "valider inscriptions",
     "validateCompanies": "valider sociétés",
+    "vatNumber": "numéro de TVA",
     "viewDetails": "voir détails",
     "viewNationalRegisterDetails": "voir détails Registre National"
     

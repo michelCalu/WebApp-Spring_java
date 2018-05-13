@@ -70,6 +70,7 @@
     "validate": "validate",
     "validateCitizens": "validate inscriptions",
     "validateCompanies": "validate companies",
+    "vatNumber": "VAT number",
     "viewDetails": "view details",
     "viewNationalRegisterDetails": "See national register details"
 

@@ -1,29 +1,30 @@
 <div class="col-md-9 col-md-offset-3">
-    {{ pendingCompanies$ | async }}
-	<!-- <h1> {{'validateCitizens' |translate}} </h1>
+    <h1> {{'validateCompanies' |translate }} </h1>
 	<div class="container">
-		<table *ngIf="(pendingCitizens$ | async)?.length; else noCitizens" class="table table-striped">
+		<table *ngIf="(pendingCompanies$ | async)?.length; else noCompanies" class="table table-striped">
 			<thead>
 				<tr>
                     <th scope="col">{{'name' | translate}}</th>
-                    <th> {{'nationalRegisterNumber' | translate }}</th>
+                    <th> {{'vatNumber' | translate }}</th>
                     <th></th>
                     <th></th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr *ngFor="let citizen of (pendingCitizens$ | async)">
-                    <td> {{ citizen.firstName + ' ' + citizen.lastName }}</td>
-                    <td> {{ citizen.nationalRegisterNb }} </td>
+				<tr *ngFor="let company of (pendingCompanies$ | async)">
+                    <td> {{ company.companyName }}</td>
+                    <td> {{ company.vatNb }} </td>
                     <td><button class="btn btn-success" (click)="selectedCitizen = citizen">{{'viewDetails'| translate}}</button></td>
                     <td><button class="btn btn-success" (click)="validate(citizen)"> {{'validate' | translate}}</button></td>
 				</tr>
 			</tbody>
 		</table>
-		<ng-template #noCitizens>
-			<div>Votre service n'a pas d'inscriptions en attente</div>
+		<ng-template #noCompanies>
+			<div>Votre service n'a pas d'inscriptions de sociétés en attente</div>
         </ng-template>
 
+        // TODO select company
+        
         <div *ngIf="selectedCitizen">
             <citizen-detail  [citizen]="selectedCitizen"></citizen-detail>
             <nrn-details [citizen]="selectedCitizen"></nrn-details>
@@ -31,5 +32,4 @@
         
 	</div>
 
-</div> -->
-
+</div>
