@@ -58,7 +58,7 @@ public class RequestServiceImpl implements RequestService {
 
     @Override
     public Request find(long requestId) {
-	return requestRepository.findById(requestId);
+    return requestRepository.findById(requestId);
     }
 
     // rollback for all exceptions, not only runtime exceptions and errors
@@ -136,6 +136,28 @@ public class RequestServiceImpl implements RequestService {
     @Override
     public RequestType findRequestTypeById(long id) {
 	return requestRepository.findRequestTypeById(id);
+    }
+
+    @Override
+    public RequestField findRequestFieldByCode(long requestId, String code){
+        Request request = find(requestId);
+        RequestField fieldOfCode = null;
+        for(RequestField field: request.getData()){
+            if(field.getCode().equals(code)){
+                if(fieldOfCode == null) {
+                    if(field.getFieldFile() != null)
+                        fieldOfCode = field;
+                    else
+                        throw new BusinessException("Requested file identified by code : " + code + " isn't a file!");
+                }
+                else
+                    throw new BusinessException("Multiple request fields of code : " + code + " detected.");
+            }
+        }
+        if(fieldOfCode != null)
+            return fieldOfCode;
+        else
+            throw new BusinessException("No requestField of code : " + code + " has been found !");
     }
 
     @Override
