@@ -20,15 +20,16 @@ DROP TABLE IF EXISTS t_user_statusses;
 DROP TABLE IF EXISTS t_user_accounts;
 DROP TABLE IF EXISTS t_addresses;
 DROP TABLE IF EXISTS t_documents;
+DROP TABLE IF EXISTS t_document_titles;
 
 CREATE TABLE t_user_accounts (
   userAccountID			INT PRIMARY KEY 		NOT NULL AUTO_INCREMENT,
   roles		    		ENUM('ROLE_USER','ROLE_ADMIN') 			NOT NULL,
   password				VARCHAR(255) 			NOT NULL,
   userStatus
-  	ENUM('created','active','disabled')			NOT NULL 
+                     ENUM('created','active','disabled')			NOT NULL
 );
-  
+
 
 
 CREATE TABLE t_addresses (
@@ -91,10 +92,13 @@ CREATE TABLE t_employees (
 
 CREATE TABLE t_companies (
   companyNb   	VARCHAR(255)  	PRIMARY KEY NOT NULL,
-  vatNb     	VARCHAR(255),
-  address     	INT       		NOT NULL,
-  legalForm  	VARCHAR(255)  	NOT NULL,
-  contactPerson INT	NOT NULL,
+  vatNb     	  VARCHAR(255)    ,
+  address     	INT       		  NOT NULL,
+  legalForm  	  VARCHAR(255)  	NOT NULL,
+  contactPerson INT	            NOT NULL,
+  companyName   VARCHAR(255)    NOT NULL,
+  companyStatus
+    ENUM('created','active','disabled')			NOT NULL,
 
   FOREIGN KEY (contactPerson) REFERENCES t_citizens(citizenID)
 );
@@ -103,9 +107,9 @@ CREATE TABLE t_mandataries(
   mandataryID   INT PRIMARY KEY 	NOT NULL AUTO_INCREMENT,
   citizenID   	INT  				NOT NULL,
   companyNb   	VARCHAR(255)  		NOT NULL,
-  role      	
-  	ENUM('owner','manager','reader')       	
-  									NOT NULL,
+  role
+                ENUM('owner','manager','reader')
+                                 NOT NULL,
 
   FOREIGN KEY (citizenID) REFERENCES t_citizens(citizenID),
   FOREIGN KEY (companyNb) REFERENCES t_companies(companyNb),
@@ -113,9 +117,9 @@ CREATE TABLE t_mandataries(
 );
 
 CREATE TABLE t_request_types (
-	requestTypeID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-	description VARCHAR(255),
-	CONSTRAINT UC_Description UNIQUE (description)
+  requestTypeID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  description VARCHAR(255),
+  CONSTRAINT UC_Description UNIQUE (description)
 );
 
 CREATE TABLE t_req_statusses (
@@ -133,13 +137,13 @@ CREATE TABLE t_departments (
   addressID			  INT, -- if null, same as municipality address
 
   FOREIGN KEY(headOfDepartmentID)
-    REFERENCES t_employees(employeeID),
+  REFERENCES t_employees(employeeID),
   FOREIGN KEY(parentDepartmentID)
-    REFERENCES t_departments(departmentID),
+  REFERENCES t_departments(departmentID),
   FOREIGN KEY(municipalityID)
-    REFERENCES t_municipalities (municipalityID),
+  REFERENCES t_municipalities (municipalityID),
   FOREIGN KEY(addressID)
-    REFERENCES t_addresses(addressID)
+  REFERENCES t_addresses(addressID)
 );
 
 CREATE TABLE t_requests (
@@ -158,27 +162,27 @@ CREATE TABLE t_requests (
   municipalityRef VARCHAR(255)  NOT NULL,
 
   FOREIGN KEY(requestTypeID)
-    REFERENCES t_request_types(requestTypeID),
+  REFERENCES t_request_types(requestTypeID),
   FOREIGN KEY(citizenID)
-    REFERENCES t_citizens(citizenID),
+  REFERENCES t_citizens(citizenID),
   FOREIGN KEY (companyNb)
-    REFERENCES t_companies(companyNb),
+  REFERENCES t_companies(companyNb),
   FOREIGN KEY(employeeID)
-    REFERENCES t_employees(employeeID),
+  REFERENCES t_employees(employeeID),
   FOREIGN KEY(departmentID)
-    REFERENCES t_departments(departmentID),
+  REFERENCES t_departments(departmentID),
   FOREIGN KEY(statusID)
-   REFERENCES t_req_statusses(statusID)
+  REFERENCES t_req_statusses(statusID)
 );
 
 CREATE TABLE t_request_field_definitions (
   fieldCode 			VARCHAR(255)  PRIMARY KEY NOT NULL,
-  requestTypeID			INT NOT NULL,  
+  requestTypeID			INT NOT NULL,
   fieldType				VARCHAR(255) NOT NULL,
   required				BOOLEAN NOT NULL,
-  
+
   FOREIGN KEY(requestTypeID)
-    REFERENCES t_request_types(requestTypeID)
+  REFERENCES t_request_types(requestTypeID)
 );
 
 CREATE TABLE t_request_field_values (
@@ -188,11 +192,11 @@ CREATE TABLE t_request_field_values (
   -- fieldValue XOR fieldFile: either one or the other is present (both nullable, therefore)
   fieldValue			VARCHAR(255),
   fieldFile				LONGBLOB,
-  
+
   FOREIGN KEY(fieldCode)
-    REFERENCES t_request_field_definitions(fieldCode),
+  REFERENCES t_request_field_definitions(fieldCode),
   FOREIGN KEY(requestID)
-    REFERENCES t_requests(requestID)
+  REFERENCES t_requests(requestID)
 );
 
 CREATE TABLE t_event_types (
@@ -235,8 +239,18 @@ CREATE TABLE t_departments_skills (
   FOREIGN KEY (skillID) REFERENCES t_skills(skillID)
 );
 
+
+CREATE TABLE t_document_titles (
+  titleID 	INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  title 	VARCHAR(255) 	NOT NULL
+);
+
 CREATE TABLE t_documents (
   documentID 	INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  requestID 	INT NOT NULL,
-  contents 		TEXT NOT NULL 
+  requestID 	INT 			NOT NULL,
+  contents 		TEXT 			NOT NULL,
+  documentTitleID	INT 		NOT NULL,
+  FOREIGN KEY(documentTitleID) REFERENCES t_document_titles(titleID)
 );
+
+

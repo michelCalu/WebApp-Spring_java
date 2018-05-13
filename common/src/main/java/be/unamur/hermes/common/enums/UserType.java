@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum UserType {
 
-    CITIZEN("ctz"), EMPLOYEE("empl");
+    CITIZEN("ctz"), EMPLOYEE("empl"), COMPANY("cmp");
 
     private final String value;
 

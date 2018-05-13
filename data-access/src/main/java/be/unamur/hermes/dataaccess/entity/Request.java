@@ -1,7 +1,5 @@
 package be.unamur.hermes.dataaccess.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,22 +11,12 @@ public class Request {
     private String systemRef;
     private String municipalityRef;
 
-    // only used for database retrieval
-    private Long citizenId;
-    private String companyNb;
-    private Long employeeId;
-    private Long departmentId;
-    private Long typeId;
-    private String typeDescription;
-    private Long statusId;
-    private List<Long> dataIds;
-
     // derived information
     private Employee assignee;
     private Citizen citizen;
     private Company company;
     private Department department;
-    private RequestType type;
+    private String typeDescription;
     private RequestStatus status;
     private List<RequestField> data = new ArrayList<>();
 
@@ -36,10 +24,9 @@ public class Request {
 	// no-op
     }
 
-    public Request(Long id, Long typeId) {
+    public Request(Long id) {
 	super();
 	this.id = id;
-	this.typeId = typeId;
     }
 
     public RequestStatus getStatus() {
@@ -75,85 +62,35 @@ public class Request {
     }
 
     public Department getDepartment() {
-        return department;
+	return department;
     }
 
     public void setDepartment(Department department) {
-        this.department = department;
+	this.department = department;
     }
 
     public Long getId() {
 	return id;
     }
 
-    public RequestType getType() {
-	return type;
-    }
-
-    public void setType(RequestType type) {
-	this.type = type;
-    }
-
-    public List<RequestField> getData() {
-        return data;
-    }
-
-    public void addRequestField(RequestField requestField) {
-        this.data.add(requestField);
-    }
-
-    public void addRequestFields(List<RequestField> requestFields) {
-        this.data.addAll(requestFields);
-    }
-
     public String getTypeDescription() {
 	return typeDescription;
     }
 
-    @JsonIgnore
-    public Long getTypeId() {
-        return typeId;
+    public void setTypeDescription(String typeDescription) {
+	this.typeDescription = typeDescription;
     }
 
-    @JsonIgnore
-    public Long getCitizenId() {
-	return citizenId;
+    public List<RequestField> getData() {
+	return data;
     }
 
-    public void setCitizenId(Long citizenId) {
-	this.citizenId = citizenId;
+    public void addRequestField(RequestField requestField) {
+	this.data.add(requestField);
     }
 
-    @JsonIgnore
-    public Long getEmployeeId() {
-	return employeeId;
-    }
-
-    public void setEmployeeId(Long employeeId) {
-	this.employeeId = employeeId;
-    }
-
-    @JsonIgnore
-    public String getCompanyNb() {
-	return companyNb;
-    }
-
-    public void setCompanyId(String companyNb) {
-	this.companyNb = companyNb;
-    }
-
-    @JsonIgnore
-    public Long getDepartmentId() {
-        return departmentId;
-    }
-
-    public void setDepartmentId(Long departmentId) {
-        this.departmentId = departmentId;
-    }
-
-    @JsonIgnore
-    public List<Long> getDataIds() {
-        return dataIds;
+    public void addRequestFields(List<RequestField> requestFields) {
+	this.data.addAll(requestFields);
     }
 
     public String getUserRef() {
@@ -182,26 +119,9 @@ public class Request {
 
     @Override
     public String toString() {
-        return "Request{" +
-                "id=" + id +
-                ", userRef='" + userRef + '\'' +
-                ", systemRef='" + systemRef + '\'' +
-                ", municipalityRef='" + municipalityRef + '\'' +
-                ", citizenId=" + citizenId +
-                ", companyNb='" + companyNb + '\'' +
-                ", employeeId=" + employeeId +
-                ", departmentId=" + departmentId +
-                ", typeId=" + typeId +
-                ", typeDescription='" + typeDescription + '\'' +
-                ", statusId=" + statusId +
-                ", dataIds=" + dataIds +
-                ", assignee=" + assignee +
-                ", citizen=" + citizen +
-                ", company=" + company +
-                ", department=" + department +
-                ", type=" + type +
-                ", status=" + status +
-                ", data=" + data +
-                '}';
+	return "Request [id=" + id + ", userRef=" + userRef + ", systemRef=" + systemRef + ", municipalityRef="
+		+ municipalityRef + ", assignee=" + assignee + ", citizen=" + citizen + ", company=" + company
+		+ ", department=" + department + ", typeDescription=" + typeDescription + ", status=" + status
+		+ ", data=" + data + "]";
     }
 }

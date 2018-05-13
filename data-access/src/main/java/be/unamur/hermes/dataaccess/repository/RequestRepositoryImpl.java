@@ -8,11 +8,11 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
 import be.unamur.hermes.dataaccess.entity.Citizen;
+import be.unamur.hermes.dataaccess.entity.Company;
 import be.unamur.hermes.dataaccess.entity.Department;
 import be.unamur.hermes.dataaccess.entity.Employee;
 import be.unamur.hermes.dataaccess.entity.Request;
@@ -56,11 +56,12 @@ public class RequestRepositoryImpl implements RequestRepository {
     private final EmployeeRepository employeeRepository;
     private final RequestFieldRepository requestFieldRepository;
     private final DepartmentRepository departmentRepository;
+    private final CompanyRepository companyRepository;
 
     @Autowired
     public RequestRepositoryImpl(JdbcTemplate jdbcTemplate, CitizenRepository citizenRepository,
 	    EmployeeRepository employeeRepository, RequestFieldRepository requestFieldRepository,
-	    DepartmentRepository departmentRepository) {
+	    DepartmentRepository departmentRepository, CompanyRepository companyRepository) {
 	super();
 	this.jdbcTemplate = jdbcTemplate;
 	this.inserter = new SimpleJdbcInsert(jdbcTemplate.getDataSource()).withTableName("t_requests")
@@ -69,53 +70,48 @@ public class RequestRepositoryImpl implements RequestRepository {
 	this.employeeRepository = employeeRepository;
 	this.requestFieldRepository = requestFieldRepository;
 	this.departmentRepository = departmentRepository;
+	this.companyRepository = companyRepository;
     }
 
     @Override
     public List<Request> findByCitizen(long citizenId) {
-	List<Request> requests = jdbcTemplate.query(queryByCitizenId, new Object[] { citizenId },
-		new RequestRowMapper());
-	requests.stream().forEach(this::fillRequest);
+	List<Request> requests = jdbcTemplate.query(queryByCitizenId, new Object[] { citizenId }, this::fillRequest);
 	return requests;
     }
 
     @Override
     public List<Request> findByCitizen(long citizenId, long requestTypeId) {
 	List<Request> requests = jdbcTemplate.query(queryByCitizenIdAndRequestType,
-		new Object[] { citizenId, requestTypeId }, new RequestRowMapper());
-	requests.stream().forEach(this::fillRequest);
+		new Object[] { citizenId, requestTypeId }, this::fillRequest);
 	return requests;
     }
 
     @Override
     public Request findById(long id) {
-	Request result = jdbcTemplate.queryForObject(queryById, new Object[] { id }, new RequestRowMapper());
-	fillRequest(result);
+	Request result = jdbcTemplate.queryForObject(queryById, new Object[] { id }, this::fillRequest);
 	return result;
     }
 
     @Override
     public List<Request> findbyDepartmentId(long departmentId) {
 	List<Request> requests = jdbcTemplate.query(queryByDepartmentId, new Object[] { departmentId },
-		new RequestRowMapper());
-	requests.stream().forEach(this::fillRequest);
+		this::fillRequest);
 	return requests;
     }
 
     @Override
     public List<Request> findbyAssigneeId(long employeeId) {
-	List<Request> requests = jdbcTemplate.query(queryByEmployeeId, new Object[] { employeeId },
-		new RequestRowMapper());
-	requests.stream().forEach(this::fillRequest);
+	List<Request> requests = jdbcTemplate.query(queryByEmployeeId, new Object[] { employeeId }, this::fillRequest);
 	return requests;
     }
 
     @Override
     public long create(Request newRequest) {
 	Map<String, Object> parameters = new HashMap<>();
-	parameters.put("requestTypeID", newRequest.getType().getId());
+	long requestTypeId = findRequestTypeByDescription(newRequest.getTypeDescription()).getId();
+	parameters.put("requestTypeID", requestTypeId);
 	parameters.put("citizenID", newRequest.getCitizen().getId());
-	parameters.put("companyNb", newRequest.getCompanyNb());
+	parameters.put("companyNb", newRequest.getCompany().getCompanyNb());
 	parameters.put("departmentID", newRequest.getDepartment().getId());
 	RequestStatus newStatus = findRequestStatusByName(RequestRepository.STATUS_NEW);
 	parameters.put("statusID", newStatus.getId());
@@ -159,36 +155,28 @@ public class RequestRepositoryImpl implements RequestRepository {
 		(rs, rowId) -> new RequestStatus(rs.getLong(1), rs.getString(2)));
     }
 
-    private void fillRequest(Request request) {
-	Citizen citizen = citizenRepository.findById(request.getCitizenId());
-	RequestType reqType = findRequestTypeById(request.getTypeId());
-	Department department = departmentRepository.findById(request.getDepartmentId());
-	List<RequestField> requestFields = requestFieldRepository.getFields(request.getId());
+    private Request fillRequest(ResultSet rs, int rowNum) throws SQLException {
+	Request request = new Request(rs.getLong(1));
+	RequestType reqType = findRequestTypeById(rs.getLong(2));
+	request.setTypeDescription(reqType.getDescription());
+	Citizen citizen = citizenRepository.findById(rs.getLong(3));
 	request.setCitizen(citizen);
-	request.setType(reqType);
+	RequestStatus status = findRequestStatusById(rs.getLong(7));
+	request.setStatus(status);
+	request.setSystemRef(rs.getString(8));
+	request.setUserRef(rs.getString(9));
+	request.setMunicipalityRef(rs.getString(10));
+	Department department = departmentRepository.findById(rs.getLong(6));
 	request.setDepartment(department);
+	List<RequestField> requestFields = requestFieldRepository.getFields(request.getId());
 	request.addRequestFields(requestFields);
-	if (request.getEmployeeId() > 0) {
-	    Employee assignee = employeeRepository.findById(request.getEmployeeId());
+	Company company = companyRepository.findByCompanyNb(rs.getString(4));
+	request.setCompany(company);
+	long employeeId = rs.getLong(5);
+	if (employeeId > 0) {
+	    Employee assignee = employeeRepository.findById(employeeId);
 	    request.setAssignee(assignee);
 	}
+	return request;
     }
-
-    private class RequestRowMapper implements RowMapper<Request> {
-	@Override
-	public Request mapRow(ResultSet rs, int rowNum) throws SQLException {
-	    Request request = new Request(rs.getLong(1), rs.getLong(2));
-	    request.setCitizenId(rs.getLong(3));
-	    request.setEmployeeId(rs.getLong(5));
-	    request.setDepartmentId(rs.getLong(6));
-	    Long statusId = rs.getLong(7);
-	    RequestStatus status = findRequestStatusById(statusId);
-	    request.setStatus(status);
-	    request.setSystemRef(rs.getString(8));
-	    request.setUserRef(rs.getString(9));
-	    request.setMunicipalityRef(rs.getString(10));
-	    return request;
-	}
-    }
-
 }

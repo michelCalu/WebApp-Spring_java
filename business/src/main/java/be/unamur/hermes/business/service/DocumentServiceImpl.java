@@ -24,6 +24,7 @@ import be.unamur.hermes.common.util.PDFCreator;
 import be.unamur.hermes.dataaccess.entity.Address;
 import be.unamur.hermes.dataaccess.entity.Citizen;
 import be.unamur.hermes.dataaccess.entity.Department;
+import be.unamur.hermes.dataaccess.entity.Document;
 import be.unamur.hermes.dataaccess.entity.Employee;
 import be.unamur.hermes.dataaccess.entity.Municipality;
 import be.unamur.hermes.dataaccess.entity.Request;
@@ -77,8 +78,8 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     @Override
-    public List<Long> findDocumentByRequest(long requestId) {
-	return documentRepository.getDocumentIds(requestId);
+    public List<Document> findDocumentByRequest(long requestId) {
+	return documentRepository.getDocumentIdsTitles(requestId);
     }
 
     @Override
@@ -87,7 +88,7 @@ public class DocumentServiceImpl implements DocumentService {
 	Context context = initContext(request);
 	context.setVariable("title", "Demande de certificat de nationalité");
 	String contents = templateEngine.process(templateName, context);
-	return documentRepository.create(request.getId(), contents);
+	return documentRepository.create(request.getId(), contents, DocumentService.TITLE_NATIONALITY_CERTIFICATE);
     }
 
     @Override
@@ -96,14 +97,14 @@ public class DocumentServiceImpl implements DocumentService {
 	Context context = initContext(request);
 	context.setVariable("title", "Demande de carte de stationnement pour riverain ou visiteur");
 	String contents = templateEngine.process(templateName, context);
-	return documentRepository.create(request.getId(), contents);
+	return documentRepository.create(request.getId(), contents, DocumentService.TITLE_PARKING_CARD_DECISION);
     }
 
     @Override
     public long createParkingCard(Request request) {
 	Context context = initContext(request);
 	String contents = templateEngine.process("parkingCard/card", context);
-	return documentRepository.create(request.getId(), contents);
+	return documentRepository.create(request.getId(), contents, DocumentService.TITLE_PARKING_CARD_CITIZEN);
     }
 
     @Override
@@ -111,7 +112,7 @@ public class DocumentServiceImpl implements DocumentService {
 	Context context = initContext(request);
 	context.setVariable("title", "Invitation à payer");
 	String contents = templateEngine.process("parkingCard/payment", context);
-	return documentRepository.create(request.getId(), contents);
+	return documentRepository.create(request.getId(), contents, DocumentService.TITLE_PARKING_CARD_PAYMENT);
     }
 
     protected Context initContext(Request request) {
@@ -154,7 +155,7 @@ public class DocumentServiceImpl implements DocumentService {
 	dep.setEmail("population-gembloux@commune.be");
 	dep.setPhoneNumber("populationPhoneNumber");
 	RequestStatus requestStatus = new RequestStatus(0, "Done");
-	Request request = new Request(1L, 1L);
+	Request request = new Request(0L);
 	request.setAssignee(officer);
 	request.setCitizen(requestor);
 	request.setStatus(requestStatus);
