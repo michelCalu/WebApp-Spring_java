@@ -27,12 +27,10 @@ export class MyRequestsComponent implements OnInit {
         this.citizenRequests$ = this.requestService.getCitizenRequests(currentUser.id);
         this.citizenRequests$.subscribe(requests => {
             for (const request of requests) {
-                this.getCreationDate(request.id).subscribe(creationDate => this.citizenRequestsCreationDates[request.id] = creationDate);
+                this.requestService.getCreationDate(request.id)
+                        .subscribe(creationDate => this.citizenRequestsCreationDates[request.id] = creationDate);
             }
         });
     }
 
-    private getCreationDate(requestId: number): Observable<Date> {
-        return this.requestService.getCreationDate(requestId);
-    }
 }
