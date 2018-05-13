@@ -1,6 +1,7 @@
 package be.unamur.hermes.dataaccess.repository;
 
 import be.unamur.hermes.common.enums.UserStatus;
+import be.unamur.hermes.dataaccess.dto.UpdateCompanyAccount;
 import be.unamur.hermes.dataaccess.entity.Address;
 import be.unamur.hermes.dataaccess.entity.Company;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,8 @@ public class CompanyRepositoryImpl implements CompanyRepository {
                     "SELECT address from t_municipalities WHERE municipalityID= ?)))"+
                     "AND companyStatus='created'";
 
+    private static final String updateCompanyStatus = //
+            "UPDATE t_companies c SET c.companyStatus = ? WHERE c.companyNb = ?";
 
 
     @Autowired
@@ -65,6 +68,11 @@ public class CompanyRepositoryImpl implements CompanyRepository {
        // return jdbcTemplate.query(queryPending, new Object[] { municipalityID }, this::buildCompany);
         return jdbcTemplate.query(queryPending, new Object[] { municipalityID },
                 this::buildCompany);
+    }
+
+    @Override
+    public void activate(String companyNb, UpdateCompanyAccount updates) {
+        jdbcTemplate.update(String.format(updateCompanyStatus, "companyStatus"), updates.getCompanyStatus(), companyNb);
     }
 
 

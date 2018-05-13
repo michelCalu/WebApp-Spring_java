@@ -2,6 +2,7 @@ package be.unamur.hermes.business.service;
 
 import be.unamur.hermes.business.exception.BusinessException;
 import be.unamur.hermes.common.enums.HermesRegex;
+import be.unamur.hermes.dataaccess.dto.UpdateCompanyAccount;
 import be.unamur.hermes.dataaccess.entity.Company;
 import be.unamur.hermes.dataaccess.repository.CompanyRepository;
 import be.unamur.hermes.dataaccess.repository.MunicipalityRepository;
@@ -65,6 +66,11 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public List<Company> findPending(long municipalityID) {
         return companyRepository.findPending(municipalityID);
+    }
+
+    @Override
+    public void activate(String companyNb, UpdateCompanyAccount updates) {
+        companyRepository.activate(companyNb, updates);
     }
 
     private void checkCompanyAttributes(Company company) throws BusinessException{

@@ -2,10 +2,12 @@ package be.unamur.hermes.web.controller;
 
 import be.unamur.hermes.business.exception.BusinessException;
 import be.unamur.hermes.business.service.CompanyService;
+import be.unamur.hermes.dataaccess.dto.UpdateCompanyAccount;
 import be.unamur.hermes.dataaccess.entity.Company;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -54,6 +56,19 @@ public class CompanyController {
         } catch (Exception ex) {
             logger.error(ex.getMessage(), ex);
             return ResponseEntity.badRequest().build();
+        }
+    }
+
+    //activate
+    @PatchMapping(path = "/{companyNb}")
+    public ResponseEntity<Company> updateCompany(@RequestBody UpdateCompanyAccount updates,
+                                                 @PathVariable("companyNb") String companyNb) {
+        try {
+            companyService.activate(companyNb, updates);
+            Company updatedCompany = companyService.findByCompanyNb(companyNb);
+            return new ResponseEntity<Company>(updatedCompany, HttpStatus.OK);
+        } catch (BusinessException be) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 }
