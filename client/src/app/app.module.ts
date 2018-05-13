@@ -4,7 +4,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common
 import { NgModule } from '@angular/core';
 
 import { AlertService, AuthenticationService, CitizenService, MockAuthService, RequestService, EmployeeService, 
-            DocumentService } from './_services/index';
+            DocumentService, CompanyService, DepartmentService} from './_services/index';
 import { AlertComponent } from './_directives/index';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app.routing.module';
@@ -92,6 +92,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     MunicipalityService,
     RequestService,
     DocumentService,
+    CompanyService,
+    DepartmentService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: JwtInterceptor,

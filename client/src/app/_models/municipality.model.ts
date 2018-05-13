@@ -1,7 +1,9 @@
+import { Address } from './address.model';
+
 export class Municipality {
   id: number;
   name: string;
-  address: any; // TODO: address
+  address: Address;
   email: string;
   phone: string;
   mayorName: string;

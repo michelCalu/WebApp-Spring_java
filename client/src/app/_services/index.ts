@@ -6,3 +6,5 @@ export * from './employee.service';
 export * from './request.service';
 export * from './municipality.service';
 export * from './document.service';
+export * from './company.service';
+export * from './department.service';

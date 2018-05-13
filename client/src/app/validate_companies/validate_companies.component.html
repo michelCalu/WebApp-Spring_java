@@ -1,5 +1,5 @@
 <div class="col-md-9 col-md-offset-3">
-    VALIDATE COMPANIES
+    {{ pendingCompanies$ | async }}
 	<!-- <h1> {{'validateCitizens' |translate}} </h1>
 	<div class="container">
 		<table *ngIf="(pendingCitizens$ | async)?.length; else noCitizens" class="table table-striped">
