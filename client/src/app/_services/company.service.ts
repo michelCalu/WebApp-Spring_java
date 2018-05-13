@@ -15,6 +15,11 @@ export class CompanyService {
 
     constructor(private http: HttpClient, private messageService: AlertService, private translateService: TranslateService) { }
 
+    public createCompany(company: Company): Observable<any> {
+        console.log('CREATING COMPANY : ' + JSON.stringify(company));
+        return this.http.post(/*this.serverAddress + */ '/companies', company);
+    }
+
     public getPendingCompanies(municipalityId: number): Observable<Company[]> {
         return this.http.get<Company[]>('/companies/pending?municipalityID=' + municipalityId)
             .map(res => {

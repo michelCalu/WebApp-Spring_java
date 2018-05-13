@@ -1,0 +1,1 @@
+export * from './mycompanies.component';

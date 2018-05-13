@@ -2,11 +2,13 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { AuthGuard } from './_guards';
+import { CreateCompanyComponent } from './createcompany';
 import { CreateUserComponent } from './createuser';
 import { HomeComponent } from './home';
 import { LoginComponent } from './login';
 // import { MyFoldersComponent } from './myfolders';
 // import { MyProfileComponent } from './myprofile';
+import { MyCompaniesComponent } from './mycompanies';
 import { MyRequestsComponent } from './myrequests';
 import { NewRequestComponent } from './newrequest';
 import { NationalityCertificateCreationComponent } from './nationality-certificate-creation';
@@ -23,6 +25,8 @@ const appRoutes: Routes = [
     //   { path: 'home', component: HomeComponent },
     //   { path: 'myfolders', component: MyFoldersComponent },
     //   { path: 'myprofile', component: MyProfileComponent },
+      { path: 'createcompany', component: CreateCompanyComponent },
+      { path: 'mycompanies', component: MyCompaniesComponent},
       { path: 'myrequests', component: MyRequestsComponent },
       { path: 'newrequest', component: NewRequestComponent },
       { path: 'employee_dashboard', component: EmployeeDashboardComponent },

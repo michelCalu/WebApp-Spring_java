@@ -17,6 +17,8 @@
     "closed": "closed",
     "colour": "Colour",
     "connectAsEmployee": "Login as an employee",
+    "connectAsCitizen": "Login as a citizen",
+    "connectAsCompany": "Login as a company",
     "create_employee": "create an employee",
     "created": "created",
     "createEmployee.title": "Create a new employee",
@@ -63,6 +65,7 @@
     "service.employee.errorGetEmployee" : "Unknown employee",
     "signin": "sign in",
     "signup": "sign up",
+    "createCompany": "sign up a company",
     "status": "status",
 
     "type": "type",

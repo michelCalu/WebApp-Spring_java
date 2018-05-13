@@ -1,0 +1,31 @@
+<div class="col-md-6">
+  <div class="container">
+	<h1>Inscription</h1>
+	<form #inscriptionForm="ngForm">
+		<label for="companyNb"> Numéro d'entreprise :</label>
+		<input [(ngModel)]="company.companyNb" type="text" placeholder="Proximus" name="companyNb" class="form-control" id="companyNb" required>
+	  	<label for="companyName">Nom :</label>
+	  	<input [(ngModel)]="company.companyName" type="text" placeholder="Proximus" name="companyName" class="form-control" id="companyName" required>
+	  	<label for="vatNb">TVA :</label>
+	  	<input [(ngModel)]="company.vatNb" type="text" placeholder="BE0*********" name="vatNb" class="form-control" id="vatNb" required>
+	  	<label for="legalForm">Forme juridique:</label>
+	  	<input [(ngModel)]="company.legalForm" type="text" placeholder="ASBL" name="legalForm" class="form-control" id="legalForm" required>
+	
+	  	<label for="country">Pays:</label>
+      	<input [(ngModel)]="company.address.country" type="text" placeholder="Ex: Belgique" default="Belgique" name="country" class="form-control" id="country" required>
+      	
+	  	<!-- <label for="municipality">Commune:</label>
+      	<input [(ngModel)]="citizen.address.municipality" type="text" placeholder="Ex: Bruxelles" name="state" class="form-control" id="municipality" required> -->
+      	<label for="municipality"> Commune:</label>
+      	<select class="custom-select" [(ngModel)]="company.address.municipality" name="municipality" placeholder="Ex: Bruxelles" class="form-control" id="municipality" required>
+      	    <option *ngFor="let municipality of (municipalities$ | async)" [value]="municipality.name"> {{municipality.name}} </option>
+      	</select>
+	
+	  	<label for="street">Rue:</label>
+	  	<input [(ngModel)]="company.address.street" type="text" placeholder="Boulevard Anspach" name="street" class="form-control" id="street" required>
+	  	<label for="streetNb">Numéro de rue:</label>
+	  	<input [(ngModel)]="company.address.streetNb" type="text" placeholder="Ex: 42" name="streetNb" class="form-control" id="streetNb">
+	  	<button class="btn btn-success" [class.btn-danger]="!inscriptionForm.form.valid"(click)="createCompany()" [disabled]="!inscriptionForm.form.valid">Create</button>
+	</form>
+  </div>
+</div>

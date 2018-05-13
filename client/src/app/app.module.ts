@@ -9,13 +9,15 @@ import { AlertComponent } from './_directives/index';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app.routing.module';
 import { AuthGuard } from './_guards/index';
-import { CreateUserComponent } from './createuser/createuser.component';
+import { CreateCompanyComponent } from './createcompany/index';
+import { CreateUserComponent } from './createuser/index';
 import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/index';
 import { JwtInterceptor } from './_helpers/index';
 import { LoginComponent } from './login/index';
 // import { MyFoldersComponent } from './myfolders/index';
 // import { MyProfileComponent } from './myprofile/index';
+import { MyCompaniesComponent } from './mycompanies/index';
 import { MyRequestsComponent } from './myrequests/index';
 import { NationalityCertificateCreationComponent} from './nationality-certificate-creation';
 import { NewRequestComponent } from './newrequest/index';
@@ -46,12 +48,14 @@ export function HttpLoaderFactory(http: HttpClient) {
   declarations: [
     AlertComponent,
     AppComponent,
+    CreateCompanyComponent,
     CreateUserComponent,
     HeaderComponent,
     HomeComponent,
     LoginComponent,
     // MyFoldersComponent,
     // MyProfileComponent,
+    MyCompaniesComponent,
     MyRequestsComponent,
     EmployeeDashboardComponent,
     NewRequestComponent,
@@ -89,6 +93,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     MockAuthService,
     AlertService,
     AuthenticationService,
+    CompanyService,
     CitizenService,
     EmployeeService,
     MunicipalityService,
