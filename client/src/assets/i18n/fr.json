@@ -19,6 +19,8 @@
     "closed": "clôture",
     "colour": "Couleur",
     "connectAsEmployee": "Se connecter en tant qu'employé",
+    "connectAsCitizen": "Se connecter en tant que citoyen",
+    "connectAsCompany": "Se connecter en tant que société",
     "create_employee": "créer un employé",
     "created": "création",
     "createEmployee.title": "Créer un nouvel employé",
@@ -67,6 +69,7 @@
 
     "signin": "se connecter",
     "signup": "s'inscrire",
+    "createCompany": "inscrire une société",
     "status": "statut",
 
     "type": "type",

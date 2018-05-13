@@ -3,7 +3,7 @@ import { Address } from './address.model';
 export class Company {
   companyNb: string;
   vatNb: string;
-  address: Address;
+  address = new Address();
   legalForm: string;
   contactPerson: number;
   companyName: string;
