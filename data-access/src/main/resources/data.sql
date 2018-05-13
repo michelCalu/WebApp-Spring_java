@@ -121,7 +121,7 @@ insert into t_request_field_values values(4, "citizenParkingCardPlateNumber", 2,
 insert into t_request_field_values values(5, "citizenParkingCardGreenCard", 2, "file.pdf", "pdf", "TODO: should be the BLOB");
 
 
-insert into t_document_titles values (1, "citizeParkingCard");
+insert into t_document_titles values (1, "citizenParkingCard");
 insert into t_document_titles values (2, "citizenParkingPayment");
 insert into t_document_titles values (3, "citizenParkingDecision");
 insert into t_document_titles values (4, "nationalityCertificate");

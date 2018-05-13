@@ -31,7 +31,7 @@ export class DocumentService {
                 type: 'application/pdf'
             });
             const url = window.URL.createObjectURL(new Blob([res], {type: 'application/pdf'}));
-            const filename = fileName + '.pdf';
+            const filename = fileName;
             FileSaver.saveAs(blob, filename);
         })
         .catch(err => {

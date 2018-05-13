@@ -19,7 +19,7 @@ import java.util.List;
 public interface DocumentService {
 
     public static final String TITLE_NATIONALITY_CERTIFICATE="nationalityCertificate";
-    public static final String TITLE_PARKING_CARD_CITIZEN="citizeParkingCard";
+    public static final String TITLE_PARKING_CARD_CITIZEN="citizenParkingCard";
     public static final String TITLE_PARKING_CARD_DECISION="citizenParkingDecision";
     public static final String TITLE_PARKING_CARD_PAYMENT="citizenParkingPayment";
 

@@ -25,9 +25,9 @@ export class DocumentDetailsComponent implements OnChanges {
         }
     }
 
-    downloadDocument(documentId: number): void {
+    downloadDocument(documentId: number, documentTitle: string): void {
         // TODO use actual name of the type of document
-        this.documentService.downloadDocumentById(documentId, 'mockName').subscribe();
+        this.documentService.downloadDocumentById(documentId, documentTitle).subscribe();
     }
 
 }
