@@ -131,6 +131,16 @@ public class RequestServiceImpl implements RequestService {
     }
 
     @Override
+    public List<Request> findByCompanyNb(String companyNb) {
+        return requestRepository.findByCompanyNb(companyNb);
+    }
+
+    @Override
+    public List<Request> findByCompanyNb(String companyNb, long requestTypeId) {
+        return requestRepository.findByCompanyNb(companyNb, requestTypeId);
+    }
+
+    @Override
     public RequestType findRequestTypeById(long id) {
 	return requestRepository.findRequestTypeById(id);
     }

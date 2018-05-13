@@ -22,6 +22,10 @@ public interface RequestService {
 
     List<Request> findByAssigneeId(long assigneeId);
 
+    List<Request> findByCompanyNb(String companyNb);
+
+    List<Request> findByCompanyNb(String companyNb, long requestTypeId);
+
     List<Request> find(long citizenId, long requestTypeId);
 
     long create(Request newRequest, Map<String, MultipartFile> codeToFiles);

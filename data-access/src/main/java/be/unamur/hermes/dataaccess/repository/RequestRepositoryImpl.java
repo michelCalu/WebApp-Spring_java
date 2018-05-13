@@ -35,6 +35,10 @@ public class RequestRepositoryImpl implements RequestRepository {
 	    selectRequestClause + " WHERE req.departmentId = ?";
     private static final String queryByEmployeeId = //
 	    selectRequestClause + " WHERE req.employeeId = ?";
+    private static final String queryByCompanyNb = //
+        selectRequestClause + " WHERE req.companyNb = ?";
+    private static final String queryByCompanyNbAndRequestType = queryByCompanyNb //
+        + " AND req.requestTypeID = ?";
     private static final String queryByCitizenIdAndRequestType = queryByCitizenId //
 	    + " AND req.requestTypeID = ?";
     private static final String queryRequestTypeByDescription = //
@@ -103,6 +107,16 @@ public class RequestRepositoryImpl implements RequestRepository {
     public List<Request> findbyAssigneeId(long employeeId) {
 	List<Request> requests = jdbcTemplate.query(queryByEmployeeId, new Object[] { employeeId }, this::fillRequest);
 	return requests;
+    }
+
+    @Override
+    public List<Request> findByCompanyNb(String companyNb) {
+        return jdbcTemplate.query(queryByCompanyNb, new Object[] { companyNb }, this::fillRequest);
+    }
+
+    @Override
+    public List<Request> findByCompanyNb(String companyNb, long requestTypeId) {
+        return jdbcTemplate.query(queryByCompanyNbAndRequestType, new Object[] { companyNb, requestTypeId }, this::fillRequest);
     }
 
     @Override

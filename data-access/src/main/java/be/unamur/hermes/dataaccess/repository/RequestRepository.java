@@ -18,6 +18,10 @@ public interface RequestRepository {
 
     List<Request> findbyAssigneeId(long assigneeId);
 
+    List<Request> findByCompanyNb(String companyNb);
+
+    List<Request> findByCompanyNb(String companyNb, long requestTypeId);
+
     Request findById(long id);
 
     long create(Request request);

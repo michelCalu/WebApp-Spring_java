@@ -58,7 +58,8 @@ public class RequestController {
     public ResponseEntity<List<Request>> getRequests(@RequestParam("citizenId") Optional<Long> citizenId,
 	    @RequestParam("requestTypeId") Optional<Long> requestTypeId,
 	    @RequestParam("departmentId") Optional<Long> departmentId,
-	    @RequestParam("assigneeId") Optional<Long> assigneeId) {
+	    @RequestParam("assigneeId") Optional<Long> assigneeId,
+		@RequestParam("companyNb") Optional<String> companyNb) {
 	try {
 	    List<Request> data = null;
 	    if (departmentId.isPresent()) {
@@ -69,11 +70,19 @@ public class RequestController {
 		data = requestService.findByAssigneeId(assigneeId.get());
 		return ResponseEntity.status(HttpStatus.OK).body(data);
 	    }
-	    if (!citizenId.isPresent())
+	    if (!(citizenId.isPresent() || companyNb.isPresent()) || (citizenId.isPresent() && companyNb.isPresent()))
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-	    data = requestTypeId.isPresent() ? requestService.find(citizenId.get(), requestTypeId.get())
-		    : requestService.findByCitizenId(citizenId.get());
-	    return ResponseEntity.status(HttpStatus.OK).body(data);
+	    if(citizenId.isPresent()){
+	    	data = requestTypeId.isPresent() ? requestService.find(citizenId.get(), requestTypeId.get())
+					: requestService.findByCitizenId(citizenId.get());
+			return ResponseEntity.status(HttpStatus.OK).body(data);
+		}
+		if(companyNb.isPresent()){
+	    	data = requestTypeId.isPresent() ? requestService.findByCompanyNb(companyNb.get(), requestTypeId.get())
+					: requestService.findByCompanyNb(companyNb.get());
+			return ResponseEntity.status(HttpStatus.OK).body(data);
+		}
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
 	} catch (Exception ex) {
 	    logger.error("Bad request", ex);
 	    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
