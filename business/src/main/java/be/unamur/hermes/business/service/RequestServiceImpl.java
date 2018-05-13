@@ -86,13 +86,15 @@ public class RequestServiceImpl implements RequestService {
 
 	try {
 	    for (String code : codeToFiles.keySet()) {
-		RequestField requestField = new RequestField();
-		requestField.setCode(code);
-		requestField.setFieldType("File");
-		requestField.setFieldValue(codeToFiles.get(code).getOriginalFilename());
-		requestField.setFieldFile(codeToFiles.get(code).getBytes());
-		newRequest.addRequestField(requestField);
-		requestFieldRepository.createRequestField(requestField, newRequestId);
+	        MultipartFile file = codeToFiles.get(code);
+		    RequestField requestField = new RequestField();
+            requestField.setCode(code);
+            requestField.setFieldType("binary");
+            requestField.setFieldValue(file.getOriginalFilename());
+            requestField.setFieldFile(file.getBytes());
+            requestField.setFieldFileType(file.getContentType());
+            newRequest.addRequestField(requestField);
+            requestFieldRepository.createRequestField(requestField, newRequestId);
 	    }
 	} catch (IOException e) {
 	    throw new BusinessException("Error when receiving files.");

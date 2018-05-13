@@ -114,11 +114,11 @@ insert into t_requests values(1, 1, 1, null, 1, 1, 1, "HERM001", "my ref", "JETT
 insert into t_requests values(2, 2, 2, null, 2, 5, 2, "HERM002", "a parking ref.", "GANSH001");
 insert into t_requests values(3, 2, 3, null, 4, 8, 1, "HERM003", "a parking ref.", "GANSH001");
 
-insert into t_request_field_values values(1, "citizenParkingCardCarMake", 2, "Fiat", null);
-insert into t_request_field_values values(2, "citizenParkingCardCarModel", 2, "Punto", null);
-insert into t_request_field_values values(3, "citizenParkingCardCarColour", 2, "red", null);
-insert into t_request_field_values values(4, "citizenParkingCardPlateNumber", 2, "123456", null);
-insert into t_request_field_values values(5, "citizenParkingCardGreenCard", 2, "file_name", "TODO: should be the BLOB");
+insert into t_request_field_values values(1, "citizenParkingCardCarMake", 2, "Fiat", null, null);
+insert into t_request_field_values values(2, "citizenParkingCardCarModel", 2, "Punto", null, null);
+insert into t_request_field_values values(3, "citizenParkingCardCarColour", 2, "red", null, null);
+insert into t_request_field_values values(4, "citizenParkingCardPlateNumber", 2, "123456", null, null);
+insert into t_request_field_values values(5, "citizenParkingCardGreenCard", 2, "file.pdf", "pdf", "TODO: should be the BLOB");
 
 
 insert into t_document_titles values (1, "citizeParkingCard");
