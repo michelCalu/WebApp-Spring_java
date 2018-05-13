@@ -37,6 +37,7 @@ public class RequestFieldRepositoryImpl implements RequestFieldRepository {
         params.put("fieldCode", requestField.getCode());
         params.put("fieldValue", requestField.getFieldValue());
         params.put("fieldFile", requestField.getFieldFile());
+        params.put("fieldFileType", requestField.getFieldFileType());
         return (Long) inserter.executeAndReturnKey(params);
     }
 
@@ -47,12 +48,14 @@ public class RequestFieldRepositoryImpl implements RequestFieldRepository {
             "WHERE rfv.requestID = ?";
 
     private RequestField buildRequestField(ResultSet rs, int rowNum) throws SQLException {
+
         return new RequestField(
                 rs.getString(2),
-                rs.getBoolean(9),
-                rs.getString(6),
+                rs.getBoolean(10),
+                rs.getString(9),
                 rs.getString(4),
-                rs.getBlob(5) == null ? null : rs.getBlob(5).getBytes(1, (int) rs.getBlob(5).length())
+                rs.getBlob(5) == null ? null : rs.getBlob(5).getBytes(1, (int) rs.getBlob(5).length()),
+                rs.getString(6)
         );
     }
 }

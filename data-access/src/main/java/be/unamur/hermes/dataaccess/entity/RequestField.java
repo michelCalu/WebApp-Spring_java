@@ -10,6 +10,7 @@ public class RequestField {
     private String fieldType;
     private String fieldValue;
     private byte[] fieldFile;
+    private String fieldFileType;
 
     public RequestField(){};
 
@@ -17,12 +18,14 @@ public class RequestField {
                         Boolean required,
                         String fieldType,
                         String fieldValue,
-                        byte[] fieldFile){
+                        byte[] fieldFile,
+                        String fieldFileType){
         this.code = code;
         this.required = required;
         this.fieldType = fieldType;
         this.fieldValue = fieldValue;
         this.fieldFile = fieldFile;
+        this.fieldFileType = fieldFileType;
     }
 
     public String getCode() {
@@ -65,6 +68,14 @@ public class RequestField {
         this.fieldFile = fieldFile;
     }
 
+    public String getFieldFileType() {
+        return fieldFileType;
+    }
+
+    public void setFieldFileType(String fieldFileType) {
+        this.fieldFileType = fieldFileType;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -74,13 +85,14 @@ public class RequestField {
                 Objects.equals(required, that.required) &&
                 Objects.equals(fieldType, that.fieldType) &&
                 Objects.equals(fieldValue, that.fieldValue) &&
-                Arrays.equals(fieldFile, that.fieldFile);
+                Arrays.equals(fieldFile, that.fieldFile) &&
+                Objects.equals(fieldFileType, that.fieldFileType);
     }
 
     @Override
     public int hashCode() {
 
-        int result = Objects.hash(code, required, fieldType, fieldValue);
+        int result = Objects.hash(code, required, fieldType, fieldValue, fieldFileType);
         result = 31 * result + Arrays.hashCode(fieldFile);
         return result;
     }
@@ -92,7 +104,7 @@ public class RequestField {
                 ", required=" + required +
                 ", fieldType='" + fieldType + '\'' +
                 ", value='" + fieldValue + '\'' +
-                ", file=" + Arrays.toString(fieldFile) +
+                ", fileType=" + fieldFileType +
                 '}';
     }
 }

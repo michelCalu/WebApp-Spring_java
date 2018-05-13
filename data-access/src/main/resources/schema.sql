@@ -191,8 +191,10 @@ CREATE TABLE t_request_field_values (
   requestID				INT NOT NULL,
   -- fieldValue OR fieldValue && fieldFile
   -- The fieldValue is the name of the file
+  -- fieldFileType is the type of the file
   fieldValue			VARCHAR(255) NOT NULL,
   fieldFile				LONGBLOB,
+  fieldFileType       VARCHAR(255),
 
   FOREIGN KEY(fieldCode)
   REFERENCES t_request_field_definitions(fieldCode),
