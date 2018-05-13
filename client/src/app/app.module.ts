@@ -4,7 +4,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common
 import { NgModule } from '@angular/core';
 
 import { AlertService, AuthenticationService, CitizenService, MockAuthService, RequestService, EmployeeService, 
-            DocumentService } from './_services/index';
+            DocumentService, CompanyService, DepartmentService} from './_services/index';
 import { AlertComponent } from './_directives/index';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app.routing.module';
@@ -34,6 +34,8 @@ import { NrnDetailsComponent } from './nrn-details';
 import { MunicipalityService } from './_services/municipality.service';
 import { DocumentDetailsComponent } from './document-details/document-details.component';
 import { RequestHistoryComponent } from './request-history/request-history.component';
+import { ValidateCompaniesComponent } from './validate_companies';
+import { CompanyDetailComponent } from './company-detail';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -64,7 +66,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     ValidateCitizensComponent,
     NrnDetailsComponent,
     DocumentDetailsComponent,
-    RequestHistoryComponent
+    RequestHistoryComponent,
+    ValidateCompaniesComponent,
+    CompanyDetailComponent
   ],
   imports: [
     AppRoutingModule,
@@ -90,6 +94,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     MunicipalityService,
     RequestService,
     DocumentService,
+    CompanyService,
+    DepartmentService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: JwtInterceptor,

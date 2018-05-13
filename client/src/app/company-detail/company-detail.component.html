@@ -1,0 +1,15 @@
+<div class="container">
+    <h2>Informations société</h2>
+
+    <ul class="list-group">
+            <li class="list-group-item"> Nom : {{company.companyName}}</li>
+            <li class="list-group-item"> Numéro TVA : {{company.vatNb}} </li>
+            <li class="list-group-item"> Forme légale : {{ company.legalForm }} </li>
+            <li class="list-group-item"> Status : {{ company.status }} </li>    
+            <li class="list-group-item"> Adresse : {{company.address.street}} {{company.address.streetNb}}, {{company.address.state}} </li>    
+    </ul>
+
+    <h4> Personne de contact </h4>
+    <citizen-detail *ngIf="(contactPerson$ | async)" [citizen]="(contactPerson$ | async)"></citizen-detail>
+
+</div>

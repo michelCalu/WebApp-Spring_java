@@ -14,6 +14,7 @@ import { ParkingCardCreationComponent } from './parking-card-creation';
 import { EmployeeDashboardComponent } from './employee_dashboard';
 import { CreateEmployeeComponent } from './create_employee';
 import { ValidateCitizensComponent } from './validate_citizens/validate_citizens.component';
+import { ValidateCompaniesComponent } from './validate_companies/validate_companies.component';
 
 const appRoutes: Routes = [
   // routes protected with AuthGuard
@@ -28,7 +29,8 @@ const appRoutes: Routes = [
       { path: 'create_employee', component: CreateEmployeeComponent },
       { path: 'newrequest/nationality', component: NationalityCertificateCreationComponent},
       { path: 'newrequest/parking', component: ParkingCardCreationComponent},
-      { path: 'validate_citizens', component: ValidateCitizensComponent }
+      { path: 'validate_citizens', component: ValidateCitizensComponent },
+      { path: 'validate_companies', component: ValidateCompaniesComponent }
 
     ] },
   // unprotected routes:

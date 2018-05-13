@@ -14,6 +14,7 @@
     "carMake": "Marque",
     "carModel": "Modèle",
     "carRegistrationNumber": "Immatriculation",
+    "citizenData": "Information citoyen",
     "citizenParkingCard": "Carte de stationnement citoyen",
     "closed": "clôture",
     "colour": "Couleur",
@@ -59,8 +60,11 @@
     "service.citizen.errorGetCitizen" : "Citoyen inconnu",
     "service.citizen.errorGetNrn" : "Numéro de registre national non reconnu",
     "service.citizen.errorValidateCitizen": "Impossible de valider le compte du citoyen",
+    "service.company.errorValidateCompany": "Impossible de valider le compte de la société",
+    "service.department.departmentNotFound": "Impossible de trouver le service municipal",
     "service.department.municipalityNotFound": "Impossible de trouver les services de la commune",
     "service.employee.errorGetEmployee" : "Employée inconnu",    
+
     "signin": "se connecter",
     "signup": "s'inscrire",
     "status": "statut",
@@ -71,6 +75,8 @@
 
     "validate": "valider",
     "validateCitizens": "valider inscriptions",
+    "validateCompanies": "valider sociétés",
+    "vatNumber": "numéro de TVA",
     "viewDetails": "voir détails",
     "viewNationalRegisterDetails": "voir détails Registre National"
     

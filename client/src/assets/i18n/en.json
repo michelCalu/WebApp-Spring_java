@@ -12,6 +12,7 @@
     "carMake": "Car make",
     "carModel": "Model",
     "carRegistrationNumber": "Registration number",
+    "citizenData": "Citizen data",
     "citizenParkingCard": "Citizen parking card",
     "closed": "closed",
     "colour": "Colour",
@@ -56,6 +57,8 @@
     "service.citizen.errorGetCitizen" : "Unknown citizen",
     "service.citizen.errorGetNrn" : "Unknown national register number",
     "service.citizen.errorValidateCitizen": "Unable to validate the citizen's account",
+    "service.company.errorValidateCompany": "Unable to validate the company's account",
+    "service.department.departmentNotFound": "Unable to find the municipality department",
     "service.department.municipalityNotFound": "Unable to find the departments of this municipality",
     "service.employee.errorGetEmployee" : "Unknown employee",
     "signin": "sign in",
@@ -68,6 +71,8 @@
 
     "validate": "validate",
     "validateCitizens": "validate inscriptions",
+    "validateCompanies": "validate companies",
+    "vatNumber": "VAT number",
     "viewDetails": "view details",
     "viewNationalRegisterDetails": "See national register details"
 

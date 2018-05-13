@@ -1,0 +1,32 @@
+<div class="col-md-9 col-md-offset-3">
+    <h1> {{'validateCompanies' |translate }} </h1>
+	<div class="container">
+		<table *ngIf="(pendingCompanies$ | async)?.length; else noCompanies" class="table table-striped">
+			<thead>
+				<tr>
+                    <th scope="col">{{'name' | translate}}</th>
+                    <th> {{'vatNumber' | translate }}</th>
+                    <th></th>
+                    <th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngFor="let company of (pendingCompanies$ | async)">
+                    <td> {{ company.companyName }}</td>
+                    <td> {{ company.vatNb }} </td>
+                    <td><button class="btn btn-success" (click)="selectedCompany = company">{{'viewDetails'| translate}}</button></td>
+                    <td><button class="btn btn-success" (click)="validate(company)"> {{'validate' | translate}}</button></td>
+				</tr>
+			</tbody>
+		</table>
+		<ng-template #noCompanies>
+			<div>Votre service n'a pas d'inscriptions de sociétés en attente</div>
+        </ng-template>
+
+        <div *ngIf="selectedCompany">      
+            <company-detail [company]="selectedCompany"></company-detail>
+        </div>
+        
+	</div>
+
+</div>
