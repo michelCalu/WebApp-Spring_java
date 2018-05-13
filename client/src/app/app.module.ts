@@ -3,7 +3,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 
-import { AlertService, AuthenticationService, CitizenService, MockAuthService, RequestService, EmployeeService, 
+import { AlertService, AuthenticationService, CitizenService, MockAuthService, RequestService, EmployeeService,
             DocumentService, CompanyService, DepartmentService} from './_services/index';
 import { AlertComponent } from './_directives/index';
 import { AppComponent } from './app.component';
@@ -14,8 +14,8 @@ import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/index';
 import { JwtInterceptor } from './_helpers/index';
 import { LoginComponent } from './login/index';
-import { MyFoldersComponent } from './myfolders/index';
-import { MyProfileComponent } from './myprofile/index';
+// import { MyFoldersComponent } from './myfolders/index';
+// import { MyProfileComponent } from './myprofile/index';
 import { MyRequestsComponent } from './myrequests/index';
 import { NationalityCertificateCreationComponent} from './nationality-certificate-creation';
 import { NewRequestComponent } from './newrequest/index';
@@ -50,8 +50,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     HeaderComponent,
     HomeComponent,
     LoginComponent,
-    MyFoldersComponent,
-    MyProfileComponent,
+    // MyFoldersComponent,
+    // MyProfileComponent,
     MyRequestsComponent,
     EmployeeDashboardComponent,
     NewRequestComponent,
