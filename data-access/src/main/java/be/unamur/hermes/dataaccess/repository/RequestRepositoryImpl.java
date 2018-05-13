@@ -111,7 +111,8 @@ public class RequestRepositoryImpl implements RequestRepository {
 	long requestTypeId = findRequestTypeByDescription(newRequest.getTypeDescription()).getId();
 	parameters.put("requestTypeID", requestTypeId);
 	parameters.put("citizenID", newRequest.getCitizen().getId());
-	parameters.put("companyNb", newRequest.getCompany().getCompanyNb());
+	if(newRequest.getCompany() != null)
+		parameters.put("companyNb", newRequest.getCompany().getCompanyNb());
 	parameters.put("departmentID", newRequest.getDepartment().getId());
 	RequestStatus newStatus = findRequestStatusByName(RequestRepository.STATUS_NEW);
 	parameters.put("statusID", newStatus.getId());
@@ -170,8 +171,11 @@ public class RequestRepositoryImpl implements RequestRepository {
 	request.setDepartment(department);
 	List<RequestField> requestFields = requestFieldRepository.getFields(request.getId());
 	request.addRequestFields(requestFields);
-	Company company = companyRepository.findByCompanyNb(rs.getString(4));
-	request.setCompany(company);
+	String companyNb = rs.getString(4);
+	if(companyNb != null) {
+        Company company = companyRepository.findByCompanyNb(companyNb);
+        request.setCompany(company);
+    }
 	long employeeId = rs.getLong(5);
 	if (employeeId > 0) {
 	    Employee assignee = employeeRepository.findById(employeeId);
