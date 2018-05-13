@@ -1,20 +1,19 @@
 package be.unamur.hermes.dataaccess.repository;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import be.unamur.hermes.common.enums.MandataryRole;
+import be.unamur.hermes.dataaccess.entity.Citizen;
+import be.unamur.hermes.dataaccess.entity.Company;
+import be.unamur.hermes.dataaccess.entity.Mandatary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
-import be.unamur.hermes.common.enums.MandataryRole;
-import be.unamur.hermes.dataaccess.entity.Citizen;
-import be.unamur.hermes.dataaccess.entity.Company;
-import be.unamur.hermes.dataaccess.entity.Mandatary;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Repository
 public class MandataryRepositoryImpl implements MandataryRepository {
@@ -84,7 +83,7 @@ public class MandataryRepositoryImpl implements MandataryRepository {
 
     private Mandatary build(ResultSet rs, int row) throws SQLException {
 	Citizen ctz = citizenRepository.findById(rs.getLong(2));
-	Company company = companyRepository.findById(rs.getString(3));
+	Company company = companyRepository.findByCompanyNb(rs.getString(3));
 	MandataryRole role = MandataryRole.getRole(rs.getString(4));
 	return new Mandatary(rs.getLong(1), ctz, company, role);
     }

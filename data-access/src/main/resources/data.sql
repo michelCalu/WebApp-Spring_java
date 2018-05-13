@@ -46,18 +46,21 @@ insert into t_user_accounts values(7,"ROLE_USER","$2a$10$4w9Wm8gc93DpDQdyZ7SR5O.
 
 insert into t_addresses values(1,"Avenue de la Reine", 279,"A",1090,"Jette", "Région de Bruxelles-Capitale", "Belgique");
 insert into t_addresses values(2,"Place du miroir", 1,null,1020,"Jette", "Région de Bruxelles-Capitale", "Belgique");
-insert into t_addresses values(3,"Rue des combattants", 10,null,1310,"La Hulpe", "Brabant Wallon", "Belgique");
+insert into t_addresses values(3,"chaussée de la hulpe", 748,null,1310,"La Hulpe", "Brabant Wallon", "Belgique");
 insert into t_addresses values(4,"Avenue de Charles-Quint", 140,null,1083,"Ganshoren", "Région de Bruxelles-Capitale", "Belgique");
 insert into t_addresses values(5,"Avenue Van Overbeke", 12, "B",1083,"Ganshoren", "Région de Bruxelles-Capitale", "Belgique");
 insert into t_addresses values(6,"Rue du Noyer", 43, null, 1000,"Bruxelles", "Région de Bruxelles-Capitale", "Belgique");
 insert into t_addresses values(7,"Rue Sart-lez-moulins", 77, null, 6044,"Roux", "Charleroi", "Belgique");
-insert into t_addresses values(9,"Rue grandgagnage", 1, null, 5000,"Namur", "Namur", "Belgique");
+insert into t_addresses values(8,"Rue des combattants", 59, null, 1310,"La Hulpe", "Brabant Wallon", "Belgique");
+insert into t_addresses values(9,"Rue du burnout", 66, null, 1310,"La Hulpe", "Brabant Wallon", "Belgique");
+insert into t_addresses values(10,"Rue du bobard", 55, null, 1310,"La Hulpe", "Brabant Wallon", "Belgique");
+insert into t_addresses values(11,"Rue des pepettes", 44, null, 4000,"Liege", "Province de Liege", "Belgique");
 
 insert into t_municipalities values(1, "Jette", 1, "info@jette.be", "02/654.12.20", "Hervé Doyen");
 insert into t_municipalities values(2, "Ganshoren", 4, "ganshoren@ganshoren.irisnet.be", "02/465.12.77", "Robert Genard");
-insert into t_municipalities values(4, "Roux", 7, "roux@municipality.com", "RouxPhone", "Paul Magnette");
-insert into t_municipalities values(3, "La Hulpe", 3, "lh@municipality.com", "lhphone", "palpatine");
-insert into t_municipalities values(5, "Namur", 9, "nam@municipality.com", "phone", "gonzalez");
+insert into t_municipalities values(3, "Roux", 7, "roux@municipality.com", "RouxPhone", "Paul Magnette");
+insert into t_municipalities values(4, "La Hulpe", 8, "lh@municipality.com", "lhPhone", "Gonzague pull rose");
+insert into t_municipalities values(5, "Liege", 11, "litche@municipality.com", "lPhone", "Moreau");
 
 insert into t_citizens values(1,"Thomas","Elskens",1,"thomaselskens@hotmail.com",null,"NRN_Thomas","1983-11-13",1);
 insert into t_citizens values(2,"David","Fernandez",5,"dfernandez1612@gmail.com",null,"david","1983-12-16",2);
@@ -98,8 +101,8 @@ insert into t_departments values(4, 2, "Population", 2, null,null);
 insert into t_departments values(5, 2, "Stationnement", 2, null,null);
 insert into t_departments values(6, 4, "Population", 2, null,null);
 insert into t_departments values(7, 4, "Stationnement", 2, null,null);
-insert into t_departments values(8, 3, "Population", 2, null,null);
-insert into t_departments values(9, 3, "Mobilité", 2, null,null);
+insert into t_departments values(8, 4, "Population", 2, null,null);
+insert into t_departments values(9, 4, "Stationnement", 2, null,null);
 insert into t_departments values(10, 5, "Population", 2, null,null);
 insert into t_departments values(11, 5, "Stationnement", 2, null,null);
 
@@ -123,11 +126,10 @@ insert into t_document_titles values (2, "citizenParkingPayment");
 insert into t_document_titles values (3, "citizenParkingDecision");
 insert into t_document_titles values (4, "nationalityCertificate");
 
+insert into t_companies values("111111", "BE111111",9, "sprl", 1, "world company","created");
+insert into t_companies values("222222", "BE222222",10, "SA", 1, "world company","created");
+insert into t_companies values("333333", "BE333333",11, "SNC", 1, "world company","created");
 
-
-
-
-
-
-
-
+insert into t_mandataries values(1,1,"111111","owner");
+insert into t_mandataries values(2,3,"222222","owner");
+insert into t_mandataries values(3,3,"333333","owner");

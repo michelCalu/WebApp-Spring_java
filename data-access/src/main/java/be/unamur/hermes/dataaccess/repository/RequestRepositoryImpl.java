@@ -1,24 +1,17 @@
 package be.unamur.hermes.dataaccess.repository;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import be.unamur.hermes.dataaccess.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
-import be.unamur.hermes.dataaccess.entity.Citizen;
-import be.unamur.hermes.dataaccess.entity.Department;
-import be.unamur.hermes.dataaccess.entity.Employee;
-import be.unamur.hermes.dataaccess.entity.Request;
-import be.unamur.hermes.dataaccess.entity.RequestField;
-import be.unamur.hermes.dataaccess.entity.RequestStatus;
-import be.unamur.hermes.dataaccess.entity.RequestType;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Repository
 public class RequestRepositoryImpl implements RequestRepository {
@@ -56,11 +49,12 @@ public class RequestRepositoryImpl implements RequestRepository {
     private final EmployeeRepository employeeRepository;
     private final RequestFieldRepository requestFieldRepository;
     private final DepartmentRepository departmentRepository;
+    private final CompanyRepository companyRepository;
 
     @Autowired
     public RequestRepositoryImpl(JdbcTemplate jdbcTemplate, CitizenRepository citizenRepository,
 	    EmployeeRepository employeeRepository, RequestFieldRepository requestFieldRepository,
-	    DepartmentRepository departmentRepository) {
+	    DepartmentRepository departmentRepository,CompanyRepository companyRepository) {
 	super();
 	this.jdbcTemplate = jdbcTemplate;
 	this.inserter = new SimpleJdbcInsert(jdbcTemplate.getDataSource()).withTableName("t_requests")
@@ -69,6 +63,7 @@ public class RequestRepositoryImpl implements RequestRepository {
 	this.employeeRepository = employeeRepository;
 	this.requestFieldRepository = requestFieldRepository;
 	this.departmentRepository = departmentRepository;
+	this.companyRepository = companyRepository;
     }
 
     @Override
@@ -115,7 +110,7 @@ public class RequestRepositoryImpl implements RequestRepository {
 	Map<String, Object> parameters = new HashMap<>();
 	parameters.put("requestTypeID", newRequest.getType().getId());
 	parameters.put("citizenID", newRequest.getCitizen().getId());
-	parameters.put("companyNb", newRequest.getCompanyNb());
+	parameters.put("companyNb", newRequest.getCompany().getCompanyNb());
 	parameters.put("departmentID", newRequest.getDepartment().getId());
 	RequestStatus newStatus = findRequestStatusByName(RequestRepository.STATUS_NEW);
 	parameters.put("statusID", newStatus.getId());
@@ -164,10 +159,12 @@ public class RequestRepositoryImpl implements RequestRepository {
 	RequestType reqType = findRequestTypeById(request.getTypeId());
 	Department department = departmentRepository.findById(request.getDepartmentId());
 	List<RequestField> requestFields = requestFieldRepository.getFields(request.getId());
+	Company company = companyRepository.findByCompanyNb(request.getCompanyNb());
 	request.setCitizen(citizen);
 	request.setType(reqType);
 	request.setDepartment(department);
 	request.addRequestFields(requestFields);
+	request.setCompany(company);
 	if (request.getEmployeeId() > 0) {
 	    Employee assignee = employeeRepository.findById(request.getEmployeeId());
 	    request.setAssignee(assignee);
@@ -179,6 +176,7 @@ public class RequestRepositoryImpl implements RequestRepository {
 	public Request mapRow(ResultSet rs, int rowNum) throws SQLException {
 	    Request request = new Request(rs.getLong(1), rs.getLong(2));
 	    request.setCitizenId(rs.getLong(3));
+	    request.setCompanyId(rs.getString(4));
 	    request.setEmployeeId(rs.getLong(5));
 	    request.setDepartmentId(rs.getLong(6));
 	    Long statusId = rs.getLong(7);

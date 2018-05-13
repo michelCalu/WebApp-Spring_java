@@ -1,12 +1,20 @@
 package be.unamur.hermes.dataaccess.repository;
 
+import be.unamur.hermes.dataaccess.dto.UpdateCompanyAccount;
 import be.unamur.hermes.dataaccess.entity.Company;
+
+import java.sql.SQLException;
+import java.util.List;
 
 public interface CompanyRepository {
 
-    public String create(Company company);
+    Company findByCompanyNb(String entrepriseNumber);
 
-    public Company findById(String companyNb);
+    List<Company> findAll();
 
-    public Company findByVAT(String vat);
+    void create(Company company) throws SQLException;
+
+    List<Company> findPending(long municipalityID);
+
+    void activate(String companyNb, UpdateCompanyAccount updates);
 }

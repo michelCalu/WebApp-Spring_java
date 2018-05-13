@@ -6,7 +6,8 @@ public enum HermesRegex {
     PHONE       ("^([+]32)[1-9][0-9]{2}/([0-9]{2}[.]){2}[0-9]{2}$"),
     MAIL        ("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,6}$"),
     INTEGER     ("^[1-9][0-9]*$"),
-    ZIPCODE     ("^[1-9][0-9]{0,3}$");
+    ZIPCODE     ("^[1-9][0-9]{0,3}$"),
+    VATNB       ("^[beBE]+[1-9][0-9]*$");
 
     private final String regex;
 

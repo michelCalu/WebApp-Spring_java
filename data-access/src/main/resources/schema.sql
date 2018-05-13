@@ -92,10 +92,13 @@ CREATE TABLE t_employees (
 
 CREATE TABLE t_companies (
   companyNb   	VARCHAR(255)  	PRIMARY KEY NOT NULL,
-  vatNb     	VARCHAR(255),
-  address     	INT       		NOT NULL,
-  legalForm  	VARCHAR(255)  	NOT NULL,
-  contactPerson INT	NOT NULL,
+  vatNb     	  VARCHAR(255)    ,
+  address     	INT       		  NOT NULL,
+  legalForm  	  VARCHAR(255)  	NOT NULL,
+  contactPerson INT	            NOT NULL,
+  companyName   VARCHAR(255)    NOT NULL,
+  companyStatus
+    ENUM('created','active','disabled')			NOT NULL,
 
   FOREIGN KEY (contactPerson) REFERENCES t_citizens(citizenID)
 );
