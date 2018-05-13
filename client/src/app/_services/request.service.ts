@@ -6,6 +6,7 @@ import { CitizenRequest, Citizen, RequestEvent } from '../_models';
 import * as configData from '../configuration-data';
 import { AlertService } from './alert.service';
 import { TranslateService } from '@ngx-translate/core';
+import * as FileSaver from 'file-saver';
 
 
 @Injectable()
@@ -91,6 +92,19 @@ export class RequestService {
                 this.messageService.error(this.translateService.instant('request.service.getEvents'));
                 return [];
             });
+    }
+
+    downloadFileByCode(requestId: number, code: string, fileName: string, fileType: string): Observable<any> {
+        return this.http.get('/requests/' + requestId + '/file?code=' + code, {responseType: 'blob'})
+        .map(res => {
+            const blob = new Blob([res], { type: fileType });
+            const url = window.URL.createObjectURL(new Blob([res], { type: fileType }));
+            FileSaver.saveAs(blob, fileName);
+        })
+        .catch(err => {
+            this.messageService.error(this.translateService.instant('documents.service.getError'));
+            return Observable.throw(err);
+        });
     }
 }
 

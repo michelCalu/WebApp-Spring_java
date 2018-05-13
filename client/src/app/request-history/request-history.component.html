@@ -9,7 +9,7 @@
     </thead>
     <tbody>
         <tr *ngFor="let event of (events$ | async)">
-            <th>{{ event.typeDescription | translate }}</th>
+            <th>{{ event.type.description | translate }}</th>
             <td>{{ event.at | date:'dd-MM-yyyy HH:mm' }} </td>
         </tr>
     </tbody>

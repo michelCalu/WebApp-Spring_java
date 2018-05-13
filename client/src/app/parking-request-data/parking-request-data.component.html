@@ -13,6 +13,7 @@
     <li class="list-group-item"> Modèle : {{ carData['citizenParkingCardCarModel'] }}</li>
     <li class="list-group-item"> Couleur : {{ carData['citizenParkingCardCarColour'] }}</li>
     <li class="list-group-item"> Matricule : {{ carData['citizenParkingCardPlateNumber'] }}</li>
+    <li class="list-group-item" *ngIf="carFilesData['citizenParkingCardGreenCard']['fieldFile']" > Carte d'assurance :<a href="javascript:;"(click)="downloadFile('citizenParkingCardGreenCard')"> Télécharger </a></li>    
 </ul>
 
 <br>

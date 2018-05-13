@@ -99,7 +99,7 @@ public class RequestController {
     	try {
 			RequestField field = requestService.findRequestFieldByCode(requestId, code);
 			ByteArrayResource resource = new ByteArrayResource(field.getFieldFile());
-			MediaType mediaType = new MediaType(field.getFieldFileType());
+            MediaType mediaType = MediaType.valueOf(field.getFieldFileType());
 
 			return ResponseEntity.
 					status(HttpStatus.OK).
