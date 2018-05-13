@@ -15,7 +15,7 @@
 			</thead>
 			<tbody>
 				<tr *ngFor="let request of (serviceRequests$ | async)">
-                    <td scope="row">{{request.type.description | translate}}</td>
+                    <td scope="row">{{request.typeDescription | translate}}</td>
                     <td> {{ request.userRef }}</td>
                     <!-- <td> ** TODO **</td> -->
                     <td> {{ request.status.name | translate }}</td> 

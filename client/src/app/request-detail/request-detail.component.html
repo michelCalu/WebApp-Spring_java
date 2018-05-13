@@ -1,8 +1,8 @@
 <div class="container">
     <h2> {{ 'citizenData' | translate }}</h2>        
     <citizen-detail *ngIf="citizen" [citizen]="citizen"></citizen-detail>
-    <nationality-request-data *ngIf="citizen && request && request.type.description === 'nationalityCertificate'" [request]="request" [citizen]="citizen"></nationality-request-data>
-    <parking-request-data *ngIf=" request && request.type.description === 'citizenParkingCard'" [request]="request" ></parking-request-data>
+    <nationality-request-data *ngIf="citizen && request && request.typeDescription === 'nationalityCertificate'" [request]="request" [citizen]="citizen"></nationality-request-data>
+    <parking-request-data *ngIf=" request && request.typeDescription === 'citizenParkingCard'" [request]="request" ></parking-request-data>
 
     <request-history [request]="request"></request-history>
     <document-details *ngIf="request.status.name == 'accepted' || request.status.name == 'rejected'" [request]="request"></document-details>

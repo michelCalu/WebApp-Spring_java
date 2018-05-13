@@ -22,9 +22,5 @@ export class MyRequestsComponent implements OnInit {
     ngOnInit() {
         const currentUser = this.authService.getCurrentUser();
         this.citizenRequests$ = this.requestService.getCitizenRequests(currentUser.id);
-
-        this.citizenRequests$.subscribe(citizenREquests => {
-            console.log(citizenREquests);
-        })
     }
 }

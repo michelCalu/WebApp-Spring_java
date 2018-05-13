@@ -14,7 +14,7 @@
 			</thead>
 			<tbody>
 				<tr *ngFor="let request of (citizenRequests$ | async)">
-					<th>{{request.type.description | translate}}</th>
+					<th>{{request.typeDescription | translate}}</th>
 					<td>{{ request.userRef }}</td> <!-- TODO -->
 					<td>{{request.status.name | translate}}</td>
 					<td><button class="btn btn-success" (click)="selectedRequest = request">{{'details'| translate}}</button></td>
