@@ -21,9 +21,10 @@
     "connectAsEmployee": "Se connecter en tant qu'employé",
     "connectAsCitizen": "Se connecter en tant que citoyen",
     "connectAsCompany": "Se connecter en tant que société",
-    "create_employee": "créer un employé",
+    "create_employee": "créer un employé",    
     "created": "création",
     "createEmployee.title": "Créer un nouvel employé",
+    "creationDate": "Date de création",
 
     "documents.service.getError": "Erreur dans la recherche des documents",
 
@@ -56,8 +57,10 @@
     "requestDate": "date demande",
     "requestModification": "demander modification",
     "request.service.assignError": "Erreur dans l'assignation de la demande",
+    "request.service.getCreationDate": "Erreur dans la recherche de la date de création",
     "request.service.getError": "Erreur dans la recherche de demandes",
     "request.service.getEvents": "Erreur dans la recherche de l'historique de la demande",
+
 
     "service.citizen.errorGetCitizen" : "Citoyen inconnu",
     "service.citizen.errorGetNrn" : "Numéro de registre national non reconnu",

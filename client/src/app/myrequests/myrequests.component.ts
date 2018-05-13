@@ -16,11 +16,23 @@ export class MyRequestsComponent implements OnInit {
 
     citizenRequests$: Observable<CitizenRequest[]>;
     selectedRequest: CitizenRequest;
+    citizenRequestsCreationDates = new Map<number, Date>();
+
+    test: Observable<Date>;
 
     constructor(private requestService: RequestService, private authService: AuthenticationService) {}
 
     ngOnInit() {
         const currentUser = this.authService.getCurrentUser();
         this.citizenRequests$ = this.requestService.getCitizenRequests(currentUser.id);
+        this.citizenRequests$.subscribe(requests => {
+            for (const request of requests) {
+                this.getCreationDate(request.id).subscribe(creationDate => this.citizenRequestsCreationDates[request.id] = creationDate);
+            }
+        });
+    }
+
+    private getCreationDate(requestId: number): Observable<Date> {
+        return this.requestService.getCreationDate(requestId);
     }
 }

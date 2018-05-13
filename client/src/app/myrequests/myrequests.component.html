@@ -8,7 +8,8 @@
 				<tr>
 					<th scope="col">{{'type' | translate}}</th>
 					<th scope="col">{{'reference' | translate}}</th>
-					<th scope="col">{{'status' | translate}}</th>
+                    <th scope="col">{{'status' | translate}}</th>
+                    <th scope="col">{{'creationDate' | translate}}</th>
 					<th scope="col">{{'actions' | translate}}</th>
 				</tr>
 			</thead>
@@ -16,11 +17,12 @@
 				<tr *ngFor="let request of (citizenRequests$ | async)">
 					<th>{{request.typeDescription | translate}}</th>
 					<td>{{ request.userRef }}</td>
-					<td>{{request.status.name | translate}}</td>
+                    <td>{{request.status.name | translate}}</td>
+                    <td> {{ citizenRequestsCreationDates[request.id] | date:'dd/MM/yy HH:mm'}} </td>
 					<td><button class="btn btn-success" (click)="selectedRequest = request">{{'details'| translate}}</button></td>
 				</tr>
 			</tbody>
-		</table>
+        </table>
 		<ng-template #noRequests>
 			<div>Vous n'avez pas encore introduit des demandes</div>
         </ng-template>
