@@ -1,4 +1,5 @@
 <div class="container">
+    <h2> {{ 'citizenData' | translate }}</h2>        
     <citizen-detail *ngIf="citizen" [citizen]="citizen"></citizen-detail>
     <nationality-request-data *ngIf="citizen && request && request.type.description === 'nationalityCertificate'" [request]="request" [citizen]="citizen"></nationality-request-data>
     <parking-request-data *ngIf=" request && request.type.description === 'citizenParkingCard'" [request]="request" ></parking-request-data>

@@ -14,8 +14,8 @@
 				<tr *ngFor="let company of (pendingCompanies$ | async)">
                     <td> {{ company.companyName }}</td>
                     <td> {{ company.vatNb }} </td>
-                    <td><button class="btn btn-success" (click)="selectedCitizen = citizen">{{'viewDetails'| translate}}</button></td>
-                    <td><button class="btn btn-success" (click)="validate(citizen)"> {{'validate' | translate}}</button></td>
+                    <td><button class="btn btn-success" (click)="selectedCompany = company">{{'viewDetails'| translate}}</button></td>
+                    <td><button class="btn btn-success" (click)="validate(company)"> {{'validate' | translate}}</button></td>
 				</tr>
 			</tbody>
 		</table>
@@ -23,11 +23,8 @@
 			<div>Votre service n'a pas d'inscriptions de sociétés en attente</div>
         </ng-template>
 
-        // TODO select company
-        
-        <div *ngIf="selectedCitizen">
-            <citizen-detail  [citizen]="selectedCitizen"></citizen-detail>
-            <nrn-details [citizen]="selectedCitizen"></nrn-details>
+        <div *ngIf="selectedCompany">      
+            <company-detail [company]="selectedCompany"></company-detail>
         </div>
         
 	</div>

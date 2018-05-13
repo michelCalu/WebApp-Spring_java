@@ -17,6 +17,8 @@ export class ValidateCompaniesComponent implements OnInit {
     pendingCompanies$: Observable<Company[]>;
     employeeDepartment$: Observable<Department>;
 
+    selectedCompany: Company;
+
     constructor(private companyService: CompanyService, private employeeService: EmployeeService,
                  private authService: AuthenticationService, private departmentService: DepartmentService) { }
 

@@ -24,6 +24,7 @@
         </ng-template>
 
         <div *ngIf="selectedCitizen">
+            <h2> {{ 'citizenData' | translate }}</h2>
             <citizen-detail  [citizen]="selectedCitizen"></citizen-detail>
             <nrn-details [citizen]="selectedCitizen"></nrn-details>
         </div>
