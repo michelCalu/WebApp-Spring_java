@@ -23,7 +23,6 @@ export class ParkingCardCreationComponent implements OnInit {
     carModel = new RequestField();
     carColour = new RequestField();
     carRegistrationNumber = new RequestField();
-    greenCard = new RequestField();
 
     @ViewChild('fileInput') fileInput: ElementRef;
 
@@ -43,8 +42,6 @@ export class ParkingCardCreationComponent implements OnInit {
       this.carColour.fieldType = 'String';
       this.carRegistrationNumber.code = 'citizenParkingCardPlateNumber';
       this.carRegistrationNumber.fieldType = 'String';
-      this.greenCard.code = 'citizenParkingCardGreenCard';
-      this.greenCard.fieldType = 'File';
     }
 
     ngOnInit() {
@@ -82,9 +79,8 @@ export class ParkingCardCreationComponent implements OnInit {
         this.carModel.fieldValue = this.form.get('carModel').value;
         this.carColour.fieldValue = this.form.get('colour').value;
         this.carRegistrationNumber.fieldValue = this.form.get('carRegistrationNumber').value;
-        this.greenCard.fieldFile = this.form.get('insurance_certificate').value;
 
-        request.data = [this.carMake, this.carModel, this.carColour, this.carRegistrationNumber/*, this.greenCard*/];
+        request.data = [this.carMake, this.carModel, this.carColour, this.carRegistrationNumber];
 
         var formData = new FormData();
         formData.append("request",  new Blob([JSON.stringify(request)], {
