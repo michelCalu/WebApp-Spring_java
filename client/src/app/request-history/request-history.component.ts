@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output, EventEmitter, OnChanges, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { CitizenRequest, Citizen, RequestEvent } from '../_models';
 import { AuthenticationService, CitizenService, RequestService, AlertService } from '../_services';
 import { Observable } from 'rxjs/Observable';

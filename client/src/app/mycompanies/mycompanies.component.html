@@ -3,23 +3,23 @@
 	<br>
 	<br>
 	<div class="container">
-		<table *ngIf="(companies$ | async)?.length; else noCompany" class="table table-striped">
+		<table *ngIf="(mandataries$ | async)?.length; else noCompany" class="table table-striped">
 			<thead>
 				<tr>
-					<th scope="col">{{'type' | translate}}</th>
-					<th scope="col">{{'reference' | translate}}</th>
+					<th scope="col">Nom</th>
+					<!--<th scope="col">{{'reference' | translate}}</th>
                     <th scope="col">{{'status' | translate}}</th>
                     <th scope="col">{{'creationDate' | translate}}</th>
-					<th scope="col">{{'actions' | translate}}</th>
+					<th scope="col">{{'actions' | translate}}</th>-->
 				</tr>
 			</thead>
 			<tbody>
-				<tr *ngFor="let request of (companies$ | async)">
-					<th>{{request.typeDescription | translate}}</th>
-					<td>{{ request.userRef }}</td>
+				<tr *ngFor="let request of (mandataries$ | async)">
+					<th>{{request.company.companyName | translate}}</th>
+					<!--<td>{{ request.userRef }}</td>
                     <td>{{request.status.name | translate}}</td>
                     <td> {{ citizenRequestsCreationDates[request.id] | date:'dd/MM/yy HH:mm'}} </td>
-					<td><button class="btn btn-success" (click)="selectedRequest = request">{{'details'| translate}}</button></td>
+					<td><button class="btn btn-success" (click)="selectedRequest = request">{{'details'| translate}}</button></td>-->
 				</tr>
 			</tbody>
         </table>
@@ -30,6 +30,5 @@
         <div *ngIf="selectedRequest">
             <request-detail [request]="selectedRequest" [displayEmployeeActions]="false"></request-detail>
         </div>
-
 	</div>
 </div>
