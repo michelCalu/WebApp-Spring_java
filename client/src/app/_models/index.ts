@@ -2,6 +2,7 @@ export * from './address.model';
 export * from './citizen.model';
 export * from './company.model';
 export * from './employee.model';
+export * from './mandatary.model';
 export * from './municipality.model';
 export * from './department.model';
 export * from './user.model';

@@ -29,6 +29,10 @@ export class CreateCompanyComponent implements OnInit {
             data => this.alertService.success('Enregistrement réussi'),
             error => this.alertService.error('Échec dans l\'enregistrement')
         );
+        this.companyService.createMandatary(this.company).subscribe(
+            data => this.alertService.success('Enregistrement réussi'),
+            error => this.alertService.error('Échec dans l\'enregistrement')
+        );
     }
 
 }
