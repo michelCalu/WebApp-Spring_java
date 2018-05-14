@@ -12,7 +12,6 @@ import { AuthenticationService } from '../_services/authentication.service';
 })
 
 export class MyCompaniesComponent implements OnInit {
-
     //companies$: Observable<Company[]>;
     selectedRequest: Company;
     companiesCreationDates = new Map<number, Date>();
