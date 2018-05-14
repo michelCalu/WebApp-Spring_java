@@ -20,6 +20,14 @@ export class CompanyService {
         return this.http.post(/*this.serverAddress + */ '/companies', company);
     }
 
+    public getCompany(citizenID: number): Observable<Company[]> {
+        return this.http.get<Company[]>(/*this.serverAddress + */ '/companies?citizenId=' + citizenID)
+            .catch(err => {
+                this.messageService.error(this.translateService.instant('request.service.getError'));
+                return [];
+            });
+    }
+
     public getPendingCompanies(municipalityId: number): Observable<Company[]> {
         return this.http.get<Company[]>('/companies/pending?municipalityID=' + municipalityId)
             .map(res => {
