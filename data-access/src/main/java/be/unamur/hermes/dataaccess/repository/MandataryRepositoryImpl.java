@@ -1,19 +1,22 @@
 package be.unamur.hermes.dataaccess.repository;
 
-import be.unamur.hermes.common.enums.MandataryRole;
-import be.unamur.hermes.dataaccess.entity.Citizen;
-import be.unamur.hermes.dataaccess.entity.Company;
-import be.unamur.hermes.dataaccess.entity.Mandatary;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
-import org.springframework.stereotype.Repository;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
+import org.springframework.stereotype.Repository;
+import org.springframework.util.StringUtils;
+
+import be.unamur.hermes.common.enums.MandataryRole;
+import be.unamur.hermes.dataaccess.entity.Citizen;
+import be.unamur.hermes.dataaccess.entity.Company;
+import be.unamur.hermes.dataaccess.entity.Mandatary;
 
 @Repository
 public class MandataryRepositoryImpl implements MandataryRepository {
@@ -26,15 +29,17 @@ public class MandataryRepositoryImpl implements MandataryRepository {
 
     // queries
     private static final String queryBase = //
-	    "SELECT * FROM t_mandataries";
+	    "SELECT * FROM t_mandataries m";
     private static final String queryById = //
-	    queryBase + " WHERE mandataryID = ?";
+	    queryBase + " WHERE m.mandataryID = ?";
     private static final String queryByCitizenId = //
-	    queryBase + " WHERE citizenID = ?";
+	    queryBase + " WHERE m.citizenID = ?";
+    private static final String queryByCitizenIdCompanyStatus = queryBase
+	    + " JOIN t_companies c ON c.companyNb = m.companyNb WHERE c.companyStatus = ? AND m.citizenID = ?";
     private static final String queryByCompanyNb = //
-	    queryBase + " WHERE companyNb = ?";
+	    queryBase + " WHERE m.companyNb = ?";
     private static final String queryByCompanyRole = //
-	    queryByCompanyNb + " AND role = ?";
+	    queryByCompanyNb + " AND m.role = ?";
 
     @Autowired
     public MandataryRepositoryImpl(JdbcTemplate jdbc, CompanyRepository companyRepository,
@@ -72,8 +77,11 @@ public class MandataryRepositoryImpl implements MandataryRepository {
     }
 
     @Override
-    public List<Mandatary> findByCitizenId(long citizenId) {
-	return jdbc.query(queryByCitizenId, this::build, new Object[] { citizenId });
+    public List<Mandatary> findByCitizenId(long citizenId, Optional<String> companyStatus) {
+	if (!companyStatus.isPresent() || !StringUtils.hasText(companyStatus.get()))
+	    return jdbc.query(queryByCitizenId, this::build, new Object[] { citizenId });
+	else
+	    return jdbc.query(queryByCitizenIdCompanyStatus, this::build, new Object[] { companyStatus, citizenId });
     }
 
     @Override

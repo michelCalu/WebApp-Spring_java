@@ -1,6 +1,7 @@
 package be.unamur.hermes.business.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,8 +40,8 @@ public class MandataryServiceImpl implements MandataryService {
     }
 
     @Override
-    public List<Mandatary> findByCitizen(Long citizenId) {
-	return mandataryRepository.findByCitizenId(citizenId);
+    public List<Mandatary> findByCitizen(Long citizenId, Optional<String> companyStatus) {
+	return mandataryRepository.findByCitizenId(citizenId, companyStatus);
     }
 
     @Override

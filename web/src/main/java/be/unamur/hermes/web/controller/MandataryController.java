@@ -46,9 +46,10 @@ public class MandataryController {
 
     @GetMapping
     public ResponseEntity<List<Mandatary>> find(@RequestParam("companyNb") Optional<String> companyNb,
-	    @RequestParam("role") Optional<String> role, @RequestParam("citizenId") Optional<Long> citizenId) {
+	    @RequestParam("role") Optional<String> role, @RequestParam("citizenId") Optional<Long> citizenId,
+	    @RequestParam("companyStatus") Optional<String> companyStatus) {
 	if (citizenId.isPresent())
-	    return ResponseEntity.ok(mandataryService.findByCitizen(citizenId.get()));
+	    return ResponseEntity.ok(mandataryService.findByCitizen(citizenId.get(), companyStatus));
 	if (companyNb.isPresent()) {
 	    if (role.isPresent())
 		return ResponseEntity.ok(mandataryService.findByCompany(companyNb.get(), role.get()));
