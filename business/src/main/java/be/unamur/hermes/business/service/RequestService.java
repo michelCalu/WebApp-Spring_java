@@ -3,16 +3,20 @@ package be.unamur.hermes.business.service;
 import java.util.List;
 import java.util.Map;
 
-import be.unamur.hermes.business.exception.BusinessException;
-import be.unamur.hermes.dataaccess.entity.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import be.unamur.hermes.business.exception.BusinessException;
+import be.unamur.hermes.dataaccess.entity.Request;
+import be.unamur.hermes.dataaccess.entity.RequestField;
+import be.unamur.hermes.dataaccess.entity.RequestType;
 
 public interface RequestService {
 
     public static final String STATUS_ACCEPTED = "accepted";
     public static final String STATUS_REJECTED = "rejected";
     public static final String TYPE_NATIONALITY_CERTIFICATE = "nationalityCertificate";
-    public static final String TYPE_PARKING_CARD = "citizenParkingCard";
+    public static final String TYPE_CITIZEN_PARKING_CARD = "citizenParkingCard";
+    public static final String TYPE_COMPANY_PARKING_CARD = "companyParkingCard";
 
     Request find(long requestId);
 

@@ -58,7 +58,7 @@ public class RequestServiceImpl implements RequestService {
 
     @Override
     public Request find(long requestId) {
-    return requestRepository.findById(requestId);
+	return requestRepository.findById(requestId);
     }
 
     // rollback for all exceptions, not only runtime exceptions and errors
@@ -86,15 +86,15 @@ public class RequestServiceImpl implements RequestService {
 
 	try {
 	    for (String code : codeToFiles.keySet()) {
-	        MultipartFile file = codeToFiles.get(code);
-		    RequestField requestField = new RequestField();
-            requestField.setCode(code);
-            requestField.setFieldType("binary");
-            requestField.setFieldValue(file.getOriginalFilename());
-            requestField.setFieldFile(file.getBytes());
-            requestField.setFieldFileType(file.getContentType());
-            newRequest.addRequestField(requestField);
-            requestFieldRepository.createRequestField(requestField, newRequestId);
+		MultipartFile file = codeToFiles.get(code);
+		RequestField requestField = new RequestField();
+		requestField.setCode(code);
+		requestField.setFieldType("binary");
+		requestField.setFieldValue(file.getOriginalFilename());
+		requestField.setFieldFile(file.getBytes());
+		requestField.setFieldFileType(file.getContentType());
+		newRequest.addRequestField(requestField);
+		requestFieldRepository.createRequestField(requestField, newRequestId);
 	    }
 	} catch (IOException e) {
 	    throw new BusinessException("Error when receiving files.");
@@ -135,12 +135,12 @@ public class RequestServiceImpl implements RequestService {
 
     @Override
     public List<Request> findByCompanyNb(String companyNb) {
-        return requestRepository.findByCompanyNb(companyNb);
+	return requestRepository.findByCompanyNb(companyNb);
     }
 
     @Override
     public List<Request> findByCompanyNb(String companyNb, long requestTypeId) {
-        return requestRepository.findByCompanyNb(companyNb, requestTypeId);
+	return requestRepository.findByCompanyNb(companyNb, requestTypeId);
     }
 
     @Override
@@ -149,25 +149,24 @@ public class RequestServiceImpl implements RequestService {
     }
 
     @Override
-    public RequestField findRequestFieldByCode(long requestId, String code){
-        Request request = find(requestId);
-        RequestField fieldOfCode = null;
-        for(RequestField field: request.getData()){
-            if(field.getCode().equals(code)){
-                if(fieldOfCode == null) {
-                    if(field.getFieldFile() != null)
-                        fieldOfCode = field;
-                    else
-                        throw new BusinessException("Requested file identified by code : " + code + " isn't a file!");
-                }
-                else
-                    throw new BusinessException("Multiple request fields of code : " + code + " detected.");
-            }
-        }
-        if(fieldOfCode != null)
-            return fieldOfCode;
-        else
-            throw new BusinessException("No requestField of code : " + code + " has been found !");
+    public RequestField findRequestFieldByCode(long requestId, String code) {
+	Request request = find(requestId);
+	RequestField fieldOfCode = null;
+	for (RequestField field : request.getData()) {
+	    if (field.getCode().equals(code)) {
+		if (fieldOfCode == null) {
+		    if (field.getFieldFile() != null)
+			fieldOfCode = field;
+		    else
+			throw new BusinessException("Requested file identified by code : " + code + " isn't a file!");
+		} else
+		    throw new BusinessException("Multiple request fields of code : " + code + " detected.");
+	    }
+	}
+	if (fieldOfCode != null)
+	    return fieldOfCode;
+	else
+	    throw new BusinessException("No requestField of code : " + code + " has been found !");
     }
 
     @Override
@@ -214,7 +213,7 @@ public class RequestServiceImpl implements RequestService {
 	// TODO all this could be done much better
 	if (RequestService.TYPE_NATIONALITY_CERTIFICATE.equalsIgnoreCase(type)) {
 	    documentService.createNationalityCertificate(true, request);
-	} else if (RequestService.TYPE_PARKING_CARD.equalsIgnoreCase(type)) {
+	} else if (RequestService.TYPE_CITIZEN_PARKING_CARD.equalsIgnoreCase(type)) {
 	    documentService.createParkingCard(request);
 	    documentService.createParkingCardDecision(true, request);
 	    documentService.createPayment(request);
@@ -226,7 +225,7 @@ public class RequestServiceImpl implements RequestService {
 	// TODO all this could be done much better
 	if (RequestService.TYPE_NATIONALITY_CERTIFICATE.equalsIgnoreCase(type)) {
 	    documentService.createNationalityCertificate(false, request);
-	} else if (RequestService.TYPE_PARKING_CARD.equalsIgnoreCase(type)) {
+	} else if (RequestService.TYPE_CITIZEN_PARKING_CARD.equalsIgnoreCase(type)) {
 	    documentService.createParkingCardDecision(false, request);
 	}
     }
