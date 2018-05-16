@@ -81,7 +81,8 @@ public class MandataryRepositoryImpl implements MandataryRepository {
 	if (!companyStatus.isPresent() || !StringUtils.hasText(companyStatus.get()))
 	    return jdbc.query(queryByCitizenId, this::build, new Object[] { citizenId });
 	else
-	    return jdbc.query(queryByCitizenIdCompanyStatus, this::build, new Object[] { companyStatus, citizenId });
+	    return jdbc.query(queryByCitizenIdCompanyStatus, this::build,
+		    new Object[] { companyStatus.get(), citizenId });
     }
 
     @Override
