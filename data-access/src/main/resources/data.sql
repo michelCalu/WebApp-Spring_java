@@ -44,20 +44,20 @@ insert into t_user_accounts values(6,"ROLE_ADMIN","$2a$10$4w9Wm8gc93DpDQdyZ7SR5O
 insert into t_user_accounts values(7,"ROLE_USER","$2a$10$4w9Wm8gc93DpDQdyZ7SR5O.17XQMsfElDZRVbKuzaQJVi.0s.5xn.","active");
 
 
-insert into t_addresses values(1,"Avenue de la Reine", 279,"A",1090,"Jette", "Région de Bruxelles-Capitale", "Belgique");
-insert into t_addresses values(2,"Place du miroir", 1,null,1020,"Jette", "Région de Bruxelles-Capitale", "Belgique");
+insert into t_addresses values(1,"Avenue de la Reine", 279,"A",5680,"Doische", "Wallonie", "Belgique");
+insert into t_addresses values(2,"Place du miroir", 1,null,5680,"Doische", "Wallonie", "Belgique");
 insert into t_addresses values(3,"chaussée de la hulpe", 748,null,1310,"La Hulpe", "Brabant Wallon", "Belgique");
-insert into t_addresses values(4,"Avenue de Charles-Quint", 140,null,1083,"Ganshoren", "Région de Bruxelles-Capitale", "Belgique");
-insert into t_addresses values(5,"Avenue Van Overbeke", 12, "B",1083,"Ganshoren", "Région de Bruxelles-Capitale", "Belgique");
-insert into t_addresses values(6,"Rue du Noyer", 43, null, 1000,"Bruxelles", "Région de Bruxelles-Capitale", "Belgique");
+insert into t_addresses values(4,"Avenue de Charles-Quint", 140,null,6600,"Bastogne", "Wallonie", "Belgique");
+insert into t_addresses values(5,"Avenue Van Overbeke", 12, "B",6600,"Bastogne", "Wallonie", "Belgique");
+insert into t_addresses values(6,"Rue du Noyer", 43, null, 6600,"Bastogne", "Wallonie", "Belgique");
 insert into t_addresses values(7,"Rue Sart-lez-moulins", 77, null, 6044,"Roux", "Charleroi", "Belgique");
 insert into t_addresses values(8,"Rue des combattants", 59, null, 1310,"La Hulpe", "Brabant Wallon", "Belgique");
 insert into t_addresses values(9,"Rue du burnout", 66, null, 1310,"La Hulpe", "Brabant Wallon", "Belgique");
 insert into t_addresses values(10,"Rue du bobard", 55, null, 1310,"La Hulpe", "Brabant Wallon", "Belgique");
 insert into t_addresses values(11,"Rue des pepettes", 44, null, 4000,"Liege", "Province de Liege", "Belgique");
 
-insert into t_municipalities values(1, "Jette", 1, "info@jette.be", "02/654.12.20", "Hervé Doyen");
-insert into t_municipalities values(2, "Ganshoren", 4, "ganshoren@ganshoren.irisnet.be", "02/465.12.77", "Robert Genard");
+insert into t_municipalities values(1, "Doische", 1, "info@doische.be", "082/654.12.20", "Hervé Doyen");
+insert into t_municipalities values(2, "Bastogne", 4, "bastogne@bastogne.irisnet.be", "061/465.12.77", "Robert Genard");
 insert into t_municipalities values(3, "Roux", 7, "roux@municipality.com", "RouxPhone", "Paul Magnette");
 insert into t_municipalities values(4, "La Hulpe", 8, "lh@municipality.com", "lhPhone", "Gonzague pull rose");
 insert into t_municipalities values(5, "Liege", 11, "litche@municipality.com", "lPhone", "Moreau");
@@ -133,3 +133,64 @@ insert into t_companies values("333333", "BE333333",11, "SNC", 1, "world company
 insert into t_mandataries values(1,1,"111111","owner");
 insert into t_mandataries values(2,3,"222222","owner");
 insert into t_mandataries values(3,3,"333333","owner");
+
+-- parameters for nationality certificate
+insert into t_parameters values(1, 1, "<?xml version='1.0' encoding='UTF-8'?><parameters><parameter id='activated'>true</parameter></parameters>");
+insert into t_parameters values(1, 2, "<?xml version='1.0' encoding='UTF-8'?><parameters><parameter id='activated'>true</parameter></parameters>");
+insert into t_parameters values(1, 3, "<?xml version='1.0' encoding='UTF-8'?><parameters><parameter id='activated'>true</parameter></parameters>");
+insert into t_parameters values(1, 4, "<?xml version='1.0' encoding='UTF-8'?><parameters><parameter id='activated'>true</parameter></parameters>");
+insert into t_parameters values(1, 5, "<?xml version='1.0' encoding='UTF-8'?><parameters><parameter id='activated'>true</parameter></parameters>");
+
+-- parameters for citizen parking card
+insert into t_parameters values(2, 1, "<?xml version='1.0' encoding='UTF-8'?><parameters>
+<parameter id='activated'>true</parameter>
+<parameter id='parkingCard.periodValidity'>18</parameter>
+<parameter id='parkingCard.termPayment'>2</parameter>
+<parameter id='parkingCard.fee'>2000</parameter></parameters>");
+insert into t_parameters values(2, 2, "<?xml version='1.0' encoding='UTF-8'?><parameters>
+<parameter id='activated'>true</parameter>
+<parameter id='parkingCard.periodValidity'>18</parameter>
+<parameter id='parkingCard.termPayment'>2</parameter>
+<parameter id='parkingCard.fee'>2000</parameter></parameters>");
+insert into t_parameters values(2, 3, "<?xml version='1.0' encoding='UTF-8'?><parameters>
+<parameter id='activated'>true</parameter>
+<parameter id='parkingCard.periodValidity'>18</parameter>
+<parameter id='parkingCard.termPayment'>2</parameter>
+<parameter id='parkingCard.fee'>2000</parameter></parameters>");
+insert into t_parameters values(2, 4, "<?xml version='1.0' encoding='UTF-8'?><parameters>
+<parameter id='activated'>true</parameter>
+<parameter id='parkingCard.periodValidity'>18</parameter>
+<parameter id='parkingCard.termPayment'>2</parameter>
+<parameter id='parkingCard.fee'>2000</parameter></parameters>");
+insert into t_parameters values(2, 5, "<?xml version='1.0' encoding='UTF-8'?><parameters>
+<parameter id='activated'>true</parameter>
+<parameter id='parkingCard.periodValidity'>18</parameter>
+<parameter id='parkingCard.termPayment'>2</parameter>
+<parameter id='parkingCard.fee'>2000</parameter></parameters>");
+
+-- parameters for company parking card
+insert into t_parameters values(3, 1, "<?xml version='1.0' encoding='UTF-8'?><parameters>
+<parameter id='activated'>true</parameter>
+<parameter id='parkingCard.periodValidity'>18</parameter>
+<parameter id='parkingCard.termPayment'>4</parameter>
+<parameter id='parkingCard.fee'>2500</parameter></parameters>");
+insert into t_parameters values(3, 2, "<?xml version='1.0' encoding='UTF-8'?><parameters>
+<parameter id='activated'>true</parameter>
+<parameter id='parkingCard.periodValidity'>18</parameter>
+<parameter id='parkingCard.termPayment'>3</parameter>
+<parameter id='parkingCard.fee'>3000.5</parameter></parameters>");
+insert into t_parameters values(3, 3, "<?xml version='1.0' encoding='UTF-8'?><parameters>
+<parameter id='activated'>true</parameter>
+<parameter id='parkingCard.periodValidity'>18</parameter>
+<parameter id='parkingCard.termPayment'>4</parameter>
+<parameter id='parkingCard.fee'>7000</parameter></parameters>");
+insert into t_parameters values(3, 4, "<?xml version='1.0' encoding='UTF-8'?><parameters>
+<parameter id='activated'>true</parameter>
+<parameter id='parkingCard.periodValidity'>18</parameter>
+<parameter id='parkingCard.termPayment'>10</parameter>
+<parameter id='parkingCard.fee'>5000</parameter></parameters>");
+insert into t_parameters values(3, 5, "<?xml version='1.0' encoding='UTF-8'?><parameters>
+<parameter id='activated'>true</parameter>
+<parameter id='parkingCard.periodValidity'>18</parameter>
+<parameter id='parkingCard.termPayment'>20</parameter>
+<parameter id='parkingCard.fee'>4000</parameter></parameters>");

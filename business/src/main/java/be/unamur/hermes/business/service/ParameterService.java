@@ -19,7 +19,9 @@ public interface ParameterService {
      */
     String getParameter(long municipalityId, long requestTypeId, String parameterId);
 
-    RequestParameters getRequestType(long municipalityId, long requestTypeId);
+    RequestParameters getParameters(long municipalityId, long requestTypeId);
+
+    RequestParameters getParameters(long municipalityId, String requestType);
 
     void create(Map<String, String> parameters, long municipalityId, long requestTypeId);
 

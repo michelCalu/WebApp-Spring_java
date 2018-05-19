@@ -45,7 +45,7 @@ public class ParameterController {
     @GetMapping(path = "/{municipalityId}/{requestTypeId}", params = "!parameterId")
     public ResponseEntity<RequestParameters> getParameters(@PathVariable(value = "municipalityId") long municipalityId,
 	    @PathVariable(value = "requestTypeId") long requestTypeId) {
-	return ResponseEntity.ok(parameterService.getRequestType(municipalityId, requestTypeId));
+	return ResponseEntity.ok(parameterService.getParameters(municipalityId, requestTypeId));
     }
 
     @GetMapping(path = "/{municipalityId}/{requestTypeId}")

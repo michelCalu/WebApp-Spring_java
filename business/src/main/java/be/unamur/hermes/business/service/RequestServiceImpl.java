@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import be.unamur.hermes.business.exception.BusinessException;
 import be.unamur.hermes.common.constants.EventConstants;
+import be.unamur.hermes.common.constants.RequestTypes;
 import be.unamur.hermes.common.enums.RequestStatusInfo;
 import be.unamur.hermes.dataaccess.entity.Citizen;
 import be.unamur.hermes.dataaccess.entity.Department;
@@ -211,10 +212,10 @@ public class RequestServiceImpl implements RequestService {
     private void approve(Request request) {
 	String type = request.getTypeDescription();
 	// TODO all this could be done much better
-	if (RequestService.TYPE_NATIONALITY_CERTIFICATE.equalsIgnoreCase(type)) {
+	if (RequestTypes.NATIONALITY_CERTIFICATE.equalsIgnoreCase(type)) {
 	    documentService.createNationalityCertificate(true, request);
-	} else if (RequestService.TYPE_CITIZEN_PARKING_CARD.equalsIgnoreCase(type)
-		|| RequestService.TYPE_COMPANY_PARKING_CARD.equalsIgnoreCase(type)) {
+	} else if (RequestTypes.CITIZEN_PARKING_CARD.equalsIgnoreCase(type)
+		|| RequestTypes.COMPANY_PARKING_CARD.equalsIgnoreCase(type)) {
 	    documentService.createParkingCard(request);
 	    documentService.createParkingCardDecision(true, request);
 	    documentService.createPayment(request);
@@ -224,10 +225,10 @@ public class RequestServiceImpl implements RequestService {
     private void reject(Request request) {
 	String type = request.getTypeDescription();
 	// TODO all this could be done much better
-	if (RequestService.TYPE_NATIONALITY_CERTIFICATE.equalsIgnoreCase(type)) {
+	if (RequestTypes.NATIONALITY_CERTIFICATE.equalsIgnoreCase(type)) {
 	    documentService.createNationalityCertificate(false, request);
-	} else if (RequestService.TYPE_CITIZEN_PARKING_CARD.equalsIgnoreCase(type)
-		|| RequestService.TYPE_COMPANY_PARKING_CARD.equalsIgnoreCase(type)) {
+	} else if (RequestTypes.CITIZEN_PARKING_CARD.equalsIgnoreCase(type)
+		|| RequestTypes.COMPANY_PARKING_CARD.equalsIgnoreCase(type)) {
 	    documentService.createParkingCardDecision(false, request);
 	}
     }
