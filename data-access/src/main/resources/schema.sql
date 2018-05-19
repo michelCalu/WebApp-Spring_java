@@ -8,6 +8,7 @@ DROP TABLE IF EXISTS t_request_field_definitions;
 DROP TABLE IF EXISTS t_requests;
 DROP TABLE IF EXISTS t_departments;
 DROP TABLE IF EXISTS t_req_statusses;
+DROP TABLE IF EXISTS t_parameters;
 DROP TABLE IF EXISTS t_request_types;
 DROP TABLE IF EXISTS t_mandataries;
 DROP TABLE IF EXISTS t_mandatary_roles;
@@ -21,7 +22,6 @@ DROP TABLE IF EXISTS t_user_accounts;
 DROP TABLE IF EXISTS t_addresses;
 DROP TABLE IF EXISTS t_documents;
 DROP TABLE IF EXISTS t_document_titles;
-DROP TABLE IF EXISTS t_parameters;
 
 CREATE TABLE t_user_accounts (
   userAccountID			INT PRIMARY KEY 		NOT NULL AUTO_INCREMENT,

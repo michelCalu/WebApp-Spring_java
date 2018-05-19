@@ -13,6 +13,7 @@ public class Employee extends User {
     private int dependentChildren;
     private int dependentPeople;
     private List<Long> departmentIds;
+    private LocalDate birthdate;
 
     Employee() {
     }
@@ -50,6 +51,16 @@ public class Employee extends User {
 
 	return Objects.hash(super.hashCode(), accountNumber, arrivalDate, gender, civilStatus, dependentChildren,
 		dependentPeople);
+    }
+
+    @Override
+    public LocalDate getBirthdate() {
+        return birthdate;
+    }
+
+    @Override
+    public void setBirthdate(LocalDate birthdate) {
+        this.birthdate = birthdate;
     }
 
     public String getAccountNumber() {
