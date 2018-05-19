@@ -1,22 +1,22 @@
-package be.unamur.hermes.business.parameters;
+package be.unamur.hermes.dataaccess.entity;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Class represting a type of claim.
+ * Class representing a type of request.
  *
  */
 public class RequestParameters {
 
-    private static final String KEY_ACTIVATED = "activated";
+    private final long municipalityId;
+    private final long requestTypeId;
+    private final Map<String, String> parameters;
 
-    private final String requestTypeId;
-    private final Map<String, String> parameters = new HashMap<>();
-
-    public RequestParameters(String requestTypeId) {
+    public RequestParameters(long municipalityId, long requestTypeId, Map<String, String> parameters) {
 	super();
+	this.municipalityId = municipalityId;
 	this.requestTypeId = requestTypeId;
+	this.parameters = parameters;
     }
 
     @Override
@@ -24,15 +24,11 @@ public class RequestParameters {
 	return "ClaimType [id=" + requestTypeId + ", parameters=" + parameters + "]";
     }
 
-    public boolean isActivated() {
-	if (parameters.containsKey(KEY_ACTIVATED)) {
-	    String paramObj = parameters.get(KEY_ACTIVATED);
-	    return Boolean.parseBoolean(paramObj);
-	}
-	return false;
+    public long getMunicipalityId() {
+	return municipalityId;
     }
 
-    public String getId() {
+    public long getRequestTypeId() {
 	return requestTypeId;
     }
 
