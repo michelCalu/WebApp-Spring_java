@@ -49,7 +49,7 @@ public class CompanyController {
     }
 
     @GetMapping(path = "/pending")
-    public ResponseEntity<List<Company>> getDocuments(@RequestParam("municipalityID") long municipalityID) {
+    public ResponseEntity<List<Company>> getPending(@RequestParam("municipalityID") long municipalityID) {
         try {
             List<Company> comps = companyService.findPending(municipalityID);
             return ResponseEntity.ok(comps);
