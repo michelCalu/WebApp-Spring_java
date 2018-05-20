@@ -1,7 +1,7 @@
 <div class="col-md-6 col-md-offset-3">
 	<h1>Nouvelle demande</h1>
 	<div class="list-group">
-		<button type="button" class="list-group-item list-group-item-action" routerLink="/newrequest/nationality"><a>Certificat de nationalité</a></button>
+		<button type="button" class="list-group-item list-group-item-action" routerLink="/newrequest/nationality" [hidden]="authService.getCurrentCompany()"><a>Certificat de nationalité</a></button>
 		<button type="button" class="list-group-item list-group-item-action" routerLink="/newrequest/parking">Carte de stationnement</button>
     </div>
 </div>

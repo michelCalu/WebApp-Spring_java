@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import * as configData from '../configuration-data';
 import { AlertService } from './alert.service';
 import { TranslateService } from '@ngx-translate/core';
-import { Company } from '../_models';
+import { Company, Mandatary } from '../_models';
 
 
 @Injectable()
@@ -15,9 +15,35 @@ export class CompanyService {
 
     constructor(private http: HttpClient, private messageService: AlertService, private translateService: TranslateService) { }
 
-    public createCompany(company: Company): Observable<any> {
-        console.log('CREATING COMPANY : ' + JSON.stringify(company));
-        return this.http.post(/*this.serverAddress + */ '/companies', company);
+    public createCompany(company: Company, creatorId: number): Observable<boolean> {
+        // let the backend know who created the company
+        company['creatorId'] = creatorId;
+        return this.http.post<boolean>('/companies', company, { observe: 'response' })
+            .map(resp => resp.status === 201)
+            .catch(err => Observable.of(false));
+    }
+
+    // TODO delete
+    //A little bit barbarian
+    // public createMandatary(company: Company): Observable<any>{
+    //     var mandatary = new Mandatary();
+    //     mandatary.citizen.id = company.contactPerson;
+    //     mandatary.company.companyNb = company.companyNb;
+    //     mandatary.role = 'owner';
+    //     console.log("CREATING MANDATARY" + JSON.stringify(mandatary));
+    //     return this.http.post('/mandataries', mandatary);
+    // }
+
+    public getMandataries(citizenID: number): Observable<Mandatary[]> {
+        return this.http.get<Mandatary[]>(/*this.serverAddress + */ '/mandataries?citizenId=' + citizenID + '&companyStatus=active')
+            .map(res => {
+                console.log(res);
+                return res;
+            })
+            .catch(err => {
+                this.messageService.error(this.translateService.instant('request.service.getError'));
+                return [];
+            });
     }
 
     public getPendingCompanies(municipalityId: number): Observable<Company[]> {

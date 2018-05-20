@@ -1,3 +1,25 @@
 <div class="col-md-6 col-md-offset-3">
-	<h1>Mes companies</h1>
+	<h1>Mes sociétés</h1>
+    <br>
+	<div class="container">
+        <button class="btn btn-success" *ngIf="currentCompany" (click)="disconnectFromCompany()">Se déconnecter de {{currentCompany.companyName}}</button>
+		<table *ngIf="(mandataries$ | async)?.length; else noCompany" class="table table-striped">
+			<thead>
+				<tr>
+					<th scope="col">Nom</th>
+					<th scope="col">Connexion</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngFor="let mandatary of (mandataries$ | async)">
+					<td>{{mandatary.company.companyName | translate}}</td>
+					<td><button class="btn btn-success" (click)="connectToCompany(mandatary.company)">Se connecter</button></td>
+				</tr>
+			</tbody>
+        </table>
+		<ng-template #noCompany>
+			<div>Vous n'avez pas de sociétés associées </div>
+        </ng-template>
+        
+	</div>
 </div>

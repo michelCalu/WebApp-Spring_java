@@ -25,10 +25,19 @@ export class CreateCompanyComponent implements OnInit {
     }
 
     createCompany(): void {
-        this.companyService.createCompany(this.company).subscribe(
-            data => this.alertService.success('Enregistrement réussi'),
-            error => this.alertService.error('Échec dans l\'enregistrement')
-        );
+        this.companyService.createCompany(this.company, this.authService.getCurrentUser().id).subscribe( success => {
+                if (success) {
+                    this.alertService.success('Enregistrement réussi');
+                } else {
+                    this.alertService.error('Échec dans l\'enregistrement');
+                }
+            });
+
+        // TODO: delete it is the backend who will create the mandataries
+        // setTimeout(this.companyService.createMandatary(this.company).subscribe(
+        //     data => this.alertService.success('Enregistrement réussi'),
+        //     error => this.alertService.error('Échec dans l\'enregistrement')
+        // ), 3000);
     }
 
 }
