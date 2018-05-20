@@ -28,7 +28,7 @@ export class CreateCompanyComponent implements OnInit {
         this.companyService.createCompany(this.company).subscribe(
             data => this.alertService.success('Enregistrement réussi'),
             error => this.alertService.error('Échec dans l\'enregistrement')
-        )
+        );
         setTimeout(this.companyService.createMandatary(this.company).subscribe(
             data => this.alertService.success('Enregistrement réussi'),
             error => this.alertService.error('Échec dans l\'enregistrement')

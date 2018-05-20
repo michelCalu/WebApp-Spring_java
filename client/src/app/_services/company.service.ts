@@ -26,7 +26,6 @@ export class CompanyService {
         mandatary.citizen.id = company.contactPerson;
         mandatary.company.companyNb = company.companyNb;
         mandatary.role = 'owner';
-        console.log("coucou");
         console.log("CREATING MANDATARY" + JSON.stringify(mandatary));
         return this.http.post('/mandataries', mandatary);
     }

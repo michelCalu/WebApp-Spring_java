@@ -21,6 +21,15 @@ export class MyCompaniesComponent implements OnInit {
 
     constructor(private companyService: CompanyService, private authService: AuthenticationService) {}
 
+    //companies$: Observable<Company[]>;
+    selectedRequest: Company;
+    companiesCreationDates = new Map<number, Date>();
+    mandataries$: Observable<Mandatary[]>;
+
+    test: Observable<Date>;
+
+    constructor(private companyService: CompanyService, private authService: AuthenticationService) {}
+
     ngOnInit() {
         console.log(this.mandataries$);
         const currentUser = this.authService.getCurrentUser();
