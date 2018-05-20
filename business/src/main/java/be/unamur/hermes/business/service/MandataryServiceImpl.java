@@ -1,13 +1,15 @@
 package be.unamur.hermes.business.service;
 
-import java.util.List;
-import java.util.Optional;
-
+import be.unamur.hermes.common.enums.MandataryRole;
+import be.unamur.hermes.dataaccess.entity.Citizen;
+import be.unamur.hermes.dataaccess.entity.Company;
+import be.unamur.hermes.dataaccess.entity.Mandatary;
+import be.unamur.hermes.dataaccess.repository.MandataryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import be.unamur.hermes.dataaccess.entity.Mandatary;
-import be.unamur.hermes.dataaccess.repository.MandataryRepository;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MandataryServiceImpl implements MandataryService {
@@ -35,8 +37,9 @@ public class MandataryServiceImpl implements MandataryService {
     }
 
     @Override
-    public Long register(Mandatary mandatary) {
-	return mandataryRepository.create(mandatary);
+    public Long create(Citizen citizen, Company company, MandataryRole role) {
+        Mandatary mandatary = new Mandatary(citizen, company, role);
+        return mandataryRepository.create(mandatary);
     }
 
     @Override

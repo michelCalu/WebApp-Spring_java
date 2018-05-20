@@ -1,9 +1,12 @@
 package be.unamur.hermes.business.service;
 
+import be.unamur.hermes.common.enums.MandataryRole;
+import be.unamur.hermes.dataaccess.entity.Citizen;
+import be.unamur.hermes.dataaccess.entity.Company;
+import be.unamur.hermes.dataaccess.entity.Mandatary;
+
 import java.util.List;
 import java.util.Optional;
-
-import be.unamur.hermes.dataaccess.entity.Mandatary;
 
 public interface MandataryService {
 
@@ -17,6 +20,6 @@ public interface MandataryService {
 
     List<Mandatary> findAll();
 
-    Long register(Mandatary mandatary);
+    Long create(Citizen citizen, Company company, MandataryRole role);
 
 }

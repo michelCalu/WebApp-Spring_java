@@ -1,7 +1,10 @@
 package be.unamur.hermes.web.controller;
 
 import be.unamur.hermes.business.exception.BusinessException;
+import be.unamur.hermes.business.service.CitizenService;
 import be.unamur.hermes.business.service.CompanyService;
+import be.unamur.hermes.business.service.MandataryService;
+import be.unamur.hermes.common.enums.MandataryRole;
 import be.unamur.hermes.dataaccess.dto.UpdateCompanyAccount;
 import be.unamur.hermes.dataaccess.entity.Company;
 import org.slf4j.Logger;
@@ -9,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -20,18 +24,24 @@ import java.util.List;
 public class CompanyController {
 
     private final CompanyService companyService;
+    private final CitizenService citizenService;
+    private final MandataryService mandataryService;
     private static Logger logger = LoggerFactory.getLogger(CompanyController.class);
 
     @Autowired
-    public CompanyController(CompanyService companyService) {
+    public CompanyController(CompanyService companyService, CitizenService citizenService, MandataryService mandataryService) {
 	this.companyService = companyService;
+	this.mandataryService = mandataryService;
+	this.citizenService = citizenService;
     }
 
     // CREATE
     @PostMapping
+    @Transactional
     public ResponseEntity<Object> create(@RequestBody Company company) {
         try {
             companyService.register(company);
+            mandataryService.create(citizenService.findById(company.getCreatorId()), company, MandataryRole.OWNER);
             URI location = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{companyNb}").buildAndExpand(company.getCompanyNb())
                     .toUri();
             return ResponseEntity.created(location).build();
