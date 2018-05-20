@@ -20,18 +20,19 @@ export class CompanyService {
         return this.http.post(/*this.serverAddress + */ '/companies', company);
     }
 
+    //A little bit barbarian
     public createMandatary(company: Company): Observable<any>{
         var mandatary = new Mandatary();
         mandatary.citizen.id = company.contactPerson;
         mandatary.company.companyNb = company.companyNb;
         mandatary.role = 'owner';
         console.log("coucou");
-        console.log(JSON.stringify(mandatary));
+        console.log("CREATING MANDATARY" + JSON.stringify(mandatary));
         return this.http.post('/mandataries', mandatary);
     }
 
     public getMandataries(citizenID: number): Observable<Mandatary[]> {
-        return this.http.get<Mandatary[]>(/*this.serverAddress + */ '/mandataries?citizenId=' + citizenID)
+        return this.http.get<Mandatary[]>(/*this.serverAddress + */ '/mandataries?citizenId=' + citizenID + '&companyStatus=active')
             .map(res => {
                 console.log(res);
                 return res;

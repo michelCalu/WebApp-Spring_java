@@ -7,6 +7,7 @@
 			<thead>
 				<tr>
 					<th scope="col">Nom</th>
+					<th scope="col">Connexion</th>
 					<!--<th scope="col">{{'reference' | translate}}</th>
                     <th scope="col">{{'status' | translate}}</th>
                     <th scope="col">{{'creationDate' | translate}}</th>
@@ -15,7 +16,8 @@
 			</thead>
 			<tbody>
 				<tr *ngFor="let request of (mandataries$ | async)">
-					<th>{{request.company.companyName | translate}}</th>
+					<td>{{request.company.companyName | translate}}</td>
+					<td><button class="btn btn-success" (click)="connectToCompany">Se connecter</button></td>
 					<!--<td>{{ request.userRef }}</td>
                     <td>{{request.status.name | translate}}</td>
                     <td> {{ citizenRequestsCreationDates[request.id] | date:'dd/MM/yy HH:mm'}} </td>
