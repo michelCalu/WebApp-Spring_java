@@ -1,13 +1,16 @@
 package be.unamur.hermes.business.exception;
 
-public class BusinessException extends RuntimeException {
+import be.unamur.hermes.common.exception.HermesException;
 
-    public BusinessException(String message) {
-        super(message);
+public class BusinessException extends HermesException {
+
+    public BusinessException(int code, String message) {
+	super(code, message);
     }
 
-    public BusinessException(String message, Throwable cause) {
-        super(message, cause);
+    public BusinessException(int code, String message, Throwable cause) {
+	super(code, message);
+	this.initCause(cause);
     }
-    
+
 }

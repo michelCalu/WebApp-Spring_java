@@ -9,6 +9,7 @@ import org.springframework.util.StringUtils;
 
 import be.unamur.hermes.business.exception.BusinessException;
 import be.unamur.hermes.common.constants.EventConstants;
+import be.unamur.hermes.common.exception.Errors;
 import be.unamur.hermes.dataaccess.entity.Address;
 import be.unamur.hermes.dataaccess.entity.Event;
 import be.unamur.hermes.dataaccess.entity.Request;
@@ -43,7 +44,8 @@ public class DocumentHelper {
 	Optional<RequestField> fieldOpt = request.getData().stream().filter(rf -> code.equalsIgnoreCase(rf.getCode()))
 		.findFirst();
 	if (!fieldOpt.isPresent())
-	    throw new BusinessException("Request field with code '" + code + "' cannot be replaced");
+	    throw new BusinessException(Errors.FAILURE_DOCUMENT_GENERATION,
+		    "Request field with code '" + code + "' cannot be replaced");
 	return fieldOpt.get().getFieldValue();
     }
 

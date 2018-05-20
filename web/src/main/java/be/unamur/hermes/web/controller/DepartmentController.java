@@ -15,11 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import be.unamur.hermes.business.exception.BusinessException;
 import be.unamur.hermes.business.service.DepartmentService;
+import be.unamur.hermes.common.exception.Errors;
 import be.unamur.hermes.dataaccess.entity.Department;
 
 @RestController
 @RequestMapping({ "/departments" })
-public class DepartmentController {
+public class DepartmentController implements Errors {
 
     private static Logger logger = LoggerFactory.getLogger(DepartmentController.class);
 
@@ -36,22 +37,14 @@ public class DepartmentController {
     @GetMapping
     public ResponseEntity<List<Department>> findDepartments(
 	    @RequestParam("municipalityId") Optional<Long> municipalityId) {
-	try {
-	    if (municipalityId.isPresent())
-		return ResponseEntity.ok(departmentService.findAll(municipalityId.get()));
-	} catch (BusinessException ex) {
-	    logger.error("Business exception", ex);
-	    return ResponseEntity.badRequest().build();
-	}
-	return ResponseEntity.badRequest().build();
+	if (municipalityId.isPresent())
+	    return ResponseEntity.ok(departmentService.findAll(municipalityId.get()));
+	else
+	    throw new BusinessException(MISSING_MUNICIPALITY, "MunicipalityId is required");
     }
 
     @GetMapping(path = "/{departmentId}")
     public ResponseEntity<Department> findDepartment(@PathVariable(value = "departmentId") long departmentId) {
-	try {
-	    return ResponseEntity.ok(departmentService.findById(departmentId));
-	} catch (BusinessException ex) {
-	    return ResponseEntity.badRequest().build();
-	}
+	return ResponseEntity.ok(departmentService.findById(departmentId));
     }
 }

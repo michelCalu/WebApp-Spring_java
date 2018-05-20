@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import be.unamur.hermes.business.exception.BusinessException;
 import be.unamur.hermes.business.service.MunicipalityService;
 import be.unamur.hermes.dataaccess.entity.Municipality;
 
@@ -50,29 +49,20 @@ public class MunicipalityController {
     @GetMapping
     public ResponseEntity<Municipality> getMunicipality(@RequestParam("zipCode") Optional<Long> zipCode,
 	    @RequestParam("addressId") Optional<Long> addressId, @RequestParam("name") Optional<String> name) {
-	try {
-	    if (zipCode.isPresent()) {
-		return ResponseEntity.ok(municipalityService.findByZIPcode(zipCode.get()));
-	    }
-	    if (addressId.isPresent())
-		return ResponseEntity.ok(municipalityService.findByAddress(addressId.get()));
-	    if (name.isPresent()) {
-		return ResponseEntity.ok(municipalityService.findByName(name.get()));
-	    }
-	} catch (Exception ex) {
-	    logger.error("Get Municipalities failed", ex);
+	if (zipCode.isPresent()) {
+	    return ResponseEntity.ok(municipalityService.findByZIPcode(zipCode.get()));
+	}
+	if (addressId.isPresent())
+	    return ResponseEntity.ok(municipalityService.findByAddress(addressId.get()));
+	if (name.isPresent()) {
+	    return ResponseEntity.ok(municipalityService.findByName(name.get()));
 	}
 	return ResponseEntity.badRequest().build();
     }
 
     @GetMapping(path = "/{municipalityId}")
     public ResponseEntity<Municipality> getMunicipality(@PathVariable("municipalityId") long municipalityId) {
-	try {
-	    return ResponseEntity.ok(municipalityService.findById(municipalityId));
-	} catch (Exception ex) {
-	    logger.error("Get Municipality failed", ex);
-	}
-	return ResponseEntity.badRequest().build();
+	return ResponseEntity.ok(municipalityService.findById(municipalityId));
     }
 
     // CREATE
@@ -80,14 +70,8 @@ public class MunicipalityController {
     @PostMapping
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Object> createMunicipality(@RequestBody Municipality municipality) {
-	try {
-	    long newId = municipalityService.activate(municipality);
-	    URI location = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}").buildAndExpand(newId)
-		    .toUri();
-	    return ResponseEntity.created(location).build();
-	} catch (BusinessException ex) {
-	    logger.error("Request createMunicipality failed", ex);
-	    return ResponseEntity.badRequest().build();
-	}
+	long newId = municipalityService.activate(municipality);
+	URI location = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}").buildAndExpand(newId).toUri();
+	return ResponseEntity.created(location).build();
     }
 }

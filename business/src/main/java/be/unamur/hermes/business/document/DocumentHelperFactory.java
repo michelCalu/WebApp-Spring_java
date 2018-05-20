@@ -2,6 +2,7 @@ package be.unamur.hermes.business.document;
 
 import be.unamur.hermes.business.exception.BusinessException;
 import be.unamur.hermes.common.constants.RequestTypes;
+import be.unamur.hermes.common.exception.Errors;
 import be.unamur.hermes.dataaccess.entity.Request;
 import be.unamur.hermes.dataaccess.entity.RequestParameters;
 
@@ -23,7 +24,7 @@ public class DocumentHelperFactory {
 	if (RequestTypes.COMPANY_PARKING_CARD.equalsIgnoreCase(typeDescription)
 		|| RequestTypes.CITIZEN_PARKING_CARD.equalsIgnoreCase(typeDescription))
 	    return new ParkingCardDocumentHelper(parameters, request);
-	throw new BusinessException("Unknown request type : " + typeDescription);
+	throw new BusinessException(Errors.MISSING_REQUEST_TYPE, "Unknown request type : " + typeDescription);
     }
 
 }

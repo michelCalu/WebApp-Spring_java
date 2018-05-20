@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.Map;
 
 import be.unamur.hermes.business.exception.BusinessException;
-import be.unamur.hermes.business.exception.NRNNotValidExceptions.NRNNotValidException;
 import be.unamur.hermes.business.exception.NRNNotValidExceptions.NRNServiceAccessException;
+import be.unamur.hermes.common.exception.NRNNotValidException;
 import be.unamur.hermes.dataaccess.entity.Citizen;
 import be.unamur.hermes.dataaccess.entity.UserAccount;
 

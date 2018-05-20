@@ -19,6 +19,8 @@ import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,7 +33,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import be.unamur.hermes.business.exception.BusinessException;
 import be.unamur.hermes.business.service.RequestService;
 import be.unamur.hermes.common.constants.RequestTypes;
 import be.unamur.hermes.dataaccess.entity.Request;
@@ -52,12 +53,7 @@ public class RequestController implements RequestTypes {
 
     @GetMapping(path = "/{requestId}")
     public ResponseEntity<Request> getRequest(@PathVariable(value = "requestId") long requestId) {
-	try {
-	    return ResponseEntity.status(HttpStatus.OK).body(requestService.find(requestId));
-	} catch (Exception ex) {
-	    logger.error("Bad request", ex);
-	    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-	}
+	return ResponseEntity.status(HttpStatus.OK).body(requestService.find(requestId));
     }
 
     @GetMapping
@@ -66,51 +62,42 @@ public class RequestController implements RequestTypes {
 	    @RequestParam("departmentId") Optional<Long> departmentId,
 	    @RequestParam("assigneeId") Optional<Long> assigneeId,
 	    @RequestParam("companyNb") Optional<String> companyNb) {
-	try {
-	    List<Request> data = null;
-	    if (departmentId.isPresent()) {
-		data = requestService.findByDepartmentId(departmentId.get());
-		return ResponseEntity.status(HttpStatus.OK).body(data);
-	    }
-	    if (assigneeId.isPresent()) {
-		data = requestService.findByAssigneeId(assigneeId.get());
-		return ResponseEntity.status(HttpStatus.OK).body(data);
-	    }
-	    if (!(citizenId.isPresent() || companyNb.isPresent()) || (citizenId.isPresent() && companyNb.isPresent()))
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-	    if (citizenId.isPresent()) {
-		data = requestTypeId.isPresent() ? requestService.find(citizenId.get(), requestTypeId.get())
-			: requestService.findByCitizenId(citizenId.get());
-		return ResponseEntity.status(HttpStatus.OK).body(data);
-	    }
-	    if (companyNb.isPresent()) {
-		data = requestTypeId.isPresent() ? requestService.findByCompanyNb(companyNb.get(), requestTypeId.get())
-			: requestService.findByCompanyNb(companyNb.get());
-		return ResponseEntity.status(HttpStatus.OK).body(data);
-	    }
-	    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-	} catch (Exception ex) {
-	    logger.error("Bad request", ex);
-	    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+	List<Request> data = null;
+	if (departmentId.isPresent()) {
+	    data = requestService.findByDepartmentId(departmentId.get());
+	    return ResponseEntity.status(HttpStatus.OK).body(data);
 	}
+	if (assigneeId.isPresent()) {
+	    data = requestService.findByAssigneeId(assigneeId.get());
+	    return ResponseEntity.status(HttpStatus.OK).body(data);
+	}
+	if (!(citizenId.isPresent() || companyNb.isPresent()) || (citizenId.isPresent() && companyNb.isPresent()))
+	    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+	if (citizenId.isPresent()) {
+	    data = requestTypeId.isPresent() ? requestService.find(citizenId.get(), requestTypeId.get())
+		    : requestService.findByCitizenId(citizenId.get());
+	    return ResponseEntity.status(HttpStatus.OK).body(data);
+	}
+	if (companyNb.isPresent()) {
+	    data = requestTypeId.isPresent() ? requestService.findByCompanyNb(companyNb.get(), requestTypeId.get())
+		    : requestService.findByCompanyNb(companyNb.get());
+	    return ResponseEntity.status(HttpStatus.OK).body(data);
+	}
+	return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
     }
 
     @GetMapping(path = "/{requestId}/file")
     public ResponseEntity<ByteArrayResource> getRequestFile(@PathVariable(value = "requestId") long requestId,
 	    @RequestParam("code") String code) {
-	try {
-	    RequestField field = requestService.findRequestFieldByCode(requestId, code);
-	    ByteArrayResource resource = new ByteArrayResource(field.getFieldFile());
-	    MediaType mediaType = MediaType.valueOf(field.getFieldFileType());
+	RequestField field = requestService.findRequestFieldByCode(requestId, code);
+	ByteArrayResource resource = new ByteArrayResource(field.getFieldFile());
+	MediaType mediaType = MediaType.valueOf(field.getFieldFileType());
 
-	    return ResponseEntity.status(HttpStatus.OK).contentType(mediaType)
-		    .contentLength(field.getFieldFile().length).body(resource);
-	} catch (BusinessException ex) {
-	    logger.error("Bad request", ex);
-	    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-	}
+	return ResponseEntity.status(HttpStatus.OK).contentType(mediaType).contentLength(field.getFieldFile().length)
+		.body(resource);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN') or #newRequest.citizen.id == principal.technicalId")
     @PostMapping(params = "requestType=" + CITIZEN_PARKING_CARD, consumes = { "multipart/form-data" })
     public ResponseEntity<Void> createRequest(@RequestPart("request") @Valid Request newRequest,
 	    @RequestPart("citizenParkingCardGreenCard") @Valid MultipartFile greenCard,
@@ -123,6 +110,7 @@ public class RequestController implements RequestTypes {
 	return ResponseEntity.created(location).build();
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN') or #newRequest.citizen.id == principal.technicalId")
     @PostMapping(params = "requestType=" + COMPANY_PARKING_CARD, consumes = { "multipart/form-data" })
     public ResponseEntity<Void> createRequest(@RequestPart("request") @Valid Request newRequest,
 	    @RequestPart("companyParkingCardGreenCard") @Valid MultipartFile greenCard,
@@ -132,20 +120,18 @@ public class RequestController implements RequestTypes {
 	return ResponseEntity.created(location).build();
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN') or #newRequest.citizen.id == principal.technicalId")
     @PostMapping(params = "requestType=" + NATIONALITY_CERTIFICATE, consumes = { "multipart/form-data" })
     public ResponseEntity<Void> createRequest(@RequestPart("request") @Valid Request newRequest) {
 	URI location = createRequest(NATIONALITY_CERTIFICATE, newRequest, Collections.emptyList());
 	return ResponseEntity.created(location).build();
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN') or #updatedRequest.citizen.id == principal.technicalId")
     @PatchMapping
-    public ResponseEntity<Object> updateAccount(@RequestBody Request updatedRequest) {
-	try {
-	    requestService.update(updatedRequest);
-	    return ResponseEntity.ok().build();
-	} catch (BusinessException be) {
-	    return new ResponseEntity<Object>(HttpStatus.BAD_REQUEST);
-	}
+    public ResponseEntity<Object> updateAccount(@RequestBody Request updatedRequest, Authentication authi) {
+	requestService.update(updatedRequest);
+	return ResponseEntity.ok().build();
     }
 
     private URI createRequest(String requestType, Request newRequest, List<MultipartFile> files) {

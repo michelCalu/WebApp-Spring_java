@@ -1,25 +1,26 @@
 package be.unamur.hermes.business.service;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
+
 import be.unamur.hermes.business.exception.BusinessException;
 import be.unamur.hermes.common.enums.Authority;
 import be.unamur.hermes.common.enums.UserStatus;
 import be.unamur.hermes.common.enums.UserType;
+import be.unamur.hermes.common.exception.Errors;
 import be.unamur.hermes.common.util.PasswordUtil;
 import be.unamur.hermes.dataaccess.dto.UpdateUserAccount;
 import be.unamur.hermes.dataaccess.entity.Employee;
 import be.unamur.hermes.dataaccess.entity.UserAccount;
 import be.unamur.hermes.dataaccess.repository.EmployeeRepository;
 import be.unamur.hermes.dataaccess.repository.UserAccountRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
-
-import java.util.List;
 
 @Service
-public class EmployeeServiceImpl implements EmployeeService {
+public class EmployeeServiceImpl implements EmployeeService, Errors {
 
     private final EmployeeRepository employeeRepository;
     private final UserAccountRepository accountRepository;
@@ -32,20 +33,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee findByName(String firstName, String lastname) throws BusinessException {
-	try {
-	    return employeeRepository.findByName(firstName, lastname);
-	} catch (EmptyResultDataAccessException e) {
-	    throw new BusinessException("Employee not found !");
-	}
+	return employeeRepository.findByName(firstName, lastname);
     }
 
     @Override
     public Employee findById(Long employeeId) throws BusinessException {
-	try {
-	    return employeeRepository.findById(employeeId);
-	} catch (EmptyResultDataAccessException e) {
-	    throw new BusinessException("Employee not found !");
-	}
+	return employeeRepository.findById(employeeId);
     }
 
     @Override
@@ -65,51 +58,38 @@ public class EmployeeServiceImpl implements EmployeeService {
 	return employeeRepository.create(employee, userAccountId);
     }
 
-
-	private void checkEmployeeAttributes(Employee employee) throws BusinessException {
-		if (!StringUtils.hasText(employee.getPassword()))
-			throw new BusinessException("Password is required");
-		if (employee.getBirthdate().isAfter(employee.getArrivalDate())) {
-			throw new BusinessException("birthdate cannot be after arrival date");
-		}
+    private void checkEmployeeAttributes(Employee employee) throws BusinessException {
+	if (!StringUtils.hasText(employee.getPassword()))
+	    throw new BusinessException(MISSING_PASSWORD, "Password is required");
+	if (employee.getBirthdate().isAfter(employee.getArrivalDate())) {
+	    throw new BusinessException(INVALID_BIRTH_DATE, "birthdate cannot be after arrival date");
 	}
+    }
 
     @Override
     public void suspendAccount(long employeeID) throws BusinessException {
 	long acctId;
 	UserAccount account;
 	Employee employee;
-	try {
-	    employee = employeeRepository.findById(employeeID);
-	    account = employeeRepository.findAccount(employee.getNationalRegisterNb());
-	} catch (EmptyResultDataAccessException e) {
-	    throw new BusinessException("Employee not found !");
-	}
+	employee = employeeRepository.findById(employeeID);
+	account = employeeRepository.findAccount(employee.getNationalRegisterNb());
 	acctId = account.getAccountUserId();
-	if (!account.getStatus().getValue().equals("disabled")) {
+	if (account.getStatus() != UserStatus.DISABLED) {
 	    UpdateUserAccount update = new UpdateUserAccount();
 	    update.setStatus("disabled");
 	    accountRepository.update(acctId, update);
 	} else {
-	    throw new BusinessException("Account is already disabled");
+	    throw new BusinessException(INVALID_USER_STATUS, "Account is already disabled");
 	}
     }
 
     @Override
     public UserAccount findAccount(String nationalRegistrationNb) throws BusinessException {
-	try {
-	    return employeeRepository.findAccount(nationalRegistrationNb);
-	} catch (EmptyResultDataAccessException e) {
-	    throw new BusinessException("Account not found !");
-	}
+	return employeeRepository.findAccount(nationalRegistrationNb);
     }
 
     @Override
     public UserAccount findAccount(long employeeId) {
-	try {
-	    return employeeRepository.findAccount(employeeId);
-	} catch (EmptyResultDataAccessException e) {
-	    throw new BusinessException("Account not found !");
-	}
+	return employeeRepository.findAccount(employeeId);
     }
 }

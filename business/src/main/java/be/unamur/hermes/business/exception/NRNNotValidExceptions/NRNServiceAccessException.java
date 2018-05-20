@@ -1,10 +1,12 @@
 package be.unamur.hermes.business.exception.NRNNotValidExceptions;
 
-public class NRNServiceAccessException extends Exception {
+import be.unamur.hermes.common.exception.Errors;
+import be.unamur.hermes.common.exception.HermesException;
 
-    public NRNServiceAccessException(String msg){
-        super(msg);
+public class NRNServiceAccessException extends HermesException {
+
+    public NRNServiceAccessException(String msg) {
+	super(Errors.FAILURE_CONNEXION_NRN_SERVICE, msg);
     }
 
 }
-

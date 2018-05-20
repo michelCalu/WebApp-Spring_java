@@ -16,13 +16,14 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import be.unamur.hermes.business.exception.BusinessException;
+import be.unamur.hermes.common.exception.Errors;
 import be.unamur.hermes.common.util.XMLUtil;
 import be.unamur.hermes.dataaccess.entity.RequestParameters;
 import be.unamur.hermes.dataaccess.entity.RequestType;
 import be.unamur.hermes.dataaccess.repository.ParameterRepository;
 
 @Service
-public class ParameterServiceImpl implements ParameterService {
+public class ParameterServiceImpl implements ParameterService, Errors {
 
     private static String TAG_PARAMETERS = "parameters";
     private static String TAG_PARAMETER = "parameter";
@@ -50,19 +51,22 @@ public class ParameterServiceImpl implements ParameterService {
     @Override
     public RequestParameters getParameters(long municipalityId, long requestTypeId) {
 	String contents = parameterRepository.findContents(municipalityId, requestTypeId);
+	Map<String, String> parsed;
 	try {
-	    Map<String, String> parsed = parse(contents);
+	    parsed = parse(contents);
 	    return new RequestParameters(municipalityId, requestTypeId, parsed);
 	} catch (Exception e) {
-	    throw new BusinessException(e.getMessage());
+	    logger.error(e.getMessage(), e);
+	    throw new BusinessException(INVALID_XML, e.getMessage());
 	}
+
     }
 
     @Override
     public RequestParameters getParameters(long municipalityId, String requestTypeDescription) {
 	RequestType requestType = requestService.findRequestTypeByDescription(requestTypeDescription);
 	if (requestType == null)
-	    throw new BusinessException("Unknown requestType : " + requestTypeDescription);
+	    throw new BusinessException(MISSING_REQUEST_TYPE, "Unknown requestType : " + requestTypeDescription);
 	return getParameters(municipalityId, requestType.getId());
     }
 

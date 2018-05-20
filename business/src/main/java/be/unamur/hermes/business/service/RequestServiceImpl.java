@@ -13,6 +13,7 @@ import be.unamur.hermes.business.exception.BusinessException;
 import be.unamur.hermes.common.constants.EventConstants;
 import be.unamur.hermes.common.constants.RequestTypes;
 import be.unamur.hermes.common.enums.RequestStatusInfo;
+import be.unamur.hermes.common.exception.Errors;
 import be.unamur.hermes.dataaccess.entity.Citizen;
 import be.unamur.hermes.dataaccess.entity.Department;
 import be.unamur.hermes.dataaccess.entity.Event;
@@ -28,7 +29,7 @@ import be.unamur.hermes.dataaccess.repository.RequestFieldRepository;
 import be.unamur.hermes.dataaccess.repository.RequestRepository;
 
 @Service
-public class RequestServiceImpl implements RequestService {
+public class RequestServiceImpl implements RequestService, Errors {
 
     private final RequestRepository requestRepository;
     private final RequestFieldRepository requestFieldRepository;
@@ -77,11 +78,13 @@ public class RequestServiceImpl implements RequestService {
 
 	for (RequestField field : newRequest.getData()) {
 	    if (field.getFieldType().equals("String") && field.getFieldFile() != null)
-		throw new BusinessException("Field type doesn't match field content ! Expected 'String' got 'File'");
+		throw new BusinessException(INVALID_REQUEST_FIELD,
+			"Field type doesn't match field content ! Expected 'String' got 'File'");
 	    if (field.getFieldType().equals("File") && field.getFieldValue() != null)
-		throw new BusinessException("Field type doesn't match field content ! Expected 'File' got 'String'");
+		throw new BusinessException(INVALID_REQUEST_FIELD,
+			"Field type doesn't match field content ! Expected 'File' got 'String'");
 	    if (field.getFieldValue() == null && field.getFieldFile() == null)
-		throw new BusinessException("No value or file is attached to this field !");
+		throw new BusinessException(MISSING_REQUEST_FIELD, "No value or file is attached to this field !");
 	    requestFieldRepository.createRequestField(field, newRequestId);
 	}
 
@@ -98,7 +101,7 @@ public class RequestServiceImpl implements RequestService {
 		requestFieldRepository.createRequestField(requestField, newRequestId);
 	    }
 	} catch (IOException e) {
-	    throw new BusinessException("Error when receiving files.");
+	    throw new BusinessException(INVALID_FILE, "Error when receiving files.");
 	}
 
 	// register creation event
@@ -159,15 +162,18 @@ public class RequestServiceImpl implements RequestService {
 		    if (field.getFieldFile() != null)
 			fieldOfCode = field;
 		    else
-			throw new BusinessException("Requested file identified by code : " + code + " isn't a file!");
+			throw new BusinessException(INVALID_REQUEST_FIELD,
+				"Requested file identified by code : " + code + " isn't a file!");
 		} else
-		    throw new BusinessException("Multiple request fields of code : " + code + " detected.");
+		    throw new BusinessException(INVALID_REQUEST_FIELD,
+			    "Multiple request fields of code : " + code + " detected.");
 	    }
 	}
 	if (fieldOfCode != null)
 	    return fieldOfCode;
 	else
-	    throw new BusinessException("No requestField of code : " + code + " has been found !");
+	    throw new BusinessException(MISSING_REQUEST_FIELD,
+		    "No requestField of code : " + code + " has been found !");
     }
 
     @Override
@@ -177,7 +183,7 @@ public class RequestServiceImpl implements RequestService {
 	// is the request approved/rejected ?
 	if (updatedRequest.getStatus() != null) {
 	    if (!checkTransition(baseRequest.getStatus(), updatedRequest.getStatus()))
-		throw new BusinessException("Unauthorized workflow");
+		throw new BusinessException(INVALID_REQUEST_STATUS, "Unauthorized workflow");
 	    RequestStatus newStatus = updatedRequest.getStatus();
 	    // some statusses need special traitment (document generation)
 	    if (RequestService.STATUS_ACCEPTED.equalsIgnoreCase(newStatus.getName())) {
@@ -256,7 +262,8 @@ public class RequestServiceImpl implements RequestService {
 	List<Department> municipalityDepartments = departmentRepository
 		.findByMunicipalityId(citizenMunicipality.getId());
 	if (municipalityDepartments.isEmpty())
-	    throw new BusinessException("The request type isn't managed by any service of the municipality.");
+	    throw new BusinessException(FAILURE_DATABASE_RETRIEVAL,
+		    "The request type is not managed by any department of the municipality.");
 	else
 	    return municipalityDepartments.get(0);
     }
