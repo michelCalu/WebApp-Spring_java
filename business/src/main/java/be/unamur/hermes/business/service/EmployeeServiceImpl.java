@@ -1,13 +1,5 @@
 package be.unamur.hermes.business.service;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
-
 import be.unamur.hermes.business.exception.BusinessException;
 import be.unamur.hermes.common.enums.Authority;
 import be.unamur.hermes.common.enums.UserStatus;
@@ -18,6 +10,13 @@ import be.unamur.hermes.dataaccess.entity.Employee;
 import be.unamur.hermes.dataaccess.entity.UserAccount;
 import be.unamur.hermes.dataaccess.repository.EmployeeRepository;
 import be.unamur.hermes.dataaccess.repository.UserAccountRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
+
+import java.util.List;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
@@ -57,8 +56,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     @Transactional
     public long register(Employee employee) {
-	if (!StringUtils.hasText(employee.getPassword()))
-	    throw new BusinessException("Password is required");
+	checkEmployeeAttributes(employee);
 	// create user account (employees do not have to get activated)
 	String pass = PasswordUtil.encode(employee.getPassword());
 	UserAccount employeeAccount = new UserAccount(0L, 0L, employee.getNationalRegisterNb(), UserType.EMPLOYEE,
@@ -66,6 +64,15 @@ public class EmployeeServiceImpl implements EmployeeService {
 	long userAccountId = accountRepository.create(employeeAccount);
 	return employeeRepository.create(employee, userAccountId);
     }
+
+
+	private void checkEmployeeAttributes(Employee employee) throws BusinessException {
+		if (!StringUtils.hasText(employee.getPassword()))
+			throw new BusinessException("Password is required");
+		if (employee.getBirthdate().isAfter(employee.getArrivalDate())) {
+			throw new BusinessException("birthdate cannot be after arrival date");
+		}
+	}
 
     @Override
     public void suspendAccount(long employeeID) throws BusinessException {

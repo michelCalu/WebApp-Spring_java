@@ -2,9 +2,13 @@ package be.unamur.hermes.business.service;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +24,9 @@ import org.thymeleaf.templateresolver.TemplateResolver;
 import com.google.common.base.Charsets;
 
 import be.unamur.hermes.business.document.DocumentHelper;
+import be.unamur.hermes.business.document.DocumentHelperFactory;
+import be.unamur.hermes.common.constants.RequestFields;
+import be.unamur.hermes.common.constants.RequestTypes;
 import be.unamur.hermes.common.util.PDFCreator;
 import be.unamur.hermes.dataaccess.entity.Address;
 import be.unamur.hermes.dataaccess.entity.Citizen;
@@ -28,6 +35,8 @@ import be.unamur.hermes.dataaccess.entity.Document;
 import be.unamur.hermes.dataaccess.entity.Employee;
 import be.unamur.hermes.dataaccess.entity.Municipality;
 import be.unamur.hermes.dataaccess.entity.Request;
+import be.unamur.hermes.dataaccess.entity.RequestField;
+import be.unamur.hermes.dataaccess.entity.RequestParameters;
 import be.unamur.hermes.dataaccess.entity.RequestStatus;
 import be.unamur.hermes.dataaccess.repository.DocumentRepository;
 
@@ -40,8 +49,7 @@ public class DocumentServiceImpl implements DocumentService {
     private final TemplateResolver templateResolver;
     private final DocumentRepository documentRepository;
 
-    @Autowired
-    private EventService eventService;
+    private ParameterService parameterService;
 
     @Autowired
     public DocumentServiceImpl(DocumentRepository documentRepository) {
@@ -66,6 +74,11 @@ public class DocumentServiceImpl implements DocumentService {
 	return result;
     }
 
+    @Autowired
+    void setParameterService(ParameterService parameterService) {
+	this.parameterService = parameterService;
+    }
+
     @Override
     public InputStream findDocumentById(long documentId) {
 	String htmlContents = documentRepository.getDocument(documentId);
@@ -85,49 +98,52 @@ public class DocumentServiceImpl implements DocumentService {
     @Override
     public long createNationalityCertificate(boolean positive, Request request) {
 	String templateName = positive ? "nationalityCertificate/positive" : "nationalityCertificate/negative";
-	Context context = initContext(request);
-	context.setVariable("title", "Demande de certificat de nationalité");
-	String contents = templateEngine.process(templateName, context);
+	String contents = generateContents("Demande de certificat de nationalité", templateName, request);
 	return documentRepository.create(request.getId(), contents, DocumentService.TITLE_NATIONALITY_CERTIFICATE);
     }
 
     @Override
     public long createParkingCardDecision(boolean positive, Request request) {
 	String templateName = positive ? "parkingCard/positive" : "parkingCard/negative";
-	Context context = initContext(request);
-	context.setVariable("title", "Demande de carte de stationnement pour riverain ou visiteur");
-	String contents = templateEngine.process(templateName, context);
+	String title = "Demande de carte de stationnement pour riverain ou visiteur";
+	String contents = generateContents(title, templateName, request);
 	return documentRepository.create(request.getId(), contents, DocumentService.TITLE_PARKING_CARD_DECISION);
     }
 
     @Override
     public long createParkingCard(Request request) {
-	Context context = initContext(request);
-	String contents = templateEngine.process("parkingCard/card", context);
+	String contents = generateContents("", "parkingCard/card", request);
 	return documentRepository.create(request.getId(), contents, DocumentService.TITLE_PARKING_CARD_CITIZEN);
     }
 
     @Override
     public long createPayment(Request request) {
-	Context context = initContext(request);
-	context.setVariable("title", "Invitation à payer");
-	String contents = templateEngine.process("parkingCard/payment", context);
+	String contents = generateContents("Invitation à payer", "parkingCard/payment", request);
 	return documentRepository.create(request.getId(), contents, DocumentService.TITLE_PARKING_CARD_PAYMENT);
     }
 
-    protected Context initContext(Request request) {
+    protected String generateContents(String title, String templateName, Request request) {
+	Context context = initContext(title, request);
+	return templateEngine.process(templateName, context);
+    }
+
+    protected Context initContext(String title, Request request) {
 	Context result = new Context(Locale.FRENCH);
+	result.setVariable("title", title);
 	result.setVariable("date", LocalDate.now());
 	result.setVariable("requestor", request.getCitizen());
 	result.setVariable("request", request);
 	result.setVariable("officer", request.getAssignee());
-	result.setVariable("events", eventService.findByReq(request.getId()));
 	if (request.getDepartment().getAddress() == null) {
 	    request.getDepartment().setAddress(request.getDepartment().getMunicipality().getAddress());
 	}
 	result.setVariable("department", request.getDepartment());
-	result.setVariable("municipality", request.getDepartment().getMunicipality());
-	result.setVariable("util", new DocumentHelper());
+	Municipality municipality = request.getDepartment().getMunicipality();
+	result.setVariable("municipality", municipality);
+
+	RequestParameters params = parameterService.getParameters(municipality.getId(), request.getTypeDescription());
+	DocumentHelper helper = new DocumentHelperFactory(request, params).getDocumentHelper();
+	result.setVariable("util", helper);
 	return result;
     }
 
@@ -161,19 +177,36 @@ public class DocumentServiceImpl implements DocumentService {
 	request.setStatus(requestStatus);
 	request.setSystemRef("HERM-REF");
 	request.setUserRef("USER_REF");
+	request.setMunicipalityRef("MUNIP_REF");
+	request.setDepartment(dep);
+	RequestField field = new RequestField(RequestFields.CITIZEN_PLATENUMBER, true, null, "BE-ZAVALK153", null,
+		null);
+	request.getData().add(field);
+
+	ParameterService paramService = new ParameterServiceImpl(null) {
+	    @Override
+	    public RequestParameters getParameters(long municipalityId, String requestTypeDescription) {
+		Map<String, String> paramMap = new HashMap<>();
+		paramMap.put("activated", "true");
+		paramMap.put("parkingCard.periodValidity", "10");
+		paramMap.put("parkingCard.termPayment", "2");
+		paramMap.put("parkingCard.fee", "1500.50");
+		return new RequestParameters(1L, 3L, paramMap);
+	    }
+
+	};
+
 	DocumentServiceImpl service = new DocumentServiceImpl();
-	// String result = service.getNationalityCertificate(false, request);
-	// service.getParkingCardDecision(true, doc);
-	// service.getPayment(doc);
-	// service.getParkingCard(doc);
-	// System.out.println(result);
-	// PDFCreator creator = new PDFCreator();
-	// try {
-	// Path output = Paths.get("C:\\Users\\Thomas_Elskens\\Documents\\test",
-	// "test.pdf");
-	// creator.createPDF(result, output);
-	// } catch (IOException e) {
-	// e.printStackTrace();
-	// }
+	service.setParameterService(paramService);
+	request.setTypeDescription(RequestTypes.CITIZEN_PARKING_CARD);
+	String result = service.generateContents("Titre du document", "parkingCard/negative", request);
+	System.out.println(result);
+	PDFCreator creator = new PDFCreator();
+	try {
+	    Path output = Paths.get("C:\\Users\\Thomas_Elskens\\Documents\\test", "test.pdf");
+	    creator.createPDF(result, output);
+	} catch (IOException e) {
+	    e.printStackTrace();
+	}
     }
 }

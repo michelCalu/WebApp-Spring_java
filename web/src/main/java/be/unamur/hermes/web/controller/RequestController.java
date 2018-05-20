@@ -33,12 +33,13 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import be.unamur.hermes.business.exception.BusinessException;
 import be.unamur.hermes.business.service.RequestService;
+import be.unamur.hermes.common.constants.RequestTypes;
 import be.unamur.hermes.dataaccess.entity.Request;
 import be.unamur.hermes.dataaccess.entity.RequestField;
 
 @RestController
 @RequestMapping({ "/requests" })
-public class RequestController {
+public class RequestController implements RequestTypes {
 
     private static Logger logger = LoggerFactory.getLogger(RequestController.class);
 
@@ -110,8 +111,7 @@ public class RequestController {
 	}
     }
 
-    @PostMapping(params = "requestType=" + RequestService.TYPE_CITIZEN_PARKING_CARD, consumes = {
-	    "multipart/form-data" })
+    @PostMapping(params = "requestType=" + CITIZEN_PARKING_CARD, consumes = { "multipart/form-data" })
     public ResponseEntity<Void> createRequest(@RequestPart("request") @Valid Request newRequest,
 	    @RequestPart("citizenParkingCardGreenCard") @Valid MultipartFile greenCard,
 	    @RequestPart("citizenParkingCardUserProof") Optional<MultipartFile> userProof) {
@@ -119,24 +119,22 @@ public class RequestController {
 	files.add(greenCard);
 	if (userProof.isPresent())
 	    files.add(userProof.get());
-	URI location = createRequest(RequestService.TYPE_CITIZEN_PARKING_CARD, newRequest, files);
+	URI location = createRequest(CITIZEN_PARKING_CARD, newRequest, files);
 	return ResponseEntity.created(location).build();
     }
 
-    @PostMapping(params = "requestType=" + RequestService.TYPE_COMPANY_PARKING_CARD, consumes = {
-	    "multipart/form-data" })
+    @PostMapping(params = "requestType=" + COMPANY_PARKING_CARD, consumes = { "multipart/form-data" })
     public ResponseEntity<Void> createRequest(@RequestPart("request") @Valid Request newRequest,
 	    @RequestPart("companyParkingCardGreenCard") @Valid MultipartFile greenCard,
 	    @RequestPart("companyParkingCardUserProof") MultipartFile userProof) {
 	List<MultipartFile> files = Arrays.asList(greenCard, userProof);
-	URI location = createRequest(RequestService.TYPE_CITIZEN_PARKING_CARD, newRequest, files);
+	URI location = createRequest(CITIZEN_PARKING_CARD, newRequest, files);
 	return ResponseEntity.created(location).build();
     }
 
-    @PostMapping(params = "requestType=" + RequestService.TYPE_NATIONALITY_CERTIFICATE, consumes = {
-	    "multipart/form-data" })
+    @PostMapping(params = "requestType=" + NATIONALITY_CERTIFICATE, consumes = { "multipart/form-data" })
     public ResponseEntity<Void> createRequest(@RequestPart("request") @Valid Request newRequest) {
-	URI location = createRequest(RequestService.TYPE_NATIONALITY_CERTIFICATE, newRequest, Collections.emptyList());
+	URI location = createRequest(NATIONALITY_CERTIFICATE, newRequest, Collections.emptyList());
 	return ResponseEntity.created(location).build();
     }
 

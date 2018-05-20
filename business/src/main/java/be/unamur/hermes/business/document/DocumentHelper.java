@@ -3,12 +3,17 @@ package be.unamur.hermes.business.document;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.util.StringUtils;
 
+import be.unamur.hermes.business.exception.BusinessException;
 import be.unamur.hermes.common.constants.EventConstants;
 import be.unamur.hermes.dataaccess.entity.Address;
 import be.unamur.hermes.dataaccess.entity.Event;
+import be.unamur.hermes.dataaccess.entity.Request;
+import be.unamur.hermes.dataaccess.entity.RequestField;
+import be.unamur.hermes.dataaccess.entity.RequestParameters;
 import be.unamur.hermes.dataaccess.entity.User;
 
 /**
@@ -21,6 +26,26 @@ import be.unamur.hermes.dataaccess.entity.User;
 public class DocumentHelper {
 
     private static final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+    protected final RequestParameters params;
+    protected final Request request;
+
+    public DocumentHelper(RequestParameters params, Request request) {
+	this.params = params;
+	this.request = request;
+    }
+
+    public String getParameter(String parameterId) {
+	return params.getParameter(parameterId);
+    }
+
+    public String getRequestField(String code) {
+	Optional<RequestField> fieldOpt = request.getData().stream().filter(rf -> code.equalsIgnoreCase(rf.getCode()))
+		.findFirst();
+	if (!fieldOpt.isPresent())
+	    throw new BusinessException("Request field with code '" + code + "' cannot be replaced");
+	return fieldOpt.get().getFieldValue();
+    }
 
     public String getAddressLine1(Address address) {
 	StringBuilder sb = new StringBuilder();
@@ -54,6 +79,14 @@ public class DocumentHelper {
      */
     public String format(LocalDate date) {
 	return date.format(dtf);
+    }
+
+    protected boolean isCorporateRequest() {
+	return request.getCompany() != null;
+    }
+
+    protected LocalDate getDocumentDate() {
+	return LocalDate.now();
     }
 
 }

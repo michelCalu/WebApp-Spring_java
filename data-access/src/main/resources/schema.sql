@@ -8,6 +8,7 @@ DROP TABLE IF EXISTS t_request_field_definitions;
 DROP TABLE IF EXISTS t_requests;
 DROP TABLE IF EXISTS t_departments;
 DROP TABLE IF EXISTS t_req_statusses;
+DROP TABLE IF EXISTS t_parameters;
 DROP TABLE IF EXISTS t_request_types;
 DROP TABLE IF EXISTS t_mandataries;
 DROP TABLE IF EXISTS t_mandatary_roles;
@@ -249,11 +250,19 @@ CREATE TABLE t_document_titles (
 );
 
 CREATE TABLE t_documents (
-  documentID 	INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  requestID 	INT 			NOT NULL,
-  contents 		TEXT 			NOT NULL,
-  documentTitleID	INT 		NOT NULL,
+  documentID 		INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  requestID 		INT 			NOT NULL,
+  contents 			TEXT 			NOT NULL,
+  documentTitleID	INT 			NOT NULL,
   FOREIGN KEY(documentTitleID) REFERENCES t_document_titles(titleID)
 );
 
-
+CREATE TABLE t_parameters (
+  requestTypeID		INT 	NOT NULL,
+  municipalityID	INT 	NOT NULL,
+  contents			TEXT 	NOT NULL,
+  
+  PRIMARY KEY(requestTypeID,municipalityID),
+  FOREIGN KEY(requestTypeID) 	REFERENCES t_request_types(requestTypeID),
+  FOREIGN KEY(municipalityID)	REFERENCES t_municipalities(municipalityID)	
+);

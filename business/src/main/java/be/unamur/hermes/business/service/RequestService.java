@@ -14,9 +14,6 @@ public interface RequestService {
 
     public static final String STATUS_ACCEPTED = "accepted";
     public static final String STATUS_REJECTED = "rejected";
-    public static final String TYPE_NATIONALITY_CERTIFICATE = "nationalityCertificate";
-    public static final String TYPE_CITIZEN_PARKING_CARD = "citizenParkingCard";
-    public static final String TYPE_COMPANY_PARKING_CARD = "companyParkingCard";
 
     Request find(long requestId);
 

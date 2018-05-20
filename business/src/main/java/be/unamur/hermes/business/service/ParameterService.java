@@ -1,8 +1,8 @@
 package be.unamur.hermes.business.service;
 
-import java.util.List;
+import java.util.Map;
 
-import be.unamur.hermes.business.parameters.RequestParameters;
+import be.unamur.hermes.dataaccess.entity.RequestParameters;
 
 /**
  * Service Interface for parameters.
@@ -12,26 +12,19 @@ public interface ParameterService {
     /**
      * 
      * @param municipality
-     * @param claimId
-     *            see {@link ClaimId}
-     * @return {@code true} if this type of claim is active for the municipality
-     *         given in parameter, {@code false} otherwise.
-     */
-    boolean isActivated(String municipality, String claimId);
-
-    /**
-     * 
-     * @param municipality
-     * @param claimId
-     *            see {@link ClaimId}
+     * @param requestTypeId
      * @param parameterId
      *            (xpath expression relative to the claimType node)
      * @return
      */
-    String getParameter(String municipality, String claimId, String parameterId);
+    String getParameter(long municipalityId, long requestTypeId, String parameterId);
 
-    RequestParameters getRequestType(String municipality, String claimId);
+    RequestParameters getParameters(long municipalityId, long requestTypeId);
 
-    List<RequestParameters> getRequestTypes(String municipality);
+    RequestParameters getParameters(long municipalityId, String requestType);
+
+    void create(Map<String, String> parameters, long municipalityId, long requestTypeId);
+
+    void update(Map<String, String> parameters, long municipalityId, long requestTypeId);
 
 }

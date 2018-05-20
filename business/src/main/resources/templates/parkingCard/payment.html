@@ -8,7 +8,7 @@
 Suite à votre demande de carte de stationnement pour riverain ou visiteur acceptée, voici les informations nécessaires pour effectuer le paiement.
 </p>
 <p>
-Montant à payer : TODO €
+Montant à payer : [[${util.fee}]].
 </p>
 <p>
 Destinataire : <br/>
@@ -17,10 +17,10 @@ Destinataire : <br/>
 [[${util.getAddressLine2(municipality.address)}]]
 </p>
 <p>
-Communication libre : TODO
+Communication libre : [[${#strings.toString(request.userRef)}]]
 </p>
 <p>
-Veuillez effectuer le versement pour le TODO compris. Si ce n’est pas fait, la carte de stationnement sera invalidée dès le lendemain de l’échéance.
+Veuillez effectuer le versement pour le [[${util.paymentTerm}]] compris. Si ce n’est pas fait, la carte de stationnement sera invalidée dès le lendemain de l’échéance.
 </p>
 </div>
 <div th:replace="base :: base-message-footer"> </div>

@@ -17,9 +17,9 @@
 <br/>
 <h1 style='text-align: center;'>CARTE DE STATIONNEMENT</h1>
 <br/>
-<p>Plaque d’immatriculation du véhicule : TODO.</p>
-<p>Numéro de la carte : TODO.</p>
-<p>Période de validité de la carte : du TODO au TODO compris.</p>
+<p>Plaque d’immatriculation du véhicule : [[${util.plateNumber}]].</p>
+<p>Numéro de la carte : [[${request.municipalityRef}]].</p>
+<p>Période de validité de la carte : du [[${util.validityBegin}]] au [[${util.validityEnd}]] compris.</p>
 <br/>
 <br/>
 <div th:replace="base :: base-message-footer-table"> </div>
