@@ -1,36 +1,25 @@
 <div class="col-md-6 col-md-offset-3">
-	<h1>Mes companies</h1>
-	<br>
-	<br>
+	<h1>Mes sociétés</h1>
+    <br>
 	<div class="container">
+        <button class="btn btn-success" *ngIf="currentCompany" (click)="disconnectFromCompany()">Se déconnecter de {{currentCompany.companyName}}</button>
 		<table *ngIf="(mandataries$ | async)?.length; else noCompany" class="table table-striped">
 			<thead>
 				<tr>
 					<th scope="col">Nom</th>
 					<th scope="col">Connexion</th>
-					<!--<th scope="col">{{'reference' | translate}}</th>
-                    <th scope="col">{{'status' | translate}}</th>
-                    <th scope="col">{{'creationDate' | translate}}</th>
-					<th scope="col">{{'actions' | translate}}</th>-->
 				</tr>
 			</thead>
 			<tbody>
-				<tr *ngFor="let request of (mandataries$ | async)">
-					<td>{{request.company.companyName | translate}}</td>
-					<td><button class="btn btn-success" (click)="connectToCompany">Se connecter</button></td>
-					<!--<td>{{ request.userRef }}</td>
-                    <td>{{request.status.name | translate}}</td>
-                    <td> {{ citizenRequestsCreationDates[request.id] | date:'dd/MM/yy HH:mm'}} </td>
-					<td><button class="btn btn-success" (click)="selectedRequest = request">{{'details'| translate}}</button></td>-->
+				<tr *ngFor="let mandatary of (mandataries$ | async)">
+					<td>{{mandatary.company.companyName | translate}}</td>
+					<td><button class="btn btn-success" (click)="connectToCompany(mandatary.company)">Se connecter</button></td>
 				</tr>
 			</tbody>
         </table>
 		<ng-template #noCompany>
-			<div>Vous n'avez pas de sociétés</div>
+			<div>Vous n'avez pas de sociétés associées </div>
         </ng-template>
         
-        <div *ngIf="selectedRequest">
-            <request-detail [request]="selectedRequest" [displayEmployeeActions]="false"></request-detail>
-        </div>
 	</div>
 </div>

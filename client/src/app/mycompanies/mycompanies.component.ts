@@ -7,17 +7,12 @@ import { Observable } from 'rxjs/Observable';
 import { AuthenticationService } from '../_services/authentication.service';
 
 @Component({
-    moduleId: module.id,
     templateUrl: 'mycompanies.component.html'
 })
 
 export class MyCompaniesComponent implements OnInit {
-    //companies$: Observable<Company[]>;
-    selectedRequest: Company;
-    companiesCreationDates = new Map<number, Date>();
     mandataries$: Observable<Mandatary[]>;
-
-    test: Observable<Date>;
+    currentCompany: Company;
 
     constructor(private companyService: CompanyService, private authService: AuthenticationService) {}
 
@@ -25,13 +20,16 @@ export class MyCompaniesComponent implements OnInit {
         console.log(this.mandataries$);
         const currentUser = this.authService.getCurrentUser();
         this.mandataries$ = this.companyService.getMandataries(currentUser.id);
-        this.mandataries$.subscribe(requests => {
-            for (const request of requests) {
-                /*this.companyService.getCreationDate(request.id)
-                        .subscribe(creationDate => this.companiesCreationDates[request.id] = creationDate);*/
-                console.log(request);
-            }
-        });
-        console.log(this.mandataries$);
+        this.currentCompany = this.authService.getCurrentCompany();
+    }
+
+    connectToCompany(company: Company) {
+        this.authService.connectToCompany(company);
+        this.currentCompany = company;
+    }
+
+    disconnectFromCompany() {
+        this.authService.disconnectFromCompany();
+        this.currentCompany = null;
     }
 }

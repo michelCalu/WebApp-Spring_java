@@ -17,9 +17,9 @@
 
         <!-- ALL -->
         <li class="nav-item"><a class="nav-link" routerLink="home" (click)="onLogout()">{{'logout' | translate}}</a></li>
-        <li class="nav-item"><a class="nav-link" (click)="switchLanguage()"> {{currentLanguage === 'fr' ? 'en' : 'fr'}}</a></li>
-        
+        <li class="nav-item"><a class="nav-link" (click)="switchLanguage()"> {{currentLanguage === 'fr' ? 'en' : 'fr'}}</a></li>        
     </ul>
+    <span *ngIf="authService.getCurrentCompany()">société actuelle: {{authService.getCurrentCompany().companyName}}</span>
 </div>
 
 <ng-template #logout>

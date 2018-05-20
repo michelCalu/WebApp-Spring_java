@@ -10,6 +10,7 @@ import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { TranslateService } from '@ngx-translate/core';
+import { Company } from '../_models/company.model';
 
 @Injectable()
 export class AuthenticationService {
@@ -54,6 +55,23 @@ export class AuthenticationService {
         this.loggedIn$.next(false);
         // remove user from local storage to log user out
         sessionStorage.removeItem('currentUser');
+    }
+
+    connectToCompany(company: Company): void {
+        const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+        currentUser['company'] = company;
+        sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
+    }
+
+    disconnectFromCompany() {
+        const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+        delete currentUser['company'];
+        sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
+    }
+
+    getCurrentCompany(): Company {
+        const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+        return currentUser['company'];
     }
 
     getCurrentUser(): User {
