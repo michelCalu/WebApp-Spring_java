@@ -7,7 +7,7 @@
             <ul>
                 <li> Nom : {{requestor.lastName}} </li>
                 <li> Prénom : {{requestor.firstName}} </li>
-                <li [hidden]="!isCompany"> Société : {{ authService.getCurrentCompany().companyName }} </li>
+                <li *ngIf="isCompany"> Société : {{ authService.getCurrentCompany().companyName }} </li>
             </ul>
 
             <form [formGroup]="form" (ngSubmit)="onSubmit()">

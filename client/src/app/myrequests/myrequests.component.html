@@ -1,6 +1,6 @@
 <div class="col-md-9 col-md-offset-3">
     <h1 [hidden]="currentCompany">{{'myrequests' | translate}}</h1>
-    <h1 [hidden]="!currentCompany">{{'mycompanyrequests' | translate}}: {{currentCompany.companyName}}</h1>    
+    <h1 *ngIf="currentCompany">{{'mycompanyrequests' | translate}}: {{currentCompany.companyName}}</h1>    
 	<br>
 	<br>
 	<div class="container">
