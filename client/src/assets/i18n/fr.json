@@ -92,7 +92,8 @@
     "validateCompanies": "valider sociétés",
     "vatNumber": "numéro de TVA",
     "viewDetails": "voir détails",
-    "viewNationalRegisterDetails": "voir détails Registre National"
+    "viewNationalRegisterDetails": "voir détails Registre National",
+    "belgium":"Belgique"
     
 
 }
