@@ -1,5 +1,4 @@
-DROP TABLE IF EXISTS t_departments_skills;
-DROP TABLE IF EXISTS t_skills;
+DROP TABLE IF EXISTS t_departments_request_types;
 DROP TABLE IF EXISTS t_departments_employees;
 DROP TABLE IF EXISTS t_events;
 DROP TABLE IF EXISTS t_event_types;
@@ -234,18 +233,13 @@ CREATE TABLE t_departments_employees (
   FOREIGN KEY (employeeID) REFERENCES t_employees(employeeID)
 );
 
-CREATE TABLE t_skills (
-  skillID       VARCHAR(255) PRIMARY KEY NOT NULL,
-  description   VARCHAR(255) UNIQUE
-);
-
-CREATE TABLE t_departments_skills (
+CREATE TABLE t_departments_request_types (
   departmentID  INT NOT NULL,
-  skillID       VARCHAR(255) NOT NULL,
+  requestTypeID INT NOT NULL,
 
-  PRIMARY KEY (departmentID, skillID),
+  PRIMARY KEY (departmentID, requestTypeID),
   FOREIGN KEY (departmentID) REFERENCES t_departments(departmentID),
-  FOREIGN KEY (skillID) REFERENCES t_skills(skillID)
+  FOREIGN KEY (requestTypeID) REFERENCES t_request_types(requestTypeID)
 );
 
 
