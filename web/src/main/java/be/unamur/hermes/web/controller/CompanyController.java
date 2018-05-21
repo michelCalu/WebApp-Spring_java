@@ -19,7 +19,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import be.unamur.hermes.business.service.CitizenService;
 import be.unamur.hermes.business.service.CompanyService;
+import be.unamur.hermes.business.service.MandataryService;
+import be.unamur.hermes.common.enums.MandataryRole;
 import be.unamur.hermes.dataaccess.dto.UpdateCompanyAccount;
 import be.unamur.hermes.dataaccess.entity.Company;
 
@@ -28,11 +31,16 @@ import be.unamur.hermes.dataaccess.entity.Company;
 public class CompanyController {
 
     private final CompanyService companyService;
+    private final MandataryService mandataryService;
+    private final CitizenService citizenService;
     private static Logger logger = LoggerFactory.getLogger(CompanyController.class);
 
     @Autowired
-    public CompanyController(CompanyService companyService) {
+    public CompanyController(CompanyService companyService, MandataryService mandataryService,
+	    CitizenService citizenService) {
 	this.companyService = companyService;
+	this.mandataryService = mandataryService;
+	this.citizenService = citizenService;
     }
 
     // CREATE
@@ -40,6 +48,7 @@ public class CompanyController {
     @Transactional
     public ResponseEntity<Object> create(@RequestBody Company company) {
 	companyService.register(company);
+	mandataryService.create(citizenService.findById(company.getCreatorId()), company, MandataryRole.OWNER);
 	URI location = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{companyNb}")
 		.buildAndExpand(company.getCompanyNb()).toUri();
 	return ResponseEntity.created(location).build();
