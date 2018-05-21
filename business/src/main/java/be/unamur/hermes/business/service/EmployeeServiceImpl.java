@@ -2,6 +2,8 @@ package be.unamur.hermes.business.service;
 
 import java.util.List;
 
+import be.unamur.hermes.dataaccess.entity.Address;
+import be.unamur.hermes.dataaccess.entity.Municipality;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,11 +26,16 @@ public class EmployeeServiceImpl implements EmployeeService, Errors {
 
     private final EmployeeRepository employeeRepository;
     private final UserAccountRepository accountRepository;
+    private final AddressService addressService;
+    private final MunicipalityService municipalityService;
 
     @Autowired
-    public EmployeeServiceImpl(EmployeeRepository employeeRepository, UserAccountRepository accountRepository) {
+    public EmployeeServiceImpl(EmployeeRepository employeeRepository, UserAccountRepository accountRepository,
+							   AddressService addressService, MunicipalityService municipalityService) {
 	this.employeeRepository = employeeRepository;
 	this.accountRepository = accountRepository;
+	this.addressService = addressService;
+	this.municipalityService = municipalityService;
     }
 
     @Override
@@ -49,13 +56,20 @@ public class EmployeeServiceImpl implements EmployeeService, Errors {
     @Override
     @Transactional
     public long register(Employee employee) {
-	checkEmployeeAttributes(employee);
-	// create user account (employees do not have to get activated)
-	String pass = PasswordUtil.encode(employee.getPassword());
-	UserAccount employeeAccount = new UserAccount(0L, 0L, employee.getNationalRegisterNb(), UserType.EMPLOYEE,
-		UserStatus.ACTIVE, pass, UserAccount.prepareAuthorities(Authority.USER.getAuthority()));
-	long userAccountId = accountRepository.create(employeeAccount);
-	return employeeRepository.create(employee, userAccountId);
+		checkEmployeeAttributes(employee);
+
+		// Update and creation of the employee address
+		addressService.createAddress(
+				addressService.updateAddressGivenMunicipality(
+						employee.getAddress(),
+						municipalityService.findByName(employee.getAddress().getMunicipality())));
+
+		// create user account (employees do not have to get activated)
+		String pass = PasswordUtil.encode(employee.getPassword());
+		UserAccount employeeAccount = new UserAccount(0L, 0L, employee.getNationalRegisterNb(), UserType.EMPLOYEE,
+			UserStatus.ACTIVE, pass, UserAccount.prepareAuthorities(Authority.USER.getAuthority()));
+		long userAccountId = accountRepository.create(employeeAccount);
+		return employeeRepository.create(employee, userAccountId);
     }
 
     private void checkEmployeeAttributes(Employee employee) throws BusinessException {

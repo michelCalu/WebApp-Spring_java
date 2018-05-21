@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.regex.Pattern;
 
+import be.unamur.hermes.dataaccess.entity.Municipality;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,15 +22,17 @@ import be.unamur.hermes.dataaccess.repository.UserAccountRepository;
 public class CompanyServiceImpl implements CompanyService, Errors {
 
     private CompanyRepository companyRepository;
-    private MunicipalityRepository municipalityRepository;
+    private final AddressService addressService;
+    private final MunicipalityService municipalityService;
     private final UserAccountRepository accountRepository;
 
     @Autowired
-    public CompanyServiceImpl(CompanyRepository companyRepository, MunicipalityRepository municipalityRepository,
-	    UserAccountRepository userAccountRepository) {
+    public CompanyServiceImpl(CompanyRepository companyRepository, AddressService addressService,
+	    UserAccountRepository userAccountRepository, MunicipalityService municipalityService) {
 	this.companyRepository = companyRepository;
-	this.municipalityRepository = municipalityRepository;
+	this.addressService = addressService;
 	this.accountRepository = userAccountRepository;
+	this.municipalityService = municipalityService;
     }
 
     @Override
@@ -46,15 +49,19 @@ public class CompanyServiceImpl implements CompanyService, Errors {
     @Transactional
     public void register(Company company) {
 	// checkCompanyAttributes(company);
-	String municipalityName = company.getAddress().getMunicipality();
-	if (municipalityRepository.findByName(municipalityName) == null)
-	    throw new BusinessException(INVALID_MUNICIPALITY,
-		    "The company's municipality is not recognized by the system.");
-	try {
-	    companyRepository.create(company);
-	} catch (SQLException ex) {
-	    throw new BusinessException(FAILURE_DATABASE_RETRIEVAL, ex.getMessage(), ex);
-	}
+
+        // Update and creation of the company's address
+		addressService.createAddress(
+		    addressService.updateAddressGivenMunicipality(
+		        company.getAddress(),
+                    municipalityService.findByName(company.getAddress().getMunicipality())
+            ));
+
+		try {
+	    	companyRepository.create(company);
+		} catch (SQLException ex) {
+	    	throw new BusinessException(FAILURE_DATABASE_RETRIEVAL, ex.getMessage(), ex);
+		}
     }
 
     @Override

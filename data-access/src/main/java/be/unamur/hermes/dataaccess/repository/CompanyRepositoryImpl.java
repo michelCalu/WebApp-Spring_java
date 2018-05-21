@@ -51,11 +51,10 @@ public class CompanyRepositoryImpl implements CompanyRepository {
 
     @Override
     public void create(Company company) {
-        long address = addressRepository.create(company.getAddress());
         Map<String, Object> params = new HashMap<>();
         params.put("companyNb", company.getCompanyNb());
         params.put("vatNb", company.getVatNb());
-        params.put("address", address);
+        params.put("address", company.getAddress().getId());
         params.put("legalForm", company.getLegalForm());
         params.put("contactPerson", company.getContactPerson());
         params.put("companyName", company.getCompanyName());

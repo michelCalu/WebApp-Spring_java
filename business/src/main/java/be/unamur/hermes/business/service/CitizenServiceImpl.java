@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
+import be.unamur.hermes.dataaccess.entity.Municipality;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,14 +34,16 @@ public class CitizenServiceImpl implements CitizenService, Errors {
 
     private CitizenRepository citizenRepository;
     private final UserAccountRepository accountRepository;
-    private MunicipalityRepository municipalityRepository;
+    private final AddressService addressService;
+    private final MunicipalityService municipalityService;
 
     @Autowired
     public CitizenServiceImpl(CitizenRepository citizenRepository, UserAccountRepository accountRepository,
-	    MunicipalityRepository municipalityRepository) {
+	    AddressService addressService, MunicipalityService municipalityService) {
 	this.citizenRepository = citizenRepository;
 	this.accountRepository = accountRepository;
-	this.municipalityRepository = municipalityRepository;
+	this.addressService = addressService;
+	this.municipalityService = municipalityService;
     }
 
     @Override
@@ -66,24 +69,25 @@ public class CitizenServiceImpl implements CitizenService, Errors {
     @Override
     @Transactional
     public long register(Citizen citizen) {
-	// only required during creation
-	if (!StringUtils.hasText(citizen.getPassword()))
-	    throw new BusinessException(MISSING_PASSWORD, "Password is required");
+	    // only required during creation
+	    if (!StringUtils.hasText(citizen.getPassword()))
+	        throw new BusinessException(MISSING_PASSWORD, "Password is required");
 
-	// TODO uncomment after tests
-	// checkCitizenAttributes(citizen);
+	    // TODO uncomment after tests
+	    // checkCitizenAttributes(citizen);
 
-	// The citizen's municipality must be present in the system
-	String municipalityName = citizen.getAddress().getMunicipality();
-	if (municipalityRepository.findByName(municipalityName) == null)
-	    throw new BusinessException(FAILURE_DATABASE_RETRIEVAL,
-		    "The citizen's municipality is not recognized by the system.");
-	// create user account
-	String pass = PasswordUtil.encode(citizen.getPassword());
-	UserAccount citizenAccount = new UserAccount(0L, 0L, citizen.getNationalRegisterNb(), UserType.CITIZEN,
-		UserStatus.CREATED, pass, UserAccount.prepareAuthorities(Authority.USER.getAuthority()));
-	long userAccountId = accountRepository.create(citizenAccount);
-	return citizenRepository.create(citizen, userAccountId);
+        // Update and creation of the citizen address
+	    addressService.createAddress(
+	        addressService.updateAddressGivenMunicipality(
+	            citizen.getAddress(),
+                    municipalityService.findByName(citizen.getAddress().getMunicipality())));
+
+	    // create user account
+	    String pass = PasswordUtil.encode(citizen.getPassword());
+	    UserAccount citizenAccount = new UserAccount(0L, 0L, citizen.getNationalRegisterNb(), UserType.CITIZEN,
+    		UserStatus.CREATED, pass, UserAccount.prepareAuthorities(Authority.USER.getAuthority()));
+	    long userAccountId = accountRepository.create(citizenAccount);
+	    return citizenRepository.create(citizen, userAccountId);
     }
 
     private void checkCitizenAttributes(Citizen citizen) throws BusinessException {

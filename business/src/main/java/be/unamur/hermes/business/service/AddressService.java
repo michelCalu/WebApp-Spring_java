@@ -1,6 +1,7 @@
 package be.unamur.hermes.business.service;
 
 import be.unamur.hermes.dataaccess.entity.Address;
+import be.unamur.hermes.dataaccess.entity.Municipality;
 
 public interface AddressService {
 
@@ -11,6 +12,8 @@ public interface AddressService {
     Address findByCompany (long entrepriseNb);
 
     Address findByMunicipality(long municipalityID);
+
+    Address updateAddressGivenMunicipality(Address address, Municipality municipality);
 
 
 }

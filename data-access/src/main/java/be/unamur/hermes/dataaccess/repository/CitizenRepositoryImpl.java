@@ -57,11 +57,10 @@ public class CitizenRepositoryImpl implements CitizenRepository {
 
     @Override
     public long create(Citizen citizen, long userAccountId) {
-	long addressID = addressRepository.create(citizen.getAddress());
 	Map<String, Object> params = new HashMap<>();
 	params.put("firstName", citizen.getFirstName());
 	params.put("lastName", citizen.getLastName());
-	params.put("addressID", addressID);
+	params.put("addressID", citizen.getAddress().getId());
 	params.put("mail", citizen.getMail());
 	params.put("phone", citizen.getPhone());
 	params.put("nationalRegisterNb", citizen.getNationalRegisterNb());

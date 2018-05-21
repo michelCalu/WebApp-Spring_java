@@ -1,5 +1,6 @@
 package be.unamur.hermes.business.service;
 
+import be.unamur.hermes.dataaccess.entity.Municipality;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,12 +14,15 @@ public class AddressServiceImpl implements AddressService {
 
     @Autowired
     public AddressServiceImpl(AddressRepository addressRepository) {
-	this.addressRepository = addressRepository;
+	    this.addressRepository = addressRepository;
     }
 
     @Override
     public long createAddress(Address address) {
-	return addressRepository.create(address);
+        // We set the address id so that object using this address can refer to it.
+        Long addressID = addressRepository.create(address);
+        address.setId(addressID);
+	    return addressID;
     }
 
     @Override
@@ -35,4 +39,12 @@ public class AddressServiceImpl implements AddressService {
     public Address findByMunicipality(long municipalityID) {
 	return null;
     }
+
+    @Override
+    public Address updateAddressGivenMunicipality(Address address, Municipality municipality) {
+        address.setZipCode(municipality.getAddress().getZipCode());
+        address.setState(municipality.getAddress().getState());
+        return address;
+    }
+
 }

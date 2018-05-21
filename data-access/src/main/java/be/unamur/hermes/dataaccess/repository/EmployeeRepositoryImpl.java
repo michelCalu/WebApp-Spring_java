@@ -22,7 +22,6 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
     private final JdbcTemplate jdbcTemplate;
     private final AddressRepository addressRepository;
     private final SimpleJdbcInsert inserter;
-    private final SimpleJdbcInsert departmentInserter;
 
     @Autowired
     public EmployeeRepositoryImpl(final JdbcTemplate jdbcTemplate, final AddressRepository addressRepository) {
@@ -30,8 +29,6 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
 	this.addressRepository = addressRepository;
 	this.inserter = new SimpleJdbcInsert(jdbcTemplate.getDataSource()).withTableName("t_employees")
 		.usingGeneratedKeyColumns("employeeID");
-	this.departmentInserter = new SimpleJdbcInsert(jdbcTemplate.getDataSource())
-		.withTableName("t_departments_employees");
     }
 
     @Override
@@ -53,11 +50,10 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
 
     @Override
     public long create(Employee employee, long userAccountID) {
-	long addressID = addressRepository.create(employee.getAddress());
 	Map<String, Object> params = new HashMap<>();
 	params.put("firstName", employee.getFirstName());
 	params.put("lastName", employee.getLastName());
-	params.put("addressID", addressID);
+	params.put("addressID", employee.getAddress().getId());
 	params.put("mail", employee.getMail());
 	params.put("phone", employee.getPhone());
 	params.put("nationalRegisterNb", employee.getNationalRegisterNb());

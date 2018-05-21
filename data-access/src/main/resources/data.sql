@@ -108,6 +108,8 @@ insert into t_departments values(11, 5, "Stationnement", 2, null,null);
 
 insert into t_departments_employees values (8,4);
 insert into t_departments_employees values (9,5);
+insert into t_departments_employees values (8,3);
+insert into t_departments_employees values (9,3);
 
 
 insert into t_requests values(1, 1, 1, null, 1, 1, 1, "HERM001", "my ref", "JETTE001");

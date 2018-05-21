@@ -30,10 +30,9 @@ public class MunicipalityRepositoryImpl implements MunicipalityRepository {
 
     @Override
     public long create(Municipality municipality) {
-	long addressID = addressRepository.create(municipality.getAddress());
 	Map<String, Object> params = new HashMap<>();
 	params.put("name", municipality.getName());
-	params.put("address", addressID);
+	params.put("address", municipality.getAddress().getId());
 	params.put("email", municipality.getEmail());
 	params.put("phone", municipality.getPhone());
 	params.put("mayorName", municipality.getMayorName());
