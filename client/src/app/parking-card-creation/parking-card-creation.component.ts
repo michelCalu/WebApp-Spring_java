@@ -116,7 +116,7 @@ export class ParkingCardCreationComponent implements OnInit {
                             this.form.get('insurance_certificate').value);
 
         if (this.isCompany) {
-            formData.append('companyParkingCardVisitorProof', this.form.get('car_user_proof').value);
+            formData.append('companyParkingCardUserProof', this.form.get('car_user_proof').value);
         }
 
         this.requestService.createRequestWithFileUploads(formData, this.isCompany ? 'companyParkingCard' : 'citizenParkingCard')

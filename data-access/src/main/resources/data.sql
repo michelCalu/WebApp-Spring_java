@@ -20,7 +20,7 @@ insert into t_request_field_definitions values("companyParkingCardCarModel", 3, 
 insert into t_request_field_definitions values("companyParkingCardCarColour", 3, "string", true);
 insert into t_request_field_definitions values("companyParkingCardPlateNumber", 3, "string", true);
 insert into t_request_field_definitions values("companyParkingCardGreenCard", 3, "binary", true);
-insert into t_request_field_definitions values("companyParkingCardVisitorProof", 3, "binary", true);
+insert into t_request_field_definitions values("companyParkingCardUserProof", 3, "binary", false);
 
 insert into t_req_statusses values(null,"new");
 insert into t_req_statusses values(null,"ongoing");

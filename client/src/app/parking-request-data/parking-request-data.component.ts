@@ -47,7 +47,7 @@ export class ParkingRequestDataComponent implements OnChanges, OnInit {
     }
 
     hasUserProofFile(): boolean {
-        const userProofCode = this.company ? 'companyParkingCardVisitorProof' : 'citizenParkingCardUserProof';
+        const userProofCode = this.company ? 'companyParkingCardUserProof' : 'citizenParkingCardUserProof';
         return this.carFilesData[userProofCode] && this.carFilesData[userProofCode]['fieldFile'];
     }
 
