@@ -1,7 +1,6 @@
 package be.unamur.hermes.web.controller;
 
 import java.net.URI;
-import java.net.URI;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -9,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,22 +23,16 @@ import be.unamur.hermes.business.service.CompanyService;
 import be.unamur.hermes.dataaccess.dto.UpdateCompanyAccount;
 import be.unamur.hermes.dataaccess.entity.Company;
 
-
-
 @RestController
 @RequestMapping({ "/companies" })
 public class CompanyController {
 
     private final CompanyService companyService;
-    private final CitizenService citizenService;
-    private final MandataryService mandataryService;
     private static Logger logger = LoggerFactory.getLogger(CompanyController.class);
 
     @Autowired
-    public CompanyController(CompanyService companyService, CitizenService citizenService, MandataryService mandataryService) {
+    public CompanyController(CompanyService companyService) {
 	this.companyService = companyService;
-	this.mandataryService = mandataryService;
-	this.citizenService = citizenService;
     }
 
     // CREATE
