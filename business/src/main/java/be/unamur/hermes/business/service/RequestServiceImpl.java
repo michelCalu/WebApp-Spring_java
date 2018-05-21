@@ -177,6 +177,8 @@ public class RequestServiceImpl implements RequestService, Errors {
 		throw new BusinessException(INVALID_REQUEST_STATUS, "Unauthorized workflow");
 	    RequestStatus newStatus = updatedRequest.getStatus();
 	    // some statusses need special traitment (document generation)
+
+
 	    if (RequestService.STATUS_ACCEPTED.equalsIgnoreCase(newStatus.getName())) {
 		approve(baseRequest);
 	    } else if (RequestService.STATUS_REJECTED.equalsIgnoreCase(newStatus.getName())) {
@@ -244,6 +246,7 @@ public class RequestServiceImpl implements RequestService, Errors {
 
 		Event statusEvent;
 		if(updatedRequest.getStatus().getName().equals(RequestService.STATUS_REJECTED)){
+		    System.out.println("--> DEBUG: eventtype:"+newStatusInfo.getEventType());
 			statusEvent = Event.create(newStatusInfo.getEventType(), userAccountId, updatedRequest.getId(), updatedRequest.getStatus().getComment());
 		}else{
 			statusEvent = Event.create(newStatusInfo.getEventType(), userAccountId, updatedRequest.getId());
