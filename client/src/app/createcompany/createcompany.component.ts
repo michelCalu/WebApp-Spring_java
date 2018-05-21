@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/Observable';
 
 @Component({
     moduleId: module.id,
-    templateUrl: './createCompany.component.html',
+    templateUrl: 'createcompany.component.html',
 })
 export class CreateCompanyComponent implements OnInit {
 
