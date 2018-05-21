@@ -58,8 +58,7 @@ public class EmployeeServiceImpl implements EmployeeService, Errors {
 	checkEmployeeAttributes(employee);
 
 	// Update and creation of the employee address
-	addressService.createAddress(addressService.updateAddressGivenMunicipality(employee.getAddress(),
-		municipalityService.findByName(employee.getAddress().getMunicipality())));
+		addressService.createAddress(employee.getAddress());
 
 	// create user account (employees do not have to get activated)
 	String pass = PasswordUtil.encode(employee.getPassword());
