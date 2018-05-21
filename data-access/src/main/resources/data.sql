@@ -109,12 +109,13 @@ insert into t_departments values(11, 5, "Stationnement", 2, null,null);
 insert into t_departments_employees values (8,4);
 insert into t_departments_employees values (9,5);
 insert into t_departments_employees values (8,3);
-insert into t_departments_employees values (9,3);
 
 
 insert into t_requests values(1, 1, 1, null, 1, 1, 1, "HERM001", "my ref", "JETTE001");
 insert into t_requests values(2, 2, 2, null, 2, 5, 2, "HERM002", "a parking ref.", "GANSH001");
-insert into t_requests values(3, 2, 3, null, 4, 8, 1, "HERM003", "a parking ref.", "GANSH001");
+insert into t_requests values(3, 2, 3, null, 4, 9, 1, "HERM003", "a parking ref.", "GANSH001");
+insert into t_requests values(4, 1, 3, null, null, 8, 1, "HERM004", "a certificate ref.", "LAHU001");
+insert into t_requests values(5, 2, 3, null, null, 9, 1, "HERM005", "a parking ref.", "LAHU002");
 
 insert into t_request_field_values values(1, "citizenParkingCardCarMake", 2, "Fiat", null, null);
 insert into t_request_field_values values(2, "citizenParkingCardCarModel", 2, "Punto", null, null);

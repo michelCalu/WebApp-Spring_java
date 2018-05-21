@@ -27,9 +27,9 @@ public class DepartmentRepositoryImpl implements DepartmentRepository, Applicati
 
     // queries
     private static final String findById =//
-		"SELECT * FROM department d WHERE d.departmentID = ?";
+		"SELECT * FROM t_departments d WHERE d.departmentID = ?";
     private static final String findByMunicipalityId = //
-        "SELECT * FROM department d WHERE d.municipalityID = ?";
+        "SELECT * FROM t_departments d WHERE d.municipalityID = ?";
     private static final String requestTypeByDepartmentID =//
 		"SELECT rt.* FROM (t_departments_request_types drt " +
 			"JOIN t_request_types rt ON drt.requestTypeID = rt.requestTypeID) " +
