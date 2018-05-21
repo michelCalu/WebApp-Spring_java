@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
-import { CitizenRequest, Citizen, Company } from '../_models';
+import { CitizenRequest, Citizen, Company, User } from '../_models';
 import { AuthenticationService, CitizenService, RequestService, AlertService } from '../_services';
 import { Observable } from 'rxjs/Observable';
 
@@ -18,6 +18,7 @@ export class RequestDetailComponent implements OnChanges, OnInit {
     requestUpdated = new EventEmitter<void>();
 
     company: Company;
+    currentUser: User;
     citizen: Citizen;
     selectedAction = 'accept';
     possibleActions = ['accept', 'reject', 'requestModification'];
@@ -27,6 +28,7 @@ export class RequestDetailComponent implements OnChanges, OnInit {
 
     ngOnInit() {
         this.company = this.authService.getCurrentCompany();
+        this.currentUser = this.authService.getCurrentUser();
     }
 
     ngOnChanges(changes: SimpleChanges): void {

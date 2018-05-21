@@ -12,9 +12,10 @@
     <div [hidden]="!displayEmployeeActions || request.status.name === 'accepted' || request.status.name === 'rejected'">        
         <h2> Actions </h2>
         <span [hidden]="request.assignee"> Pour effectuer une action, veuillez assigner la demande d'abord </span>
-        <select class="custom-select" [(ngModel)]="selectedAction" [disabled]="! request.assignee">
+        <span *ngIf="request.assignee && request.assignee.id !== currentUser.id"> Cette demande est assignée à un(e) de vos collègues, vous ne pouvez pas effectuer d'action </span>
+        <select class="custom-select" [(ngModel)]="selectedAction" [disabled]="! request.assignee || (request.assignee && request.assignee.id !== currentUser.id)">
             <option *ngFor="let action of possibleActions" [value]="action">{{ action | translate }}</option>
         </select>
-        <button class="btn btn-primary" [disabled]="!selectedAction" (click)="performAction()" [disabled]="!request.assignee"> OK </button>
+        <button class="btn btn-primary" [disabled]="!selectedAction || !request.assignee || (request.assignee && request.assignee.id !== currentUser.id)" (click)="performAction()"> OK </button>
     </div>
 </div>
