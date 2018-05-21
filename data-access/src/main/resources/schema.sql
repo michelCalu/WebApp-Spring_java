@@ -212,8 +212,9 @@ CREATE TABLE t_events (
   eventID 		INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
   eventType    	INT       		NOT NULL,
   at      		DATETIME      	NOT NULL,
-  author    	INT       		NOT NULL,
-  request   	INT       		NOT NULL,
+  author    	INT       		  NOT NULL,
+  request   	INT       		  NOT NULL,
+  comment     VARCHAR(20000)  ,
 
   FOREIGN KEY (eventType) REFERENCES t_event_types(eventTypeID),
   FOREIGN KEY (author) REFERENCES t_user_accounts(userAccountID),

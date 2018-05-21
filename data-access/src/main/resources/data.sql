@@ -33,6 +33,7 @@ insert into t_event_types values(null,"created");
 insert into t_event_types values(null,"updated");
 insert into t_event_types values(null,"closed");
 insert into t_event_types values(null,"assigneeChange");
+insert into t_event_types values(null,"rejected");
 
 -- test data
 insert into t_user_accounts values(1,"ROLE_USER","$2a$10$nci/VfQ6BffNStE8ECXmq.7/fs4FBGTghAOfijxmMcx4r7A7JZOdK","active"); -- thomas
