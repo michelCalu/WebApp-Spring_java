@@ -13,6 +13,7 @@ public class Company {
     private String contactPerson;
     private String companyName;
     private UserStatus status;
+    private long creatorId;
 
     public Company() {
     }
@@ -25,6 +26,14 @@ public class Company {
         this.contactPerson = contactPerson;
         this.companyName = companyName;
         this.status = status;
+    }
+
+    public long getCreatorId() {
+        return creatorId;
+    }
+
+    public void setCreatorId(long creatorId) {
+        this.creatorId = creatorId;
     }
 
     public UserStatus getStatus() {

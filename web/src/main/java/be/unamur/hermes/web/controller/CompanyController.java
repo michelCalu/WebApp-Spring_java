@@ -1,6 +1,7 @@
 package be.unamur.hermes.web.controller;
 
 import java.net.URI;
+import java.net.URI;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -22,20 +23,27 @@ import be.unamur.hermes.business.service.CompanyService;
 import be.unamur.hermes.dataaccess.dto.UpdateCompanyAccount;
 import be.unamur.hermes.dataaccess.entity.Company;
 
+
+
 @RestController
 @RequestMapping({ "/companies" })
 public class CompanyController {
 
     private final CompanyService companyService;
+    private final CitizenService citizenService;
+    private final MandataryService mandataryService;
     private static Logger logger = LoggerFactory.getLogger(CompanyController.class);
 
     @Autowired
-    public CompanyController(CompanyService companyService) {
+    public CompanyController(CompanyService companyService, CitizenService citizenService, MandataryService mandataryService) {
 	this.companyService = companyService;
+	this.mandataryService = mandataryService;
+	this.citizenService = citizenService;
     }
 
     // CREATE
     @PostMapping
+    @Transactional
     public ResponseEntity<Object> create(@RequestBody Company company) {
 	companyService.register(company);
 	URI location = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{companyNb}")

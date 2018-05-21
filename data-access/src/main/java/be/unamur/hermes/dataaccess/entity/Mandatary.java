@@ -1,8 +1,8 @@
 package be.unamur.hermes.dataaccess.entity;
 
-import java.util.Objects;
-
 import be.unamur.hermes.common.enums.MandataryRole;
+
+import java.util.Objects;
 
 public class Mandatary {
 
@@ -19,6 +19,13 @@ public class Mandatary {
 	this.citizen = citizen;
 	this.company = company;
 	this.role = role;
+    }
+
+    public Mandatary(Citizen citizen, Company company, MandataryRole role) {
+        this.id = id;
+        this.citizen = citizen;
+        this.company = company;
+        this.role = role;
     }
 
     public long getId() {
