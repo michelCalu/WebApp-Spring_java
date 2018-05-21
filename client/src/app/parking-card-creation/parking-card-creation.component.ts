@@ -1,9 +1,9 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
-import {RequestService, AlertService, CitizenService, AuthenticationService} from '../_services';
-import {Citizen, CitizenRequest} from '../_models';
+import { RequestService, AlertService, CitizenService, AuthenticationService } from '../_services';
+import { Citizen, CitizenRequest } from '../_models';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import {RequestField} from "../_models/request-field.model";
+import { RequestField } from "../_models/request-field.model";
 
 @Component({
     moduleId: module.id,
@@ -14,95 +14,157 @@ import {RequestField} from "../_models/request-field.model";
 /* file handling inspired by https://nehalist.io/uploading-files-in-angular2/ */
 export class ParkingCardCreationComponent implements OnInit {
 
-    fileLoaded: boolean;
+    isCompany: boolean;
+
+    insuranceFileLoaded = false;
+    carUserProofLoaded = false;
     form: FormGroup;
     loading = false;
     requestor: Citizen;
-    //TODO : Not sure about this ... but it may work
-    carMake = new RequestField();
-    carModel = new RequestField();
-    carColour = new RequestField();
-    carRegistrationNumber = new RequestField();
 
-    @ViewChild('fileInput') fileInput: ElementRef;
+
+    @ViewChild('insuranceCertificateInput') insuranceCertificateInput: ElementRef;
+    @ViewChild('userProofInput') userProofInput: ElementRef;
 
     constructor(
-      private router: Router,
-      private requestService: RequestService,
-      private alertService: AlertService,
-      private fb: FormBuilder,
-      private authService: AuthenticationService,
-      private citizenService: CitizenService) {
-
-      this.carMake.code = 'citizenParkingCardCarMake';
-      this.carMake.fieldType = 'String';
-      this.carModel.code = 'citizenParkingCardCarModel';
-      this.carModel.fieldType = 'String';
-      this.carColour.code = 'citizenParkingCardCarColour';
-      this.carColour.fieldType = 'String';
-      this.carRegistrationNumber.code = 'citizenParkingCardPlateNumber';
-      this.carRegistrationNumber.fieldType = 'String';
-    }
+        private router: Router,
+        private requestService: RequestService,
+        private alertService: AlertService,
+        private fb: FormBuilder,
+        private authService: AuthenticationService,
+        private citizenService: CitizenService) { }
 
     ngOnInit() {
-        this.form = this.fb.group({
+        this.isCompany = (this.authService.getCurrentCompany() != null);
+        const validators = {
             carMake: ['', Validators.required],
             carModel: ['', Validators.required],
             colour: ['', Validators.required],
             carRegistrationNumber: ['', Validators.required],
-            insurance_certificate: null
-        });
-      const currentUser = this.authService.getCurrentUser();
-      this.citizenService.getCitizen(currentUser).subscribe(
-        data => this.requestor = data,
-        err => this.alertService.error('Citoyen inconnu'));
+            insurance_certificate: null,
+            car_user_proof: null
+        };
+        if (this.isCompany) {
+            validators['carContactPersonEmail'] = ['', Validators.required];
+            validators['carVisitorFirstName'] = ['', Validators.required];
+            validators['carVisitorLastName'] = ['', Validators.required];
+        }
+
+        this.form = this.fb.group(validators);
+        const currentUser = this.authService.getCurrentUser();
+        this.citizenService.getCitizen(currentUser).subscribe(
+            data => this.requestor = data,
+            err => this.alertService.error('Citoyen inconnu'));
 
     }
 
 
-    onFileChange(event) {
+    onFileChange(event: any, inputFieldName: string) {
         if (event.target.files.length > 0) {
             const file = event.target.files[0];
-            this.form.get('insurance_certificate').setValue(file);
-            this.fileLoaded = true;
+            if (inputFieldName === 'insuranceCertificate') {
+                this.form.get('insurance_certificate').setValue(file);
+                this.insuranceFileLoaded = true;
+            } else {
+                this.form.get('car_user_proof').setValue(file);
+                this.carUserProofLoaded = true;
+            }
         }
     }
 
 
     onSubmit() {
         this.loading = true;
-        const request = new CitizenRequest();
-        request.typeDescription = 'citizenParkingCard';
+
+        let request = new CitizenRequest();
+        request.typeDescription = this.isCompany ? 'companyParkingCard' : 'citizenParkingCard';
         request.citizen = this.requestor;
 
-        this.carMake.fieldValue = this.form.get('carMake').value;
-        this.carModel.fieldValue = this.form.get('carModel').value;
-        this.carColour.fieldValue = this.form.get('colour').value;
-        this.carRegistrationNumber.fieldValue = this.form.get('carRegistrationNumber').value;
+        const carMake: RequestField = {
+            code:  this.isCompany ? 'companyParkingCardCarMake' : 'citizenParkingCardCarMake',
+            fieldType: 'String',
+            fieldValue: this.form.get('carMake').value
+        };
 
-        request.data = [this.carMake, this.carModel, this.carColour, this.carRegistrationNumber];
+        const carModel: RequestField = {
+            code:  this.isCompany ? 'companyParkingCardCarModel' : 'citizenParkingCardCarModel',
+            fieldType: 'String',
+            fieldValue: this.form.get('carModel').value
+        };
 
-        var formData = new FormData();
-        formData.append("request",  new Blob([JSON.stringify(request)], {
-          type: "application/json"
-        }));
-        formData.append("citizenParkingCardGreenCard", this.form.get('insurance_certificate').value);
+        const carColour: RequestField = {
+            code:  this.isCompany ? 'companyParkingCardCarColour' : 'citizenParkingCardCarColour',
+            fieldType: 'String',
+            fieldValue: this.form.get('colour').value
+        };
 
-        this.requestService.createRequestWithFileUploads(formData, "citizenParkingCard").subscribe(success => {
-            this.loading = false;
-            if (success) {
-                this.router.navigate(['/myrequests']);
-                this.alertService.success('Demande de carte de parking bien envoyé');
-            } else {
-                this.alertService.error('Échec dans la carte de parking');
-            }
-        });
+        const carRegistrationNumber: RequestField = {
+            code:  this.isCompany ? 'companyParkingCardPlateNumber' : 'citizenParkingCardPlateNumber',
+            fieldType: 'String',
+            fieldValue: this.form.get('carRegistrationNumber').value
+        };
+
+        request.data = [carMake , carModel, carColour, carRegistrationNumber];
+
+        if (this.isCompany) {
+            request = this.addSpecificCompanyData(request);
+        }
+
+        const formData = new FormData();
+        formData.append('request', new Blob([JSON.stringify(request)], { type: 'application/json' }));
+        formData.append(this.isCompany ? 'companyParkingCardGreenCard' : 'citizenParkingCardGreenCard',
+                            this.form.get('insurance_certificate').value);
+
+        if (this.isCompany) {
+            formData.append('companyParkingCardVisitorProof', this.form.get('car_user_proof').value);
+        }
+
+        this.requestService.createRequestWithFileUploads(formData, this.isCompany ? 'companyParkingCard' : 'citizenParkingCard')
+            .subscribe(success => {
+                this.loading = false;
+                if (success) {
+                    this.router.navigate(['/myrequests']);
+                    this.alertService.success('Demande de carte de parking bien envoyé');
+                } else {
+                    this.alertService.error('Échec dans la carte de parking');
+                }
+            });
 
     }
 
-    clearFile() {
-        this.form.get('insurance_certificate').setValue(null);
-        this.fileInput.nativeElement.value = '';
-        this.fileLoaded = false;
+    clearFile(inputFieldName: string) {
+        if (inputFieldName === 'insuranceCertificate') {
+            this.form.get('insurance_certificate').setValue(null);
+            this.insuranceCertificateInput.nativeElement.value = '';
+            this.insuranceFileLoaded = false;
+        } else {
+            this.form.get('car_user_proof').setValue(null);
+            this.userProofInput.nativeElement.value = '';
+            this.carUserProofLoaded = false;
+        }
+    }
+
+    private addSpecificCompanyData( request: CitizenRequest): CitizenRequest {
+        request.data.push({
+            code:  'companyParkingCardContactPersonEmail',
+            fieldType: 'String',
+            fieldValue: this.form.get('carContactPersonEmail').value
+        });
+
+        request.data.push({
+            code: 'companyParkingCardUserFirstName',
+            fieldType: 'String',
+            fieldValue: this.form.get('carVisitorFirstName').value
+        });
+
+        request.data.push({
+            code: 'companyParkingCardUserLastName',
+            fieldType: 'String',
+            fieldValue: this.form.get('carVisitorLastName').value
+        });
+
+        request.companyNb = this.authService.getCurrentCompany().companyNb;
+
+        return request;
     }
 }

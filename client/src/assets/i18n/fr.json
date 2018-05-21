@@ -11,13 +11,18 @@
     "awaitingInfo": "en attente d'information",
 
 
+    "carContactPersonEmail": "Email de personne de contacte",
     "carMake": "Marque",
     "carModel": "Modèle",
     "carRegistrationNumber": "Immatriculation",
+    "carUserProof": "Preuve de titularité du demandeur",
+    "carVisitorFirstName": "Prénom du visiteur",
+    "carVisitorLastName": "Nom de famille du visiteur",
     "citizenData": "Information citoyen",
     "citizenParkingCard": "Carte de stationnement citoyen",
     "closed": "clôture",
     "colour": "Couleur",
+    "company": "société",
     "connectAsEmployee": "Se connecter en tant qu'employé",
     "connectAsCitizen": "Se connecter en tant que citoyen",
     "connectAsCompany": "Se connecter en tant que société",
