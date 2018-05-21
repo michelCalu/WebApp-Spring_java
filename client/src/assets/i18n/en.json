@@ -21,6 +21,7 @@
     "closed": "closed",
     "colour": "Colour",
     "company": "company",
+    "companyParkingCard": "Company parking card",
     "connectAsEmployee": "Login as an employee",
     "connectAsCitizen": "Login as a citizen",
     "connectAsCompany": "Login as a company",
@@ -40,6 +41,7 @@
     "logout": "logout",
 
     "mycompanies": "my companies",
+    "mycompanyrequests": "requests of company",
     "mydocuments": "my documents",
     "myrequests": "my requests",
 
@@ -62,6 +64,7 @@
     "request.service.getCreationDate": "Error retrieving the creation date",
     "request.service.getError": "Error retrieving the requests",
     "request.service.getEvents": "Error retrieving the request's record history",
+    "requestorData": "Requestor data",
 
     "service.citizen.errorGetCitizen" : "Unknown citizen",
     "service.citizen.errorGetNrn" : "Unknown national register number",

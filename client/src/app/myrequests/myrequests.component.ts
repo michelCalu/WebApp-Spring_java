@@ -6,6 +6,7 @@ import { RequestService, MockAuthService } from '../_services';
 import { Observable } from 'rxjs/Observable';
 import { CitizenRequest } from '../_models/citizen-request.model';
 import { AuthenticationService } from '../_services/authentication.service';
+import { Company } from '../_models/company.model';
 
 @Component({
     moduleId: module.id,
@@ -13,6 +14,8 @@ import { AuthenticationService } from '../_services/authentication.service';
 })
 
 export class MyRequestsComponent implements OnInit {
+
+    currentCompany: Company;
 
     citizenRequests$: Observable<CitizenRequest[]>;
     selectedRequest: CitizenRequest;
@@ -24,7 +27,12 @@ export class MyRequestsComponent implements OnInit {
 
     ngOnInit() {
         const currentUser = this.authService.getCurrentUser();
-        this.citizenRequests$ = this.requestService.getCitizenRequests(currentUser.id);
+        this.currentCompany = this.authService.getCurrentCompany();
+        if (this.currentCompany) {
+            this.citizenRequests$ = this.requestService.getCompanyRequests(this.currentCompany.companyNb);
+        } else {
+            this.citizenRequests$ = this.requestService.getCitizenRequests(currentUser.id);
+        }
         this.citizenRequests$.subscribe(requests => {
             for (const request of requests) {
                 this.requestService.getCreationDate(request.id)

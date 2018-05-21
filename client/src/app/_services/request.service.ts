@@ -28,11 +28,19 @@ export class RequestService {
     }
 
     getCitizenRequests(citizenID: number): Observable<CitizenRequest[]> {
-        return this.http.get<CitizenRequest[]>(/*this.serverAddress + */ '/requests?citizenId=' + citizenID)
+        return this.http.get<CitizenRequest[]>('/requests?citizenId=' + citizenID)
             .catch(err => {
                 this.messageService.error(this.translateService.instant('request.service.getError'));
                 return [];
             });
+    }
+
+    getCompanyRequests(companyNb: string): Observable<CitizenRequest[]> {
+        return this.http.get<CitizenRequest[]>('/requests?companyNb=' + companyNb)
+        .catch(err => {
+            this.messageService.error(this.translateService.instant('request.service.getError'));
+            return [];
+        });
     }
 
     getDepartmentRequests(departmentID: number): Observable<CitizenRequest[]> {

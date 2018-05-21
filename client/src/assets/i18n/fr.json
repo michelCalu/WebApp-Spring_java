@@ -23,6 +23,7 @@
     "closed": "clôture",
     "colour": "Couleur",
     "company": "société",
+    "companyParkingCard": "Carte de stationnement d'entreprise",
     "connectAsEmployee": "Se connecter en tant qu'employé",
     "connectAsCitizen": "Se connecter en tant que citoyen",
     "connectAsCompany": "Se connecter en tant que société",
@@ -42,6 +43,7 @@
     "logout": "se déconnecter",
 
     "mycompanies": "mes sociétés",
+    "mycompanyrequests": "demandes de la société",
     "mydocuments": "mes documents",
     "myprofile": "mon profile",
     "myrequests": "mes demandes",
@@ -65,6 +67,7 @@
     "request.service.getCreationDate": "Erreur dans la recherche de la date de création",
     "request.service.getError": "Erreur dans la recherche de demandes",
     "request.service.getEvents": "Erreur dans la recherche de l'historique de la demande",
+    "requestorData": "Données du demandeur",
 
 
     "service.citizen.errorGetCitizen" : "Citoyen inconnu",
