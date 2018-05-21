@@ -1,9 +1,11 @@
-import { RequestField } from "./request-field.model";
+import { RequestField } from './request-field.model';
+import { Employee } from './employee.model';
+import { Citizen } from './citizen.model';
 
 export class CitizenRequest {
-    assignee: any; // employee
-    citizen: any; // citizen
-    company: any; // company
+    assignee: Employee;
+    citizen: Citizen;
+    companyNb: string;
     id: number;
     municipalityRef: string;
     status: string;
@@ -14,7 +16,4 @@ export class CitizenRequest {
     department: any; // department
     type: any;
 
-    // constructor(){
-    //   this.data = [];
-    // }
 }

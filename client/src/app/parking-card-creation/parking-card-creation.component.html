@@ -1,41 +1,71 @@
 <div class="col-md-12 col-md-offset-3" *ngIf="requestor">
-	<h1> {{'parkingCard' | translate}}</h1>
-	<h2>{{ 'newrequest' | translate}}</h2>
-	<div class="row">
-		<div class="col-md-6">
-			<h2>Informations demandeur</h2>
-			<ul>
-				<div><span>Nom : </span>{{requestor.lastName}}</div>
-        <div><span>Prénom : </span>{{requestor.firstName}}</div>
-      </ul>
+    <h1> {{'parkingCard' | translate}}<span *ngIf="isCompany">: {{company | translate}} {{authService.getCurrentCompany().companyName}}</span></h1>
+    <h2>{{ 'newrequest' | translate}}</h2>
+    <div class="row">
+        <div class="col-md-6">
+            <h2>Informations demandeur</h2>
+            <ul>
+                <li> Nom : {{requestor.lastName}} </li>
+                <li> Prénom : {{requestor.firstName}} </li>
+                <li [hidden]="!isCompany"> Société : {{ authService.getCurrentCompany().companyName }} </li>
+            </ul>
 
-      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <form [formGroup]="form" (ngSubmit)="onSubmit()">
 
-        <div class="form-group">
-          <label for="car_make">{{'carMake' | translate}}</label>
-          <input type="text" class="form-control" id="car_make" formControlName="carMake">
-        </div>
-        <div class="form-group">
-          <label for="car_model">{{'carModel' | translate}}</label>
-          <input type="text" class="form-control" id="car_model" formControlName="carModel">
-        </div>
-        <div class="form-group">
-          <label for="colour">{{'colour' | translate}}</label>
-          <input type="text" class="form-control" id="colour" formControlName="colour">
-        </div>
-        <div class="form-group">
-          <label for="car_registration_number">{{'carRegistrationNumber' | translate}}</label>
-          <input type="text" class="form-control" id="car_registration_number" formControlName="carRegistrationNumber">
-        </div>
-        <div class="form-group">
-          <label for="insurance_certificate">{{'insuranceCertificate' | translate}}</label>
-          <input type="file" id="insurance_certificate" (change)="onFileChange($event)" #fileInput required>
-          <button type="button" class="btn btn-sm btn-default" (click)="clearFile()">clear file</button>
-        </div>
-        <!-- TODO include awsome font for spinner -->
-        <button type="submit" [disabled]="form.invalid || !fileLoaded || loading" class="btn btn-success">Submit <span *ngIf="loading"><i class="fa fa-spinner fa-spin fa-fw">Loading</i></span></button>
+                <div class="form-group">
+                    <label for="car_make">{{'carMake' | translate}}</label>
+                    <input type="text" class="form-control" id="car_make" formControlName="carMake">
+                </div>
+                <div class="form-group">
+                    <label for="car_model">{{'carModel' | translate}}</label>
+                    <input type="text" class="form-control" id="car_model" formControlName="carModel">
+                </div>
+                <div class="form-group">
+                    <label for="colour">{{'colour' | translate}}</label>
+                    <input type="text" class="form-control" id="colour" formControlName="colour">
+                </div>
+                <div class="form-group">
+                    <label for="car_registration_number">{{'carRegistrationNumber' | translate}}</label>
+                    <input type="text" class="form-control" id="car_registration_number" formControlName="carRegistrationNumber">
+                </div>
 
-      </form>
-		</div>
+                <div *ngIf="isCompany">
+                    <div class="form-group">
+                        <label for="car_contact_person">{{'carContactPersonEmail' | translate}}</label>
+                        <input type="email" class="form-control" id="car_contact_person" formControlName="carContactPersonEmail">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="car_visitor_first_name">{{'carVisitorFirstName' | translate}}</label>
+                        <input type="text" class="form-control" id="car_visitor_first_name" formControlName="carVisitorFirstName">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="car_visitor_last_name">{{'carVisitorLastName' | translate}}</label>
+                        <input type="text" class="form-control" id="car_visitor_last_name" formControlName="carVisitorLastName">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="insurance_certificate">{{'insuranceCertificate' | translate}}</label>
+                    <input type="file" id="insurance_certificate" (change)="onFileChange($event, 'insuranceCertificate')" #insuranceCertificateInput required>
+                    <button type="button" class="btn btn-sm btn-default" (click)="clearFile('insuranceCertificate')">clear file</button>
+                </div>
+
+                <div class="form-group" *ngIf="isCompany">
+                        <label for="user_proof">{{'carUserProof' | translate}}</label>
+                        <input type="file" id="car_user_proof" (change)="onFileChange($event, 'userProof')" #userProofInput required>
+                        <button type="button" class="btn btn-sm btn-default" (click)="clearFile('userProof')">clear file</button>
+                </div>
+
+                <!-- TODO include awsome font for spinner -->
+                <button type="submit" [disabled]="form.invalid || !insuranceFileLoaded || (isCompany && !carUserProofLoaded) || loading" class="btn btn-success">Submit
+                    <span *ngIf="loading">
+                        <i class="fa fa-spinner fa-spin fa-fw">Loading</i>
+                    </span>
+                </button>
+
+            </form>
+        </div>
     </div>
 </div>
