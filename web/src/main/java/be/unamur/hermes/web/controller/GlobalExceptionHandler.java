@@ -24,7 +24,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler imple
     public ResponseEntity<Error> handle(EmptyResultDataAccessException ex) {
 	logger.error(ex.getMessage(), ex);
 	Error error = new Error(FAILURE_DATABASE_RETRIEVAL, ex.getMessage());
-	return new ResponseEntity<Error>(error, HttpStatus.NO_CONTENT);
+	return new ResponseEntity<Error>(error, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(SQLException.class)

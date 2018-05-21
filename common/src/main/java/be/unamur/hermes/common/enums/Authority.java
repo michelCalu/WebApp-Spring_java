@@ -1,8 +1,11 @@
 package be.unamur.hermes.common.enums;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+
 public enum Authority {
 
-    USER("USER"), ADMIN("ADMIN");
+    USER("USER"), OFFICER("OFFICER"), ADMIN("ADMIN");
 
     private final String role;
 
@@ -14,8 +17,8 @@ public enum Authority {
 	return role;
     }
 
-    public String getAuthority() {
-	return "ROLE_" + role;
+    public GrantedAuthority getAuthority() {
+	return new SimpleGrantedAuthority("ROLE_" + role);
     }
 
 }

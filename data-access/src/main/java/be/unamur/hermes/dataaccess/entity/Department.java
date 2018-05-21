@@ -1,14 +1,19 @@
 package be.unamur.hermes.dataaccess.entity;
 
+import java.util.List;
+
 public class Department {
 
     private long id;
     private String name;
     private Address address;
     private Employee manager;
+    private Department parentDepartment;
     private String email;
     private String phoneNumber;
     private Municipality municipality;
+    private List<RequestType> managedRequestTypes;
+
 
     public long getId() {
 	return id;
@@ -42,6 +47,14 @@ public class Department {
 	this.manager = manager;
     }
 
+    public Department getParentDepartment() {
+        return parentDepartment;
+    }
+
+    public void setParentDepartment(Department parentDepartment) {
+        this.parentDepartment = parentDepartment;
+    }
+
     public String getEmail() {
 	return email;
     }
@@ -64,5 +77,13 @@ public class Department {
 
     public void setMunicipality(Municipality municipality) {
 	this.municipality = municipality;
+    }
+
+    public List<RequestType> getManagedRequestTypes() {
+        return managedRequestTypes;
+    }
+
+    public void setManagedRequestTypes(List<RequestType> managedRequestTypes) {
+        this.managedRequestTypes = managedRequestTypes;
     }
 }

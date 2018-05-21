@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Employee, Municipality, Department } from '../_models';
+import { Employee, Municipality, Department, Address } from '../_models';
 import { AlertService, EmployeeService, MunicipalityService } from '../_services';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     templateUrl: 'create_employee.component.html'
@@ -17,7 +18,9 @@ export class CreateEmployeeComponent implements OnInit {
     employee = new Employee();
 
     constructor(private employeeService: EmployeeService, private municipalityService: MunicipalityService,
-        private alertService: AlertService, private router: Router) { }
+        private alertService: AlertService, private router: Router, private translateService: TranslateService) { 
+      this.employee.address.country = translateService.instant('belgium');
+    }
 
     ngOnInit() {
         this.municipalities$ = this.municipalityService.getMunicipalities();

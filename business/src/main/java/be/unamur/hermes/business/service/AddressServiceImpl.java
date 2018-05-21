@@ -44,6 +44,7 @@ public class AddressServiceImpl implements AddressService {
     public Address updateAddressGivenMunicipality(Address address, Municipality municipality) {
         address.setZipCode(municipality.getAddress().getZipCode());
         address.setState(municipality.getAddress().getState());
+        address.setCountry(municipality.getAddress().getCountry());
         return address;
     }
 

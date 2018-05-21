@@ -1,5 +1,4 @@
-DROP TABLE IF EXISTS t_departments_skills;
-DROP TABLE IF EXISTS t_skills;
+DROP TABLE IF EXISTS t_departments_request_types;
 DROP TABLE IF EXISTS t_departments_employees;
 DROP TABLE IF EXISTS t_events;
 DROP TABLE IF EXISTS t_event_types;
@@ -24,11 +23,15 @@ DROP TABLE IF EXISTS t_documents;
 DROP TABLE IF EXISTS t_document_titles;
 
 CREATE TABLE t_user_accounts (
-  userAccountID			INT PRIMARY KEY 		NOT NULL AUTO_INCREMENT,
-  roles		    		ENUM('ROLE_USER','ROLE_ADMIN') 			NOT NULL,
-  password				VARCHAR(255) 			NOT NULL,
+  userAccountID			
+  		INT PRIMARY KEY 	NOT NULL AUTO_INCREMENT,
+  roles		    
+  		VARCHAR(510)		NOT NULL, -- comma-separated list of {ROLE_USER,ROLE_OFFICER,ROLE_ADMIN}
+  password				
+  		VARCHAR(255) 		NOT NULL,
   userStatus
-                     ENUM('created','active','disabled')			NOT NULL
+        ENUM('created','active','disabled')			
+                     		NOT NULL
 );
 
 
@@ -57,7 +60,7 @@ CREATE TABLE t_municipalities (
 );
 
 CREATE TABLE t_citizens (
-  citizenID  INT PRIMARY KEY   NOT NULL AUTO_INCREMENT,
+  citizenID  	INT PRIMARY KEY   NOT NULL AUTO_INCREMENT,
   firstName     VARCHAR(255)      NOT NULL,
   lastName      VARCHAR(255)      NOT NULL,
   addressID     INT               NOT NULL,
@@ -66,6 +69,7 @@ CREATE TABLE t_citizens (
   nationalRegisterNb VARCHAR(255) NOT NULL UNIQUE ,
   birthdate     DATE,
   userAccountID	INT,
+  
   FOREIGN KEY (addressID) REFERENCES t_addresses(addressID),
   FOREIGN KEY (userAccountID) REFERENCES t_user_accounts(userAccountID)
 );
@@ -229,18 +233,13 @@ CREATE TABLE t_departments_employees (
   FOREIGN KEY (employeeID) REFERENCES t_employees(employeeID)
 );
 
-CREATE TABLE t_skills (
-  skillID       VARCHAR(255) PRIMARY KEY NOT NULL,
-  description   VARCHAR(255) UNIQUE
-);
-
-CREATE TABLE t_departments_skills (
+CREATE TABLE t_departments_request_types (
   departmentID  INT NOT NULL,
-  skillID       VARCHAR(255) NOT NULL,
+  requestTypeID INT NOT NULL,
 
-  PRIMARY KEY (departmentID, skillID),
+  PRIMARY KEY (departmentID, requestTypeID),
   FOREIGN KEY (departmentID) REFERENCES t_departments(departmentID),
-  FOREIGN KEY (skillID) REFERENCES t_skills(skillID)
+  FOREIGN KEY (requestTypeID) REFERENCES t_request_types(requestTypeID)
 );
 
 

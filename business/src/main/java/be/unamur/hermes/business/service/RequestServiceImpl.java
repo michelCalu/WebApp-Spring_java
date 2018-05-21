@@ -255,29 +255,35 @@ public class RequestServiceImpl implements RequestService, Errors {
 	eventService.create(statusEvent);
     }
 
-    // TODO : implements skills and adapt this method
     private Department findRequestDepartment(Request request) {
-	Citizen citizen = request.getCitizen();
-	Municipality citizenMunicipality = municipalityRepository.findByName(citizen.getAddress().getMunicipality());
-	List<Department> municipalityDepartments = departmentRepository
-		.findByMunicipalityId(citizenMunicipality.getId());
-	if (municipalityDepartments.isEmpty())
-	    throw new BusinessException(FAILURE_DATABASE_RETRIEVAL,
-		    "The request type is not managed by any department of the municipality.");
-	else
-	    return municipalityDepartments.get(0);
+		Citizen citizen = request.getCitizen();
+		Municipality citizenMunicipality = municipalityRepository.findByName(citizen.getAddress().getMunicipality());
+		List<Department> municipalityDepartments = departmentRepository
+			.findByMunicipalityId(citizenMunicipality.getId());
+
+		for(Department department: municipalityDepartments){
+			List<RequestType> departmentRequestTypes = department.getManagedRequestTypes();
+			for(RequestType requestType: departmentRequestTypes){
+				if(requestType.getDescription().equals(request.getTypeDescription())){
+					return department;
+				}
+			}
+		}
+
+		throw new BusinessException(FAILURE_DATABASE_RETRIEVAL,
+				"The request type is not managed by any department of the municipality.");
     }
 
     private String generateSystemRef(Request request) {
-	String citizenNRN = request.getCitizen().getNationalRegisterNb();
-	String nbOfCreatedRequest = Integer
-		.toString(requestRepository.findByCitizen(request.getCitizen().getId()).size());
-	return "REQ_" + citizenNRN + "_" + nbOfCreatedRequest;
+		String citizenNRN = request.getCitizen().getNationalRegisterNb();
+		String nbOfCreatedRequest = Integer
+			.toString(requestRepository.findByCitizen(request.getCitizen().getId()).size());
+		return "REQ_" + citizenNRN + "_" + nbOfCreatedRequest;
     }
 
     private String generateMunicipalityRef(Request request) {
-	Municipality municipality = request.getDepartment().getMunicipality();
-	String nbOfCreatedRequest = Integer.toString(requestRepository.findbyDepartmentId(municipality.getId()).size());
-	return "REQ_" + municipality.getName().replaceAll("\\s+", "") + "_" + nbOfCreatedRequest;
+		Municipality municipality = request.getDepartment().getMunicipality();
+		String nbOfCreatedRequest = Integer.toString(requestRepository.findbyDepartmentId(municipality.getId()).size());
+		return "REQ_" + municipality.getName().replaceAll("\\s+", "") + "_" + nbOfCreatedRequest;
     }
 }

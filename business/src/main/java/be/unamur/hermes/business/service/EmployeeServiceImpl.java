@@ -1,9 +1,8 @@
 package be.unamur.hermes.business.service;
 
+import java.util.Arrays;
 import java.util.List;
 
-import be.unamur.hermes.dataaccess.entity.Address;
-import be.unamur.hermes.dataaccess.entity.Municipality;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,7 +30,7 @@ public class EmployeeServiceImpl implements EmployeeService, Errors {
 
     @Autowired
     public EmployeeServiceImpl(EmployeeRepository employeeRepository, UserAccountRepository accountRepository,
-							   AddressService addressService, MunicipalityService municipalityService) {
+	    AddressService addressService, MunicipalityService municipalityService) {
 	this.employeeRepository = employeeRepository;
 	this.accountRepository = accountRepository;
 	this.addressService = addressService;
@@ -56,20 +55,18 @@ public class EmployeeServiceImpl implements EmployeeService, Errors {
     @Override
     @Transactional
     public long register(Employee employee) {
-		checkEmployeeAttributes(employee);
+	checkEmployeeAttributes(employee);
 
-		// Update and creation of the employee address
-		addressService.createAddress(
-				addressService.updateAddressGivenMunicipality(
-						employee.getAddress(),
-						municipalityService.findByName(employee.getAddress().getMunicipality())));
+	// Update and creation of the employee address
+		addressService.createAddress(employee.getAddress());
 
-		// create user account (employees do not have to get activated)
-		String pass = PasswordUtil.encode(employee.getPassword());
-		UserAccount employeeAccount = new UserAccount(0L, 0L, employee.getNationalRegisterNb(), UserType.EMPLOYEE,
-			UserStatus.ACTIVE, pass, UserAccount.prepareAuthorities(Authority.USER.getAuthority()));
-		long userAccountId = accountRepository.create(employeeAccount);
-		return employeeRepository.create(employee, userAccountId);
+	// create user account (employees do not have to get activated)
+	String pass = PasswordUtil.encode(employee.getPassword());
+	UserAccount employeeAccount = new UserAccount(0L, 0L, employee.getNationalRegisterNb(), UserType.EMPLOYEE,
+		UserStatus.ACTIVE, pass,
+		Arrays.asList(Authority.USER.getAuthority(), Authority.OFFICER.getAuthority()));
+	long userAccountId = accountRepository.create(employeeAccount);
+	return employeeRepository.create(employee, userAccountId);
     }
 
     private void checkEmployeeAttributes(Employee employee) throws BusinessException {
