@@ -114,10 +114,8 @@ export class ParkingCardCreationComponent implements OnInit {
         formData.append('request', new Blob([JSON.stringify(request)], { type: 'application/json' }));
         formData.append(this.isCompany ? 'companyParkingCardGreenCard' : 'citizenParkingCardGreenCard',
                             this.form.get('insurance_certificate').value);
-
-        if (this.isCompany) {
-            formData.append('companyParkingCardUserProof', this.form.get('car_user_proof').value);
-        }
+        formData.append(this.isCompany ? 'companyParkingCardUserProof' : 'citizenParkingCardUserProof',
+                            this.form.get('car_user_proof').value);
 
         this.requestService.createRequestWithFileUploads(formData, this.isCompany ? 'companyParkingCard' : 'citizenParkingCard')
             .subscribe(success => {

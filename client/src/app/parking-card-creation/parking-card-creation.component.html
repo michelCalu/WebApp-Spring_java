@@ -52,14 +52,14 @@
                     <button type="button" class="btn btn-sm btn-default" (click)="clearFile('insuranceCertificate')">clear file</button>
                 </div>
 
-                <div class="form-group" *ngIf="isCompany">
+                <div class="form-group">
                         <label for="user_proof">{{'carUserProof' | translate}}</label>
-                        <input type="file" id="car_user_proof" (change)="onFileChange($event, 'userProof')" #userProofInput required>
+                        <input type="file" id="car_user_proof" (change)="onFileChange($event, 'userProof')" #userProofInput>
                         <button type="button" class="btn btn-sm btn-default" (click)="clearFile('userProof')">clear file</button>
                 </div>
 
                 <!-- TODO include awsome font for spinner -->
-                <button type="submit" [disabled]="form.invalid || !insuranceFileLoaded || (isCompany && !carUserProofLoaded) || loading" class="btn btn-success">Submit
+                <button type="submit" [disabled]="form.invalid || !insuranceFileLoaded || loading" class="btn btn-success">Submit
                     <span *ngIf="loading">
                         <i class="fa fa-spinner fa-spin fa-fw">Loading</i>
                     </span>
