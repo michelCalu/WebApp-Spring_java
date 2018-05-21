@@ -163,7 +163,7 @@ export class ParkingCardCreationComponent implements OnInit {
             fieldValue: this.form.get('carVisitorLastName').value
         });
 
-        request.companyNb = this.authService.getCurrentCompany().companyNb;
+        request.company.companyNb = this.authService.getCurrentCompany().companyNb;
 
         return request;
     }

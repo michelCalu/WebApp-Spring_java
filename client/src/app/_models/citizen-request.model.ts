@@ -1,11 +1,11 @@
 import { RequestField } from './request-field.model';
 import { Employee } from './employee.model';
 import { Citizen } from './citizen.model';
+import { Company } from './company.model';
 
 export class CitizenRequest {
-    assignee: Employee;
-    citizen: Citizen;
-    companyNb: string;
+    assignee = new Employee();
+    citizen = new Citizen();
     id: number;
     municipalityRef: string;
     status: string;
@@ -15,5 +15,6 @@ export class CitizenRequest {
     data: Array<RequestField> = [];
     department: any; // department
     type: any;
+    company = new Company();
 
 }
