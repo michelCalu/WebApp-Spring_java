@@ -1,17 +1,9 @@
 package be.unamur.hermes.web.controller;
 
-import java.net.URI;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-
-import javax.validation.Valid;
-
+import be.unamur.hermes.business.service.RequestService;
+import be.unamur.hermes.common.constants.RequestTypes;
+import be.unamur.hermes.dataaccess.entity.Request;
+import be.unamur.hermes.dataaccess.entity.RequestField;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,22 +13,15 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import be.unamur.hermes.business.service.RequestService;
-import be.unamur.hermes.common.constants.RequestTypes;
-import be.unamur.hermes.dataaccess.entity.Request;
-import be.unamur.hermes.dataaccess.entity.RequestField;
+import javax.validation.Valid;
+import java.net.URI;
+import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping({ "/requests" })
@@ -127,11 +112,11 @@ public class RequestController implements RequestTypes {
 	return ResponseEntity.created(location).build();
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN') or #updatedRequest.citizen.id == principal.technicalId")
+   // @PreAuthorize("hasRole('ROLE_ADMIN') or #updatedRequest.citizen.id == principal.technicalId")
     @PatchMapping
-    public ResponseEntity<Object> updateAccount(@RequestBody Request updatedRequest, Authentication authi) {
-	requestService.update(updatedRequest);
-	return ResponseEntity.ok().build();
+    public ResponseEntity<Object> updateRequest(@RequestBody Request updatedRequest, Authentication authi) {
+		requestService.update(updatedRequest);
+		return ResponseEntity.ok().build();
     }
 
     private URI createRequest(String requestType, Request newRequest, List<MultipartFile> files) {
