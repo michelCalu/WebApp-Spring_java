@@ -117,11 +117,21 @@ public class Request {
 	this.municipalityRef = municipalityRef;
     }
 
+
     @Override
     public String toString() {
-	return "Request [id=" + id + ", userRef=" + userRef + ", systemRef=" + systemRef + ", municipalityRef="
-		+ municipalityRef + ", assignee=" + assignee + ", citizen=" + citizen + ", company=" + company
-		+ ", department=" + department + ", typeDescription=" + typeDescription + ", status=" + status
-		+ ", data=" + data + "]";
+        return "Request{" +
+                "id=" + id +
+                ", userRef='" + userRef + '\'' +
+                ", systemRef='" + systemRef + '\'' +
+                ", municipalityRef='" + municipalityRef + '\'' +
+                ", assignee=" + assignee +
+                ", citizen=" + citizen +
+                ", company=" + company +
+                ", department=" + department +
+                ", typeDescription='" + typeDescription + '\'' +
+                ", status=" + status +
+                ", data=" + data+
+                '}';
     }
 }

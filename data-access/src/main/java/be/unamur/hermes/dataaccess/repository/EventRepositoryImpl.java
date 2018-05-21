@@ -1,19 +1,18 @@
 package be.unamur.hermes.dataaccess.repository;
 
+import be.unamur.hermes.dataaccess.entity.Event;
+import be.unamur.hermes.dataaccess.entity.EventType;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
+import org.springframework.stereotype.Repository;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
-import org.springframework.stereotype.Repository;
-
-import be.unamur.hermes.dataaccess.entity.Event;
-import be.unamur.hermes.dataaccess.entity.EventType;
 
 @Repository
 public class EventRepositoryImpl implements EventRepository {
@@ -52,6 +51,7 @@ public class EventRepositoryImpl implements EventRepository {
 	params.put("at", event.getAt());
 	params.put("author", event.getAuthorId());
 	params.put("request", event.getRequestId());
+	params.put("comment", event.getComment());
 	return (Long) inserter.executeAndReturnKey(params);
     }
 
@@ -88,6 +88,13 @@ public class EventRepositoryImpl implements EventRepository {
     private Event build(ResultSet rs, int row) throws SQLException {
 	EventType type = getTypeById(rs.getLong(2));
 	Timestamp timestamp = rs.getTimestamp(3);
-	return new Event(rs.getLong(2), type, timestamp.toLocalDateTime(), rs.getLong(4), rs.getLong(5));
+	return new Event(
+	        rs.getLong(2),
+            type,
+            timestamp.toLocalDateTime(),
+            rs.getLong(4),
+            rs.getLong(5),
+            rs.getString(6)
+            );
     }
 }

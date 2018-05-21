@@ -1,32 +1,23 @@
 package be.unamur.hermes.business.service;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
-
 import be.unamur.hermes.business.exception.BusinessException;
 import be.unamur.hermes.common.constants.EventConstants;
 import be.unamur.hermes.common.constants.RequestTypes;
 import be.unamur.hermes.common.enums.RequestStatusInfo;
 import be.unamur.hermes.common.exception.Errors;
-import be.unamur.hermes.dataaccess.entity.Citizen;
-import be.unamur.hermes.dataaccess.entity.Department;
-import be.unamur.hermes.dataaccess.entity.Event;
-import be.unamur.hermes.dataaccess.entity.Municipality;
-import be.unamur.hermes.dataaccess.entity.Request;
-import be.unamur.hermes.dataaccess.entity.RequestField;
-import be.unamur.hermes.dataaccess.entity.RequestStatus;
-import be.unamur.hermes.dataaccess.entity.RequestType;
-import be.unamur.hermes.dataaccess.entity.UserAccount;
+import be.unamur.hermes.dataaccess.entity.*;
 import be.unamur.hermes.dataaccess.repository.DepartmentRepository;
 import be.unamur.hermes.dataaccess.repository.MunicipalityRepository;
 import be.unamur.hermes.dataaccess.repository.RequestFieldRepository;
 import be.unamur.hermes.dataaccess.repository.RequestRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class RequestServiceImpl implements RequestService, Errors {
@@ -240,19 +231,24 @@ public class RequestServiceImpl implements RequestService, Errors {
     }
 
     private void createStatusEvent(Request updatedRequest, Request baseRequest) {
-	RequestStatusInfo newStatusInfo = RequestStatusInfo.getStatusFor(updatedRequest.getStatus().getName());
-	RequestStatusInfo oldStatusInfo = RequestStatusInfo.getStatusFor(baseRequest.getStatus().getName());
-	boolean isCitizenInitiated = newStatusInfo.isCitizenInitiated(oldStatusInfo);
-	long userAccountId;
-	if (isCitizenInitiated) {
-	    userAccountId = citizenService.findAccount(baseRequest.getCitizen().getId()).getAccountUserId();
-	} else {
-	    userAccountId = employeeService.findAccount(baseRequest.getAssignee().getNationalRegisterNb())
-		    .getAccountUserId();
-	}
+		RequestStatusInfo newStatusInfo = RequestStatusInfo.getStatusFor(updatedRequest.getStatus().getName());
+		RequestStatusInfo oldStatusInfo = RequestStatusInfo.getStatusFor(baseRequest.getStatus().getName());
+		boolean isCitizenInitiated = newStatusInfo.isCitizenInitiated(oldStatusInfo);
+		long userAccountId;
+		if (isCitizenInitiated) {
+			userAccountId = citizenService.findAccount(baseRequest.getCitizen().getId()).getAccountUserId();
+		} else {
+			userAccountId = employeeService.findAccount(baseRequest.getAssignee().getNationalRegisterNb())
+				.getAccountUserId();
+		}
 
-	Event statusEvent = Event.create(newStatusInfo.getEventType(), userAccountId, updatedRequest.getId());
-	eventService.create(statusEvent);
+		Event statusEvent;
+		if(updatedRequest.getStatus().getName().equals(RequestService.STATUS_REJECTED)){
+			statusEvent = Event.create(newStatusInfo.getEventType(), userAccountId, updatedRequest.getId(), updatedRequest.getStatus().getComment());
+		}else{
+			statusEvent = Event.create(newStatusInfo.getEventType(), userAccountId, updatedRequest.getId());
+		}
+		eventService.create(statusEvent);
     }
 
     // TODO : implements skills and adapt this method
