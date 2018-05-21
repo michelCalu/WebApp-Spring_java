@@ -6,6 +6,7 @@ public class RequestStatus {
 
     private long id;
     private String name;
+    private String comment;
 
     public RequestStatus() {
     }
@@ -29,6 +30,14 @@ public class RequestStatus {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
     @Override
