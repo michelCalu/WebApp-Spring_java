@@ -38,6 +38,7 @@ import { DocumentDetailsComponent } from './document-details/document-details.co
 import { RequestHistoryComponent } from './request-history/request-history.component';
 import { ValidateCompaniesComponent } from './validate_companies';
 import { CompanyDetailComponent } from './company-detail';
+import { BackbuttonComponent } from './backbutton/backbutton.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -72,7 +73,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     DocumentDetailsComponent,
     RequestHistoryComponent,
     ValidateCompaniesComponent,
-    CompanyDetailComponent
+    CompanyDetailComponent,
+    BackbuttonComponent
   ],
   imports: [
     AppRoutingModule,

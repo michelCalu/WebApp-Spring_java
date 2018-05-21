@@ -20,7 +20,10 @@
 					<td>{{ request.userRef }}</td>
                     <td>{{request.status.name | translate}}</td>
                     <td> {{ citizenRequestsCreationDates[request.id] | date:'dd/MM/yy HH:mm'}} </td>
-					<td><button class="btn btn-success" (click)="selectedRequest = request">{{'details'| translate}}</button></td>
+					<td>
+						<button class="btn btn-success" (click)="selectedRequest = request">{{'details'| translate}}</button>
+						<button class="btn btn-info" (click)="selectedRequest = null" [disabled]="selectedRequest != request">{{'collapse' | translate}}</button>
+					</td>
 				</tr>
 			</tbody>
         </table>
@@ -31,7 +34,6 @@
         <div *ngIf="selectedRequest">
             <request-detail [request]="selectedRequest" [displayEmployeeActions]="false"></request-detail>
         </div>
-
 	</div>
 
 </div>

@@ -88,6 +88,7 @@
     "vatNumber": "VAT number",
     "viewDetails": "view details",
     "viewNationalRegisterDetails": "See national register details",
-    "belgium":"Belgium"
-
+    "belgium":"Belgium",
+	"goBack":"Go back",
+	"collapse":"Collapse"
 }
