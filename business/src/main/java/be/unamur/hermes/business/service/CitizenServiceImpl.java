@@ -1,12 +1,12 @@
 package be.unamur.hermes.business.service;
 
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
-import be.unamur.hermes.dataaccess.entity.Municipality;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,7 +26,6 @@ import be.unamur.hermes.common.util.PasswordUtil;
 import be.unamur.hermes.dataaccess.entity.Citizen;
 import be.unamur.hermes.dataaccess.entity.UserAccount;
 import be.unamur.hermes.dataaccess.repository.CitizenRepository;
-import be.unamur.hermes.dataaccess.repository.MunicipalityRepository;
 import be.unamur.hermes.dataaccess.repository.UserAccountRepository;
 
 @Service
@@ -69,25 +68,23 @@ public class CitizenServiceImpl implements CitizenService, Errors {
     @Override
     @Transactional
     public long register(Citizen citizen) {
-	    // only required during creation
-	    if (!StringUtils.hasText(citizen.getPassword()))
-	        throw new BusinessException(MISSING_PASSWORD, "Password is required");
+	// only required during creation
+	if (!StringUtils.hasText(citizen.getPassword()))
+	    throw new BusinessException(MISSING_PASSWORD, "Password is required");
 
-	    // TODO uncomment after tests
-	    // checkCitizenAttributes(citizen);
+	// TODO uncomment after tests
+	// checkCitizenAttributes(citizen);
 
-        // Update and creation of the citizen address
-	    addressService.createAddress(
-	        addressService.updateAddressGivenMunicipality(
-	            citizen.getAddress(),
-                    municipalityService.findByName(citizen.getAddress().getMunicipality())));
+	// Update and creation of the citizen address
+	addressService.createAddress(addressService.updateAddressGivenMunicipality(citizen.getAddress(),
+		municipalityService.findByName(citizen.getAddress().getMunicipality())));
 
-	    // create user account
-	    String pass = PasswordUtil.encode(citizen.getPassword());
-	    UserAccount citizenAccount = new UserAccount(0L, 0L, citizen.getNationalRegisterNb(), UserType.CITIZEN,
-    		UserStatus.CREATED, pass, UserAccount.prepareAuthorities(Authority.USER.getAuthority()));
-	    long userAccountId = accountRepository.create(citizenAccount);
-	    return citizenRepository.create(citizen, userAccountId);
+	// create user account
+	String pass = PasswordUtil.encode(citizen.getPassword());
+	UserAccount citizenAccount = new UserAccount(0L, 0L, citizen.getNationalRegisterNb(), UserType.CITIZEN,
+		UserStatus.CREATED, pass, Collections.singletonList(Authority.USER.getAuthority()));
+	long userAccountId = accountRepository.create(citizenAccount);
+	return citizenRepository.create(citizen, userAccountId);
     }
 
     private void checkCitizenAttributes(Citizen citizen) throws BusinessException {

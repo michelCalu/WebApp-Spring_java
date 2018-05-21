@@ -20,7 +20,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -97,7 +96,7 @@ public class RequestController implements RequestTypes {
 		.body(resource);
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN') or #newRequest.citizen.id == principal.technicalId")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_OFFICER') or #newRequest.citizen.id == principal.technicalId")
     @PostMapping(params = "requestType=" + CITIZEN_PARKING_CARD, consumes = { "multipart/form-data" })
     public ResponseEntity<Void> createRequest(@RequestPart("request") @Valid Request newRequest,
 	    @RequestPart("citizenParkingCardGreenCard") @Valid MultipartFile greenCard,
@@ -110,7 +109,7 @@ public class RequestController implements RequestTypes {
 	return ResponseEntity.created(location).build();
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN') or #newRequest.citizen.id == principal.technicalId")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_OFFICER') or #newRequest.citizen.id == principal.technicalId")
     @PostMapping(params = "requestType=" + COMPANY_PARKING_CARD, consumes = { "multipart/form-data" })
     public ResponseEntity<Void> createRequest(@RequestPart("request") @Valid Request newRequest,
 	    @RequestPart("companyParkingCardGreenCard") @Valid MultipartFile greenCard,
@@ -120,16 +119,16 @@ public class RequestController implements RequestTypes {
 	return ResponseEntity.created(location).build();
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN') or #newRequest.citizen.id == principal.technicalId")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_OFFICER') or #newRequest.citizen.id == principal.technicalId")
     @PostMapping(params = "requestType=" + NATIONALITY_CERTIFICATE, consumes = { "multipart/form-data" })
     public ResponseEntity<Void> createRequest(@RequestPart("request") @Valid Request newRequest) {
 	URI location = createRequest(NATIONALITY_CERTIFICATE, newRequest, Collections.emptyList());
 	return ResponseEntity.created(location).build();
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN') or #updatedRequest.citizen.id == principal.technicalId")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_OFFICER') or #updatedRequest.citizen.id == principal.technicalId")
     @PatchMapping
-    public ResponseEntity<Object> updateAccount(@RequestBody Request updatedRequest, Authentication authi) {
+    public ResponseEntity<Object> updateAccount(@RequestBody Request updatedRequest) {
 	requestService.update(updatedRequest);
 	return ResponseEntity.ok().build();
     }
