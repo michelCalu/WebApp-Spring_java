@@ -66,11 +66,13 @@ export class RequestService {
     performAction(request: CitizenRequest, action: string, additionalData: Object): Observable<Boolean> {
         console.log('Performing action ' + action + 'on request : ' + JSON.stringify(request));
         if (action === 'accept') {
-            return this.http.patch('/requests', { 'id': request.id, 'status': { 'id': 5, 'name': 'accepted' } })
+            return this.http.patch('/requests', {'id': request.id,
+                                                'status': { 'id': 5, 'name': 'accepted', 'comment': additionalData['comment']}})
                 .map(res => true)
                 .catch(error => Observable.of(false));
         } else if (action === 'reject') {
-            return this.http.patch('/requests', { 'id': request.id, 'status': { 'id': 4, 'name': 'rejected' } })
+            return this.http.patch('/requests', { 'id': request.id,
+                                                    'status': { 'id': 4, 'name': 'rejected', 'comment': additionalData['comment']} })
                 .map(res => true).
                 catch(err => Observable.of(false));
         } else {

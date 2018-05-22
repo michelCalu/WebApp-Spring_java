@@ -17,8 +17,6 @@ export class CreateUserComponent implements OnInit {
 
     ngOnInit() {
         this.municipalities$ = this.municipalityService.getMunicipalities();
-
-        this.citizen.address.country = 'Belgique';
     }
 
     createCitizen(): void {

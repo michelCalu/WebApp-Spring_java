@@ -1,6 +1,6 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { RequestService, AlertService, CitizenService, AuthenticationService } from '../_services';
-import { Citizen, CitizenRequest } from '../_models';
+import { Citizen, CitizenRequest, Company } from '../_models';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { RequestField } from "../_models/request-field.model";
@@ -160,7 +160,9 @@ export class ParkingCardCreationComponent implements OnInit {
             fieldType: 'String',
             fieldValue: this.form.get('carVisitorLastName').value
         });
-
+        if (!request.company) {
+            request.company = new Company();
+        }
         request.company.companyNb = this.authService.getCurrentCompany().companyNb;
 
         return request;

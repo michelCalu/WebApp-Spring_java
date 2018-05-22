@@ -19,7 +19,6 @@ export class CreateCompanyComponent implements OnInit {
     ngOnInit() {
         this.municipalities$ = this.municipalityService.getMunicipalities();
 
-        this.company.address.country = 'Belgique';
         this.company.contactPerson = this.authService.getCurrentUser().id;
         this.company.status = 'created';
     }
@@ -33,11 +32,6 @@ export class CreateCompanyComponent implements OnInit {
                 }
             });
 
-        // TODO: delete it is the backend who will create the mandataries
-        // setTimeout(this.companyService.createMandatary(this.company).subscribe(
-        //     data => this.alertService.success('Enregistrement réussi'),
-        //     error => this.alertService.error('Échec dans l\'enregistrement')
-        // ), 3000);
     }
 
 }

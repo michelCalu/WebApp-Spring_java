@@ -14,11 +14,6 @@
 	  <input [(ngModel)]="citizen.nationalRegisterNb" type="text" placeholder="****** *** **" name="nationalRegisterNb" class="form-control" id="nationalRegistreNb" required>
 	  <label for="birthdate">Date de naissance:</label>
 	  <input [(ngModel)]="citizen.birthdate" type="date" placeholder="aaaa-MM-jjTHH:mm" name="birthdate" class="form-control" id="birthdate" required>
-	  <label for="country">Pays:</label>
-      <input [(ngModel)]="citizen.address.country" type="text" placeholder="Ex: Belgique" default="Belgique" name="country" class="form-control" id="country" required>
-      
-	  <!-- <label for="municipality">Commune:</label>
-      <input [(ngModel)]="citizen.address.municipality" type="text" placeholder="Ex: Bruxelles" name="state" class="form-control" id="municipality" required> -->
       <label for="municipality"> Commune:</label>
       <select class="custom-select" [(ngModel)]="citizen.address.municipality" name="municipality" placeholder="Ex: Bruxelles" class="form-control" id="municipality" required>
           <option *ngFor="let municipality of (municipalities$ | async)" [value]="municipality.name"> {{municipality.name}} </option>

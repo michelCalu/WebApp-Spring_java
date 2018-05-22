@@ -5,12 +5,14 @@
         <tr>
             <th scope="col">{{ 'event'| translate}}</th>
             <th scope="col">{{ 'date' | translate}}</th>
+            <th scope="col">{{ 'comment' | translate}}</th>
         </tr>
     </thead>
     <tbody>
         <tr *ngFor="let event of (events$ | async)">
             <th>{{ event.type.description | translate }}</th>
             <td>{{ event.at | date:'dd-MM-yyyy HH:mm' }} </td>
+            <td>{{ event.comment }}</td>
         </tr>
     </tbody>
 </table>
