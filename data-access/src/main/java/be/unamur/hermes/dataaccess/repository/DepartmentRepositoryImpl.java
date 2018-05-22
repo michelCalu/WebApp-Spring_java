@@ -2,6 +2,7 @@ package be.unamur.hermes.dataaccess.repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -87,7 +88,7 @@ public class DepartmentRepositoryImpl implements DepartmentRepository, Applicati
     }
 
     private List<RequestType> getRequestTypeByDepartment(long departmentId) {
-    	return jdbc.queryForList(requestTypeByDepartmentID, new Object[] { departmentId }, RequestType.class);
+    	return buildRequestType(jdbc.queryForList(requestTypeByDepartmentID, departmentId));
 	}
 
     private Department build(ResultSet rs, int row) throws SQLException {
@@ -117,5 +118,15 @@ public class DepartmentRepositoryImpl implements DepartmentRepository, Applicati
         List<RequestType> managedRequestTypes = getRequestTypeByDepartment(id);
         result.setManagedRequestTypes(managedRequestTypes);
         return result;
+    }
+
+    private List<RequestType> buildRequestType(List<Map<String, Object>> requestTypesAsRows) {
+        List<RequestType> requestTypes = new ArrayList<>();
+        for(Map<String, Object> requestTypeRow: requestTypesAsRows){
+            String description = (String) requestTypeRow.get("description");
+            Integer requestTypeID = (Integer) requestTypeRow.get("requestTypeID");
+            requestTypes.add(new RequestType(Integer.toUnsignedLong(requestTypeID),description));
+        }
+        return requestTypes;
     }
 }
