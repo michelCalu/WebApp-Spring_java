@@ -13,13 +13,13 @@
 			<tbody>
 				<tr *ngFor="let mandatary of (mandataries$ | async)">
 					<td>{{mandatary.company.companyName | translate}}</td>
-					<td><button class="btn btn-success" (click)="connectToCompany(mandatary.company)">Se connecter</button></td>
+					<td><button class="btn btn-success" *ngIf="mandatary.company.status == 'active'" (click)="connectToCompany(mandatary.company)">Se connecter</button></td>
 				</tr>
 			</tbody>
         </table>
 		<ng-template #noCompany>
 			<div>Vous n'avez pas de sociétés associées </div>
         </ng-template>
-        
+
 	</div>
 </div>
