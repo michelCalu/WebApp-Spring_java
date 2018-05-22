@@ -44,7 +44,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler imple
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Error> handle(Exception ex) {
 	logger.error(ex.getMessage(), ex);
-	Error error = new Error(HttpStatus.INTERNAL_SERVER_ERROR.value(), ex.getMessage());
+	Error error = new Error(ERROR_UNKNOWN, ex.getMessage());
 	return new ResponseEntity<Error>(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
