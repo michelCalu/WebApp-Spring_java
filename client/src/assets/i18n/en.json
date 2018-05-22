@@ -43,6 +43,7 @@
 
     "logout": "logout",
 
+    "modifyRequest": "modify",
     "mycompanies": "my companies",
     "mycompanyrequests": "requests of company",
     "mydocuments": "my documents",
@@ -92,6 +93,6 @@
     "viewDetails": "view details",
     "viewNationalRegisterDetails": "See national register details",
     "belgium":"Belgium",
-	"goBack":"Go back",
-	"collapse":"Collapse"
+	"goBack":"go back",
+	"collapse":"collapse"
 }

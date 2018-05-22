@@ -45,6 +45,7 @@
 
     "logout": "se déconnecter",
 
+    "modifyRequest": "modifier",
     "mycompanies": "mes sociétés",
     "mycompanyrequests": "demandes de la société",
     "mydocuments": "mes documents",
@@ -97,7 +98,7 @@
     "viewDetails": "voir détails",
     "viewNationalRegisterDetails": "voir détails Registre National",
     "belgium":"Belgique",
-    "goBack":"Retour",
-    "collapse":"Réduire"
+    "goBack":"retour",
+    "collapse":"réduire"
 
 }

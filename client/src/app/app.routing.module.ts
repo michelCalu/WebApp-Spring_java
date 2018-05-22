@@ -17,14 +17,12 @@ import { EmployeeDashboardComponent } from './employee_dashboard';
 import { CreateEmployeeComponent } from './create_employee';
 import { ValidateCitizensComponent } from './validate_citizens/validate_citizens.component';
 import { ValidateCompaniesComponent } from './validate_companies/validate_companies.component';
+import { UpdateRequestComponent } from './updaterequest';
 
 const appRoutes: Routes = [
   // routes protected with AuthGuard
   { path: '', canActivate: [AuthGuard], children: [
       { path: '', component: LoginComponent },
-    //   { path: 'home', component: HomeComponent },
-    //   { path: 'myfolders', component: MyFoldersComponent },
-    //   { path: 'myprofile', component: MyProfileComponent },
       { path: 'createcompany', component: CreateCompanyComponent },
       { path: 'mycompanies', component: MyCompaniesComponent},
       { path: 'myrequests', component: MyRequestsComponent },
@@ -34,7 +32,8 @@ const appRoutes: Routes = [
       { path: 'newrequest/nationality', component: NationalityCertificateCreationComponent},
       { path: 'newrequest/parking', component: ParkingCardCreationComponent},
       { path: 'validate_citizens', component: ValidateCitizensComponent },
-      { path: 'validate_companies', component: ValidateCompaniesComponent }
+      { path: 'validate_companies', component: ValidateCompaniesComponent },
+      { path: 'update_request', component: UpdateRequestComponent }
 
     ] },
   // unprotected routes:

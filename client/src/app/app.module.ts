@@ -15,8 +15,6 @@ import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/index';
 import { JwtInterceptor } from './_helpers/index';
 import { LoginComponent } from './login/index';
-// import { MyFoldersComponent } from './myfolders/index';
-// import { MyProfileComponent } from './myprofile/index';
 import { MyCompaniesComponent } from './mycompanies/index';
 import { MyRequestsComponent } from './myrequests/index';
 import { NationalityCertificateCreationComponent} from './nationality-certificate-creation';
@@ -39,6 +37,7 @@ import { RequestHistoryComponent } from './request-history/request-history.compo
 import { ValidateCompaniesComponent } from './validate_companies';
 import { CompanyDetailComponent } from './company-detail';
 import { BackbuttonComponent } from './backbutton/backbutton.component';
+import { UpdateRequestComponent } from './updaterequest/updaterequest.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -54,8 +53,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     HeaderComponent,
     HomeComponent,
     LoginComponent,
-    // MyFoldersComponent,
-    // MyProfileComponent,
     MyCompaniesComponent,
     MyRequestsComponent,
     EmployeeDashboardComponent,
@@ -74,7 +71,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     RequestHistoryComponent,
     ValidateCompaniesComponent,
     CompanyDetailComponent,
-    BackbuttonComponent
+    BackbuttonComponent,
+    UpdateRequestComponent
   ],
   imports: [
     AppRoutingModule,

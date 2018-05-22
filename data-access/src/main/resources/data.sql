@@ -22,11 +22,11 @@ insert into t_request_field_definitions values("companyParkingCardPlateNumber", 
 insert into t_request_field_definitions values("companyParkingCardGreenCard", 3, "binary", true);
 insert into t_request_field_definitions values("companyParkingCardUserProof", 3, "binary", false);
 
-insert into t_req_statusses values(null,"new");
-insert into t_req_statusses values(null,"ongoing");
-insert into t_req_statusses values(null,"awaitingInfo");
-insert into t_req_statusses values(null,"rejected");
-insert into t_req_statusses values(null,"accepted");
+insert into t_req_statusses values(1,"new");
+insert into t_req_statusses values(2,"ongoing");
+insert into t_req_statusses values(3,"awaitingInfo");
+insert into t_req_statusses values(4,"rejected");
+insert into t_req_statusses values(5,"accepted");
 
 
 insert into t_event_types values(null,"created");
