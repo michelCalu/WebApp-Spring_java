@@ -34,4 +34,9 @@ export class CreateCompanyComponent implements OnInit {
 
     }
 
+    scrollUp() {
+        console.log("onActivate");
+        window.scroll(0,0);
+    }
+
 }
