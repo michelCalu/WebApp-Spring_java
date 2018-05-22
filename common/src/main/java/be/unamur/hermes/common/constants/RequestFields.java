@@ -9,7 +9,6 @@ package be.unamur.hermes.common.constants;
  */
 public interface RequestFields {
 
-    String COMPANY_PLATENUMBER = "citizenParkingCardPlateNumber";
-    String CITIZEN_PLATENUMBER = "companyParkingCardPlateNumber";
-
+    String COMPANY_PLATENUMBER = "companyParkingCardPlateNumber";
+    String CITIZEN_PLATENUMBER = "citizenParkingCardPlateNumber";
 }

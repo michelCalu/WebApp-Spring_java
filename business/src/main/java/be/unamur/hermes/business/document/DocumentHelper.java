@@ -26,7 +26,7 @@ import be.unamur.hermes.dataaccess.entity.User;
  */
 public class DocumentHelper {
 
-    private static final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    static final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     protected final RequestParameters params;
     protected final Request request;

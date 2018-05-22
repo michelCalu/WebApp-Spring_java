@@ -9,10 +9,16 @@ public class Event {
     private LocalDateTime at;
     private long authorId;
     private long requestId;
+    private String comment;
 
     public static Event create(String eventType, long authorId, long requestId) {
-	return new Event(0L, new EventType(0L, eventType), LocalDateTime.now(), authorId, requestId);
-    }
+		return new Event(0L, new EventType(0L, eventType), LocalDateTime.now(), authorId, requestId);
+	}
+
+	public static Event create(String eventType, long authorId, long requestId, String comment) {
+		return new Event(0L, new EventType(0L, eventType), LocalDateTime.now(), authorId, requestId, comment);
+	}
+
 
     public Event() {
     }
@@ -24,6 +30,15 @@ public class Event {
 	this.authorId = authorId;
 	this.requestId = requestId;
     }
+
+	public Event(long id, EventType type, LocalDateTime at, long authorId, long requestId, String comment) {
+		this.id = id;
+		this.type = type;
+		this.at = at;
+		this.authorId = authorId;
+		this.requestId = requestId;
+		this.comment = comment;
+	}
 
     public long getId() {
 	return id;
@@ -61,7 +76,15 @@ public class Event {
 	this.requestId = requestId;
     }
 
-    @Override
+	public String getComment() {
+		return comment;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+
+	@Override
     public int hashCode() {
 	final int prime = 31;
 	int result = 1;

@@ -128,7 +128,7 @@ public class RequestController implements RequestTypes {
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_OFFICER') or #updatedRequest.citizen.id == principal.technicalId")
     @PatchMapping
-    public ResponseEntity<Object> updateAccount(@RequestBody Request updatedRequest) {
+    public ResponseEntity<Object> updateRequest(@RequestBody Request updatedRequest) {
 	requestService.update(updatedRequest);
 	return ResponseEntity.ok().build();
     }

@@ -93,7 +93,8 @@
     "vatNumber": "numéro de TVA",
     "viewDetails": "voir détails",
     "viewNationalRegisterDetails": "voir détails Registre National",
-    "belgium":"Belgique"
-    
+    "belgium":"Belgique",
+    "goBack":"Retour",
+    "collapse":"Réduire"
 
 }

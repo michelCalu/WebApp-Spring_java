@@ -23,4 +23,5 @@
 	  	<button class="btn btn-success" [class.btn-danger]="!inscriptionForm.form.valid"(click)="createCompany()" [disabled]="!inscriptionForm.form.valid">Create</button>
 	</form>
   </div>
+  <backbutton [goBackRoute]="'/myrequests'"></backbutton>
 </div>
