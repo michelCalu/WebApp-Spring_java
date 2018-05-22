@@ -52,6 +52,6 @@ public class AuthenticationController {
 	// token creation
 	String jws = tokenHelper.generateToken(user.getUsername());
 	// Return the token
-	return ResponseEntity.ok(new UserToken(jws, user.getTechnicalId()));
+	return ResponseEntity.ok(new UserToken(jws, user.getTechnicalId(), UserAccount.getRoles(user)));
     }
 }
