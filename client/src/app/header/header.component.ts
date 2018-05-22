@@ -5,7 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-header',
-    templateUrl: './header.component.html',
+    templateUrl: './header.component.html'/*,
     styles: [
         `.angular-logo {
         margin: 0 4px 3px 0;
@@ -19,7 +19,7 @@ import { TranslateService } from '@ngx-translate/core';
         pointer-events:none; //This makes it not clickable
         opacity:0.6;         //This grays it out to look disabled
     }
-    `
+    `*/
     ]
 })
 export class HeaderComponent implements OnInit {
