@@ -22,6 +22,8 @@
     "colour": "Colour",
     "company": "company",
     "companyParkingCard": "Company parking card",
+    "companyStatus.created": "waiting for validation",
+    "companyStatus.active": "validated",
     "connectAsEmployee": "Login as an employee",
     "connectAsCitizen": "Login as a citizen",
     "connectAsCompany": "Login as a company",
