@@ -64,7 +64,6 @@ export class RequestService {
     }
 
     performAction(request: CitizenRequest, action: string, additionalData: Object): Observable<Boolean> {
-        console.log('Performing action ' + action + 'on request : ' + JSON.stringify(request));
         if (action === 'accept') {
             return this.http.patch('/requests', {'id': request.id,
                                                 'status': { 'id': 5, 'name': 'accepted', 'comment': additionalData['comment']}})
@@ -75,8 +74,11 @@ export class RequestService {
                                                     'status': { 'id': 4, 'name': 'rejected', 'comment': additionalData['comment']} })
                 .map(res => true).
                 catch(err => Observable.of(false));
-        } else {
-            this.messageService.error('not implemented');
+        } else if (action === 'requestModification') {
+            return this.http.patch('/requests', { 'id': request.id,
+                                                    'status': { 'id': 3, 'name': 'awaitingInfo', 'comment': additionalData['comment']} })
+                .map(res => true).
+                catch(err => Observable.of(false));
         }
     }
 

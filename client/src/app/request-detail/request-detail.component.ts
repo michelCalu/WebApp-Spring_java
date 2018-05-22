@@ -21,7 +21,7 @@ export class RequestDetailComponent implements OnChanges, OnInit {
     currentUser: User;
     citizen: Citizen;
     selectedAction = 'accept';
-    possibleActions = ['accept', 'reject' /*, TODO 'requestModification'*/];
+    possibleActions = ['accept', 'reject', 'requestModification'];
     comment: string;
 
     constructor(private authService: AuthenticationService, private citizenService: CitizenService,
