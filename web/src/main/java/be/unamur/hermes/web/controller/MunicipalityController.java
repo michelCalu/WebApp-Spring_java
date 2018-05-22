@@ -18,7 +18,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import be.unamur.hermes.business.exception.BusinessException;
 import be.unamur.hermes.business.service.MunicipalityService;
+import be.unamur.hermes.common.exception.Errors;
 import be.unamur.hermes.dataaccess.entity.Municipality;
 
 @RestController
@@ -38,12 +40,7 @@ public class MunicipalityController {
 
     @GetMapping(params = { "!zipCode", "!addressId", "!name" })
     public ResponseEntity<List<Municipality>> getAllMunicipalities() {
-	try {
-	    return ResponseEntity.ok(municipalityService.findAll());
-	} catch (Exception ex) {
-	    logger.error("Get Municipalities failed", ex);
-	    return ResponseEntity.badRequest().build();
-	}
+	return ResponseEntity.ok(municipalityService.findAll());
     }
 
     @GetMapping
@@ -57,7 +54,7 @@ public class MunicipalityController {
 	if (name.isPresent()) {
 	    return ResponseEntity.ok(municipalityService.findByName(name.get()));
 	}
-	return ResponseEntity.badRequest().build();
+	throw new BusinessException(Errors.FAILURE_RESTCALL_PARAMETERS, "No parameters are found!");
     }
 
     @GetMapping(path = "/{municipalityId}")
