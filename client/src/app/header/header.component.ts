@@ -53,6 +53,10 @@ export class HeaderComponent implements OnInit {
     isEmployee(): boolean {
         return this.authService.getCurrentUser().type === 'employee';
     }
+  
+    isAdministrator(): boolean {
+       return this.authService.getCurrentUser().roles.includes('ADMIN');
+    }
 
     switchLanguage() {
         const newLanguage = this.currentLanguage === 'fr' ? 'en' : 'fr';

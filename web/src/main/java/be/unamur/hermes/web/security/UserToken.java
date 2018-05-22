@@ -1,16 +1,23 @@
 package be.unamur.hermes.web.security;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import be.unamur.hermes.common.enums.Authority;
+
 public class UserToken {
 
     private String token;
     private Long id;
+    private List<Authority> roles = new ArrayList<>();
 
     public UserToken() {
     }
 
-    public UserToken(String access_token, Long technicalId) {
+    public UserToken(String access_token, Long technicalId, List<Authority> roles) {
 	this.token = access_token;
 	this.id = technicalId;
+	this.roles = roles;
     }
 
     public String getToken() {
@@ -27,5 +34,13 @@ public class UserToken {
 
     public void setId(Long technicalId) {
 	this.id = technicalId;
+    }
+
+    public List<Authority> getRoles() {
+	return roles;
+    }
+
+    public void setRoles(List<Authority> roles) {
+	this.roles = roles;
     }
 }

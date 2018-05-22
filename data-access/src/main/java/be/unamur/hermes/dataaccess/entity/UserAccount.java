@@ -7,10 +7,13 @@ import java.util.stream.Collectors;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
+import be.unamur.hermes.common.enums.Authority;
 import be.unamur.hermes.common.enums.UserStatus;
 import be.unamur.hermes.common.enums.UserType;
 
 public class UserAccount extends org.springframework.security.core.userdetails.User {
+
+    public static final String ROLES_SEPARATOR = ",";
 
     private static final long serialVersionUID = 1L;
 
@@ -19,12 +22,19 @@ public class UserAccount extends org.springframework.security.core.userdetails.U
     }
 
     public static String getPersistableAuthorities(UserAccount account) {
-	return account.getAuthorities().stream().map(GrantedAuthority::toString).collect(Collectors.joining(","));
+	return account.getAuthorities().stream().map(GrantedAuthority::toString)
+		.collect(Collectors.joining(ROLES_SEPARATOR));
     }
 
     public static List<GrantedAuthority> prepareAuthorities(String persisted) {
-	String[] roles = persisted.split(",");
+	String[] roles = persisted.split(ROLES_SEPARATOR);
 	return Arrays.stream(roles).map(SimpleGrantedAuthority::new).collect(Collectors.toList());
+    }
+
+    public static List<Authority> getRoles(UserAccount account) {
+	// TODO this is ridiculous (I may say so, it is my code)
+	return account.getAuthorities().stream().map(GrantedAuthority::toString).map(Authority::fromString)
+		.collect(Collectors.toList());
     }
 
     private UserStatus status;
