@@ -35,7 +35,7 @@ export class CompanyService {
     // }
 
     public getMandataries(citizenID: number): Observable<Mandatary[]> {
-        return this.http.get<Mandatary[]>(/*this.serverAddress + */ '/mandataries?citizenId=' + citizenID + '&companyStatus=active')
+        return this.http.get<Mandatary[]>(/*this.serverAddress + */ '/mandataries?citizenId=' + citizenID)
             .map(res => {
                 console.log(res);
                 return res;
