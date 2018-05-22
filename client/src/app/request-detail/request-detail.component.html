@@ -14,8 +14,6 @@
         <span [hidden]="request.assignee"> Pour effectuer une action, veuillez assigner la demande d'abord </span>
         <span *ngIf="request.assignee && request.assignee.id !== currentUser.id"> Cette demande est assignée à un(e) de vos collègues, vous ne pouvez pas effectuer d'action </span>
 
-        comment: {{comment}}
-
         <div class="form-group">
             <label for="comment"> Commentaire</label>
             <textarea [(ngModel)]="comment" class="form-control" id="comment" rows="3"></textarea>

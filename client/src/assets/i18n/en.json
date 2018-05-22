@@ -20,6 +20,7 @@
     "citizenParkingCard": "Citizen parking card",
     "closed": "closed",
     "colour": "Colour",
+    "comment": "comment",
     "company": "company",
     "companyParkingCard": "Company parking card",
     "companyStatus.created": "waiting for validation",

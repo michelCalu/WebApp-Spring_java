@@ -22,6 +22,7 @@
     "citizenParkingCard": "Carte de stationnement citoyen",
     "closed": "clôture",
     "colour": "Couleur",
+    "comment": "commentaire",
     "company": "société",
     "companyParkingCard": "Carte de stationnement d'entreprise",
     "companyStatus.created": "en attente de validation",
