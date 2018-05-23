@@ -83,7 +83,7 @@ export class ParkingCardUpdateComponent  extends ParkingCardCreationComponent im
         }
         formData.append(this.userProofCode, userProofFileValue);
 
-        this.requestService.updateRequestWithFileUploads(formData, this.isCompany ? 'companyParkingCard' : 'citizenParkingCard')
+        this.requestService.updateRequestWithFileUploads(this.request.id, formData)
             .subscribe(success => {
                 this.loading = false;
                 if (success) {
