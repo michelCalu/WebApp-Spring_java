@@ -1,1 +1,2 @@
-<parking-card-update *ngIf="(request$ | async) as request" [request]="request"></parking-card-update>
+<parking-card-update *ngIf="request && (request.typeDescription === 'citizenParkingCard' || request.typeDescription === 'companyParkingCard') " [request]="request"></parking-card-update>
+<nationality-certificate-update *ngIf="request && request.typeDescription === 'nationalityCertificate'"></nationality-certificate-update>

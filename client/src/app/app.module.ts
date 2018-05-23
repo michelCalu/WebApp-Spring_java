@@ -39,6 +39,7 @@ import { CompanyDetailComponent } from './company-detail';
 import { BackbuttonComponent } from './backbutton/backbutton.component';
 import { UpdateRequestComponent } from './updaterequest/updaterequest.component';
 import { ParkingCardUpdateComponent } from './parking-card-update';
+import { NationalityCertificateUpdateComponent } from './nationality-certificate-update';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -74,7 +75,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     CompanyDetailComponent,
     BackbuttonComponent,
     UpdateRequestComponent,
-    ParkingCardUpdateComponent
+    ParkingCardUpdateComponent,
+    NationalityCertificateUpdateComponent
   ],
   imports: [
     AppRoutingModule,

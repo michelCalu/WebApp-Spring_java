@@ -10,15 +10,15 @@ import { CitizenRequest } from '../_models/citizen-request.model';
 
 export class UpdateRequestComponent implements OnInit {
 
-    request$: Observable<CitizenRequest>;
+    request: CitizenRequest;
 
     constructor(private route: ActivatedRoute, private requestService: RequestService) { }
 
     ngOnInit() {
-        this.request$ = this.route.paramMap.flatMap( params => {
+        this.route.paramMap.flatMap( params => {
             const requestId = Number(params.get('requestId'));
             return this.requestService.getRequestById(requestId);
-        });
+        }).subscribe(req => this.request = req);
     }
 
 }
