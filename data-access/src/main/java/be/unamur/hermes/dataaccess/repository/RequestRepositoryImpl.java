@@ -59,13 +59,15 @@ public class RequestRepositoryImpl implements RequestRepository {
     private final CitizenRepository citizenRepository;
     private final EmployeeRepository employeeRepository;
     private final RequestFieldRepository requestFieldRepository;
+    private final RequestTypeRepository requestTypeRepository;
     private final DepartmentRepository departmentRepository;
     private final CompanyRepository companyRepository;
 
     @Autowired
     public RequestRepositoryImpl(JdbcTemplate jdbcTemplate, CitizenRepository citizenRepository,
 	    EmployeeRepository employeeRepository, RequestFieldRepository requestFieldRepository,
-	    DepartmentRepository departmentRepository, CompanyRepository companyRepository) {
+	    DepartmentRepository departmentRepository, CompanyRepository companyRepository,
+		RequestTypeRepository requestTypeRepository) {
 	super();
 	this.jdbcTemplate = jdbcTemplate;
 	this.inserter = new SimpleJdbcInsert(jdbcTemplate.getDataSource()).withTableName("t_requests")
@@ -75,6 +77,7 @@ public class RequestRepositoryImpl implements RequestRepository {
 	this.requestFieldRepository = requestFieldRepository;
 	this.departmentRepository = departmentRepository;
 	this.companyRepository = companyRepository;
+	this.requestTypeRepository = requestTypeRepository;
     }
 
     @Override
@@ -122,7 +125,7 @@ public class RequestRepositoryImpl implements RequestRepository {
     @Override
     public long create(Request newRequest) {
 	Map<String, Object> parameters = new HashMap<>();
-	long requestTypeId = findRequestTypeByDescription(newRequest.getTypeDescription()).getId();
+	long requestTypeId = requestTypeRepository.findByDescription(newRequest.getTypeDescription()).getId();
 	parameters.put("requestTypeID", requestTypeId);
 	parameters.put("citizenID", newRequest.getCitizen().getId());
 	if(newRequest.getCompany() != null)
@@ -134,18 +137,6 @@ public class RequestRepositoryImpl implements RequestRepository {
 	parameters.put("userRef", newRequest.getUserRef());
 	parameters.put("municipalityRef", newRequest.getMunicipalityRef());
 	return (Long) inserter.executeAndReturnKey(parameters);
-    }
-
-    @Override
-    public RequestType findRequestTypeByDescription(String description) {
-	return jdbcTemplate.queryForObject(queryRequestTypeByDescription, new Object[] { description },
-		(rs, rowId) -> new RequestType(rs.getLong(1), rs.getString(2)));
-    }
-
-    @Override
-    public RequestType findRequestTypeById(long id) {
-	return jdbcTemplate.queryForObject(queryRequestTypeById, new Object[] { id },
-		(rs, rowId) -> new RequestType(rs.getLong(1), rs.getString(2)));
     }
 
     @Override
@@ -172,7 +163,7 @@ public class RequestRepositoryImpl implements RequestRepository {
 
     private Request fillRequest(ResultSet rs, int rowNum) throws SQLException {
 	Request request = new Request(rs.getLong(1));
-	RequestType reqType = findRequestTypeById(rs.getLong(2));
+	RequestType reqType = requestTypeRepository.findById(rs.getLong(2));
 	request.setTypeDescription(reqType.getDescription());
 	Citizen citizen = citizenRepository.findById(rs.getLong(3));
 	request.setCitizen(citizen);

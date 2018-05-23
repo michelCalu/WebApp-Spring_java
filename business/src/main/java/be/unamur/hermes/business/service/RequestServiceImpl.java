@@ -14,24 +14,14 @@ import be.unamur.hermes.common.constants.EventConstants;
 import be.unamur.hermes.common.constants.RequestTypes;
 import be.unamur.hermes.common.enums.RequestStatusInfo;
 import be.unamur.hermes.common.exception.Errors;
-import be.unamur.hermes.dataaccess.entity.Citizen;
-import be.unamur.hermes.dataaccess.entity.Department;
-import be.unamur.hermes.dataaccess.entity.Event;
-import be.unamur.hermes.dataaccess.entity.Municipality;
-import be.unamur.hermes.dataaccess.entity.Request;
-import be.unamur.hermes.dataaccess.entity.RequestField;
-import be.unamur.hermes.dataaccess.entity.RequestStatus;
-import be.unamur.hermes.dataaccess.entity.RequestType;
-import be.unamur.hermes.dataaccess.entity.UserAccount;
-import be.unamur.hermes.dataaccess.repository.DepartmentRepository;
-import be.unamur.hermes.dataaccess.repository.MunicipalityRepository;
-import be.unamur.hermes.dataaccess.repository.RequestFieldRepository;
-import be.unamur.hermes.dataaccess.repository.RequestRepository;
+import be.unamur.hermes.dataaccess.entity.*;
+import be.unamur.hermes.dataaccess.repository.*;
 
 @Service
 public class RequestServiceImpl implements RequestService, Errors {
 
     private final RequestRepository requestRepository;
+    private final RequestTypeRepository requestTypeRepository;
     private final RequestFieldRepository requestFieldRepository;
     private final MunicipalityRepository municipalityRepository;
     private final DepartmentRepository departmentRepository;
@@ -49,13 +39,14 @@ public class RequestServiceImpl implements RequestService, Errors {
     @Autowired
     public RequestServiceImpl(RequestRepository requestRepository, RequestFieldRepository requestFieldRepository,
 	    MunicipalityRepository municipalityRepository, DepartmentRepository departmentRepository,
-	    DocumentService documentService) {
+	    DocumentService documentService, RequestTypeRepository requestTypeRepository) {
 	super();
 	this.requestRepository = requestRepository;
 	this.requestFieldRepository = requestFieldRepository;
 	this.municipalityRepository = municipalityRepository;
 	this.departmentRepository = departmentRepository;
 	this.documentService = documentService;
+	this.requestTypeRepository = requestTypeRepository;
     }
 
     @Override
@@ -123,11 +114,6 @@ public class RequestServiceImpl implements RequestService, Errors {
     }
 
     @Override
-    public RequestType findRequestTypeByDescription(String description) {
-	return requestRepository.findRequestTypeByDescription(description);
-    }
-
-    @Override
     public List<Request> findByDepartmentId(long departmentId) {
 	return requestRepository.findbyDepartmentId(departmentId);
     }
@@ -145,11 +131,6 @@ public class RequestServiceImpl implements RequestService, Errors {
     @Override
     public List<Request> findByCompanyNb(String companyNb, long requestTypeId) {
 	return requestRepository.findByCompanyNb(companyNb, requestTypeId);
-    }
-
-    @Override
-    public RequestType findRequestTypeById(long id) {
-	return requestRepository.findRequestTypeById(id);
     }
 
     @Override

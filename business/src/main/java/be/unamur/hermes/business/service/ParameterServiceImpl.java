@@ -34,7 +34,7 @@ public class ParameterServiceImpl implements ParameterService, Errors {
     private final ParameterRepository parameterRepository;
 
     @Autowired
-    private RequestService requestService;
+	private RequestTypeService requestTypeService;
 
     @Autowired
     public ParameterServiceImpl(ParameterRepository parameterRepository) {
@@ -64,7 +64,7 @@ public class ParameterServiceImpl implements ParameterService, Errors {
 
     @Override
     public RequestParameters getParameters(long municipalityId, String requestTypeDescription) {
-	RequestType requestType = requestService.findRequestTypeByDescription(requestTypeDescription);
+	RequestType requestType = requestTypeService.findByDescription(requestTypeDescription);
 	if (requestType == null)
 	    throw new BusinessException(MISSING_REQUEST_TYPE, "Unknown requestType : " + requestTypeDescription);
 	return getParameters(municipalityId, requestType.getId());
