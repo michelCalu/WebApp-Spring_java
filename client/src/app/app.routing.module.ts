@@ -33,7 +33,7 @@ const appRoutes: Routes = [
       { path: 'newrequest/parking', component: ParkingCardCreationComponent},
       { path: 'validate_citizens', component: ValidateCitizensComponent },
       { path: 'validate_companies', component: ValidateCompaniesComponent },
-      { path: 'update_request', component: UpdateRequestComponent }
+      { path: 'update_request/:requestId', component: UpdateRequestComponent }
 
     ] },
   // unprotected routes:

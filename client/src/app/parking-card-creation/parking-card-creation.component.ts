@@ -6,7 +6,6 @@ import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 import { RequestField } from "../_models/request-field.model";
 
 @Component({
-    moduleId: module.id,
     templateUrl: 'parking-card-creation.component.html'
 })
 
@@ -15,21 +14,24 @@ import { RequestField } from "../_models/request-field.model";
 export class ParkingCardCreationComponent implements OnInit {
 
     isCompany: boolean;
+    isUpdate = false;
 
     insuranceFileLoaded = false;
     carUserProofLoaded = false;
     form: FormGroup;
     loading = false;
     requestor: Citizen;
+    greenCardCode: string;
+    userProofCode: string;
 
 
     @ViewChild('insuranceCertificateInput') insuranceCertificateInput: ElementRef;
     @ViewChild('userProofInput') userProofInput: ElementRef;
 
     constructor(
-        private router: Router,
-        private requestService: RequestService,
-        private alertService: AlertService,
+        protected router: Router,
+        protected requestService: RequestService,
+        protected alertService: AlertService,
         private fb: FormBuilder,
         private authService: AuthenticationService,
         private citizenService: CitizenService) { }
@@ -56,6 +58,9 @@ export class ParkingCardCreationComponent implements OnInit {
             data => this.requestor = data,
             err => this.alertService.error('Citoyen inconnu'));
 
+        this.greenCardCode = this.isCompany ? 'companyParkingCardGreenCard' : 'citizenParkingCardGreenCard';
+        this.userProofCode = this.isCompany ? 'companyParkingCardUserProof' : 'citizenParkingCardUserProof';
+
     }
 
 
@@ -76,46 +81,12 @@ export class ParkingCardCreationComponent implements OnInit {
     onSubmit() {
         this.loading = true;
 
-        let request = new CitizenRequest();
-        request.typeDescription = this.isCompany ? 'companyParkingCard' : 'citizenParkingCard';
-        request.citizen = this.requestor;
-
-        const carMake: RequestField = {
-            code:  this.isCompany ? 'companyParkingCardCarMake' : 'citizenParkingCardCarMake',
-            fieldType: 'String',
-            fieldValue: this.form.get('carMake').value
-        };
-
-        const carModel: RequestField = {
-            code:  this.isCompany ? 'companyParkingCardCarModel' : 'citizenParkingCardCarModel',
-            fieldType: 'String',
-            fieldValue: this.form.get('carModel').value
-        };
-
-        const carColour: RequestField = {
-            code:  this.isCompany ? 'companyParkingCardCarColour' : 'citizenParkingCardCarColour',
-            fieldType: 'String',
-            fieldValue: this.form.get('colour').value
-        };
-
-        const carRegistrationNumber: RequestField = {
-            code:  this.isCompany ? 'companyParkingCardPlateNumber' : 'citizenParkingCardPlateNumber',
-            fieldType: 'String',
-            fieldValue: this.form.get('carRegistrationNumber').value
-        };
-
-        request.data = [carMake , carModel, carColour, carRegistrationNumber];
-
-        if (this.isCompany) {
-            request = this.addSpecificCompanyData(request);
-        }
+        const request = this.extractRequest();
 
         const formData = new FormData();
         formData.append('request', new Blob([JSON.stringify(request)], { type: 'application/json' }));
-        formData.append(this.isCompany ? 'companyParkingCardGreenCard' : 'citizenParkingCardGreenCard',
-                            this.form.get('insurance_certificate').value);
-        formData.append(this.isCompany ? 'companyParkingCardUserProof' : 'citizenParkingCardUserProof',
-                            this.form.get('car_user_proof').value);
+        formData.append(this.greenCardCode, this.form.get('insurance_certificate').value);
+        formData.append(this.userProofCode, this.form.get('car_user_proof').value);
 
         this.requestService.createRequestWithFileUploads(formData, this.isCompany ? 'companyParkingCard' : 'citizenParkingCard')
             .subscribe(success => {
@@ -142,9 +113,47 @@ export class ParkingCardCreationComponent implements OnInit {
         }
     }
 
-    private addSpecificCompanyData( request: CitizenRequest): CitizenRequest {
+    extractRequest(): CitizenRequest {
+        let request = new CitizenRequest();
+        request.typeDescription = this.isCompany ? 'companyParkingCard' : 'citizenParkingCard';
+        request.citizen = this.requestor;
+
+        const carMake: RequestField = {
+            code: this.isCompany ? 'companyParkingCardCarMake' : 'citizenParkingCardCarMake',
+            fieldType: 'String',
+            fieldValue: this.form.get('carMake').value
+        };
+
+        const carModel: RequestField = {
+            code: this.isCompany ? 'companyParkingCardCarModel' : 'citizenParkingCardCarModel',
+            fieldType: 'String',
+            fieldValue: this.form.get('carModel').value
+        };
+
+        const carColour: RequestField = {
+            code: this.isCompany ? 'companyParkingCardCarColour' : 'citizenParkingCardCarColour',
+            fieldType: 'String',
+            fieldValue: this.form.get('colour').value
+        };
+
+        const carRegistrationNumber: RequestField = {
+            code: this.isCompany ? 'companyParkingCardPlateNumber' : 'citizenParkingCardPlateNumber',
+            fieldType: 'String',
+            fieldValue: this.form.get('carRegistrationNumber').value
+        };
+
+        request.data = [carMake, carModel, carColour, carRegistrationNumber];
+
+        if (this.isCompany) {
+            request = this.addSpecificCompanyData(request);
+        }
+        return request;
+
+    }
+
+    private addSpecificCompanyData(request: CitizenRequest): CitizenRequest {
         request.data.push({
-            code:  'companyParkingCardContactPersonEmail',
+            code: 'companyParkingCardContactPersonEmail',
             fieldType: 'String',
             fieldValue: this.form.get('carContactPersonEmail').value
         });

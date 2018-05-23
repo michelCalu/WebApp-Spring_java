@@ -23,7 +23,7 @@
 					<td>
 						<button class="btn btn-success" (click)="selectedRequest = request">{{'details'| translate}}</button>
                         <button class="btn btn-info" (click)="selectedRequest = null" [disabled]="selectedRequest != request">{{'collapse' | translate}}</button>
-                        <button [hidden]="request.status.name !== 'awaitingInfo'" type="button" class="btn btn-warning"> {{'modifyRequest' | translate }}</button>
+                        <button class="btn btn-warning" (click)="router.navigate(['/update_request/' + request.id])" [disabled]="request.status.name === 'rejected' || request.status.name === 'accepted'"> {{'modifyRequest' | translate }}</button>
 					</td>
 				</tr>
 			</tbody>

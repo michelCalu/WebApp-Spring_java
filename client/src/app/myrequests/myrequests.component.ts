@@ -7,6 +7,7 @@ import { Observable } from 'rxjs/Observable';
 import { CitizenRequest } from '../_models/citizen-request.model';
 import { AuthenticationService } from '../_services/authentication.service';
 import { Company } from '../_models/company.model';
+import { Router } from '@angular/router';
 
 @Component({
     moduleId: module.id,
@@ -21,9 +22,7 @@ export class MyRequestsComponent implements OnInit {
     selectedRequest: CitizenRequest;
     citizenRequestsCreationDates = new Map<number, Date>();
 
-    test: Observable<Date>;
-
-    constructor(private requestService: RequestService, private authService: AuthenticationService) {}
+    constructor(private requestService: RequestService, private authService: AuthenticationService, private router: Router) {}
 
     ngOnInit() {
         const currentUser = this.authService.getCurrentUser();

@@ -27,6 +27,14 @@ export class RequestService {
 
     }
 
+    public updateRequestWithFileUploads(formData: FormData, requestType: String): Observable<boolean> {
+        const header = new HttpHeaders({ 'enctype': 'multipart/form-data' });
+        return this.http.put('/requests?requestType=' + requestType, formData, { headers: header })
+            .map(res => true)
+            .catch(err => Observable.of(false));
+
+    }
+
     getCitizenRequests(citizenID: number): Observable<CitizenRequest[]> {
         return this.http.get<CitizenRequest[]>('/requests?citizenId=' + citizenID)
             .catch(err => {

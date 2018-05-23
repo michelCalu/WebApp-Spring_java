@@ -1,6 +1,6 @@
 <div class="col-md-12 col-md-offset-3" *ngIf="requestor">
     <h1> {{'parkingCard' | translate}}<span *ngIf="isCompany">: {{company | translate}} {{authService.getCurrentCompany().companyName}}</span></h1>
-    <h2>{{ 'newrequest' | translate}}</h2>
+    <h2>{{ (isUpdate ? 'updaterequest' : 'newrequest') | translate}}</h2>
     <div class="row">
         <div class="col-md-6">
             <h2>Informations demandeur</h2>
@@ -48,18 +48,36 @@
 
                 <div class="form-group">
                     <label for="insurance_certificate">{{'insuranceCertificate' | translate}}</label>
-                    <input type="file" id="insurance_certificate" (change)="onFileChange($event, 'insuranceCertificate')" #insuranceCertificateInput required>
-                    <button type="button" class="btn btn-sm btn-default" (click)="clearFile('insuranceCertificate')">clear file</button>
+                    <div *ngIf="isUpdate && hasFile(greenCardCode)">
+                        <!-- in update, manipulate already uploaded file -->
+                        <a href="javascript:;" (click)="download(greenCardCode)">Télécharger</a>
+                        <select class="custom-select" [(ngModel)]="actionGreenCardFile" name="actionGreenCard" class="form-control" [ngModelOptions]="{standalone: true}" required>
+                                <option *ngFor="let action of actions" [value]="action"> {{action | translate}} </option>
+                        </select>
+                    </div>
+                    <div *ngIf="!isUpdate || !hasFile(greenCardCode) || actionGreenCardFile === 'replace'">
+                        <input type="file" id="insurance_certificate" (change)="onFileChange($event, 'insuranceCertificate')" #insuranceCertificateInput required>
+                        <button type="button" class="btn btn-sm btn-default" (click)="clearFile('insuranceCertificate')">clear file</button>
+                    </div>
                 </div>
 
                 <div class="form-group">
                         <label for="user_proof">{{'carUserProof' | translate}}</label>
-                        <input type="file" id="car_user_proof" (change)="onFileChange($event, 'userProof')" #userProofInput>
-                        <button type="button" class="btn btn-sm btn-default" (click)="clearFile('userProof')">clear file</button>
+                        <!-- in update, manipulate already uploaded file -->
+                        <div *ngIf="isUpdate && hasFile(userProofCode)">
+                            <a href="javascript:;" (click)="download(userProofCode)">Télécharger</a>
+                            <select class="custom-select" [(ngModel)]="actionUserProofFile" name="actionUserProof" class="form-control" [ngModelOptions]="{standalone: true}" required>
+                                    <option *ngFor="let action of actions" [value]="action"> {{action | translate}} </option>
+                            </select>                            
+                        </div>
+                        <div *ngIf="!isUpdate || !hasFile(userProofCode) || actionUserProofFile === 'replace'">
+                            <input type="file" id="car_user_proof" (change)="onFileChange($event, 'userProof')" #userProofInput>
+                            <button type="button" class="btn btn-sm btn-default" (click)="clearFile('userProof')">clear file</button>
+                        </div>
                 </div>
 
                 <!-- TODO include awsome font for spinner -->
-                <button type="submit" [disabled]="form.invalid || !insuranceFileLoaded || loading" class="btn btn-success">Submit
+                <button type="submit" [disabled]="form.invalid || (!isUpdate && !insuranceFileLoaded) || loading" class="btn btn-success">Submit
                     <span *ngIf="loading">
                         <i class="fa fa-spinner fa-spin fa-fw">Loading</i>
                     </span>

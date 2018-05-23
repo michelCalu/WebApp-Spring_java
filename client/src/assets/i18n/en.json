@@ -33,6 +33,7 @@
     "createEmployee.title": "Create a new employee",
     "creationDate": "creation date",
 
+    "delete": "delete",
     "documents.service.getError": "Error retrieving the documents",
 
     "employee_dashboard": "employee inbox",
@@ -40,6 +41,8 @@
     "home": "home",
 
     "insuranceCertificate": "Insurance certificate",
+
+    "keep": "keep",
 
     "logout": "logout",
 
@@ -62,6 +65,7 @@
     "reference": "reference",
     "reject": "reject",
     "rejected": "rejected",
+    "replace": "replace",
     "requestDate": "request date",
     "requestModification": "request modification",
     "request.service.assignError": "Cannot assign request",
@@ -85,6 +89,7 @@
     "type": "type",
 
     "updated": "updated",
+    "updaterequest": "update a request",
 
     "validate": "validate",
     "validateCitizens": "validate inscriptions",

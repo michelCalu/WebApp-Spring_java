@@ -38,6 +38,7 @@ import { ValidateCompaniesComponent } from './validate_companies';
 import { CompanyDetailComponent } from './company-detail';
 import { BackbuttonComponent } from './backbutton/backbutton.component';
 import { UpdateRequestComponent } from './updaterequest/updaterequest.component';
+import { ParkingCardUpdateComponent } from './parking-card-update';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -72,7 +73,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     ValidateCompaniesComponent,
     CompanyDetailComponent,
     BackbuttonComponent,
-    UpdateRequestComponent
+    UpdateRequestComponent,
+    ParkingCardUpdateComponent
   ],
   imports: [
     AppRoutingModule,
