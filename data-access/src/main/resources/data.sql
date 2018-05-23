@@ -49,7 +49,7 @@ insert into t_user_accounts values(4,"ROLE_USER,ROLE_OFFICER","myPassword","acti
 insert into t_user_accounts values(5,"ROLE_USER","$2a$10$fg0oXDkagxfaMl7e/i56q.BN2wyRw53WlXIV1MyL.ywbISo4bGVqi","active"); -- michel
 insert into t_user_accounts values(6,"ROLE_ADMIN","$2a$10$4w9Wm8gc93DpDQdyZ7SR5O.17XQMsfElDZRVbKuzaQJVi.0s.5xn.","active"); -- admin
 insert into t_user_accounts values(7,"ROLE_USER,ROLE_OFFICER","$2a$10$4w9Wm8gc93DpDQdyZ7SR5O.17XQMsfElDZRVbKuzaQJVi.0s.5xn.","active");
--- -- -- Generic user accounts (all password : hermes)
+-- -- -- Generic user accounts (all password : Hermes)
 insert into t_user_accounts values(8,"ROLE_USER","$2a$10$rbsCA7cN7vZTcFjV3gN9A.tuNTBlPEOQbOIuPHOW3YTWCM5t0cHd.","active"); -- La Hulpe citizen
 insert into t_user_accounts values(9,"ROLE_USER","$2a$10$rbsCA7cN7vZTcFjV3gN9A.tuNTBlPEOQbOIuPHOW3YTWCM5t0cHd.","active"); -- Bastogne citizen
 insert into t_user_accounts values(10,"ROLE_USER","$2a$10$rbsCA7cN7vZTcFjV3gN9A.tuNTBlPEOQbOIuPHOW3YTWCM5t0cHd.","active"); -- Roux citizen
@@ -116,7 +116,7 @@ insert into t_employees values(5,"Jean","dubois",3,
 																 "admin@admin.com",
 																 "somePhone","22222222222",'1990-01-01',
 																 "someAccountNumber",'2018-04-16','M',"singlz",0,0,7);
--- -- -- Generics employees (all NRN : 90010133333, all phone : 0476/47.73.60)
+-- -- -- Generics employees (all NRN : 900101000 + n° of user account, all phone : 0476/47.73.60)
 insert into t_employees values(6,"Employee-Population","La Hulpe",8,"employeepopulationlahulpe@gmail.com","0476/47.73.60","90010100011",'1990-01-01',"someAccountNumber",'2018-01-01','M',"single",0,0,11);
 insert into t_employees values(7,"Employee-Stationnement","La Hulpe",8,"employeestationnementlahulpe@gmail.com","0476/47.73.60","90010100012",'1990-01-01',"someAccountNumber",'2018-01-01','M',"single",0,0,12);
 insert into t_employees values(8,"Employee-Population","Doische",2,"employeepopulationdoische@gmail.com","0476/47.73.60","90010100013",'1990-01-01',"someAccountNumber",'2018-01-01','M',"single",0,0,13);
