@@ -11,7 +11,8 @@ const PROXY_CONFIG = [
       "/departments",
       "/events",
       "/mandataries",
-      "/companies"
+      "/companies",
+      "/nrn"
     ],
     "target": "http://localhost:8888",
     "secure": false,
