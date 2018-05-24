@@ -115,7 +115,7 @@ public class RequestController implements RequestTypes {
 	    @RequestPart("companyParkingCardGreenCard") @Valid MultipartFile greenCard,
 	    @RequestPart("companyParkingCardUserProof") MultipartFile userProof) {
 	List<MultipartFile> files = Arrays.asList(greenCard, userProof);
-	URI location = createRequest(CITIZEN_PARKING_CARD, newRequest, files);
+	URI location = createRequest(COMPANY_PARKING_CARD, newRequest, files);
 	return ResponseEntity.created(location).build();
     }
 
