@@ -18,7 +18,7 @@ export class CreateEmployeeComponent implements OnInit {
     employee = new Employee();
 
     constructor(private employeeService: EmployeeService, private municipalityService: MunicipalityService,
-        private alertService: AlertService, private router: Router, private translateService: TranslateService) { 
+        private alertService: AlertService, private router: Router, private translateService: TranslateService) {
       this.employee.address.country = translateService.instant('belgium');
     }
 
@@ -42,5 +42,10 @@ export class CreateEmployeeComponent implements OnInit {
     municipalityChange(municipalityID: number) {
         this.departments$ = this.municipalityService.getDepartmentsByMunicipalityId(municipalityID);
         this.selectedDepartmentId = null;
+    }
+
+    scrollUp() {
+        console.log("onActivate");
+        window.scroll(0,0);
     }
 }

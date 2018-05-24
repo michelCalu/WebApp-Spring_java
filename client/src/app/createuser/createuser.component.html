@@ -1,31 +1,32 @@
-<div class="col-md-6">
-  <div class="container">
+<div class="starter-template">
 	<h1>Inscription</h1>
 	<form #inscriptionForm="ngForm">
-	  <label for="firstName">Prénom:</label>
-	  <input [(ngModel)]="citizen.firstName" type="text" placeholder="Prénom" name="firstName" class="form-control" id="firstName" required>
-	  <label for="lastName">Nom:</label>
-	  <input [(ngModel)]="citizen.lastName" type="text" placeholder="Nom" name="lastName" class="form-control" id="lastName" required>
-	  <label for="mail">Mail:</label>
-	  <input [(ngModel)]="citizen.mail" email placeholder="Ex: nom@example.be" name="mail" class="form-control" id="mail" required>
-	  <label for="phone">Phone:</label>
-	  <input [(ngModel)]="citizen.phone" type="text" placeholder="Ex: 0477 22 22 22" name="phone" class="form-control" id="phone" required>
-	  <label for="nationalRegistreNb">Numéro de registre national:</label>
-	  <input [(ngModel)]="citizen.nationalRegisterNb" type="text" placeholder="****** *** **" name="nationalRegisterNb" class="form-control" id="nationalRegistreNb" required>
-	  <label for="birthdate">Date de naissance:</label>
-	  <input [(ngModel)]="citizen.birthdate" type="date" placeholder="aaaa-MM-jjTHH:mm" name="birthdate" class="form-control" id="birthdate" required>
-      <label for="municipality"> Commune:</label>
-      <select class="custom-select" [(ngModel)]="citizen.address.municipality" name="municipality" placeholder="Ex: Bruxelles" class="form-control" id="municipality" required>
-          <option *ngFor="let municipality of (municipalities$ | async)" [value]="municipality.name"> {{municipality.name}} </option>
-      </select>
+		<label for="firstName">Prénom:</label>
+		<input [(ngModel)]="citizen.firstName" type="text" placeholder="Prénom" name="firstName" class="form-control" id="firstName" required>
+		<label for="lastName">Nom:</label>
+		<input [(ngModel)]="citizen.lastName" type="text" placeholder="Nom" name="lastName" class="form-control" id="lastName" required>
+		<label for="mail">Mail:</label>
+		<input [(ngModel)]="citizen.mail" email placeholder="Ex: nom@example.be" name="mail" class="form-control" id="mail" required>
+		<label for="phone">Phone:</label>
+		<input [(ngModel)]="citizen.phone" type="text" placeholder="Ex: 0477 22 22 22" name="phone" class="form-control" id="phone" required>
+		<label for="nationalRegistreNb">Numéro de registre national:</label>
+		<input [(ngModel)]="citizen.nationalRegisterNb" type="text" placeholder="****** *** **" name="nationalRegisterNb" class="form-control" id="nationalRegistreNb" required>
+		<label for="birthdate">Date de naissance:</label>
+		<input [(ngModel)]="citizen.birthdate" type="date" placeholder="aaaa-MM-jjTHH:mm" name="birthdate" class="form-control" id="birthdate" required>
 
-	  <label for="street">Rue:</label>
-	  <input [(ngModel)]="citizen.address.street" type="text" placeholder="Boulevard Anspach" name="street" class="form-control" id="street" required>
-	  <label for="streetNb">Numéro de rue:</label>
-	  <input [(ngModel)]="citizen.address.streetNb" type="text" placeholder="Ex: 42" name="streetNb" class="form-control" id="streetNb">
-	  <label for="password">Mot de passe :</label>
-	  <input [(ngModel)]="citizen.password" type="password" name="password" class="form-control" id="password" required />
-	  <button class="btn btn-success" [class.btn-danger]="!inscriptionForm.form.valid"(click)="createCitizen()" [disabled]="!inscriptionForm.form.valid">Create</button>
-	</form>
-  </div>
+	  <!-- <label for="municipality">Commune:</label>
+	  	<input [(ngModel)]="citizen.address.municipality" type="text" placeholder="Ex: Bruxelles" name="state" class="form-control" id="municipality" required> -->
+	  	<label for="municipality"> Commune:</label>
+	  	<select class="custom-select" [(ngModel)]="citizen.address.municipality" name="municipality" placeholder="Ex: Bruxelles" class="form-control" id="municipality" required>
+	  		<option *ngFor="let municipality of (municipalities$ | async)" [value]="municipality.name"> {{municipality.name}} </option>
+	  	</select>
+
+	  	<label for="street">Rue:</label>
+	  	<input [(ngModel)]="citizen.address.street" type="text" placeholder="Boulevard Anspach" name="street" class="form-control" id="street" required>
+	  	<label for="streetNb">Numéro de rue:</label>
+	  	<input [(ngModel)]="citizen.address.streetNb" type="text" placeholder="Ex: 42" name="streetNb" class="form-control" id="streetNb">
+	  	<label for="password">Mot de passe :</label>
+	  	<input [(ngModel)]="citizen.password" type="password" name="password" class="form-control" id="password" required />
+      <button class="btn btn-success" [class.btn-danger]="!inscriptionForm.form.valid"(click)="createCitizen(); scrollUp()" [disabled]="!inscriptionForm.form.valid">Create</button>
+  	</form>
 </div>

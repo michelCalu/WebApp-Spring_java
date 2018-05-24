@@ -1,82 +1,80 @@
-<div class="col-md-6">
-    <div class="container">
-        <h1> {{ 'createEmployee.title' | translate }}</h1>
-        <form #inscriptionForm="ngForm">
+<div class="starter-template">
+    <h1> {{ 'createEmployee.title' | translate }}</h1>
+    <form #inscriptionForm="ngForm">
 
-            <label for="municipality"> Administration communale :</label>
-            <select class="custom-select" [(ngModel)]="selectedMunicipalityId" (ngModelChange)="municipalityChange($event)" name="municipality" placeholder="Municipality" required>
-                <option *ngFor="let municipality of (municipalities$ | async)" [value]="municipality.id"> {{municipality.name}} </option>
-            </select>
+        <label for="municipality"> Administration communale :</label>
+        <select class="custom-select" [(ngModel)]="selectedMunicipalityId" (ngModelChange)="municipalityChange($event)" name="municipality" placeholder="Municipality" required>
+            <option *ngFor="let municipality of (municipalities$ | async)" [value]="municipality.id"> {{municipality.name}} </option>
+        </select>
 
-            <label for="department"> Département :</label>
-            <select class="custom-select" [(ngModel)]="selectedDepartmentId" name="department" placeholder="Department" required>
-                <option *ngFor="let department of (departments$ | async)" [value]="department.id"> {{department.name}} </option>
-            </select>
+        <label for="department"> Département :</label>
+        <select class="custom-select" [(ngModel)]="selectedDepartmentId" name="department" placeholder="Department" required>
+            <option *ngFor="let department of (departments$ | async)" [value]="department.id"> {{department.name}} </option>
+        </select>
 
-            <label for="firstName">Prénom:</label>
-            <input [(ngModel)]="employee.firstName" type="text" placeholder="Prénom" name="firstName" class="form-control" id="firstName"
-                required>
-            <label for="lastName">Nom:</label>
-            <input [(ngModel)]="employee.lastName" type="text" placeholder="Nom" name="lastName" class="form-control" id="lastName" required>
-            <label for="mail">Mail:</label>
-            <input [(ngModel)]="employee.mail" email placeholder="Ex: nom@example.be" name="mail" class="form-control" id="mail" required>
-            <label for="phone">Phone:</label>
-            <input [(ngModel)]="employee.phone" type="text" placeholder="Ex: 0477 22 22 22" name="phone" class="form-control" id="phone">
-            <label for="nationalRegistreNb">Numéro de registre national:</label>
-            <input [(ngModel)]="employee.nationalRegisterNb" type="text" placeholder="****** *** **" name="nationalRegisterNb" class="form-control"
-                id="nationalRegistreNb" required>
-            <label for="birthdate">Date de naissance:</label>
-            <input [(ngModel)]="employee.birthdate" type="date" placeholder="aaaa-MM-jjTHH:mm" name="birthdate" class="form-control"
-                id="birthdate">
-            <label for="country">Pays:</label>
-            <input [(ngModel)]="employee.address.country" type="text" placeholder="Ex: Belgique" name="country" class="form-control"
-                id="country" required>
-            <label for="municipality">Commune:</label>
-            <input [(ngModel)]="employee.address.municipality" type="text" placeholder="Ex: Bruxelles" name="state" class="form-control"
-                id="municipality" required>
-            <label for="street">Rue:</label>
-            <input [(ngModel)]="employee.address.street" type="text" placeholder="Boulevard Anspach" name="street" class="form-control"
-                id="street" required>
-            <label for="streetNb">Numéro de rue:</label>
-            <input [(ngModel)]="employee.address.streetNb" type="text" placeholder="Ex: 42" name="streetNb" class="form-control" id="streetNb">
-            <label for="zipCode">Code postal</label>
-            <input [(ngModel)]="employee.address.zipCode" type="text" placeholder="Ex: 1000" name="zipCode" class="form-control" id="zipCode"
-                required>
-
+        <label for="firstName">Prénom:</label>
+        <input [(ngModel)]="employee.firstName" type="text" placeholder="Prénom" name="firstName" class="form-control" id="firstName"
+        required>
+        <label for="lastName">Nom:</label>
+        <input [(ngModel)]="employee.lastName" type="text" placeholder="Nom" name="lastName" class="form-control" id="lastName" required>
+        <label for="mail">Mail:</label>
+        <input [(ngModel)]="employee.mail" email placeholder="Ex: nom@example.be" name="mail" class="form-control" id="mail" required>
+        <label for="phone">Phone:</label>
+        <input [(ngModel)]="employee.phone" type="text" placeholder="Ex: 0477 22 22 22" name="phone" class="form-control" id="phone">
+        <label for="nationalRegistreNb">Numéro de registre national:</label>
+        <input [(ngModel)]="employee.nationalRegisterNb" type="text" placeholder="****** *** **" name="nationalRegisterNb" class="form-control"
+        id="nationalRegistreNb" required>
+        <label for="birthdate">Date de naissance:</label>
+        <input [(ngModel)]="employee.birthdate" type="date" placeholder="aaaa-MM-jjTHH:mm" name="birthdate" class="form-control"
+        id="birthdate">
+        <label for="country">Pays:</label>
+        <input [(ngModel)]="employee.address.country" type="text" placeholder="Ex: Belgique" name="country" class="form-control"
+        id="country" required>
+        <label for="municipality">Commune:</label>
+        <input [(ngModel)]="employee.address.municipality" type="text" placeholder="Ex: Bruxelles" name="state" class="form-control"
+        id="municipality" required>
+        <label for="street">Rue:</label>
+        <input [(ngModel)]="employee.address.street" type="text" placeholder="Boulevard Anspach" name="street" class="form-control"
+        id="street" required>
+        <label for="streetNb">Numéro de rue:</label>
+        <input [(ngModel)]="employee.address.streetNb" type="text" placeholder="Ex: 42" name="streetNb" class="form-control" id="streetNb">
+        <label for="zipCode">Code postal</label>
+        <input [(ngModel)]="employee.address.zipCode" type="text" placeholder="Ex: 1000" name="zipCode" class="form-control" id="zipCode"
+        required>
 
 
-            <label for="accountNumber">Numéro de compte</label>
-            <input [(ngModel)]="employee.accountNumber" type="text" name="accountNumber" class="form-control" id="accountNumber" required>
 
-            <label for="arrivalDate">Date d'entrée</label>
-            <input [(ngModel)]="employee.arrivalDate" type="date" name="arrivalDate" class="form-control" id="arrivalDate" required>
+        <label for="accountNumber">Numéro de compte</label>
+        <input [(ngModel)]="employee.accountNumber" type="text" name="accountNumber" class="form-control" id="accountNumber" required>
+
+        <label for="arrivalDate">Date d'entrée</label>
+        <input [(ngModel)]="employee.arrivalDate" type="date" name="arrivalDate" class="form-control" id="arrivalDate" required>
 
 
-            <input [(ngModel)]="employee.gender" type="radio" name="gender" id="male" value="M" required>
-            <label for="male">Homme</label>
-            <input [(ngModel)]="employee.gender" type="radio" name="gender" id="female" value="F" required>
-            <label for="female">Femme</label>
-            <br>
-            <input [(ngModel)]="employee.civilStatus" type="radio" name="civilStatus" id="married" value="married" required>
-            <label for="married">Marié</label>
-            <input [(ngModel)]="employee.civilStatus" type="radio" name="civilStatus" id="bachelor" value="bachelor" required>
-            <label for="married">Célibataire</label>
-            <input [(ngModel)]="employee.civilStatus" type="radio" name="civilStatus" id="other" value="other" required>
-            <label for="married">Autre</label>
-            <br>
+        <input [(ngModel)]="employee.gender" type="radio" name="gender" id="male" value="M" required>
+        <label for="male">Homme</label>
+        <input [(ngModel)]="employee.gender" type="radio" name="gender" id="female" value="F" required>
+        <label for="female">Femme</label>
+        <br>
+        <input [(ngModel)]="employee.civilStatus" type="radio" name="civilStatus" id="married" value="married" required>
+        <label for="married">Marié</label>
+        <input [(ngModel)]="employee.civilStatus" type="radio" name="civilStatus" id="bachelor" value="bachelor" required>
+        <label for="married">Célibataire</label>
+        <input [(ngModel)]="employee.civilStatus" type="radio" name="civilStatus" id="other" value="other" required>
+        <label for="married">Autre</label>
+        <br>
 
-            <label for="dependentChildren">Nb. d'enfants dépendants</label>
-            <input [(ngModel)]="employee.dependentChildren" type="number" name="dependentChildren" class="form-control" id="dependentChildren"
-                required>
+        <label for="dependentChildren">Nb. d'enfants dépendants</label>
+        <input [(ngModel)]="employee.dependentChildren" type="number" name="dependentChildren" class="form-control" id="dependentChildren"
+        required>
 
-            <label for="dependentPeople">Nb. de personnes dépendantes</label>
-            <input [(ngModel)]="employee.dependentPeople" type="number" name="dependentPeople" class="form-control" id="dependentPeople"
-                required>
+        <label for="dependentPeople">Nb. de personnes dépendantes</label>
+        <input [(ngModel)]="employee.dependentPeople" type="number" name="dependentPeople" class="form-control" id="dependentPeople"
+        required>
 
-            <label for="password">Mot de passe :</label>
-            <input [(ngModel)]="employee.password" type="password" name="password" class="form-control" id="password" required />
+        <label for="password">Mot de passe :</label>
+        <input [(ngModel)]="employee.password" type="password" name="password" class="form-control" id="password" required />
 
-            <button class="btn btn-success" [class.btn-danger]="!inscriptionForm.form.valid" (click)="createEmployee()" [disabled]="!inscriptionForm.form.valid">Create</button>
-        </form>
-    </div>
+        <button class="btn btn-success" [class.btn-danger]="!inscriptionForm.form.valid" (click)="createEmployee(); scrollUp()" [disabled]="!inscriptionForm.form.valid">Create</button>
+    </form>
 </div>

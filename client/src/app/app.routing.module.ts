@@ -23,6 +23,9 @@ const appRoutes: Routes = [
   // routes protected with AuthGuard
   { path: '', canActivate: [AuthGuard], children: [
       { path: '', component: LoginComponent },
+      { path: 'home', component: HomeComponent },
+    //   { path: 'myfolders', component: MyFoldersComponent },
+    //   { path: 'myprofile', component: MyProfileComponent },
       { path: 'createcompany', component: CreateCompanyComponent },
       { path: 'mycompanies', component: MyCompaniesComponent},
       { path: 'myrequests', component: MyRequestsComponent },
