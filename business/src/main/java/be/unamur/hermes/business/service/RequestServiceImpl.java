@@ -1,23 +1,32 @@
 package be.unamur.hermes.business.service;
 
-import be.unamur.hermes.business.exception.BusinessException;
-import be.unamur.hermes.common.constants.EventConstants;
-import be.unamur.hermes.common.constants.RequestTypes;
-import be.unamur.hermes.common.enums.RequestStatusInfo;
-import be.unamur.hermes.common.exception.Errors;
-import be.unamur.hermes.dataaccess.entity.*;
-import be.unamur.hermes.dataaccess.repository.DepartmentRepository;
-import be.unamur.hermes.dataaccess.repository.MunicipalityRepository;
-import be.unamur.hermes.dataaccess.repository.RequestFieldRepository;
-import be.unamur.hermes.dataaccess.repository.RequestRepository;
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.Map;
+import be.unamur.hermes.business.exception.BusinessException;
+import be.unamur.hermes.common.constants.EventConstants;
+import be.unamur.hermes.common.constants.RequestTypes;
+import be.unamur.hermes.common.enums.RequestStatusInfo;
+import be.unamur.hermes.common.exception.Errors;
+import be.unamur.hermes.dataaccess.entity.Citizen;
+import be.unamur.hermes.dataaccess.entity.Department;
+import be.unamur.hermes.dataaccess.entity.Event;
+import be.unamur.hermes.dataaccess.entity.Municipality;
+import be.unamur.hermes.dataaccess.entity.Request;
+import be.unamur.hermes.dataaccess.entity.RequestField;
+import be.unamur.hermes.dataaccess.entity.RequestStatus;
+import be.unamur.hermes.dataaccess.entity.RequestType;
+import be.unamur.hermes.dataaccess.entity.UserAccount;
+import be.unamur.hermes.dataaccess.repository.DepartmentRepository;
+import be.unamur.hermes.dataaccess.repository.MunicipalityRepository;
+import be.unamur.hermes.dataaccess.repository.RequestFieldRepository;
+import be.unamur.hermes.dataaccess.repository.RequestRepository;
 
 @Service
 public class RequestServiceImpl implements RequestService, Errors {
@@ -169,7 +178,7 @@ public class RequestServiceImpl implements RequestService, Errors {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void update(Request updatedRequest) throws BusinessException {
+    public Request update(Request updatedRequest) throws BusinessException {
 	Request baseRequest = requestRepository.findById(updatedRequest.getId());
 	// is the request approved/rejected ?
 	if (updatedRequest.getStatus() != null) {
@@ -177,7 +186,6 @@ public class RequestServiceImpl implements RequestService, Errors {
 		throw new BusinessException(INVALID_REQUEST_STATUS, "Unauthorized workflow");
 	    RequestStatus newStatus = updatedRequest.getStatus();
 	    // some statusses need special traitment (document generation)
-
 
 	    if (RequestService.STATUS_ACCEPTED.equalsIgnoreCase(newStatus.getName())) {
 		approve(baseRequest);
@@ -188,7 +196,7 @@ public class RequestServiceImpl implements RequestService, Errors {
 	    requestRepository.updateStatus(updatedRequest);
 	    // ... and create event
 	    createStatusEvent(updatedRequest, baseRequest);
-	    return;
+	    return requestRepository.findById(updatedRequest.getId());
 	}
 
 	if (updatedRequest.getAssignee() != null) {
@@ -197,7 +205,9 @@ public class RequestServiceImpl implements RequestService, Errors {
 	    Event statusEvent = Event.create(EventConstants.TYPE_ASSIGNEE_CHANGE, userAccountId,
 		    updatedRequest.getId());
 	    eventService.create(statusEvent);
+	    requestRepository.findById(updatedRequest.getId());
 	}
+	return requestRepository.findById(updatedRequest.getId());
     }
 
     /**
@@ -233,56 +243,52 @@ public class RequestServiceImpl implements RequestService, Errors {
     }
 
     private void createStatusEvent(Request updatedRequest, Request baseRequest) {
-		RequestStatusInfo newStatusInfo = RequestStatusInfo.getStatusFor(updatedRequest.getStatus().getName());
-		RequestStatusInfo oldStatusInfo = RequestStatusInfo.getStatusFor(baseRequest.getStatus().getName());
-		boolean isCitizenInitiated = newStatusInfo.isCitizenInitiated(oldStatusInfo);
-		long userAccountId;
-		if (isCitizenInitiated) {
-			userAccountId = citizenService.findAccount(baseRequest.getCitizen().getId()).getAccountUserId();
-		} else {
-			userAccountId = employeeService.findAccount(baseRequest.getAssignee().getNationalRegisterNb())
-				.getAccountUserId();
-		}
+	RequestStatusInfo newStatusInfo = RequestStatusInfo.getStatusFor(updatedRequest.getStatus().getName());
+	RequestStatusInfo oldStatusInfo = RequestStatusInfo.getStatusFor(baseRequest.getStatus().getName());
+	boolean isCitizenInitiated = newStatusInfo.isCitizenInitiated(oldStatusInfo);
+	long userAccountId;
+	if (isCitizenInitiated) {
+	    userAccountId = citizenService.findAccount(baseRequest.getCitizen().getId()).getAccountUserId();
+	} else {
+	    userAccountId = employeeService.findAccount(baseRequest.getAssignee().getNationalRegisterNb())
+		    .getAccountUserId();
+	}
 
-		Event statusEvent;
-		if(updatedRequest.getStatus().getName().equals(RequestService.STATUS_REJECTED)){
-		    System.out.println("--> DEBUG: eventtype:"+newStatusInfo.getEventType());
-			statusEvent = Event.create(newStatusInfo.getEventType(), userAccountId, updatedRequest.getId(), updatedRequest.getStatus().getComment());
-		}else{
-			statusEvent = Event.create(newStatusInfo.getEventType(), userAccountId, updatedRequest.getId());
-		}
-		eventService.create(statusEvent);
+	String comment = updatedRequest.getStatus() == null ? null : updatedRequest.getStatus().getComment();
+	Event statusEvent = Event.create(newStatusInfo.getEventType(), userAccountId, updatedRequest.getId(), comment);
+
+	eventService.create(statusEvent);
     }
 
     private Department findRequestDepartment(Request request) {
-		Citizen citizen = request.getCitizen();
-		Municipality citizenMunicipality = municipalityRepository.findByName(citizen.getAddress().getMunicipality());
-		List<Department> municipalityDepartments = departmentRepository
-			.findByMunicipalityId(citizenMunicipality.getId());
+	Citizen citizen = request.getCitizen();
+	Municipality citizenMunicipality = municipalityRepository.findByName(citizen.getAddress().getMunicipality());
+	List<Department> municipalityDepartments = departmentRepository
+		.findByMunicipalityId(citizenMunicipality.getId());
 
-		for(Department department: municipalityDepartments){
-			List<RequestType> departmentRequestTypes = department.getManagedRequestTypes();
-			for(RequestType requestType: departmentRequestTypes){
-				if(requestType.getDescription().equals(request.getTypeDescription())){
-					return department;
-				}
-			}
+	for (Department department : municipalityDepartments) {
+	    List<RequestType> departmentRequestTypes = department.getManagedRequestTypes();
+	    for (RequestType requestType : departmentRequestTypes) {
+		if (requestType.getDescription().equals(request.getTypeDescription())) {
+		    return department;
 		}
+	    }
+	}
 
-		throw new BusinessException(FAILURE_DATABASE_RETRIEVAL,
-				"The request type is not managed by any department of the municipality.");
+	throw new BusinessException(FAILURE_DATABASE_RETRIEVAL,
+		"The request type is not managed by any department of the municipality.");
     }
 
     private String generateSystemRef(Request request) {
-		String citizenNRN = request.getCitizen().getNationalRegisterNb();
-		String nbOfCreatedRequest = Integer
-			.toString(requestRepository.findByCitizen(request.getCitizen().getId()).size());
-		return "REQ_" + citizenNRN + "_" + nbOfCreatedRequest;
+	String citizenNRN = request.getCitizen().getNationalRegisterNb();
+	String nbOfCreatedRequest = Integer
+		.toString(requestRepository.findByCitizen(request.getCitizen().getId()).size());
+	return "REQ_" + citizenNRN + "_" + nbOfCreatedRequest;
     }
 
     private String generateMunicipalityRef(Request request) {
-		Municipality municipality = request.getDepartment().getMunicipality();
-		String nbOfCreatedRequest = Integer.toString(requestRepository.findbyDepartmentId(municipality.getId()).size());
-		return "REQ_" + municipality.getName().replaceAll("\\s+", "") + "_" + nbOfCreatedRequest;
+	Municipality municipality = request.getDepartment().getMunicipality();
+	String nbOfCreatedRequest = Integer.toString(requestRepository.findbyDepartmentId(municipality.getId()).size());
+	return "REQ_" + municipality.getName().replaceAll("\\s+", "") + "_" + nbOfCreatedRequest;
     }
 }

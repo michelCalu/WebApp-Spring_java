@@ -19,6 +19,7 @@ import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -126,11 +127,11 @@ public class RequestController implements RequestTypes {
 	return ResponseEntity.created(location).build();
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_OFFICER') or #updatedRequest.citizen.id == principal.technicalId")
+    @PostAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_OFFICER') or returnObject.citizen.id == principal.technicalId")
     @PatchMapping
-    public ResponseEntity<Object> updateRequest(@RequestBody Request updatedRequest) {
-	requestService.update(updatedRequest);
-	return ResponseEntity.ok().build();
+    public ResponseEntity<Request> updateRequest(@RequestBody Request updatedRequest) {
+	Request result = requestService.update(updatedRequest);
+	return ResponseEntity.ok(result);
     }
 
     private URI createRequest(String requestType, Request newRequest, List<MultipartFile> files) {

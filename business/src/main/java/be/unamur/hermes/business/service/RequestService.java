@@ -37,6 +37,6 @@ public interface RequestService {
 
     RequestField findRequestFieldByCode(long requestId, String code);
 
-    void update(Request request) throws BusinessException;
+    Request update(Request request) throws BusinessException;
 
 }
