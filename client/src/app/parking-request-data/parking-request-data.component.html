@@ -7,17 +7,17 @@
 </ul>
 
 <h2> Informations du véhicule </h2>
-
+is company request : {{isCompanyRequest}}
 <ul class="list-group">
-    <li class="list-group-item"> Marque : {{ carData[company ? 'companyParkingCardCarMake': 'citizenParkingCardCarMake'] }}</li>
-    <li class="list-group-item"> Modèle : {{ carData[company ? 'companyParkingCardCarModel':'citizenParkingCardCarModel'] }}</li>
-    <li class="list-group-item"> Couleur : {{ carData[company ? 'companyParkingCardCarColour': 'citizenParkingCardCarColour'] }}</li>
-    <li class="list-group-item"> Matricule : {{ carData[company ? 'companyParkingCardPlateNumber' : 'citizenParkingCardPlateNumber'] }}</li>
-    <li *ngIf="company" class="list-group-item">Utilisateur: {{carData['companyParkingCardUserFirstName'] + ' ' + carData['companyParkingCardUserLastName']}} </li>
+    <li class="list-group-item"> Marque : {{ carData[isCompanyRequest ? 'companyParkingCardCarMake': 'citizenParkingCardCarMake'] }}</li>
+    <li class="list-group-item"> Modèle : {{ carData[isCompanyRequest ? 'companyParkingCardCarModel':'citizenParkingCardCarModel'] }}</li>
+    <li class="list-group-item"> Couleur : {{ carData[isCompanyRequest ? 'companyParkingCardCarColour': 'citizenParkingCardCarColour'] }}</li>
+    <li class="list-group-item"> Matricule : {{ carData[isCompanyRequest ? 'companyParkingCardPlateNumber' : 'citizenParkingCardPlateNumber'] }}</li>
+    <li *ngIf="isCompanyRequest" class="list-group-item">Utilisateur: {{carData['companyParkingCardUserFirstName'] + ' ' + carData['companyParkingCardUserLastName']}} </li>
 
 
-    <li class="list-group-item" *ngIf="hasGreenCardFile()" > Carte d'assurance :<a href="javascript:;"(click)="downloadFile(company?'companyParkingCardGreenCard' : 'citizenParkingCardGreenCard')"> Télécharger </a></li>    
-    <li class="list-group-item" *ngIf="hasUserProofFile()" > Preuve de titularité de l'utilisateur :<a href="javascript:;"(click)="downloadFile(company?'companyParkingCardUserProof' : 'citizenParkingCardUserProof')"> Télécharger </a></li>    
+    <li class="list-group-item" *ngIf="hasGreenCardFile()" > Carte d'assurance :<a href="javascript:;"(click)="downloadFile(isCompanyRequest?'companyParkingCardGreenCard' : 'citizenParkingCardGreenCard')"> Télécharger </a></li>    
+    <li class="list-group-item" *ngIf="hasUserProofFile()" > Preuve de titularité de l'utilisateur :<a href="javascript:;"(click)="downloadFile(isCompanyRequest?'companyParkingCardUserProof' : 'citizenParkingCardUserProof')"> Télécharger </a></li>    
 
 
 </ul>

@@ -7,20 +7,16 @@ import { RequestService, AuthenticationService } from '../_services';
     templateUrl: 'parking-request-data.component.html'
 })
 
-export class ParkingRequestDataComponent implements OnChanges, OnInit {
+export class ParkingRequestDataComponent implements OnChanges {
 
     @Input()
     request: CitizenRequest;
 
     carData = new Map<string, Object>();
     carFilesData = new Map<string, Object>();
-    company: Company;
+    isCompanyRequest: boolean;
 
     constructor(private requestService: RequestService, private authService: AuthenticationService) { }
-
-    ngOnInit() {
-        this.company = this.authService.getCurrentCompany();
-    }
 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes['request']) {
@@ -31,6 +27,7 @@ export class ParkingRequestDataComponent implements OnChanges, OnInit {
                     this.carFilesData[field.code] = field;
                 }
             }
+            this.isCompanyRequest = this.request.typeDescription === 'companyParkingCard';
         }
     }
 
@@ -42,12 +39,12 @@ export class ParkingRequestDataComponent implements OnChanges, OnInit {
     }
 
     hasGreenCardFile(): boolean {
-        const greenCardCode = this.company ? 'companyParkingCardGreenCard' : 'citizenParkingCardGreenCard';
+        const greenCardCode = this.isCompanyRequest ? 'companyParkingCardGreenCard' : 'citizenParkingCardGreenCard';
         return this.carFilesData[greenCardCode] && this.carFilesData[greenCardCode]['fieldFile'];
     }
 
     hasUserProofFile(): boolean {
-        const userProofCode = this.company ? 'companyParkingCardUserProof' : 'citizenParkingCardUserProof';
+        const userProofCode = this.isCompanyRequest ? 'companyParkingCardUserProof' : 'citizenParkingCardUserProof';
         return this.carFilesData[userProofCode] && this.carFilesData[userProofCode]['fieldFile'];
     }
 
