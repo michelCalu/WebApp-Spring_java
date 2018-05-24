@@ -1,7 +1,7 @@
 <div class="starter-template">
 	<h1>Mes sociétés</h1>
     <br>
-    <button class="btn btn-success" *ngIf="currentCompany" (click)="disconnectFromCompany()">Se déconnecter de {{currentCompany.companyName}}</button>
+    <button class="btn btn-outline-success my-2 my-sm-0" *ngIf="currentCompany" (click)="disconnectFromCompany()">Se déconnecter de {{currentCompany.companyName}}</button>
 	<table *ngIf="(mandataries$ | async)?.length; else noCompany" class="table table-striped">
 		<thead>
 			<tr>
@@ -12,7 +12,7 @@
 		<tbody>
 			<tr *ngFor="let mandatary of (mandataries$ | async)">
 				<td>{{mandatary.company.companyName | translate}}</td>
-				<td><button class="btn btn-success" *ngIf="mandatary.company.status == 'active'" (click)="connectToCompany(mandatary.company)">Se connecter</button></td>
+				<td><button class="btn btn-outline-success my-2 my-sm-0" *ngIf="mandatary.company.status == 'active'" (click)="connectToCompany(mandatary.company)">Se connecter</button></td>
 			</tr>
 		</tbody>
     </table>

@@ -11,7 +11,7 @@
             <tr *ngFor="let document of documents">
                 <th> {{document.documentTitle}} </th>
                 <td>
-                    <button class="btn btn-success" (click)="downloadDocument(document.documentID, document.documentTitle)"> Télécharger </button>
+                    <button class="btn btn-outline-success my-2 my-sm-0" (click)="downloadDocument(document.documentID, document.documentTitle)"> Télécharger </button>
                 </td>
             </tr>
         </tbody>

@@ -21,7 +21,7 @@
   		<input [(ngModel)]="company.address.street" type="text" placeholder="Boulevard Anspach" name="street" class="form-control" id="street" required>
   		<label for="streetNb">Numéro de rue:</label>
   		<input [(ngModel)]="company.address.streetNb" type="text" placeholder="Ex: 42" name="streetNb" class="form-control" id="streetNb">
-  		<button class="btn btn-success" [class.btn-danger]="!inscriptionForm.form.valid"(click)="createCompany(); scrollUp()" [disabled]="!inscriptionForm.form.valid">Create</button>
+  		<button class="btn btn-outline-success my-2 my-sm-0" [class.btn-outline-danger]="!inscriptionForm.form.valid"(click)="createCompany(); scrollUp()" [disabled]="!inscriptionForm.form.valid">Create</button>
   	</form>
-  	<backbutton [goBackRoute]="'/myrequests'"></backbutton>
+  	<backbutton class="btn-outline-danger" [goBackRoute]="'/myrequests'"></backbutton>
 </div>

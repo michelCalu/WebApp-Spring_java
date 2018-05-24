@@ -68,7 +68,7 @@
                             <a href="javascript:;" (click)="download(userProofCode)">Télécharger</a>
                             <select class="custom-select" [(ngModel)]="actionUserProofFile" name="actionUserProof" class="form-control" [ngModelOptions]="{standalone: true}" required>
                                     <option *ngFor="let action of actions" [value]="action"> {{action | translate}} </option>
-                            </select>                            
+                            </select>
                         </div>
                         <div *ngIf="!isUpdate || !hasFile(userProofCode) || actionUserProofFile === 'replace'">
                             <input type="file" id="car_user_proof" (change)="onFileChange($event, 'userProof')" #userProofInput>
@@ -77,7 +77,7 @@
                 </div>
 
                 <!-- TODO include awsome font for spinner -->
-                <button type="submit" [disabled]="form.invalid || (!isUpdate && !insuranceFileLoaded) || loading" class="btn btn-success">Submit
+                <button type="submit" [disabled]="form.invalid || !insuranceFileLoaded || loading" class="btn btn-outline-success my-2 my-sm-0">Submit
                     <span *ngIf="loading">
                         <i class="fa fa-spinner fa-spin fa-fw">Loading</i>
                     </span>

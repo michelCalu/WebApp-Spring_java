@@ -14,8 +14,8 @@
 				<tr *ngFor="let company of (pendingCompanies$ | async)">
                     <td> {{ company.companyName }}</td>
                     <td> {{ company.vatNb }} </td>
-                    <td><button class="btn btn-success" (click)="selectedCompany = company">{{'viewDetails'| translate}}</button></td>
-                    <td><button class="btn btn-success" (click)="validate(company)"> {{'validate' | translate}}</button></td>
+                    <td><button class="btn btn-outline-success my-2 my-sm-0" (click)="selectedCompany = company">{{'viewDetails'| translate}}</button></td>
+                    <td><button class="btn btn-outline-success my-2 my-sm-0" (click)="validate(company)"> {{'validate' | translate}}</button></td>
 				</tr>
 			</tbody>
 		</table>

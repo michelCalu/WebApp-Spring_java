@@ -27,6 +27,6 @@
 	  	<input [(ngModel)]="citizen.address.streetNb" type="text" placeholder="Ex: 42" name="streetNb" class="form-control" id="streetNb">
 	  	<label for="password">Mot de passe :</label>
 	  	<input [(ngModel)]="citizen.password" type="password" name="password" class="form-control" id="password" required />
-      <button class="btn btn-success" [class.btn-danger]="!inscriptionForm.form.valid"(click)="createCitizen(); scrollUp()" [disabled]="!inscriptionForm.form.valid">Create</button>
+	  	<button class="btn btn-outline-success my-2 my-sm-0" [class.btn-outline-danger]="!inscriptionForm.form.valid"(click)="createCitizen(); scrollUp()" [disabled]="!inscriptionForm.form.valid">Create</button>
   	</form>
 </div>

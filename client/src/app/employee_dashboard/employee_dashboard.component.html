@@ -19,8 +19,8 @@
                 <td> {{ requestsCreationDates[request.id] | date:'dd/MM/yy HH:mm' }}</td>
                 <td> {{ request.status.name | translate }}</td> 
                 <td> {{ request.assignee ? (request.assignee.firstName + ' ' + request.assignee.lastName) : '' }} </td>
-                <td><button class="btn btn-success" (click)="selectedRequest = request">{{'details'| translate}}</button></td>
-                <td><button class="btn btn-success" [disabled] = "request.assignee" (click)="assign(request)">{{'assignThisRequest'| translate}}</button></td>
+                <td><button class="btn btn-outline-success my-2 my-sm-0" (click)="selectedRequest = request">{{'details'| translate}}</button></td>
+                <td><button class="btn btn-outline-success my-2 my-sm-0" [disabled] = "request.assignee" (click)="assign(request)">{{'assignThisRequest'| translate}}</button></td>
 			</tr>
 		</tbody>
 	</table>
