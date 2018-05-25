@@ -23,5 +23,5 @@
   		<input [(ngModel)]="company.address.streetNb" type="text" placeholder="Ex: 42" name="streetNb" class="form-control" id="streetNb">
   		<button class="btn btn-outline-success my-2 my-sm-0" [class.btn-outline-danger]="!inscriptionForm.form.valid"(click)="createCompany(); scrollUp()" [disabled]="!inscriptionForm.form.valid">Create</button>
   	</form>
-  	<backbutton class="btn-outline-danger" [goBackRoute]="'/myrequests'"></backbutton>
+  	<backbutton [goBackRoute]="'/myrequests'"></backbutton>
 </div>
