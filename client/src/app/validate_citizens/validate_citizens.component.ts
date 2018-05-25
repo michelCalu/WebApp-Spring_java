@@ -23,6 +23,7 @@ export class ValidateCitizensComponent implements OnInit {
         this.citizenService.validateCitizenAccount(citizen).subscribe(success => {
             if (success) {
                 this.pendingCitizens$ = this.citizenService.getPendingCitizens();
+                this.selectedCitizen = null;
             }
         });
     }
