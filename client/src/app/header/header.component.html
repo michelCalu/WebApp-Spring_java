@@ -1,31 +1,38 @@
-<div *ngIf="isLoggedIn$ | async as isLoggedIn; else logout">
-    <ul class="nav nav-tabs">
-            
-        <!-- CITIZEN -->
-        <li class="nav-item" [hidden]="!isCitizen()"><a class="nav-link" routerLink="newrequest">{{'newrequest' | translate}}</a></li>
-        <li class="nav-item" [hidden]="!isCitizen()"><a class="nav-link" routerLink="myrequests">{{'myrequests' | translate}}</a></li>
-        <!-- <li class="nav-item" [hidden]="!isCitizen()"><a class="nav-link" routerLink="myfolders">{{'mydocuments' | translate}}</a></li>
-        <li class="nav-item" [hidden]="!isCitizen()"><a class="nav-link" routerLink="myprofile">{{'myprofile' | translate}}</a></li> -->
-        <li class="nav-item" [hidden]="!isCitizen()"><a class="nav-link" routerLink="createcompany">{{'createCompany' | translate}}</a></li>
-        <li class="nav-item" [hidden]="!isCitizen()"><a class="nav-link" routerLink="mycompanies">{{'mycompanies' | translate}}</a></li>
+<nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse fixed-top">
+    <div *ngIf="isLoggedIn$ | async as isLoggedIn; else logout">
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav mr-auto">
 
-        <!-- EMPLOYEE -->
-        <li class="nav-item" [hidden]="!isEmployee()"><a class="nav-link" routerLink="employee_dashboard">{{'employee_dashboard' | translate}}</a></li>
-        <li class="nav-item" [hidden]="!isEmployee()"><a class="nav-link" routerLink="validate_citizens">{{'validateCitizens' | translate}}</a></li>
-        <li class="nav-item" [hidden]="!isEmployee()"><a class="nav-link" routerLink="validate_companies">{{'validateCompanies' | translate}}</a></li>
-        <li class="nav-item" [hidden]="!isAdministrator()"><a class="nav-link" routerLink="create_employee">{{'create_employee' | translate}}</a></li>
+                <!-- CITIZEN -->
+                <li class="nav-item" [hidden]="!isCitizen()"><a class="nav-link" routerLink="newrequest">{{'newrequest' | translate}}</a></li>
+                <li class="nav-item" [hidden]="!isCitizen()"><a class="nav-link" routerLink="myrequests">{{'myrequests' | translate}}</a></li>
+                <!-- <li class="nav-item" [hidden]="!isCitizen()"><a class="nav-link" routerLink="myfolders">{{'mydocuments' | translate}}</a></li>
+                <li class="nav-item" [hidden]="!isCitizen()"><a class="nav-link" routerLink="myprofile">{{'myprofile' | translate}}</a></li> -->
+                <li class="nav-item" [hidden]="!isCitizen()"><a class="nav-link" routerLink="createcompany">{{'createCompany' | translate}}</a></li>
+                <li class="nav-item" [hidden]="!isCitizen()"><a class="nav-link" routerLink="mycompanies">{{'mycompanies' | translate}}</a></li>
 
-        <!-- ALL -->
-        <li class="nav-item"><a class="nav-link" routerLink="home" (click)="onLogout()">{{'logout' | translate}}</a></li>
-        <li class="nav-item"><a class="nav-link" (click)="switchLanguage()"> {{currentLanguage === 'fr' ? 'en' : 'fr'}}</a></li>        
-    </ul>
-    <span *ngIf="authService.getCurrentCompany()">société actuelle: {{authService.getCurrentCompany().companyName}}</span>
-</div>
+                <!-- EMPLOYEE -->
+                <li class="nav-item" [hidden]="!isEmployee()"><a class="nav-link" routerLink="employee_dashboard">{{'employee_dashboard' | translate}}</a></li>
+                <li class="nav-item" [hidden]="!isEmployee()"><a class="nav-link" routerLink="validate_citizens">{{'validateCitizens' | translate}}</a></li>
+                <li class="nav-item" [hidden]="!isEmployee()"><a class="nav-link" routerLink="validate_companies">{{'validateCompanies' | translate}}</a></li>
+                <li class="nav-item" [hidden]="!isEmployee()"><a class="nav-link" routerLink="create_employee">{{'create_employee' | translate}}</a></li>
+
+                <!-- ALL -->
+                <li class="nav-item"><a class="nav-link" routerLink="home" (click)="onLogout()">{{'logout' | translate}}</a></li>
+                <li class="nav-item"><a class="nav-link" (click)="switchLanguage()"> {{currentLanguage === 'fr' ? 'en' : 'fr'}}</a></li>
+                <li class="nav-item"><a class="nav-link disabled"> {{getUserInformation()}} </a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
 
 <ng-template #logout>
-    <ul class="nav nav-tabs">
-        <!-- <li class="nav-item"><a class="nav-link" routerLink="home">{{'home' | translate}}</a></li> -->
-        <li class="nav-item"><a class="nav-link" routerLink="createuser">{{'signup' | translate}}</a></li>
-        <li class="nav-item"><a class="nav-link" routerLink="login">{{'signin' | translate}}</a></li>
-    </ul>
+    <div class="collapse navbar-collapse">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item"><a class="nav-link" routerLink="home">{{'home' | translate}}</a></li>
+            <li class="nav-item"><a class="nav-link" routerLink="createuser">{{'signup' | translate}}</a></li>
+            <li class="nav-item"><a class="nav-link" routerLink="login">{{'signin' | translate}}</a></li>
+
+        </ul>
+    </div>
 </ng-template>

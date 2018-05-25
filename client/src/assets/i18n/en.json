@@ -36,6 +36,7 @@
     "delete": "delete",
     "documents.service.getError": "Error retrieving the documents",
 
+    "employee": "employee",
     "employee_dashboard": "employee inbox",
 
     "home": "home",

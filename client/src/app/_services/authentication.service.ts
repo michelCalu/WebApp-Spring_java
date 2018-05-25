@@ -11,6 +11,8 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { TranslateService } from '@ngx-translate/core';
 import { Company } from '../_models/company.model';
+import { CitizenService } from './citizen.service';
+import { EmployeeService } from './employee.service';
 
 @Injectable()
 export class AuthenticationService {
@@ -23,7 +25,8 @@ export class AuthenticationService {
         return this.loggedIn$.asObservable();
     }
 
-    constructor(private http: HttpClient, private messageService: AlertService, private translateService: TranslateService) { }
+    constructor(private http: HttpClient, private messageService: AlertService, private translateService: TranslateService,
+                private citizenService: CitizenService, private employeeService: EmployeeService) { }
 
     login(username: string, password: string, type: string): Observable<boolean> {
         const enriched = username + (type === 'employee' ? '_empl' : '_ctz');
@@ -39,6 +42,7 @@ export class AuthenticationService {
                     user.type = type;
                     // store user details and jwt token in local storage to keep user logged in between page refreshes
                     sessionStorage.setItem('currentUser', JSON.stringify(user));
+                    this.addUserInfo(user.type, user.id);
                     return true;
                 } else {
                     return false;
@@ -49,6 +53,20 @@ export class AuthenticationService {
                 return Observable.of(false);
             });
 
+    }
+
+    private addUserInfo (userType: string, userId: number): void {
+        let userData$;
+        if (userType === 'citizen') {
+            userData$ = this.citizenService.getCitizenById(userId);
+        } else if (userType === 'employee') {
+            userData$ = this.employeeService.getEmployeeById(userId);
+        }
+        userData$.subscribe(userData => {
+            const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+            currentUser['userData'] = userData;
+            sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
+        });
     }
 
     logout() {

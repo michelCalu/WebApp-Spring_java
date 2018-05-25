@@ -1,40 +1,37 @@
-<div class="col-md-9 col-md-offset-3">
+<div class="starter-template">
     <h1 [hidden]="currentCompany">{{'myrequests' | translate}}</h1>
-    <h1 *ngIf="currentCompany">{{'mycompanyrequests' | translate}}: {{currentCompany.companyName}}</h1>    
+    <h1 *ngIf="currentCompany">{{'mycompanyrequests' | translate}}: {{currentCompany.companyName}}</h1>
 	<br>
 	<br>
-	<div class="container">
-		<table *ngIf="(citizenRequests$ | async)?.length; else noRequests" class="table table-striped">
-			<thead>
-				<tr>
-					<th scope="col">{{'type' | translate}}</th>
-					<th scope="col">{{'reference' | translate}}</th>
-                    <th scope="col">{{'status' | translate}}</th>
-                    <th scope="col">{{'creationDate' | translate}}</th>
-					<th scope="col">{{'actions' | translate}}</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr *ngFor="let request of (citizenRequests$ | async)">
-					<th>{{request.typeDescription | translate}}</th>
-					<td>{{ request.userRef }}</td>
-                    <td>{{request.status.name | translate}}</td>
-                    <td> {{ citizenRequestsCreationDates[request.id] | date:'dd/MM/yy HH:mm'}} </td>
-					<td>
-						<button class="btn btn-success" (click)="selectedRequest = request" [hidden]="selectedRequest == request">{{'details'| translate}}</button>
-                        <button class="btn btn-info" (click)="selectedRequest = null" [hidden]="selectedRequest != request">{{'collapse' | translate}}</button>
-                        <button class="btn btn-warning" (click)="router.navigate(['/update_request/' + request.id])" [disabled]="request.status.name === 'rejected' || request.status.name === 'accepted'"> {{'modifyRequest' | translate }}</button>
-					</td>
-				</tr>
-			</tbody>
-        </table>
-		<ng-template #noRequests>
-			<div>Vous n'avez pas encore introduit des demandes</div>
-        </ng-template>
-        
-        <div *ngIf="selectedRequest">
-            <request-detail [request]="selectedRequest" [displayEmployeeActions]="false"></request-detail>
-        </div>
-	</div>
+	<table *ngIf="(citizenRequests$ | async)?.length; else noRequests" class="table table-striped">
+		<thead>
+			<tr>
+				<th scope="col">{{'type' | translate}}</th>
+				<th scope="col">{{'reference' | translate}}</th>
+                <th scope="col">{{'status' | translate}}</th>
+                <th scope="col">{{'creationDate' | translate}}</th>
+				<th scope="col">{{'actions' | translate}}</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let request of (citizenRequests$ | async)">
+				<th>{{request.typeDescription | translate}}</th>
+				<td>{{ request.userRef }}</td>
+                <td>{{request.status.name | translate}}</td>
+                <td> {{ citizenRequestsCreationDates[request.id] | date:'dd/MM/yy HH:mm'}} </td>
+				<td>
+					<button class="btn btn-outline-success my-2 my-sm-0" (click)="selectedRequest = request" [hidden]="selectedRequest == request">{{'details'| translate}}</button>
+                    <button class="btn btn-outline-info " (click)="selectedRequest = null" [hidden]="selectedRequest != request">{{'collapse' | translate}}</button>
+                    <button class="btn btn-warning-info" (click)="router.navigate(['/update_request/' + request.id])" [disabled]="request.status.name === 'rejected' || request.status.name === 'accepted'"> {{'modifyRequest' | translate }}</button>
+				</td>
+			</tr>
+		</tbody>
+    </table>
+	<ng-template #noRequests>
+		<div>Vous n'avez pas encore introduit des demandes</div>
+    </ng-template>
 
+    <div *ngIf="selectedRequest">
+        <request-detail [request]="selectedRequest" [displayEmployeeActions]="false"></request-detail>
+    </div>
 </div>

@@ -1,4 +1,4 @@
-<div class="col-md-9 col-md-offset-3">
+<div class="starter-template">
     <h1> {{'validateCompanies' |translate }} </h1>
 	<div class="container">
 		<table *ngIf="(pendingCompanies$ | async)?.length; else noCompanies" class="table table-striped">
@@ -7,15 +7,17 @@
                     <th scope="col">{{'name' | translate}}</th>
                     <th> {{'vatNumber' | translate }}</th>
                     <th></th>
-                    <th></th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr *ngFor="let company of (pendingCompanies$ | async)">
                     <td> {{ company.companyName }}</td>
                     <td> {{ company.vatNb }} </td>
-                    <td><button class="btn btn-success" (click)="selectedCompany = company">{{'viewDetails'| translate}}</button></td>
-                    <td><button class="btn btn-success" (click)="validate(company)"> {{'validate' | translate}}</button></td>
+                    <td>
+                        <button class="btn btn-outline-success my-2 my-sm-0" [hidden]="selectedCompany == company" (click)="selectedCompany = company">{{'viewDetails'| translate}}</button>
+                        <button class="btn btn-outline-info " [hidden]="selectedCompany != company" (click)="selectedCompany = null">{{'collapse' | translate}}</button>
+                        <button class="btn btn-outline-success my-2 my-sm-0" (click)="validate(company)"> {{'validate' | translate}}</button>
+                    </td>
 				</tr>
 			</tbody>
 		</table>
