@@ -14,8 +14,20 @@ import be.unamur.hermes.common.constants.EventConstants;
 import be.unamur.hermes.common.constants.RequestTypes;
 import be.unamur.hermes.common.enums.RequestStatusInfo;
 import be.unamur.hermes.common.exception.Errors;
-import be.unamur.hermes.dataaccess.entity.*;
-import be.unamur.hermes.dataaccess.repository.*;
+import be.unamur.hermes.dataaccess.entity.Citizen;
+import be.unamur.hermes.dataaccess.entity.Department;
+import be.unamur.hermes.dataaccess.entity.Event;
+import be.unamur.hermes.dataaccess.entity.Municipality;
+import be.unamur.hermes.dataaccess.entity.Request;
+import be.unamur.hermes.dataaccess.entity.RequestField;
+import be.unamur.hermes.dataaccess.entity.RequestStatus;
+import be.unamur.hermes.dataaccess.entity.RequestType;
+import be.unamur.hermes.dataaccess.entity.UserAccount;
+import be.unamur.hermes.dataaccess.repository.DepartmentRepository;
+import be.unamur.hermes.dataaccess.repository.MunicipalityRepository;
+import be.unamur.hermes.dataaccess.repository.RequestFieldRepository;
+import be.unamur.hermes.dataaccess.repository.RequestRepository;
+import be.unamur.hermes.dataaccess.repository.RequestTypeRepository;
 
 @Service
 public class RequestServiceImpl implements RequestService, Errors {
@@ -128,7 +140,7 @@ public class RequestServiceImpl implements RequestService, Errors {
 		MultipartFile file = codeToFiles.get(code);
 		RequestField requestField = toRequestField(code, file);
 		request.addRequestField(requestField);
-		requestFieldRepository.createRequestField(requestField, requestId);
+		requestFieldRepository.updateRequestField(requestField, requestId);
 	    }
 	} catch (IOException e) {
 	    throw new BusinessException(INVALID_FILE, "Error when receiving files.");

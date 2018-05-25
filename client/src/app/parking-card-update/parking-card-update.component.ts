@@ -65,6 +65,7 @@ export class ParkingCardUpdateComponent  extends ParkingCardCreationComponent im
         this.loading = true;
 
         const request = this.extractRequest();
+        request.id = this.request.id;
 
         const formData = new FormData();
         formData.append('request', new Blob([JSON.stringify(request)], { type: 'application/json' }));
@@ -83,7 +84,7 @@ export class ParkingCardUpdateComponent  extends ParkingCardCreationComponent im
         }
         formData.append(this.userProofCode, userProofFileValue);
 
-        this.requestService.updateRequestWithFileUploads(this.request.id, formData)
+        this.requestService.updateRequestWithFileUploads(formData, request.typeDescription)
             .subscribe(success => {
                 this.loading = false;
                 if (success) {
