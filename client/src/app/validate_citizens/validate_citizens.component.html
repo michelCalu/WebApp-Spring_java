@@ -6,15 +6,17 @@
 				<th scope="col">{{'name' | translate}}</th>
 				<th> {{'nationalRegisterNumber' | translate }}</th>
 				<th></th>
-				<th></th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr *ngFor="let citizen of (pendingCitizens$ | async)">
 				<td> {{ citizen.firstName + ' ' + citizen.lastName }}</td>
 				<td> {{ citizen.nationalRegisterNb }} </td>
-				<td><button class="btn btn-outline-success my-2 my-sm-0" (click)="selectedCitizen = citizen">{{'viewDetails'| translate}}</button></td>
-				<td><button class="btn btn-outline-success my-2 my-sm-0" (click)="validate(citizen)"> {{'validate' | translate}}</button></td>
+                <td>
+                    <button class="btn btn-outline-success my-2 my-sm-0" [hidden]="selectedCitizen == citizen" (click)="selectedCitizen = citizen">{{'viewDetails'| translate}}</button>
+                    <button class="btn btn-outline-info " [hidden]="selectedCitizen != citizen" (click)="selectedCitizen = null">{{'collapse' | translate}}</button>
+                    <button class="btn btn-outline-success my-2 my-sm-0" (click)="validate(citizen)"> {{'validate' | translate}}</button>
+                </td>
 			</tr>
 		</tbody>
 	</table>
