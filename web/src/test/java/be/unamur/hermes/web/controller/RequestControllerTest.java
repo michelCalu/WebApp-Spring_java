@@ -15,7 +15,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -36,7 +36,7 @@ public class RequestControllerTest {
     private RequestService service;
 
     @Test
-    @WithMockUser("00000000000_empl")
+    @WithUserDetails("999999_empl") // MockUser is not enough: we need our custom UserAccount object as principal
     public void test_getRequests_withDepartmentId() throws Exception {
 	Mockito.when(service.findByDepartmentId(5L)).thenReturn(Collections.singletonList(new Request(1L)));
 	mvc.perform(get("/requests?departmentId=5"). //
