@@ -34,7 +34,7 @@ public class MandataryController {
     }
 
     // CREATE
-    @PreAuthorize("hasRole('ROLE_ADMIN') or #mandatary.citizen.id == principal.technicalId")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_OFFICER') or #mandatary.citizen.id == principal.technicalId")
     @PostMapping
     public ResponseEntity<Object> create(@RequestBody Citizen citizen, Company company, MandataryRole role) {
 	long newId = mandataryService.create(citizen, company, role);
