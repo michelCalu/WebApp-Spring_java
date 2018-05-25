@@ -5,13 +5,15 @@
 	<table *ngIf="(mandataries$ | async)?.length; else noCompany" class="table table-striped">
 		<thead>
 			<tr>
-				<th scope="col">Nom</th>
+                <th scope="col">Nom</th>
+                <th scope="col">Status</th>
 				<th scope="col">Connexion</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr *ngFor="let mandatary of (mandataries$ | async)">
-				<td>{{mandatary.company.companyName | translate}}</td>
+                <td>{{mandatary.company.companyName | translate}}</td>
+                <td>{{ ('companyStatus.' + mandatary.company.status) | translate }}</td>
 				<td><button class="btn btn-outline-success my-2 my-sm-0" *ngIf="mandatary.company.status == 'active'" (click)="connectToCompany(mandatary.company)">Se connecter</button></td>
 			</tr>
 		</tbody>
