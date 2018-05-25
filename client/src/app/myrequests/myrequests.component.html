@@ -20,8 +20,9 @@
                 <td>{{request.status.name | translate}}</td>
                 <td> {{ citizenRequestsCreationDates[request.id] | date:'dd/MM/yy HH:mm'}} </td>
 				<td>
-					<button class="btn btn-outline-success my-2 my-sm-0" (click)="selectedRequest = request">{{'details'| translate}}</button>
-					<button class="btn btn-outline-info" (click)="selectedRequest = null" [disabled]="selectedRequest != request">{{'collapse' | translate}}</button>
+					<button class="btn btn-outline-success my-2 my-sm-0" (click)="selectedRequest = request" [hidden]="selectedRequest == request">{{'details'| translate}}</button>
+                    <button class="btn btn-outline-info " (click)="selectedRequest = null" [hidden]="selectedRequest != request">{{'collapse' | translate}}</button>
+                    <button class="btn btn-warning-info" (click)="router.navigate(['/update_request/' + request.id])" [disabled]="request.status.name === 'rejected' || request.status.name === 'accepted'"> {{'modifyRequest' | translate }}</button>
 				</td>
 			</tr>
 		</tbody>
