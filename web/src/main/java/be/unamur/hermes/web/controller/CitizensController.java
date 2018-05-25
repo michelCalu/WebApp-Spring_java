@@ -62,13 +62,14 @@ public class CitizensController {
 	return new ResponseEntity<>(citizenService.findByName(firstName, lastName), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_OFFICER')")
     @GetMapping(path = "/pending")
     public ResponseEntity<List<Citizen>> showPendingCitizens() {
 	return new ResponseEntity<>(citizenService.findPending(), HttpStatus.OK);
     }
 
     // UPDATE
-    @PreAuthorize("hasRole('ROLE_ADMIN') or #citizenID == principal.technicalId")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_OFFICER') or #citizenID == principal.technicalId")
     @PatchMapping(path = "/account/{citizenID}")
     public ResponseEntity<Object> updateAccount(@RequestBody UpdateUserAccount accountUpdate,
 	    @PathVariable("citizenID") Long citizenID) {
@@ -76,7 +77,7 @@ public class CitizensController {
 	return new ResponseEntity<Object>(HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN') or #citizenID == principal.technicalId")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_OFFICER') or #citizenID == principal.technicalId")
     @PatchMapping(path = "/{citizenID}")
     public ResponseEntity<Citizen> updateCitizen(@RequestBody Map<String, Object> updates,
 	    @PathVariable("citizenID") Long citizenID) {
