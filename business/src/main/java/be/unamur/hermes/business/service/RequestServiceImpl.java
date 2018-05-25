@@ -303,8 +303,11 @@ public class RequestServiceImpl implements RequestService, Errors {
     }
 
     private Department findRequestDepartment(Request request) {
-	Citizen citizen = request.getCitizen();
-	Municipality citizenMunicipality = municipalityRepository.findByName(citizen.getAddress().getMunicipality());
+	String municipalityName =
+			request.getCompany() != null ?
+			request.getCompany().getAddress().getMunicipality() :
+			request.getCitizen().getAddress().getMunicipality();
+	Municipality citizenMunicipality = municipalityRepository.findByName(municipalityName);
 	List<Department> municipalityDepartments = departmentRepository
 		.findByMunicipalityId(citizenMunicipality.getId());
 
