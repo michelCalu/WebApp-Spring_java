@@ -1,4 +1,4 @@
-<h1> Informations requête </h1>
+<h1> {{'requestData'| translate}} </h1>
 <ul class="list-group">
     <li class="list-group-item"> type : {{ request.typeDescription | translate }}</li>
     <li class="list-group-item"> status: {{request.status.name | translate}} </li>
@@ -6,7 +6,7 @@
     <li class="list-group-item"> ref. utilisateur : {{ request.userRef }} </li>
 </ul>
 
-<h2> Informations du véhicule </h2>
+<h2> {{ 'parkingCard.car.data' | translate}} </h2>
 <ul class="list-group">
     <li class="list-group-item"> Marque : {{ carData[isCompanyRequest ? 'companyParkingCardCarMake': 'citizenParkingCardCarMake'] }}</li>
     <li class="list-group-item"> Modèle : {{ carData[isCompanyRequest ? 'companyParkingCardCarModel':'citizenParkingCardCarModel'] }}</li>

@@ -25,22 +25,22 @@ public class DepartmentRepositoryImpl implements DepartmentRepository, Applicati
     private MunicipalityRepository municipalityRepository;
     private final AddressRepository addressRepository;
     private EmployeeRepository employeeRepository;
+    private RequestTypeRepository requestTypeRepository;
 
     // queries
     private static final String findById =//
 		"SELECT * FROM t_departments d WHERE d.departmentID = ?";
     private static final String findByMunicipalityId = //
         "SELECT * FROM t_departments d WHERE d.municipalityID = ?";
-    private static final String requestTypeByDepartmentID =//
-		"SELECT rt.* FROM (t_departments_request_types drt " +
-			"JOIN t_request_types rt ON drt.requestTypeID = rt.requestTypeID) " +
-			"WHERE drt.departmentID = ?";
 
     @Autowired
-    public DepartmentRepositoryImpl(JdbcTemplate jdbc, AddressRepository addressRepository) {
+    public DepartmentRepositoryImpl(JdbcTemplate jdbc,
+                                    AddressRepository addressRepository,
+                                    RequestTypeRepository requestTypeRepository) {
         super();
         this.jdbc = jdbc;
         this.addressRepository = addressRepository;
+        this.requestTypeRepository = requestTypeRepository;
         this.departmentInserter = new SimpleJdbcInsert(jdbc.getDataSource()).
 				withTableName("t_departments").usingGeneratedKeyColumns("departmentID");
         this.departmentRequestTypeInserter = new SimpleJdbcInsert(jdbc.getDataSource()).
@@ -87,10 +87,6 @@ public class DepartmentRepositoryImpl implements DepartmentRepository, Applicati
         return jdbc.query(findByMunicipalityId, new Object[] { munId }, this::build);
     }
 
-    private List<RequestType> getRequestTypeByDepartment(long departmentId) {
-    	return buildRequestType(jdbc.queryForList(requestTypeByDepartmentID, departmentId));
-	}
-
     private Department build(ResultSet rs, int row) throws SQLException {
         Department result = new Department();
         long id = rs.getLong(1);
@@ -115,18 +111,10 @@ public class DepartmentRepositoryImpl implements DepartmentRepository, Applicati
             Address address = addressRepository.findById(addressId);
             result.setAddress(address);
         }
-        List<RequestType> managedRequestTypes = getRequestTypeByDepartment(id);
+        List<RequestType> managedRequestTypes = requestTypeRepository.findByDepartmentId(id);
         result.setManagedRequestTypes(managedRequestTypes);
         return result;
     }
 
-    private List<RequestType> buildRequestType(List<Map<String, Object>> requestTypesAsRows) {
-        List<RequestType> requestTypes = new ArrayList<>();
-        for(Map<String, Object> requestTypeRow: requestTypesAsRows){
-            String description = (String) requestTypeRow.get("description");
-            Integer requestTypeID = (Integer) requestTypeRow.get("requestTypeID");
-            requestTypes.add(new RequestType(Integer.toUnsignedLong(requestTypeID),description));
-        }
-        return requestTypes;
-    }
+
 }

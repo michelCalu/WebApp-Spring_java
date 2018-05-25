@@ -31,4 +31,13 @@ export class MunicipalityService {
                 return [];
             });
     }
+
+    public getMunicipalityByMunicipalityName(name: String): Observable<Municipality[]> {
+      console.log("in service " + name)
+        return this.http.get<Municipality>(/*this.serverAddress + */ '/municipalities?name=' + name)
+            .catch(err => {
+            this.messageService.error(this.translateService.instant('service.department.municipalityNotFound'));
+            return [];
+        });
+    }
 }

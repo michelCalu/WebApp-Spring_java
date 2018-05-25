@@ -1,8 +1,18 @@
 <div class="starter-template">
 	<h1>Nouvelle demande</h1>
-	<div class="list-group">
-		<button type="button" class="list-group-item list-group-item-action" routerLink="/newrequest/nationality" [hidden]="authService.getCurrentCompany()"><a>Certificat de nationalité</a></button>
-		<button type="button" class="list-group-item list-group-item-action" routerLink="/newrequest/parking">Carte de stationnement</button>
+  <div *ngIf="!(authService.getCurrentCompany() && municipalityRequestTypes.indexOf('companyParkingCard') < 0); else noRequestTypeForCompanies">
+    <div *ngIf="authService.getCurrentCompany() ||
+      !(municipalityRequestTypes.indexOf('nationalityCertificate') < 0 && municipalityRequestTypes.indexOf('citizenParkingCard') < 0); else noRequestTypesForCitizen" class="list-group">
+      <button *ngIf="municipalityRequestTypes.indexOf('nationalityCertificate') > -1" type="button" class="list-group-item list-group-item-action" routerLink="/newrequest/nationality" [hidden]="authService.getCurrentCompany()"><a>Certificat de nationalité</a></button>
+      <button *ngIf="municipalityRequestTypes.indexOf('citizenParkingCard') > -1 || municipalityRequestTypes.indexOf('companyParkingCard') > -1"type="button" class="list-group-item list-group-item-action" routerLink="/newrequest/parking">Carte de stationnement</button>
     </div>
-    <backbutton [goBackRoute]="'/myrequests'"></backbutton>
+  </div>
+
+  <ng-template #noRequestTypeForCompanies>
+    <div>Cette commune ne propose actuellement aucun service pour les sociétés.</div>
+  </ng-template>
+  <ng-template #noRequestTypesForCitizen>
+    <div>Cette commune ne propose actuellement aucun service pour les citoyens.</div>
+  </ng-template>
+  <backbutton [goBackRoute]="'/myrequests'"></backbutton>
 </div>
