@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
-import { AuthenticationService } from '../_services';
+import {Component, OnInit} from '@angular/core';
+import {AuthenticationService, CitizenService, RequestTypeService} from '../_services';
+import {RequestTypeModel} from "../_models";
+import {Observable} from "rxjs/Observable";
 
 
 @Component({
@@ -8,6 +10,8 @@ import { AuthenticationService } from '../_services';
 })
 
 export class NewRequestComponent {
-    constructor(private authService: AuthenticationService) { }
+  municipalityRequestTypes: String[] = this.authService.getRequestTypes().map(requestType => requestType.description);
+
+  constructor(private authService: AuthenticationService) { }
 
 }
