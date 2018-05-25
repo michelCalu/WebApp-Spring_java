@@ -26,10 +26,6 @@ public interface RequestRepository {
 
     long create(Request request);
 
-    RequestType findRequestTypeByDescription(String description);
-
-    RequestType findRequestTypeById(long id);
-
     RequestStatus findRequestStatusById(long id);
 
     void updateStatus(Request request);

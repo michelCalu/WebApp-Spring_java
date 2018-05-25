@@ -9,3 +9,4 @@ export * from './municipality.service';
 export * from './document.service';
 export * from './company.service';
 export * from './department.service';
+export * from './requestType.service';

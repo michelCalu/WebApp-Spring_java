@@ -2,7 +2,7 @@
     <h1> {{'parkingCard' | translate}}<span *ngIf="isCompany">: {{company | translate}} {{authService.getCurrentCompany().companyName}}</span></h1>
     <h2>{{ (isUpdate ? 'updaterequest' : 'newrequest') | translate}}</h2>
     <h2>Informations demandeur</h2>
-    <ul>
+    <ul *ngIf="requestor">
         <li> Nom : {{requestor.lastName}} </li>
         <li> Prénom : {{requestor.firstName}} </li>
         <li *ngIf="isCompany"> Société : {{ authService.getCurrentCompany().companyName }} </li>
@@ -74,9 +74,8 @@
                 </div>
         </div>
 
-        <!-- TODO include awsome font for spinner -->
         <div class="mt-2">
-            <button type="submit" [disabled]="form.invalid || !insuranceFileLoaded || loading" class="btn btn-outline-success my-2 my-sm-0 float-right">Submit
+            <button type="submit" [disabled]="form.invalid || (!isUpdate && !insuranceFileLoaded) || loading" class="btn btn-outline-success my-2 my-sm-0 float-right">Submit
                 <span *ngIf="loading">
                     <i class="fa fa-spinner fa-spin fa-fw">Loading</i>
                 </span>
