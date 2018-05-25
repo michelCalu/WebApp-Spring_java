@@ -10,7 +10,6 @@
 					<th scope="col">{{'status' | translate}}</th>
                     <th scope="col">{{'assignee' | translate}}</th>
                     <th></th>
-                    <th></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -20,8 +19,11 @@
                     <td> {{ requestsCreationDates[request.id] | date:'dd/MM/yy HH:mm' }}</td>
                     <td> {{ request.status.name | translate }}</td> 
                     <td> {{ request.assignee ? (request.assignee.firstName + ' ' + request.assignee.lastName) : '' }} </td>
-                    <td><button class="btn btn-success" (click)="selectedRequest = request">{{'details'| translate}}</button></td>
-                    <td><button class="btn btn-success" [disabled] = "request.assignee" (click)="assign(request)">{{'assignThisRequest'| translate}}</button></td>
+                    <td>
+                        <button class="btn btn-success" (click)="selectedRequest = request" [hidden]="selectedRequest == request">{{'details'| translate}}</button>
+                        <button class="btn btn-info" (click)="selectedRequest = null" [hidden]="selectedRequest != request">{{'collapse' | translate}}</button>
+                        <button class="btn btn-success" [disabled] = "request.assignee" (click)="assign(request)">{{'assignThisRequest'| translate}}</button>
+                    </td>
 				</tr>
 			</tbody>
 		</table>
