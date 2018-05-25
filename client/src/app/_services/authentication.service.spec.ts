@@ -7,7 +7,7 @@ describe('Service: Authentication', () => {
   let service: AuthenticationService ;
   
   beforeEach(() => {
-    service = new AuthenticationService(null,null,null,null,null);
+    service = new AuthenticationService(null,null,null,null,null, null, null);
   });
   
    afterEach(() => { 

@@ -1,5 +1,5 @@
 <div class="starter-template">
-	<h1>Inscription</h1>
+	<h1>Inscription d'une société</h1>
 	<form #inscriptionForm="ngForm">
 		<label for="companyNb"> Numéro d'entreprise :</label>
 		<input [(ngModel)]="company.companyNb" type="text" placeholder="*********" name="companyNb" class="form-control" id="companyNb" required>
@@ -21,7 +21,10 @@
   		<input [(ngModel)]="company.address.street" type="text" placeholder="Boulevard Anspach" name="street" class="form-control" id="street" required>
   		<label for="streetNb">Numéro de rue:</label>
   		<input [(ngModel)]="company.address.streetNb" type="text" placeholder="Ex: 42" name="streetNb" class="form-control" id="streetNb">
-  		<button class="btn btn-outline-success my-2 my-sm-0" [class.btn-outline-danger]="!inscriptionForm.form.valid"(click)="createCompany(); scrollUp()" [disabled]="!inscriptionForm.form.valid">Create</button>
+  		
+  		<div class="mt-4">
+  			<backbutton [goBackRoute]="'/myrequests'"></backbutton>
+  			<button class="btn btn-outline-success my-2 my-sm-0 float-right" [class.btn-outline-danger]="!inscriptionForm.form.valid"(click)="createCompany(); scrollUp()" [disabled]="!inscriptionForm.form.valid">Create</button>
+  		</div>
   	</form>
-  	<backbutton class="btn-outline-danger" [goBackRoute]="'/myrequests'"></backbutton>
 </div>
