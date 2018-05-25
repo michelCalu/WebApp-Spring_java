@@ -5,6 +5,8 @@ import be.unamur.hermes.dataaccess.repository.RequestTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 @Service
@@ -34,6 +36,8 @@ public class RequestTypeServiceImpl implements RequestTypeService {
 
     @Override
     public List<RequestType> findByMunicipalityId(Long municipalityId) {
-        return requestTypeRepository.findByMunicipalityId(municipalityId);
+        List<RequestType> allRequestType = requestTypeRepository.findByMunicipalityId(municipalityId);
+        HashSet<RequestType> tempSet = new HashSet<>(allRequestType);
+        return new ArrayList<>(tempSet);
     }
 }
