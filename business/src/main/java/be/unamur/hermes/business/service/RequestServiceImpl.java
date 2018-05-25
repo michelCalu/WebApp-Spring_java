@@ -146,11 +146,22 @@ public class RequestServiceImpl implements RequestService, Errors {
 	    throw new BusinessException(INVALID_FILE, "Error when receiving files.");
 	}
 
-	// create event
+	// update status if applicable (Awaiting_info to ongoing)
+	Request baseRequest = requestRepository.findById(requestId);
+	RequestStatus currentStatus = baseRequest.getStatus();
+	RequestStatusInfo statusInfo = RequestStatusInfo.getStatusFor(currentStatus.getName());
+	if (RequestStatusInfo.AWAITING_INFO == statusInfo) {
+	    requestRepository.updateStatus(requestId, RequestStatusInfo.ONGOING.getValue());
+	}
+	// create updated event
 	UserAccount account = citizenService.findAccount(request.getCitizen().getId());
 	Event creationEvent = Event.create(EventConstants.TYPE_UPDATED, account.getAccountUserId(), requestId);
 	eventService.create(creationEvent);
+
 	return requestRepository.findById(requestId);
+
+	// update status
+
     }
 
     @Override

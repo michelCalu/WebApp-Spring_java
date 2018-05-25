@@ -36,9 +36,9 @@ public class RequestRepositoryImpl implements RequestRepository {
     private static final String queryByEmployeeId = //
 	    selectRequestClause + " WHERE req.employeeId = ?";
     private static final String queryByCompanyNb = //
-        selectRequestClause + " WHERE req.companyNb = ?";
+	    selectRequestClause + " WHERE req.companyNb = ?";
     private static final String queryByCompanyNbAndRequestType = queryByCompanyNb //
-        + " AND req.requestTypeID = ?";
+	    + " AND req.requestTypeID = ?";
     private static final String queryByCitizenIdAndRequestType = queryByCitizenId //
 	    + " AND req.requestTypeID = ?";
     private static final String queryRequestTypeByDescription = //
@@ -51,6 +51,8 @@ public class RequestRepositoryImpl implements RequestRepository {
 	    "SELECT st.statusID, st.statusName FROM t_req_statusses st WHERE st.statusName = ? ";
     private static final String updateStatus = //
 	    "UPDATE t_requests SET statusID = ? WHERE requestID = ? ";
+    private static final String updateStatusByName = //
+	    "UPDATE t_requests req SET req.statusID = (SELECT st.statusID FROM t_req_statusses st WHERE st.statusName = ?) WHERE req.requestID = ? ";
     private static final String updateAssignee = //
 	    "UPDATE t_requests SET employeeID = ? WHERE requestID = ?";
 
@@ -67,7 +69,7 @@ public class RequestRepositoryImpl implements RequestRepository {
     public RequestRepositoryImpl(JdbcTemplate jdbcTemplate, CitizenRepository citizenRepository,
 	    EmployeeRepository employeeRepository, RequestFieldRepository requestFieldRepository,
 	    DepartmentRepository departmentRepository, CompanyRepository companyRepository,
-		RequestTypeRepository requestTypeRepository) {
+	    RequestTypeRepository requestTypeRepository) {
 	super();
 	this.jdbcTemplate = jdbcTemplate;
 	this.inserter = new SimpleJdbcInsert(jdbcTemplate.getDataSource()).withTableName("t_requests")
@@ -114,12 +116,13 @@ public class RequestRepositoryImpl implements RequestRepository {
 
     @Override
     public List<Request> findByCompanyNb(String companyNb) {
-        return jdbcTemplate.query(queryByCompanyNb, new Object[] { companyNb }, this::fillRequest);
+	return jdbcTemplate.query(queryByCompanyNb, new Object[] { companyNb }, this::fillRequest);
     }
 
     @Override
     public List<Request> findByCompanyNb(String companyNb, long requestTypeId) {
-        return jdbcTemplate.query(queryByCompanyNbAndRequestType, new Object[] { companyNb, requestTypeId }, this::fillRequest);
+	return jdbcTemplate.query(queryByCompanyNbAndRequestType, new Object[] { companyNb, requestTypeId },
+		this::fillRequest);
     }
 
     @Override
@@ -128,8 +131,8 @@ public class RequestRepositoryImpl implements RequestRepository {
 	long requestTypeId = requestTypeRepository.findByDescription(newRequest.getTypeDescription()).getId();
 	parameters.put("requestTypeID", requestTypeId);
 	parameters.put("citizenID", newRequest.getCitizen().getId());
-	if(newRequest.getCompany() != null)
-		parameters.put("companyNb", newRequest.getCompany().getCompanyNb());
+	if (newRequest.getCompany() != null)
+	    parameters.put("companyNb", newRequest.getCompany().getCompanyNb());
 	parameters.put("departmentID", newRequest.getDepartment().getId());
 	RequestStatus newStatus = findRequestStatusByName(RequestRepository.STATUS_NEW);
 	parameters.put("statusID", newStatus.getId());
@@ -146,14 +149,19 @@ public class RequestRepositoryImpl implements RequestRepository {
     }
 
     @Override
+    public void updateAssignee(Request request) {
+	jdbcTemplate.update(updateAssignee, request.getAssignee().getId(), request.getId());
+    }
+
+    @Override
     public void updateStatus(Request request) {
 	RequestStatus status = request.getStatus();
 	jdbcTemplate.update(updateStatus, status.getId(), request.getId());
     }
 
     @Override
-    public void updateAssignee(Request request) {
-	jdbcTemplate.update(updateAssignee, request.getAssignee().getId(), request.getId());
+    public void updateStatus(long requestId, String statusName) {
+	jdbcTemplate.update(updateStatusByName, statusName, requestId);
     }
 
     private RequestStatus findRequestStatusByName(String name) {
@@ -177,10 +185,10 @@ public class RequestRepositoryImpl implements RequestRepository {
 	List<RequestField> requestFields = requestFieldRepository.getFields(request.getId());
 	request.addRequestFields(requestFields);
 	String companyNb = rs.getString(4);
-	if(companyNb != null) {
-        Company company = companyRepository.findByCompanyNb(companyNb);
-        request.setCompany(company);
-    }
+	if (companyNb != null) {
+	    Company company = companyRepository.findByCompanyNb(companyNb);
+	    request.setCompany(company);
+	}
 	long employeeId = rs.getLong(5);
 	if (employeeId > 0) {
 	    Employee assignee = employeeRepository.findById(employeeId);
