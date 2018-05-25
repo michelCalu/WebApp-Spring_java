@@ -77,26 +77,14 @@ public class RequestServiceImpl implements RequestService, Errors {
 	Long newRequestId = requestRepository.create(newRequest);
 
 	for (RequestField field : newRequest.getData()) {
-	    if (field.getFieldType().equals("String") && field.getFieldFile() != null)
-		throw new BusinessException(INVALID_REQUEST_FIELD,
-			"Field type doesn't match field content ! Expected 'String' got 'File'");
-	    if (field.getFieldType().equals("File") && field.getFieldValue() != null)
-		throw new BusinessException(INVALID_REQUEST_FIELD,
-			"Field type doesn't match field content ! Expected 'File' got 'String'");
-	    if (field.getFieldValue() == null && field.getFieldFile() == null)
-		throw new BusinessException(MISSING_REQUEST_FIELD, "No value or file is attached to this field !");
+	    checkRequestField(field);
 	    requestFieldRepository.createRequestField(field, newRequestId);
 	}
 
 	try {
 	    for (String code : codeToFiles.keySet()) {
 		MultipartFile file = codeToFiles.get(code);
-		RequestField requestField = new RequestField();
-		requestField.setCode(code);
-		requestField.setFieldType("binary");
-		requestField.setFieldValue(file.getOriginalFilename());
-		requestField.setFieldFile(file.getBytes());
-		requestField.setFieldFileType(file.getContentType());
+		RequestField requestField = toRequestField(code, file);
 		newRequest.addRequestField(requestField);
 		requestFieldRepository.createRequestField(requestField, newRequestId);
 	    }
@@ -110,6 +98,56 @@ public class RequestServiceImpl implements RequestService, Errors {
 	eventService.create(creationEvent);
 
 	return newRequestId;
+    }
+
+    private void checkRequestField(RequestField field) throws BusinessException {
+	if (field.getFieldType().equals("String") && field.getFieldFile() != null)
+	    throw new BusinessException(INVALID_REQUEST_FIELD,
+		    "Field type doesn't match field content ! Expected 'String' got 'File'");
+	if (field.getFieldType().equals("File") && field.getFieldValue() != null)
+	    throw new BusinessException(INVALID_REQUEST_FIELD,
+		    "Field type doesn't match field content ! Expected 'File' got 'String'");
+	if (field.getFieldValue() == null && field.getFieldFile() == null)
+	    throw new BusinessException(MISSING_REQUEST_FIELD, "No value or file is attached to this field !");
+    }
+
+    private RequestField toRequestField(String code, MultipartFile file) throws IOException {
+	RequestField requestField = new RequestField();
+	requestField.setCode(code);
+	requestField.setFieldType("binary");
+	requestField.setFieldValue(file.getOriginalFilename());
+	requestField.setFieldFile(file.getBytes());
+	requestField.setFieldFileType(file.getContentType());
+	return requestField;
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public Request replace(Request request, Map<String, MultipartFile> codeToFiles) {
+	// update standard request fields
+	long requestId = request.getId();
+	for (RequestField field : request.getData()) {
+	    checkRequestField(field);
+	    requestFieldRepository.updateRequestField(field, requestId);
+	}
+
+	// update files
+	try {
+	    for (String code : codeToFiles.keySet()) {
+		MultipartFile file = codeToFiles.get(code);
+		RequestField requestField = toRequestField(code, file);
+		request.addRequestField(requestField);
+		requestFieldRepository.createRequestField(requestField, requestId);
+	    }
+	} catch (IOException e) {
+	    throw new BusinessException(INVALID_FILE, "Error when receiving files.");
+	}
+
+	// create event
+	UserAccount account = citizenService.findAccount(request.getCitizen().getId());
+	Event creationEvent = Event.create(EventConstants.TYPE_UPDATED, account.getAccountUserId(), requestId);
+	eventService.create(creationEvent);
+	return requestRepository.findById(requestId);
     }
 
     @Override

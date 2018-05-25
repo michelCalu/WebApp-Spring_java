@@ -39,4 +39,6 @@ public interface RequestService {
 
     Request update(Request request) throws BusinessException;
 
+    Request replace(Request request, Map<String, MultipartFile> codeToFiles) throws BusinessException;
+
 }

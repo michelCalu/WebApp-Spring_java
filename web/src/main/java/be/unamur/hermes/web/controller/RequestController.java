@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -136,11 +137,38 @@ public class RequestController implements RequestTypes {
 	return ResponseEntity.ok(result);
     }
 
+    @PostAuthorize("hasPermission(returnObject,'any')")
+    @PutMapping(params = "requestType=" + COMPANY_PARKING_CARD, consumes = { "multipart/form-data" })
+    public ResponseEntity<Request> updateRequest(@RequestPart("request") Request request,
+	    @RequestPart("companyParkingCardGreenCard") MultipartFile greenCard,
+	    @RequestPart("companyParkingCardUserProof") MultipartFile userProof) {
+	Map<String, MultipartFile> filesMap = toMap(Arrays.asList(greenCard, userProof));
+	Request result = requestService.replace(request, filesMap);
+	return ResponseEntity.ok(result);
+    }
+
+    @PostAuthorize("hasPermission(returnObject,'any')")
+    @PutMapping(params = "requestType=" + CITIZEN_PARKING_CARD, consumes = { "multipart/form-data" })
+    public ResponseEntity<Request> updateRequest(@RequestPart("request") Request request,
+	    @RequestPart("citizenParkingCardGreenCard") MultipartFile greenCard,
+	    @RequestPart("citizenParkingCardUserProof") Optional<MultipartFile> userProof) {
+	List<MultipartFile> files = new ArrayList<>();
+	files.add(greenCard);
+	if (userProof.isPresent())
+	    files.add(userProof.get());
+	Map<String, MultipartFile> filesMap = toMap(files);
+	Request result = requestService.replace(request, filesMap);
+	return ResponseEntity.ok(result);
+    }
+
     private URI createRequest(String requestType, Request newRequest, List<MultipartFile> files) {
-	Map<String, MultipartFile> filesMap = files.stream()
-		.collect(Collectors.toMap(MultipartFile::getName, Function.identity()));
+	Map<String, MultipartFile> filesMap = toMap(files);
 	newRequest.setTypeDescription(requestType);
 	long requestId = requestService.create(newRequest, filesMap);
 	return ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}").buildAndExpand(requestId).toUri();
+    }
+
+    private Map<String, MultipartFile> toMap(List<MultipartFile> files) {
+	return files.stream().collect(Collectors.toMap(MultipartFile::getName, Function.identity()));
     }
 }
