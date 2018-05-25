@@ -8,6 +8,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -45,14 +46,15 @@ public class CitizensController {
     }
 
     // READ
-
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_OFFICER')")
     @GetMapping
     public ResponseEntity<List<Citizen>> showCitizens() {
 	return new ResponseEntity<>(citizenService.findAll(), HttpStatus.OK);
     }
 
+    @PostAuthorize("hasPermission(returnObject,'any')")
     @GetMapping(path = "/{citizenID}")
-    public ResponseEntity<Object> showCitizenById(@PathVariable(value = "citizenID") long citizenID) {
+    public ResponseEntity<Citizen> showCitizenById(@PathVariable(value = "citizenID") long citizenID) {
 	return new ResponseEntity<>(citizenService.findById(citizenID), HttpStatus.OK);
     }
 

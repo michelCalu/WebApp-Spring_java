@@ -51,11 +51,13 @@ public class RequestController implements RequestTypes {
 	this.requestService = requestService;
     }
 
+    @PostAuthorize("hasPermission(returnObject,'any')")
     @GetMapping(path = "/{requestId}")
     public ResponseEntity<Request> getRequest(@PathVariable(value = "requestId") long requestId) {
 	return ResponseEntity.status(HttpStatus.OK).body(requestService.find(requestId));
     }
 
+    @PostAuthorize("hasPermission(returnObject,'any')")
     @GetMapping
     public ResponseEntity<List<Request>> getRequests(@RequestParam("citizenId") Optional<Long> citizenId,
 	    @RequestParam("requestTypeId") Optional<Long> requestTypeId,
