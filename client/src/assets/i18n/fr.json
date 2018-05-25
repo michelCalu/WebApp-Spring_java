@@ -65,11 +65,13 @@
     "ongoing": "en cours",
 
     "parkingCard": "Carte de stationnement",
+    "parkingCard.car.data": "Informations du véhicule",
 
     "reference": "référence",
     "reject": "refuser",
     "rejected": "refusée",
     "replace": "remplacer",
+    "requestData" : "Informations de la demande",
     "requestDate": "date demande",
     "requestModification": "demander modification",
     "request.service.assignError": "Erreur dans l'assignation de la demande",

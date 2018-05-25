@@ -62,11 +62,13 @@
     "ongoing": "ongoing",
 
     "parkingCard": "Parking card",
+    "parkingCard.car.data": "Data of the vehicle",
 
     "reference": "reference",
     "reject": "reject",
     "rejected": "rejected",
     "replace": "replace",
+    "requestData":"Data of the request",
     "requestDate": "request date",
     "requestModification": "request modification",
     "request.service.assignError": "Cannot assign request",
