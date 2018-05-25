@@ -12,13 +12,12 @@ public class Event {
     private String comment;
 
     public static Event create(String eventType, long authorId, long requestId) {
-		return new Event(0L, new EventType(0L, eventType), LocalDateTime.now(), authorId, requestId);
-	}
+	return create(eventType, authorId, requestId, null);
+    }
 
-	public static Event create(String eventType, long authorId, long requestId, String comment) {
-		return new Event(0L, new EventType(0L, eventType), LocalDateTime.now(), authorId, requestId, comment);
-	}
-
+    public static Event create(String eventType, long authorId, long requestId, String comment) {
+	return new Event(0L, new EventType(0L, eventType), LocalDateTime.now(), authorId, requestId, comment);
+    }
 
     public Event() {
     }
@@ -31,14 +30,14 @@ public class Event {
 	this.requestId = requestId;
     }
 
-	public Event(long id, EventType type, LocalDateTime at, long authorId, long requestId, String comment) {
-		this.id = id;
-		this.type = type;
-		this.at = at;
-		this.authorId = authorId;
-		this.requestId = requestId;
-		this.comment = comment;
-	}
+    public Event(long id, EventType type, LocalDateTime at, long authorId, long requestId, String comment) {
+	this.id = id;
+	this.type = type;
+	this.at = at;
+	this.authorId = authorId;
+	this.requestId = requestId;
+	this.comment = comment;
+    }
 
     public long getId() {
 	return id;
@@ -76,15 +75,15 @@ public class Event {
 	this.requestId = requestId;
     }
 
-	public String getComment() {
-		return comment;
-	}
+    public String getComment() {
+	return comment;
+    }
 
-	public void setComment(String comment) {
-		this.comment = comment;
-	}
+    public void setComment(String comment) {
+	this.comment = comment;
+    }
 
-	@Override
+    @Override
     public int hashCode() {
 	final int prime = 31;
 	int result = 1;
