@@ -74,7 +74,8 @@
 
         <label for="password">Mot de passe :</label>
         <input [(ngModel)]="employee.password" type="password" name="password" class="form-control" id="password" required />
-
-        <button class="btn btn-outline-success my-2 my-sm-0" [class.btn-outline-danger]="!inscriptionForm.form.valid" (click)="createEmployee(); scrollUp()" [disabled]="!inscriptionForm.form.valid">Create</button>
+        <div class="mt-4">
+            <button class="btn btn-outline-success my-2 my-sm-0 float-right" [class.btn-outline-danger]="!inscriptionForm.form.valid" (click)="createEmployee(); scrollUp()" [disabled]="!inscriptionForm.form.valid">Create</button>
+        </div>
     </form>
 </div>

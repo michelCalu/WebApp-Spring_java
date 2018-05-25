@@ -4,5 +4,7 @@
 		<button type="button" class="list-group-item list-group-item-action" routerLink="/newrequest/nationality" [hidden]="authService.getCurrentCompany()"><a>Certificat de nationalité</a></button>
 		<button type="button" class="list-group-item list-group-item-action" routerLink="/newrequest/parking">Carte de stationnement</button>
     </div>
-    <backbutton [goBackRoute]="'/myrequests'"></backbutton>
+    <div class="mt-4">
+    	<backbutton [goBackRoute]="'/myrequests'"></backbutton>
+	</div>
 </div>

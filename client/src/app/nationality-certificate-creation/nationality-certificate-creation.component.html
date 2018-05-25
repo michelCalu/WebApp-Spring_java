@@ -1,18 +1,20 @@
 <div class="starter-template" *ngIf="requestor">
 	<h1> {{'nationalityCertificate' | translate}}</h1>
 	<h2> {{'newrequest' | translate}} </h2>
-	<div class="row">
+	<div class="row mt-4">
 		<div class="col-md-6">
             <h2> {{ 'citizenData' | translate }}</h2>
             <citizen-detail [citizen]="requestor"></citizen-detail>
-			<button class="btn btn-outline-success my-2 my-sm-0" (click)="sendRequest()">Envoyer demande</button>
-			<button class="btn btn-outline-success my-2 my-sm-0" (click)="cancelRequest()">Annuler</button>
 		</div>
-		<div>
+		<div class="col-md-6">
 			<h3>Votre référence</h3>
 			<form>
 				<input [(ngModel)]="reference" type="text" placeholder="Votre référence (opt.)" class="form-control" id="reference" name="reference">
 			</form>
 		</div>
+	</div>
+	<div class="mt-4">
+		<button class="btn btn-outline-danger my-2 my-sm-0" (click)="cancelRequest()">Annuler</button>
+		<button class="btn btn-outline-success my-2 my-sm-0 float-right" (click)="sendRequest()">Envoyer demande</button>
 	</div>
 </div>

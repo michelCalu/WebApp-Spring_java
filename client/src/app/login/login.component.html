@@ -7,11 +7,12 @@
     
     <div class="form-check">
         <input class="form-check-input" type="checkbox" value="" id="isEmployee" [(ngModel)]="isEmployee">
-            <label class="form-check-label" for="isEmployee">
-              {{'connectAsEmployee' | translate}}
-            </label>
-      </div>
-
-	<button class="btn btn-outline-success my-2 my-sm-0" (click)="login()">Se connecter</button>
+        <label class="form-check-label" for="isEmployee">
+          {{'connectAsEmployee' | translate}}
+        </label>
+    </div>
+    <div class="mt-4">
+	   <button class="btn btn-outline-success my-2 my-sm-0" (click)="login()">Se connecter</button>
+    </div>
 <!-- 	<button class="btn btn-outline-success my-2 my-sm-0" (click)="logout()">Se déconnecter</button> -->
 </div>
