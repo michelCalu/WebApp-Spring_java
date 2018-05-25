@@ -12,7 +12,8 @@ const PROXY_CONFIG = [
       "/events",
       "/mandataries",
       "/companies",
-      "/nrn"
+      "/nrn",
+      "/request-types"
     ],
     "target": "http://localhost:8888",
     "secure": false,

@@ -31,10 +31,6 @@ public interface RequestService {
 
     long create(Request newRequest, Map<String, MultipartFile> codeToFiles);
 
-    RequestType findRequestTypeByDescription(String description);
-
-    RequestType findRequestTypeById(long id);
-
     RequestField findRequestFieldByCode(long requestId, String code);
 
     Request update(Request request) throws BusinessException;

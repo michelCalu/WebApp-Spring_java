@@ -13,6 +13,9 @@ import { TranslateService } from '@ngx-translate/core';
 import { Company } from '../_models/company.model';
 import { CitizenService } from './citizen.service';
 import { EmployeeService } from './employee.service';
+import {Municipality, RequestTypeModel} from "../_models";
+import {MunicipalityService} from "./municipality.service";
+import {RequestTypeService} from "./requestType.service";
 
 @Injectable()
 export class AuthenticationService {
@@ -26,7 +29,8 @@ export class AuthenticationService {
     }
 
     constructor(private http: HttpClient, private messageService: AlertService, private translateService: TranslateService,
-                private citizenService: CitizenService, private employeeService: EmployeeService) { }
+                private citizenService: CitizenService, private employeeService: EmployeeService,
+                private municipalityService: MunicipalityService, private requestTypeService: RequestTypeService) { }
 
     login(username: string, password: string, type: string): Observable<boolean> {
         const enriched = username + (type === 'employee' ? '_empl' : '_ctz');
@@ -66,7 +70,40 @@ export class AuthenticationService {
             const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
             currentUser['userData'] = userData;
             sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
+            this.connectToMunicipality(userData.address.municipality);
         });
+    }
+
+    private connectToMunicipality (municipalityName: string): void {
+        let municipalityData$ = this.municipalityService.getMunicipalityByMunicipalityName(municipalityName);
+        municipalityData$.subscribe(municipalityData => {
+            const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+            currentUser['municipality'] = municipalityData;
+            sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
+            this.addAvailableRequestTypes(municipalityName);
+        })
+    }
+
+    private disconnectFromMunicipality (): void {
+        const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+        delete currentUser['municipality'];
+        sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
+        this.removeAvailableRequestTypes();
+    }
+
+    private addAvailableRequestTypes(municipalityName: string): void {
+        let availableRequestTypes$ = this.requestTypeService.getMunicipalityRequestTypes(municipalityName);
+        availableRequestTypes$.subscribe(availableRequestTypes => {
+          const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+          currentUser['requestTypes'] = availableRequestTypes;
+          sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
+        })
+    }
+
+    private removeAvailableRequestTypes(): void {
+        const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+        delete currentUser['requestTypes'];
+        sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
     }
 
     logout() {
@@ -79,12 +116,16 @@ export class AuthenticationService {
         const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
         currentUser['company'] = company;
         sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
+        this.disconnectFromMunicipality();
+        this.connectToMunicipality(company.address.municipality);
     }
 
     disconnectFromCompany() {
         const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
         delete currentUser['company'];
         sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
+        this.disconnectFromMunicipality();
+        this.connectToMunicipality(currentUser['userData'].address.municipality);
     }
 
     getCurrentCompany(): Company {
@@ -94,5 +135,15 @@ export class AuthenticationService {
 
     getCurrentUser(): User {
         return JSON.parse(sessionStorage.getItem('currentUser'));
+    }
+
+    getCurrentMunicipality(): Municipality {
+        const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+        return currentUser['municipality'];
+    }
+
+    getRequestTypes(): RequestTypeModel[] {
+        const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+        return currentUser['requestTypes'];
     }
 }
