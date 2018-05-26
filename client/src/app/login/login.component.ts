@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertService, AuthenticationService } from '../_services';
+import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 
 @Component({
     moduleId: module.id,
@@ -11,7 +12,8 @@ export class LoginComponent {
     password: string;
     isEmployee = false;
 
-    constructor(private router: Router, private authService: AuthenticationService, private alertService: AlertService) { }
+    constructor(private router: Router, private authService: AuthenticationService, private alertService: AlertService,
+        public bsModalRef: BsModalRef) { }
 
     login(): void {
         this.authService.login(this.username, this.password, this.isEmployee ? 'employee' : 'citizen').subscribe(

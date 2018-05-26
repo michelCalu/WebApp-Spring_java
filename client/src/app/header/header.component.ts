@@ -1,7 +1,10 @@
 import { Observable } from 'rxjs/Observable';
 import { AlertService, AuthenticationService, CitizenService, EmployeeService } from './../_services/index';
+import { LoginComponent } from './../login/index';
 import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 
 @Component({
     selector: 'app-header',
@@ -13,9 +16,11 @@ export class HeaderComponent implements OnInit {
 
     currentLanguage: string;
     isLoggedIn$: Observable<boolean>;
+    modalRef: BsModalRef;
 
     constructor(private authService: AuthenticationService, private alertService: AlertService,
-        private translateService: TranslateService, private citizenService: CitizenService, private employeeService: EmployeeService) { }
+        private translateService: TranslateService, private citizenService: CitizenService, private employeeService: EmployeeService,
+        private modalService: BsModalService) { }
 
     ngOnInit() {
         this.isLoggedIn$ = this.authService.isLoggedIn;
@@ -65,6 +70,10 @@ export class HeaderComponent implements OnInit {
         }
         return result;
 
+    }
+
+    login(){
+        this.modalRef = this.modalService.show(LoginComponent);
     }
 
 }
