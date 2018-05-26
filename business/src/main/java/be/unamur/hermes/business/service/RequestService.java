@@ -8,7 +8,6 @@ import org.springframework.web.multipart.MultipartFile;
 import be.unamur.hermes.business.exception.BusinessException;
 import be.unamur.hermes.dataaccess.entity.Request;
 import be.unamur.hermes.dataaccess.entity.RequestField;
-import be.unamur.hermes.dataaccess.entity.RequestType;
 
 public interface RequestService {
 

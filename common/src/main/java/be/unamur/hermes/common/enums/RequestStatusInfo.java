@@ -12,6 +12,10 @@ public enum RequestStatusInfo {
 	this.value = value;
     }
 
+    public String getValue() {
+	return this.value;
+    }
+
     public static RequestStatusInfo getStatusFor(String value) {
 	for (RequestStatusInfo rsi : values()) {
 	    if (rsi.value.equalsIgnoreCase(value))

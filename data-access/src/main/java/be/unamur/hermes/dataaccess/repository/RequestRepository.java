@@ -4,7 +4,6 @@ import java.util.List;
 
 import be.unamur.hermes.dataaccess.entity.Request;
 import be.unamur.hermes.dataaccess.entity.RequestStatus;
-import be.unamur.hermes.dataaccess.entity.RequestType;
 
 public interface RequestRepository {
 
@@ -29,6 +28,8 @@ public interface RequestRepository {
     RequestStatus findRequestStatusById(long id);
 
     void updateStatus(Request request);
+
+    void updateStatus(long requestId, String statusName);
 
     void updateAssignee(Request request);
 }

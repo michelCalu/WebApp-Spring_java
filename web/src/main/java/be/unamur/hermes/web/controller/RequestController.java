@@ -139,21 +139,27 @@ public class RequestController implements RequestTypes {
 
     @PostAuthorize("hasPermission(returnObject,'any')")
     @PutMapping(params = "requestType=" + COMPANY_PARKING_CARD, consumes = { "multipart/form-data" })
-    public ResponseEntity<Request> updateRequest(@RequestPart("request") Request request,
-	    @RequestPart("companyParkingCardGreenCard") MultipartFile greenCard,
-	    @RequestPart("companyParkingCardUserProof") MultipartFile userProof) {
-	Map<String, MultipartFile> filesMap = toMap(Arrays.asList(greenCard, userProof));
+    public ResponseEntity<Request> updateCompanyRequest(@RequestPart("request") Request request,
+	    @RequestPart("companyParkingCardGreenCard") Optional<MultipartFile> greenCard,
+	    @RequestPart("companyParkingCardUserProof") Optional<MultipartFile> userProof) {
+	List<MultipartFile> files = new ArrayList<>();
+	if (greenCard.isPresent())
+	    files.add(greenCard.get());
+	if (userProof.isPresent())
+	    files.add(userProof.get());
+	Map<String, MultipartFile> filesMap = toMap(files);
 	Request result = requestService.replace(request, filesMap);
 	return ResponseEntity.ok(result);
     }
 
     @PostAuthorize("hasPermission(returnObject,'any')")
     @PutMapping(params = "requestType=" + CITIZEN_PARKING_CARD, consumes = { "multipart/form-data" })
-    public ResponseEntity<Request> updateRequest(@RequestPart("request") Request request,
-	    @RequestPart("citizenParkingCardGreenCard") MultipartFile greenCard,
+    public ResponseEntity<Request> updateCitizenRequest(@RequestPart("request") Request request,
+	    @RequestPart("citizenParkingCardGreenCard") Optional<MultipartFile> greenCard,
 	    @RequestPart("citizenParkingCardUserProof") Optional<MultipartFile> userProof) {
 	List<MultipartFile> files = new ArrayList<>();
-	files.add(greenCard);
+	if (greenCard.isPresent())
+	    files.add(greenCard.get());
 	if (userProof.isPresent())
 	    files.add(userProof.get());
 	Map<String, MultipartFile> filesMap = toMap(files);
