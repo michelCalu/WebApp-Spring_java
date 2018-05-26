@@ -3,11 +3,15 @@
     "accepted": "acceptée",
     "actions": "actions",
     "additionalComment": "Additional communication",
+    "address" : "address",
+    "address.email" : "Email address",
     "assignee": "assignee",
     "assigneeChange": "assignee change",
-    "assignThisRequest" : "Get this request assigned",
+    "assignThisRequest" : "assign",
     "authentication.service.getError" : "Rejected authentication",
     "awaitingInfo": "awaiting information",
+    
+    "birthdate" : "Date of birth",
 
     "carContactPersonEmail": "Contact person email",
     "carMake": "Car make",
@@ -52,12 +56,13 @@
     "mycompanyrequests": "requests of company",
     "mydocuments": "my documents",
     "myrequests": "my requests",
+    "norequests": "You did not file any request yet",
 
     "name": "name",
     "new": "new",
     "nationalRegisterNumber": "national register number",
-    "nationalityCertificate": "nationality certificate",
-    "newrequest": "new request",    
+    "nationalityCertificate": "Nationality certificate",
+    "newrequest": "New request",    
     
     "ongoing": "ongoing",
 

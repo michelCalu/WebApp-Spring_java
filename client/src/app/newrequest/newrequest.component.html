@@ -1,10 +1,10 @@
 <div class="starter-template">
-	<h1>Nouvelle demande</h1>
+	<h1>{{ 'newrequest' | translate}}</h1>
   	<div *ngIf="!(authService.getCurrentCompany() && municipalityRequestTypes.indexOf('companyParkingCard') < 0); else noRequestTypeForCompanies">
     	<div *ngIf="authService.getCurrentCompany() ||
       !(municipalityRequestTypes.indexOf('nationalityCertificate') < 0 && municipalityRequestTypes.indexOf('citizenParkingCard') < 0); else noRequestTypesForCitizen" class="list-group">
-    		<button *ngIf="municipalityRequestTypes.indexOf('nationalityCertificate') > -1" type="button" class="list-group-item list-group-item-action" routerLink="/newrequest/nationality" [hidden]="authService.getCurrentCompany()"><a>Certificat de nationalité</a></button>
-    		<button *ngIf="municipalityRequestTypes.indexOf('citizenParkingCard') > -1 || municipalityRequestTypes.indexOf('companyParkingCard') > -1"type="button" class="list-group-item list-group-item-action" routerLink="/newrequest/parking">Carte de stationnement</button>
+    		<button *ngIf="municipalityRequestTypes.indexOf('nationalityCertificate') > -1" type="button" class="list-group-item list-group-item-action" routerLink="/newrequest/nationality" [hidden]="authService.getCurrentCompany()"><a>{{ 'nationalityCertificate' | translate}}</a></button>
+    		<button *ngIf="municipalityRequestTypes.indexOf('citizenParkingCard') > -1 || municipalityRequestTypes.indexOf('companyParkingCard') > -1"type="button" class="list-group-item list-group-item-action" routerLink="/newrequest/parking">{{ 'parkingCard' | translate}}</button>
     	</div>
   	</div>
 

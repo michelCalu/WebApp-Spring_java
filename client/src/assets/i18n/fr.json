@@ -3,14 +3,17 @@
     "actions": "actions",
     "accept": "accepter",
     "accepted": "acceptée",
+    "address" : "adresse",
+    "address.email" : "Adresse électronique",
     "additionalComment": "Communication libre",
     "assignee": "gestionnaire",
     "assigneeChange": "changement de gestionnaire",
-    "assignThisRequest" : "S'assigner cette demande",
+    "assignThisRequest" : "assigner",
     "authentication.service.getError" : "Authentification refusée",
     "awaitingInfo": "en attente d'information",
 
-
+	"birthdate" : "Date de naissance",
+	
     "carContactPersonEmail": "Email de personne de contact",
     "carMake": "Marque",
     "carModel": "Modèle",
@@ -53,14 +56,15 @@
     "mycompanies": "mes sociétés",
     "mycompanyrequests": "demandes de la société",
     "mydocuments": "mes documents",
-    "myprofile": "mon profile",
-    "myrequests": "mes demandes",
+    "myprofile": "mon profil",
+    "myrequests": "Mes demandes",
+    "norequests": "Vous n'avez pas encore de demandes",
 
     "name": "nom",
     "nationalRegisterNumber": "numéro de registre national",
-    "nationalityCertificate": "certificat de nationalité",
+    "nationalityCertificate": "Certificat de nationalité",
     "new": "nouvelle",
-    "newrequest": "nouvelle demande",    
+    "newrequest": "Nouvelle demande",    
     
     "ongoing": "en cours",
 

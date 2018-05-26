@@ -4,11 +4,11 @@
     <div>
         <span>Prénom : </span>{{citizen.firstName}}</div>
     <div>
-        <span>Date de naissance : </span>{{citizen.birthdate | date:"dd/MM/yyyy"}}</div>
+        <span>{{'birthdate' | translate}} : </span>{{citizen.birthdate | date:"dd/MM/yyyy"}}</div>
     <div>
-        <span>Numéro de registre national : </span>{{citizen.nationalRegisterNb}}</div>
+        <span>{{ 'nationalRegisterNumber' | translate}} : </span>{{citizen.nationalRegisterNb}}</div>
     <div>
-        <span>Adresse : </span>{{citizen.address.street}} {{citizen.address.streetNb}}, {{citizen.address.municipality}}</div>
+        <span>{{'address' | translate}} : </span>{{citizen.address.street}} {{citizen.address.streetNb}}, {{citizen.address.municipality}}</div>
     <div>
-        <span>Adresse électronique : </span>{{citizen.mail}}</div>
+        <span>{{'address.email' | translate}} : </span>{{citizen.mail}}</div>
 </div>

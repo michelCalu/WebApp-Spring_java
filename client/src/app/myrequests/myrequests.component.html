@@ -28,7 +28,7 @@
 		</tbody>
     </table>
 	<ng-template #noRequests>
-		<div>Vous n'avez pas encore introduit des demandes</div>
+		<div>{{ 'norequests' | translate}}</div>
     </ng-template>
 
     <div *ngIf="selectedRequest">
