@@ -44,14 +44,14 @@ insert into t_document_titles values (4, "nationalityCertificate");
 -- -- user accounts
 -- 5 citizens (password root)
 insert into t_user_accounts values(1,"ROLE_USER","$2a$10$fg0oXDkagxfaMl7e/i56q.BN2wyRw53WlXIV1MyL.ywbISo4bGVqi","active"); -- thomas_citizen
-insert into t_user_accounts values(2,"ROLE_USER","$2a$10$fg0oXDkagxfaMl7e/i56q.BN2wyRw53WlXIV1MyL.ywbISo4bGVqi","active");	-- killian_citizen
-insert into t_user_accounts values(3,"ROLE_USER","$2a$10$fg0oXDkagxfaMl7e/i56q.BN2wyRw53WlXIV1MyL.ywbISo4bGVqi","active");	-- fabian_citizen
-insert into t_user_accounts values(4,"ROLE_USER","$2a$10$fg0oXDkagxfaMl7e/i56q.BN2wyRw53WlXIV1MyL.ywbISo4bGVqi","active");	-- michel_citizen
+insert into t_user_accounts values(2,"ROLE_USER","$2a$10$fg0oXDkagxfaMl7e/i56q.BN2wyRw53WlXIV1MyL.ywbISo4bGVqi","active"); -- killian_citizen
+insert into t_user_accounts values(3,"ROLE_USER","$2a$10$fg0oXDkagxfaMl7e/i56q.BN2wyRw53WlXIV1MyL.ywbISo4bGVqi","active"); -- fabian_citizen
+insert into t_user_accounts values(4,"ROLE_USER","$2a$10$fg0oXDkagxfaMl7e/i56q.BN2wyRw53WlXIV1MyL.ywbISo4bGVqi","active"); -- michel_citizen
 insert into t_user_accounts values(5,"ROLE_USER","$2a$10$fg0oXDkagxfaMl7e/i56q.BN2wyRw53WlXIV1MyL.ywbISo4bGVqi","active"); -- david_citizen
 -- 6 employees (password Hermes)
 insert into t_user_accounts values(6,"ROLE_OFFICER","$2a$10$rbsCA7cN7vZTcFjV3gN9A.tuNTBlPEOQbOIuPHOW3YTWCM5t0cHd.","active"); -- thomas_empl
 insert into t_user_accounts values(7,"ROLE_OFFICER","$2a$10$rbsCA7cN7vZTcFjV3gN9A.tuNTBlPEOQbOIuPHOW3YTWCM5t0cHd.","active"); -- killian_empl
-insert into t_user_accounts values(8,"ROLE_OFFICER","$2a$10$rbsCA7cN7vZTcFjV3gN9A.tuNTBlPEOQbOIuPHOW3YTWCM5t0cHd.","active");	-- fabian_empl
+insert into t_user_accounts values(8,"ROLE_OFFICER","$2a$10$rbsCA7cN7vZTcFjV3gN9A.tuNTBlPEOQbOIuPHOW3YTWCM5t0cHd.","active"); -- fabian_empl
 insert into t_user_accounts values(9,"ROLE_OFFICER","$2a$10$rbsCA7cN7vZTcFjV3gN9A.tuNTBlPEOQbOIuPHOW3YTWCM5t0cHd.","active"); -- michel_empl
 insert into t_user_accounts values(10,"ROLE_OFFICER","$2a$10$rbsCA7cN7vZTcFjV3gN9A.tuNTBlPEOQbOIuPHOW3YTWCM5t0cHd.","active"); -- david_empl
 insert into t_user_accounts values(11,"ROLE_OFFICER","$2a$10$rbsCA7cN7vZTcFjV3gN9A.tuNTBlPEOQbOIuPHOW3YTWCM5t0cHd.","active"); -- suppl empl
@@ -71,57 +71,57 @@ insert into t_addresses values(5,"Rue de Liege", 44, null, 4000,"Liege", "Provin
 insert into t_addresses values(6,"Rue de Charleroi", 2, null, 6000,"Charleroi", "Province de Liege", "Belgique");
 
 -- Addresses citizens
-insert into t_addresses values(7,"une rue à namur", 			1,"A",		5000,"Namur", 		"Wallonie", 					"Belgique");
-insert into t_addresses values(8,"une rue à Bastogne", 		2,null,		6600,"Bastogne", 	"Wallonie", 					"Belgique");
-insert into t_addresses values(9,"une rue à Roux", 				3, "A",		6044,"Roux", 			"Wallonie", 					"Belgique");
-insert into t_addresses values(10,"une rue à La Hulpe", 	4, null, 	1310,"La Hulpe", 	"Brabant Wallon", 		"Belgique");
-insert into t_addresses values(11,"une rue à Liege", 			5, null, 	4000,"Liege", 		"Province de Liege", 	"Belgique");
-insert into t_addresses values(12,"une rue à Charleroi", 	6, null, 	6000,"Charleroi", "Province de Liege", 	"Belgique");
+insert into t_addresses values(7,"une rue à namur",         1,"A",      5000,"Namur",     "Wallonie",                "Belgique");
+insert into t_addresses values(8,"une rue à Bastogne",      2,null,     6600,"Bastogne",  "Wallonie",                "Belgique");
+insert into t_addresses values(9,"une rue à Roux",             3, "A",     6044,"Roux",         "Wallonie",                "Belgique");
+insert into t_addresses values(10,"une rue à La Hulpe",  4, null,    1310,"La Hulpe",  "Brabant Wallon",       "Belgique");
+insert into t_addresses values(11,"une rue à Liege",        5, null,    4000,"Liege",     "Province de Liege",    "Belgique");
+insert into t_addresses values(12,"une rue à Charleroi",    6, null,    6000,"Charleroi", "Province de Liege",    "Belgique");
 
 -- -- Municipalities
-insert into t_municipalities values(1, "Namur", 		1, "info@namur.be", "082/654.12.20", "Maxime Prévot");
-insert into t_municipalities values(2, "Bastogne", 	2, "bastogne@bastogne.be", "061/465.12.77", "Robert Genard");
-insert into t_municipalities values(3, "Roux", 			3, "roux@municipality.com", "071/12.34.56", "Pierre Paul-Jacques");
-insert into t_municipalities values(4, "La Hulpe", 	4, "lh@municipality.com", "02/653.16.37", "Gonzague Pull-Rose");
-insert into t_municipalities values(5, "Liege", 		5, "liege@municipality.com", "04/239.35.62", "Stéphane Moreau");
+insert into t_municipalities values(1, "Namur",       1, "info@namur.be", "082/654.12.20", "Maxime Prévot");
+insert into t_municipalities values(2, "Bastogne",    2, "bastogne@bastogne.be", "061/465.12.77", "Robert Genard");
+insert into t_municipalities values(3, "Roux",        3, "roux@municipality.com", "071/12.34.56", "Pierre Paul-Jacques");
+insert into t_municipalities values(4, "La Hulpe",    4, "lh@municipality.com", "02/653.16.37", "Gonzague Pull-Rose");
+insert into t_municipalities values(5, "Liege",       5, "liege@municipality.com", "04/239.35.62", "Stéphane Moreau");
 insert into t_municipalities values(6, "Charleroi", 6, "charleroi@municipality.com", "071/23.35.62", "Paul Magnette");
 
 -- -- Citizens
-insert into t_citizens values(1,"Thomas","Elskens",		1,"thomaselskens@hotmail.com",null,	"111",		"1983-11-13",			1);
-insert into t_citizens values(2,"Killian","Degryse",	2,"killian@unamur.be",null,					"222",		"1976-12-16",			2);
-insert into t_citizens values(3,"Fabian","Germeau",		3,"germeau.fabian@gmail.com",null,	"333",		"1991-07-02",			3);
-insert into t_citizens values(4,"Michel","Calu",			4,"michel@unamur.be",null,					"76120330920","1976-12-16",	4);
-insert into t_citizens values(5,"David","Fernandez",	5,"dfernandez1612@gmail.com",null,	"555","1983-12-16",					5);
+insert into t_citizens values(1,"Thomas","Elskens",      1,"thomaselskens@hotmail.com",null, "111",      "1983-11-13",        1);
+insert into t_citizens values(2,"Killian","Degryse",  2,"killian@unamur.be",null,               "222",      "1976-12-16",        2);
+insert into t_citizens values(3,"Fabian","Germeau",      3,"germeau.fabian@gmail.com",null,  "333",      "1991-07-02",        3);
+insert into t_citizens values(4,"Michel","Calu",         4,"michel@unamur.be",null,             "76120330920","1976-12-16",   4);
+insert into t_citizens values(5,"David","Fernandez",  5,"dfernandez1612@gmail.com",null,  "555","1983-12-16",              5);
 
 
 
 -- -- Employees
-insert into t_employees values(1,"Michel","Caluwaerts",7,
+insert into t_employees values(1,"liege","population ",7,
                                  "michel@mail.com",
                                  "0495/12.34.56","111111",'1970-01-01',
                                  "123456789",'2018-01-01','M',"single",0,0,6);
-insert into t_employees values(2,"Pierre","Dupont",8,
+insert into t_employees values(2,"Liège","Stationnement",8,
                                  "pierre@mail.com",
                                  "0495/12.34.56","222222",'1970-01-01',
                                  "123456789",'2018-01-01','M',"single",0,0,7);
-insert into t_employees values(3,"Marie","Leroy",9,
+insert into t_employees values(3,"La hulpe","Population",9,
                                  "marie@mail.com",
                                  "0495/12.34.56","333333",'1970-01-01',
                                  "123456789",'2018-01-01','F',"single",0,0,8);
-insert into t_employees values(4,"Anne","Pierrard",10,
+insert into t_employees values(4,"La hulpe","Population",10,
                                  "anne@mail.com",
                                  "0495/12.34.56","444444",'1970-01-01',
                                  "123456789",'2018-01-01','F',"single",0,0,9);
-insert into t_employees values(5,"John","Snow",11,
+insert into t_employees values(5,"La hulpe","Stationnement",11,
                                  "jon@mail.com",
                                  "0495/12.34.56","555555",'1970-01-01',
                                  "123456789",'2018-01-01','M',"single",0,0,10);
-insert into t_employees values(6,"Chuck","Norris",11,
+insert into t_employees values(6,"Roux","Population",11,
                                  "chuck@mail.com",
                                  "0495/12.34.56","666666",'1970-01-01',
                                  "123456789",'2018-01-01','M',"single",0,0,11);
 
-insert into t_employees values(8,"Fabian","Germeau",12,
+insert into t_employees values(8,"Fabian","Germeau-Empl",12,
                                  "fabian@mail.com",
                                  "0495/12.34.56","333",'1970-01-01',
                                  "123456789",'2018-01-01','M',"single",0,0,13);
@@ -134,17 +134,17 @@ insert into t_employees values(7,"Admin","Account",11,
 
 -- -- Departments
 insert into t_departments values(1, 1, "Population & état civil", 1, null,null); -- namur
-insert into t_departments values(2, 1, "Mobilité", 								1, null,null); -- namur
+insert into t_departments values(2, 1, "Mobilité",                         1, null,null); -- namur
 insert into t_departments values(3, 2, "Population & état civil", 1, null,null); -- bastogne
-insert into t_departments values(4, 2, "Mobilité", 								1, null,null); -- bastogne
+insert into t_departments values(4, 2, "Mobilité",                         1, null,null); -- bastogne
 insert into t_departments values(5, 3, "Population & état civil", 1, null,null); -- roux
-insert into t_departments values(6, 3, "Mobilité", 								1, null,null); -- roux
+insert into t_departments values(6, 3, "Mobilité",                         1, null,null); -- roux
 insert into t_departments values(7, 4, "Population & état civil", 1, null,null); -- la hulpe
-insert into t_departments values(8, 4, "Mobilité", 								1, null,null); -- la hulpe
+insert into t_departments values(8, 4, "Mobilité",                         1, null,null); -- la hulpe
 insert into t_departments values(9, 5, "Population & état civil", 1, null,null); -- liege
-insert into t_departments values(10,5, "Mobilité", 								1, null,null); -- liege
+insert into t_departments values(10,5, "Mobilité",                         1, null,null); -- liege
 insert into t_departments values(11,6, "Population & état civil", 1, null,null); -- charleroi
-insert into t_departments values(12,6, "Mobilité", 								1, null,null); -- charleroi
+insert into t_departments values(12,6, "Mobilité",                         1, null,null); -- charleroi
 
 
 
@@ -170,29 +170,21 @@ insert into t_departments_request_types values(12,3);
 
 -- -- Employees assignations
 ;
-insert into t_departments_employees values (5,1); -- roux_popul
-insert into t_departments_employees values (5,2); -- roux_popul
-insert into t_departments_employees values (6,3); -- roux_stat
+insert into t_departments_employees values (9,1); -- liege_popul
+insert into t_departments_employees values (10,2); -- liege_stat
+insert into t_departments_employees values (7,3); -- la hulpe_popul
 insert into t_departments_employees values (7,4); -- la hulpe_popul
 insert into t_departments_employees values (8,5); -- la hulpe_stat
-insert into t_departments_employees values (8,6); -- la hulpe_stat
-insert into t_departments_employees values (8,8); -- la hulpe_stat
+insert into t_departments_employees values (5,6); -- roux_popul
+insert into t_departments_employees values (6,8); -- roux_stationnement
 
-
-
-
--- -- Requests
-
-
--- -- -- Requests field values
 
 
 -- -- Companies
+insert into t_companies values ("123456", "BE123456", 11, "SPRL", 5, "Fernandez@Co","active"); -- 1ere société de david
 
-
-
--- -- -- Mandataries
-
+-- Mandataries
+insert into t_mandataries values(1, 5, "123456", "owner");
 
 
 

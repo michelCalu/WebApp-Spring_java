@@ -5,6 +5,8 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
 
+import be.unamur.hermes.business.service.DepartmentService;
+import be.unamur.hermes.dataaccess.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.ResponseEntity;
@@ -15,11 +17,6 @@ import org.springframework.stereotype.Component;
 import be.unamur.hermes.business.service.EmployeeService;
 import be.unamur.hermes.business.service.MunicipalityService;
 import be.unamur.hermes.common.enums.Authority;
-import be.unamur.hermes.dataaccess.entity.Citizen;
-import be.unamur.hermes.dataaccess.entity.Employee;
-import be.unamur.hermes.dataaccess.entity.Municipality;
-import be.unamur.hermes.dataaccess.entity.Request;
-import be.unamur.hermes.dataaccess.entity.UserAccount;
 
 /**
  * This PermissionEvaluator evaluates if a user can be granted access to
@@ -46,6 +43,10 @@ public class HermesPermissionEvaluator implements PermissionEvaluator {
     @Autowired
     private EmployeeService employeeService;
 
+	@Lazy
+	@Autowired
+	private DepartmentService departmentService;
+
     @Override
     public boolean hasPermission(Authentication authentication, Object targetDomainObject, Object permission) {
 	// TODO do something useful with the permission parameter
@@ -67,7 +68,8 @@ public class HermesPermissionEvaluator implements PermissionEvaluator {
 	    Employee employee = employeeService.findById(account.getTechnicalId());
 	    if (employee == null || employee.getDepartmentIds().isEmpty())
 		return false;
-	    Municipality employeeMunicipality = municipalityService.findById(employee.getDepartmentIds().get(0));
+		Department employeeDepartment = departmentService.findById(employee.getDepartmentIds().get(0));
+	    Municipality employeeMunicipality = employeeDepartment.getMunicipality();
 	    return employeeMunicipality == null ? false : employeeMunicipality.getId() == targetMunicipality.getId();
 	}
 	if (authorities.contains(Authority.USER)) {

@@ -152,6 +152,7 @@ export class ParkingCardCreationComponent implements OnInit {
     }
 
     private addSpecificCompanyData(request: CitizenRequest): CitizenRequest {
+        request.company = this.authService.getCurrentCompany();
         request.data.push({
             code: 'companyParkingCardContactPersonEmail',
             fieldType: 'String',
