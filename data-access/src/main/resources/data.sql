@@ -97,39 +97,39 @@ insert into t_citizens values(5,"David","Fernandez",	5,"dfernandez1612@gmail.com
 
 -- -- Employees
 insert into t_employees values(1,"Michel","Caluwaerts",7,
-																 "michel@mail.com",
-																 "0495/12.34.56","111111",'1970-01-01',
-																 "123456789",'2018-01-01','M',"single",0,0,6);
+                                 "michel@mail.com",
+                                 "0495/12.34.56","111111",'1970-01-01',
+                                 "123456789",'2018-01-01','M',"single",0,0,6);
 insert into t_employees values(2,"Pierre","Dupont",8,
-																 "pierre@mail.com",
-																 "0495/12.34.56","222222",'1970-01-01',
-																 "123456789",'2018-01-01','M',"single",0,0,7);
+                                 "pierre@mail.com",
+                                 "0495/12.34.56","222222",'1970-01-01',
+                                 "123456789",'2018-01-01','M',"single",0,0,7);
 insert into t_employees values(3,"Marie","Leroy",9,
-																 "marie@mail.com",
-																 "0495/12.34.56","333333",'1970-01-01',
-																 "123456789",'2018-01-01','F',"single",0,0,8);
+                                 "marie@mail.com",
+                                 "0495/12.34.56","333333",'1970-01-01',
+                                 "123456789",'2018-01-01','F',"single",0,0,8);
 insert into t_employees values(4,"Anne","Pierrard",10,
-																 "anne@mail.com",
-																 "0495/12.34.56","444444",'1970-01-01',
-																 "123456789",'2018-01-01','F',"single",0,0,9);
+                                 "anne@mail.com",
+                                 "0495/12.34.56","444444",'1970-01-01',
+                                 "123456789",'2018-01-01','F',"single",0,0,9);
 insert into t_employees values(5,"John","Snow",11,
-																 "jon@mail.com",
-																 "0495/12.34.56","555555",'1970-01-01',
-																 "123456789",'2018-01-01','M',"single",0,0,10);
+                                 "jon@mail.com",
+                                 "0495/12.34.56","555555",'1970-01-01',
+                                 "123456789",'2018-01-01','M',"single",0,0,10);
 insert into t_employees values(6,"Chuck","Norris",11,
-																 "chuck@mail.com",
-																 "0495/12.34.56","666666",'1970-01-01',
-																 "123456789",'2018-01-01','M',"single",0,0,11);
+                                 "chuck@mail.com",
+                                 "0495/12.34.56","666666",'1970-01-01',
+                                 "123456789",'2018-01-01','M',"single",0,0,11);
 
 insert into t_employees values(8,"Fabian","Germeau",12,
-																 "fabian@mail.com",
-																 "0495/12.34.56","333",'1970-01-01',
-																 "123456789",'2018-01-01','M',"single",0,0,13);
+                                 "fabian@mail.com",
+                                 "0495/12.34.56","333",'1970-01-01',
+                                 "123456789",'2018-01-01','M',"single",0,0,13);
 
 insert into t_employees values(7,"Admin","Account",11,
-																 "admin@mail.com",
-																 "0495/12.34.56","999999",'1970-01-01',
-																 "123456789",'2018-01-01','M',"single",0,0,12);
+                                 "admin@mail.com",
+                                 "0495/12.34.56","999999",'1970-01-01',
+                                 "123456789",'2018-01-01','M',"single",0,0,12);
 
 
 -- -- Departments
