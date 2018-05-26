@@ -30,7 +30,7 @@ export class ParkingCardUpdateComponent  extends ParkingCardCreationComponent im
         companyParkingCardCarColour: 'colour',
         citizenParkingCardPlateNumber: 'carRegistrationNumber',
         companyParkingCardPlateNumber: 'carRegistrationNumber',
-        carContactPersonEmail: 'companyParkingCardContactPersonEmail',
+        companyParkingCardContactPersonEmail: 'carContactPersonEmail',
         companyParkingCardUserFirstName: 'carVisitorFirstName',
         companyParkingCardUserLastName: 'carVisitorLastName'
     };
