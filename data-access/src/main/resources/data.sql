@@ -55,6 +55,7 @@ insert into t_user_accounts values(8,"ROLE_OFFICER","$2a$10$rbsCA7cN7vZTcFjV3gN9
 insert into t_user_accounts values(9,"ROLE_OFFICER","$2a$10$rbsCA7cN7vZTcFjV3gN9A.tuNTBlPEOQbOIuPHOW3YTWCM5t0cHd.","active"); -- michel_empl
 insert into t_user_accounts values(10,"ROLE_OFFICER","$2a$10$rbsCA7cN7vZTcFjV3gN9A.tuNTBlPEOQbOIuPHOW3YTWCM5t0cHd.","active"); -- david_empl
 insert into t_user_accounts values(11,"ROLE_OFFICER","$2a$10$rbsCA7cN7vZTcFjV3gN9A.tuNTBlPEOQbOIuPHOW3YTWCM5t0cHd.","active"); -- suppl empl
+insert into t_user_accounts values(13,"ROLE_OFFICER","$2a$10$rbsCA7cN7vZTcFjV3gN9A.tuNTBlPEOQbOIuPHOW3YTWCM5t0cHd.","active"); -- fabian employé
 -- 1 admin (password admin)
 insert into t_user_accounts values(12,"ROLE_ADMIN","$2a$10$4w9Wm8gc93DpDQdyZ7SR5O.17XQMsfElDZRVbKuzaQJVi.0s.5xn.","active"); -- admin
 
@@ -120,6 +121,11 @@ insert into t_employees values(6,"Chuck","Norris",11,
 																 "0495/12.34.56","666666",'1970-01-01',
 																 "123456789",'2018-01-01','M',"single",0,0,11);
 
+insert into t_employees values(8,"Fabian","Germeau",12,
+																 "fabian@mail.com",
+																 "0495/12.34.56","333",'1970-01-01',
+																 "123456789",'2018-01-01','M',"single",0,0,13);
+
 insert into t_employees values(7,"Admin","Account",11,
 																 "admin@mail.com",
 																 "0495/12.34.56","999999",'1970-01-01',
@@ -144,23 +150,23 @@ insert into t_departments values(12,6, "Mobilité", 								1, null,null); -- ch
 
 -- -- -- Departments managed requests types
 insert into t_departments_request_types values(1,1);
-insert into t_departments_request_types values(1,2);
-insert into t_departments_request_types values(1,3);
-insert into t_departments_request_types values(2,1);
 insert into t_departments_request_types values(2,2);
 insert into t_departments_request_types values(2,3);
 insert into t_departments_request_types values(3,1);
-insert into t_departments_request_types values(3,2);
-insert into t_departments_request_types values(3,3);
-insert into t_departments_request_types values(4,1);
 insert into t_departments_request_types values(4,2);
 insert into t_departments_request_types values(4,3);
 insert into t_departments_request_types values(5,1);
-insert into t_departments_request_types values(5,2);
-insert into t_departments_request_types values(5,3);
-insert into t_departments_request_types values(6,1);
 insert into t_departments_request_types values(6,2);
 insert into t_departments_request_types values(6,3);
+insert into t_departments_request_types values(7,1);
+insert into t_departments_request_types values(8,2);
+insert into t_departments_request_types values(8,3);
+insert into t_departments_request_types values(9,1);
+insert into t_departments_request_types values(10,2);
+insert into t_departments_request_types values(10,3);
+insert into t_departments_request_types values(11,1);
+insert into t_departments_request_types values(12,2);
+insert into t_departments_request_types values(12,3);
 
 -- -- Employees assignations
 ;
@@ -170,6 +176,8 @@ insert into t_departments_employees values (6,3); -- roux_stat
 insert into t_departments_employees values (7,4); -- la hulpe_popul
 insert into t_departments_employees values (8,5); -- la hulpe_stat
 insert into t_departments_employees values (8,6); -- la hulpe_stat
+insert into t_departments_employees values (8,8); -- la hulpe_stat
+
 
 
 
