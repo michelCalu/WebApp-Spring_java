@@ -21,7 +21,7 @@
                 <td>
                     <button class="btn btn-outline-success my-2 my-sm-0" (click)="selectedRequest = request" [hidden]="selectedRequest == request">{{'details'| translate}}</button>
                     <button class="btn btn-outline-info my-2 my-sm-0" (click)="selectedRequest = null" [hidden]="selectedRequest != request">{{'collapse' | translate}}</button>
-                    <button class="btn btn-outline-success my-2 my-sm-0" [disabled] = "request.assignee" (click)="assign(request)">{{'assignThisRequest'| translate}}</button>
+                    <button class="btn btn-outline-success my-2 my-sm-0" [hidden] = "request.assignee" (click)="assign(request)">{{'assignThisRequest'| translate}}</button>
                 </td>
 			</tr>
 		</tbody>
