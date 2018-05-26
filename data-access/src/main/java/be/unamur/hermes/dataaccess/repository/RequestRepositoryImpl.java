@@ -30,11 +30,11 @@ public class RequestRepositoryImpl implements RequestRepository {
     private static final String queryById = //
 	    selectRequestClause + " WHERE req.requestID=?";
     private static final String queryByCitizenId = //
-	    selectRequestClause + " WHERE req.citizenID = ?";
+	    selectRequestClause + " WHERE req.citizenID = ? AND req.companyNb is null";
     private static final String queryByDepartmentId = //
-	    selectRequestClause + " WHERE req.departmentId = ?";
+	    selectRequestClause + " WHERE req.departmentID = ?";
     private static final String queryByEmployeeId = //
-	    selectRequestClause + " WHERE req.employeeId = ?";
+	    selectRequestClause + " WHERE req.employeeID = ?";
     private static final String queryByCompanyNb = //
 	    selectRequestClause + " WHERE req.companyNb = ?";
     private static final String queryByCompanyNbAndRequestType = queryByCompanyNb //
